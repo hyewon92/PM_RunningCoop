@@ -2,78 +2,78 @@ package com.pm.rc.dto;
 
 public class MemberDto {
 
-	private String Mem_Id;
-	private String Mem_Pw;
-	private String Mem_Name;
-	private String Mem_Email;
-	private String Mem_Phone;
-	private String Mem_regdate;
-	private String Mem_delYN;
+	private String mem_id;
+	private String mem_pw;
+	private String mem_pame;
+	private String mem_email;
+	private String mem_phone;
+	private String mem_regdate;
+	private String mem_delYN;
 	
 	public MemberDto(){}
 
-	public String getMem_Id() {
-		return Mem_Id;
+	public String getMem_id() {
+		return mem_id;
 	}
 
-	public void setMem_Id(String mem_Id) {
-		Mem_Id = mem_Id;
+	public void setMem_id(String mem_id) {
+		this.mem_id = mem_id;
 	}
 
-	public String getMem_Pw() {
-		return Mem_Pw;
+	public String getMem_pw() {
+		return mem_pw;
 	}
 
-	public void setMem_Pw(String mem_Pw) {
-		Mem_Pw = mem_Pw;
+	public void setMem_pw(String mem_pw) {
+		this.mem_pw = mem_pw;
 	}
 
-	public String getMem_Name() {
-		return Mem_Name;
+	public String getMem_pame() {
+		return mem_pame;
 	}
 
-	public void setMem_Name(String mem_Name) {
-		Mem_Name = mem_Name;
+	public void setMem_pame(String mem_pame) {
+		this.mem_pame = mem_pame;
 	}
 
-	public String getMem_Email() {
-		return Mem_Email;
+	public String getMem_email() {
+		return mem_email;
 	}
 
-	public void setMem_Email(String mem_Email) {
-		Mem_Email = mem_Email;
+	public void setMem_email(String mem_email) {
+		this.mem_email = mem_email;
 	}
 
-	public String getMem_Phone() {
-		return Mem_Phone;
+	public String getMem_phone() {
+		return mem_phone;
 	}
 
-	public void setMem_Phone(String mem_Phone) {
-		Mem_Phone = mem_Phone;
+	public void setMem_phone(String mem_phone) {
+		this.mem_phone = mem_phone;
 	}
 
 	public String getMem_regdate() {
-		return Mem_regdate;
+		return mem_regdate;
 	}
 
 	public void setMem_regdate(String mem_regdate) {
-		Mem_regdate = mem_regdate;
+		this.mem_regdate = mem_regdate;
 	}
 
 	public String getMem_delYN() {
-		return Mem_delYN;
+		return mem_delYN;
 	}
 
 	public void setMem_delYN(String mem_delYN) {
-		Mem_delYN = mem_delYN;
+		this.mem_delYN = mem_delYN;
 	}
 
 	@Override
 	public String toString() {
-		return "MemberDto [Mem_Id=" + Mem_Id + ", Mem_Pw=" + Mem_Pw
-				+ ", Mem_Name=" + Mem_Name + ", Mem_Email=" + Mem_Email
-				+ ", Mem_Phone=" + Mem_Phone + ", Mem_regdate=" + Mem_regdate
-				+ ", Mem_delYN=" + Mem_delYN + "]";
+		return "MemberDto [mem_id=" + mem_id + ", mem_pw=" + mem_pw
+				+ ", mem_pame=" + mem_pame + ", mem_email=" + mem_email
+				+ ", mem_phone=" + mem_phone + ", mem_regdate=" + mem_regdate
+				+ ", mem_delYN=" + mem_delYN + "]";
 	}
-	
+
 }
