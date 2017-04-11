@@ -1,4 +1,4 @@
-package com.pm.rc.model;
+package com.pm.rc.model.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;

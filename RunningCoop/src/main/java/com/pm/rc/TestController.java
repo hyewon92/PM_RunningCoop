@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.pm.rc.model.TestService;
+import com.pm.rc.model.service.TestService;
 
 //4. dispatcher에 의해 연결된 Class @Controller 생성
 @Controller

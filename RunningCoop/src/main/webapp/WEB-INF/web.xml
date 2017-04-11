@@ -65,16 +65,16 @@
 	<!-- 7. log처리(log4j.xml를 java resource에 추가) -->
 	
 	
-	<!-- 25. 화면의 로그를 체크하기 위한 filter(listener는 화면넘어갈때 자동실행, filter는 중간에 가로채서 실행 -->
-<!-- 	<filter> -->
-<!-- 		<filter-name>logFilter</filter-name> -->
-<!-- 		<filter-class>com.pm.rc.util.AccessLogFilter</filter-class> -->
-<!-- 	</filter> -->
+	<!-- 25. 화면의 로그를 체크하기 위한 filter(listener는 화면넘어갈때 자동실행, filter는 중간에 가로채서 실행) -->
+ 	<filter> 
+ 		<filter-name>logFilter</filter-name>
+ 		<filter-class>com.pm.rc.util.AccessLogFilter</filter-class>
+ 	</filter> 
 
-<!-- 	<filter-mapping> -->
-<!-- 		<filter-name>logFilter</filter-name> -->
-<!-- 		<url-pattern>/*</url-pattern> -->
-<!-- 	</filter-mapping> -->
+	<filter-mapping> 
+ 		<filter-name>logFilter</filter-name> 
+ 		<url-pattern>/*</url-pattern> 
+	</filter-mapping> 
 	
 	
 	<!-- 에러코드가 뜰 경우 특정 페이지로 이동시키는 것 -->

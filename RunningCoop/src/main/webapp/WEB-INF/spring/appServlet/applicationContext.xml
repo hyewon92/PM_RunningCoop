@@ -56,7 +56,7 @@
 	
 	<!-- 28. AOP를 이용하여 Transaction이 Service에서  작동 되도록 함 -->
 	<aop:config>
-		<aop:advisor pointcut="execution(* com.pm.rc.model.*Service*.*(..))" advice-ref="txAdvice"/>
+		<aop:advisor pointcut="execution(* com.pm.rc.model.service.*Service*.*(..))" advice-ref="txAdvice"/>
 	</aop:config>
 	
 	
