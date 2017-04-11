@@ -2,25 +2,25 @@ package com.pm.rc.dto;
 
 public class GroupDto {
 
-	private String gr_Id;
+	private String gr_id;
 	private String gr_name;
 	private String gr_searchYN;
 	private String gr_joinYN;
-	private String gr_maxMem;
-	private String gr_memCnt;
+	private int gr_maxMem;
+	private int gr_memCnt;
 	private String gr_goal;
-	private String gr_regdate;
+	private String gr_regDate;
 	private String gr_appYn;
 	private String gr_delYN;
 	
 	public GroupDto(){}
 
-	public String getGr_Id() {
-		return gr_Id;
+	public String getGr_id() {
+		return gr_id;
 	}
 
-	public void setGr_Id(String gr_Id) {
-		this.gr_Id = gr_Id;
+	public void setGr_id(String gr_id) {
+		this.gr_id = gr_id;
 	}
 
 	public String getGr_name() {
@@ -47,19 +47,19 @@ public class GroupDto {
 		this.gr_joinYN = gr_joinYN;
 	}
 
-	public String getGr_maxMem() {
+	public int getGr_maxMem() {
 		return gr_maxMem;
 	}
 
-	public void setGr_maxMem(String gr_maxMem) {
+	public void setGr_maxMem(int gr_maxMem) {
 		this.gr_maxMem = gr_maxMem;
 	}
 
-	public String getGr_memCnt() {
+	public int getGr_memCnt() {
 		return gr_memCnt;
 	}
 
-	public void setGr_memCnt(String gr_memCnt) {
+	public void setGr_memCnt(int gr_memCnt) {
 		this.gr_memCnt = gr_memCnt;
 	}
 
@@ -71,12 +71,12 @@ public class GroupDto {
 		this.gr_goal = gr_goal;
 	}
 
-	public String getGr_regdate() {
-		return gr_regdate;
+	public String getGr_regDate() {
+		return gr_regDate;
 	}
 
-	public void setGr_regdate(String gr_regdate) {
-		this.gr_regdate = gr_regdate;
+	public void setGr_regDate(String gr_regDate) {
+		this.gr_regDate = gr_regDate;
 	}
 
 	public String getGr_appYn() {
@@ -97,11 +97,11 @@ public class GroupDto {
 
 	@Override
 	public String toString() {
-		return "GroupDto [gr_Id=" + gr_Id + ", gr_name=" + gr_name
+		return "GroupDto [gr_Id=" + gr_id + ", gr_name=" + gr_name
 				+ ", gr_searchYN=" + gr_searchYN + ", gr_joinYN=" + gr_joinYN
 				+ ", gr_maxMem=" + gr_maxMem + ", gr_memCnt=" + gr_memCnt
-				+ ", gr_goal=" + gr_goal + ", gr_regdate=" + gr_regdate
+				+ ", gr_goal=" + gr_goal + ", gr_regDate=" + gr_regDate
 				+ ", gr_appYn=" + gr_appYn + ", gr_delYN=" + gr_delYN + "]";
 	}
-	
+
 }

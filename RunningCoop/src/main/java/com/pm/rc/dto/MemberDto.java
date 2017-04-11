@@ -4,10 +4,10 @@ public class MemberDto {
 
 	private String mem_id;
 	private String mem_pw;
-	private String mem_pame;
+	private String mem_name;
 	private String mem_email;
 	private String mem_phone;
-	private String mem_regdate;
+	private String mem_regDate;
 	private String mem_delYN;
 	
 	public MemberDto(){}
@@ -28,12 +28,12 @@ public class MemberDto {
 		this.mem_pw = mem_pw;
 	}
 
-	public String getMem_pame() {
-		return mem_pame;
+	public String getMem_name() {
+		return mem_name;
 	}
 
-	public void setMem_pame(String mem_pame) {
-		this.mem_pame = mem_pame;
+	public void setMem_name(String mem_name) {
+		this.mem_name = mem_name;
 	}
 
 	public String getMem_email() {
@@ -52,12 +52,12 @@ public class MemberDto {
 		this.mem_phone = mem_phone;
 	}
 
-	public String getMem_regdate() {
-		return mem_regdate;
+	public String getMem_regDate() {
+		return mem_regDate;
 	}
 
-	public void setMem_regdate(String mem_regdate) {
-		this.mem_regdate = mem_regdate;
+	public void setMem_regDate(String mem_regDate) {
+		this.mem_regDate = mem_regDate;
 	}
 
 	public String getMem_delYN() {
@@ -71,8 +71,8 @@ public class MemberDto {
 	@Override
 	public String toString() {
 		return "MemberDto [mem_id=" + mem_id + ", mem_pw=" + mem_pw
-				+ ", mem_pame=" + mem_pame + ", mem_email=" + mem_email
-				+ ", mem_phone=" + mem_phone + ", mem_regdate=" + mem_regdate
+				+ ", mem_name=" + mem_name + ", mem_email=" + mem_email
+				+ ", mem_phone=" + mem_phone + ", mem_regDate=" + mem_regDate
 				+ ", mem_delYN=" + mem_delYN + "]";
 	}
 
