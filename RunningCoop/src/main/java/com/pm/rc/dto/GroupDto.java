@@ -1,19 +1,18 @@
 package com.pm.rc.dto;
 
 public class GroupDto {
-
-	private String gr_id;
-	private String gr_name;
-	private String gr_searchYN;
-	private String gr_joinYN;
-	private int gr_maxMem;
-	private int gr_memCnt;
-	private String gr_goal;
-	private String gr_regDate;
-	private String gr_appYN;
-	private String gr_delYN;
 	
-	public GroupDto(){}
+	 private String gr_id;  
+	 private String gr_name;     
+	 private String gr_searchYN; 
+	 private String gr_joinYN;   
+	 private int gr_memCnt;   
+	 private String gr_goal;     
+	 private String gr_regDate;  
+	 private String gr_appYN;
+	 private String gr_delYN;   
+	 
+	 public GroupDto(){}
 
 	public String getGr_id() {
 		return gr_id;
@@ -47,14 +46,6 @@ public class GroupDto {
 		this.gr_joinYN = gr_joinYN;
 	}
 
-	public int getGr_maxMem() {
-		return gr_maxMem;
-	}
-
-	public void setGr_maxMem(int gr_maxMem) {
-		this.gr_maxMem = gr_maxMem;
-	}
-
 	public int getGr_memCnt() {
 		return gr_memCnt;
 	}
@@ -79,12 +70,12 @@ public class GroupDto {
 		this.gr_regDate = gr_regDate;
 	}
 
-	public String getGr_appYn() {
+	public String getGr_appYN() {
 		return gr_appYN;
 	}
 
-	public void setGr_appYn(String gr_appYn) {
-		this.gr_appYN = gr_appYn;
+	public void setGr_appYN(String gr_appYN) {
+		this.gr_appYN = gr_appYN;
 	}
 
 	public String getGr_delYN() {
@@ -97,11 +88,18 @@ public class GroupDto {
 
 	@Override
 	public String toString() {
-		return "GroupDto [gr_Id=" + gr_id + ", gr_name=" + gr_name
+		return "GroupDto [gr_id=" + gr_id + ", gr_name=" + gr_name
 				+ ", gr_searchYN=" + gr_searchYN + ", gr_joinYN=" + gr_joinYN
-				+ ", gr_maxMem=" + gr_maxMem + ", gr_memCnt=" + gr_memCnt
-				+ ", gr_goal=" + gr_goal + ", gr_regDate=" + gr_regDate
-				+ ", gr_appYN=" + gr_appYN + ", gr_delYN=" + gr_delYN + "]";
+				+ ", gr_memCnt=" + gr_memCnt + ", gr_goal=" + gr_goal
+				+ ", gr_regDate=" + gr_regDate + ", gr_appYN=" + gr_appYN
+				+ ", gr_delYN=" + gr_delYN + "]";
 	}
+	 
+	 
+	 
+
+	
+
+	
 
 }

@@ -2,7 +2,8 @@ package com.pm.rc.dto;
 
 public class GroupBoardDto {
 	
-	private int br_seq;
+
+	private String br_uuid;
 	private String gr_id;
 	private String mem_id;
 	private String br_title;
@@ -15,12 +16,14 @@ public class GroupBoardDto {
 	
 	public GroupBoardDto(){}
 
-	public int getBr_seq() {
-		return br_seq;
+	
+	
+	public String getBr_uuid() {
+		return br_uuid;
 	}
-
-	public void setBr_seq(int br_seq) {
-		this.br_seq = br_seq;
+	
+	public void setBr_uuid(String br_uuid) {
+		this.br_uuid = br_uuid;
 	}
 
 	public String getGr_id() {
@@ -95,13 +98,17 @@ public class GroupBoardDto {
 		this.br_refer = br_refer;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "GroupBoardDto [br_seq=" + br_seq + ", gr_id=" + gr_id
+		return "GroupBoardDto [br_uuid=" + br_uuid + ", gr_id=" + gr_id
 				+ ", mem_id=" + mem_id + ", br_title=" + br_title
 				+ ", br_content=" + br_content + ", br_regDate=" + br_regDate
 				+ ", br_delYN=" + br_delYN + ", br_noticeYN=" + br_noticeYN
 				+ ", br_comYN=" + br_comYN + ", br_refer=" + br_refer + "]";
 	}
+
+
 	
 }

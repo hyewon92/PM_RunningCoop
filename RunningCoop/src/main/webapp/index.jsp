@@ -9,9 +9,12 @@
 <body>
 
 <!-- 10. 첫페이지 이동화면 설정 -->
-ㅎㅎ
+<!--  index Test 입니다 commit 되나 안되나 체크중 1 -->
 <jsp:forward page="./first.do">
 		<jsp:param value="test" name="name"/>
 	</jsp:forward> 
 </body>
 </html>
+
+
+

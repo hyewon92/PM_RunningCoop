@@ -7,6 +7,7 @@ public class ScheduleDto {
 	private String sch_content;
 	private String sch_startDate;
 	private String sch_endDate;
+	private String sch_prosYN;
 	private String pr_id;
 	private String mem_id;
 	private String sch_delYN;
@@ -54,6 +55,14 @@ public class ScheduleDto {
 		this.sch_endDate = sch_endDate;
 	}
 
+	public String getSch_prosYN() {
+		return sch_prosYN;
+	}
+
+	public void setSch_prosYN(String sch_prosYN) {
+		this.sch_prosYN = sch_prosYN;
+	}
+
 	public String getPr_id() {
 		return pr_id;
 	}
@@ -90,9 +99,15 @@ public class ScheduleDto {
 	public String toString() {
 		return "ScheduleDto [sch_seq=" + sch_seq + ", sch_title=" + sch_title
 				+ ", sch_content=" + sch_content + ", sch_startDate="
-				+ sch_startDate + ", sch_endDate=" + sch_endDate + ", pr_id="
-				+ pr_id + ", mem_id=" + mem_id + ", sch_delYN=" + sch_delYN
+				+ sch_startDate + ", sch_endDate=" + sch_endDate
+				+ ", sch_prosYN=" + sch_prosYN + ", pr_id=" + pr_id
+				+ ", mem_id=" + mem_id + ", sch_delYN=" + sch_delYN
 				+ ", sch_regDate=" + sch_regDate + "]";
 	}
+	
+	
+	
+	
+
 	
 }
