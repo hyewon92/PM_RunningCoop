@@ -14,14 +14,7 @@ public class GroupDto {
 	 
 	 public GroupDto(){}
 	 
-	 @Override
-	 public String toString() {
-		 return "GroupDto [gr_id=" + gr_id + ", gr_name=" + gr_name
-				 + ", gr_searchyn=" + gr_searchyn + ", gr_joinyn=" + gr_joinyn
-				 + ", gr_memcnt=" + gr_memcnt + ", gr_goal=" + gr_goal
-				 + ", gr_regdate=" + gr_regdate + ", gr_appyn=" + gr_appyn
-				 + ", gr_delyn=" + gr_delyn + "]";
-	 }
+
 	 
 	 public String getGr_id() {
 		return gr_id;
@@ -112,7 +105,14 @@ public class GroupDto {
 		this.gr_delyn = gr_delyn;
 	}
 
-
+	 @Override
+	 public String toString() {
+		 return "GroupDto [gr_id=" + gr_id + ", gr_name=" + gr_name
+				 + ", gr_searchyn=" + gr_searchyn + ", gr_joinyn=" + gr_joinyn
+				 + ", gr_memcnt=" + gr_memcnt + ", gr_goal=" + gr_goal
+				 + ", gr_regdate=" + gr_regdate + ", gr_appyn=" + gr_appyn
+				 + ", gr_delyn=" + gr_delyn + "]";
+	 }
 
 
 	

@@ -16,14 +16,6 @@ public class GroupBoardDto {
 	
 	public GroupBoardDto(){}
 
-	@Override
-	public String toString() {
-		return "GroupBoardDto [br_uuid=" + br_uuid + ", gr_id=" + gr_id
-				+ ", mem_id=" + mem_id + ", br_title=" + br_title
-				+ ", br_content=" + br_content + ", br_regDate=" + br_regDate
-				+ ", br_delYN=" + br_delYN + ", br_noticeYN=" + br_noticeYN
-				+ ", br_comYN=" + br_comYN + ", br_refer=" + br_refer + "]";
-	}
 	
 	
 	public String getBr_uuid() {
@@ -108,6 +100,14 @@ public class GroupBoardDto {
 
 
 
+	@Override
+	public String toString() {
+		return "GroupBoardDto [br_uuid=" + br_uuid + ", gr_id=" + gr_id
+				+ ", mem_id=" + mem_id + ", br_title=" + br_title
+				+ ", br_content=" + br_content + ", br_regDate=" + br_regDate
+				+ ", br_delYN=" + br_delYN + ", br_noticeYN=" + br_noticeYN
+				+ ", br_comYN=" + br_comYN + ", br_refer=" + br_refer + "]";
+	}
 
 
 	
