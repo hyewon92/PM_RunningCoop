@@ -10,4 +10,7 @@ public interface ScheduleService {
 	//팀 일정 조회
 	public List<ScheduleDto> teamSchSelect(String pr_id);
 	
+	//팀 일정 조회
+		public List<ScheduleDto> teamSchSelect2(String pr_id);
+	
 }
