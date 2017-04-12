@@ -10,7 +10,7 @@ public class GroupDto {
 	private int gr_memCnt;
 	private String gr_goal;
 	private String gr_regDate;
-	private String gr_appYn;
+	private String gr_appYN;
 	private String gr_delYN;
 	
 	public GroupDto(){}
@@ -80,11 +80,11 @@ public class GroupDto {
 	}
 
 	public String getGr_appYn() {
-		return gr_appYn;
+		return gr_appYN;
 	}
 
 	public void setGr_appYn(String gr_appYn) {
-		this.gr_appYn = gr_appYn;
+		this.gr_appYN = gr_appYn;
 	}
 
 	public String getGr_delYN() {
@@ -101,7 +101,7 @@ public class GroupDto {
 				+ ", gr_searchYN=" + gr_searchYN + ", gr_joinYN=" + gr_joinYN
 				+ ", gr_maxMem=" + gr_maxMem + ", gr_memCnt=" + gr_memCnt
 				+ ", gr_goal=" + gr_goal + ", gr_regDate=" + gr_regDate
-				+ ", gr_appYn=" + gr_appYn + ", gr_delYN=" + gr_delYN + "]";
+				+ ", gr_appYN=" + gr_appYN + ", gr_delYN=" + gr_delYN + "]";
 	}
 
 }
