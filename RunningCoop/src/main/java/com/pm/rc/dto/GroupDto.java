@@ -1,107 +1,122 @@
 package com.pm.rc.dto;
 
 public class GroupDto {
-
-	private String gr_id;
-	private String gr_name;
-	private String gr_searchYN;
-	private String gr_joinYN;
-	private int gr_maxMem;
-	private int gr_memCnt;
-	private String gr_goal;
-	private String gr_regDate;
-	private String gr_appYn;
-	private String gr_delYN;
 	
-	public GroupDto(){}
-
-	public String getGr_id() {
+	 private String gr_id;  
+	 private String gr_name;     
+	 private String gr_searchyn; 
+	 private String gr_joinyn;   
+	 private int gr_memcnt;   
+	 private String gr_goal;     
+	 private String gr_regdate;  
+	 private String gr_appyn;
+	 private String gr_delyn;   
+	 
+	 public GroupDto(){}
+	 
+	 @Override
+	 public String toString() {
+		 return "GroupDto [gr_id=" + gr_id + ", gr_name=" + gr_name
+				 + ", gr_searchyn=" + gr_searchyn + ", gr_joinyn=" + gr_joinyn
+				 + ", gr_memcnt=" + gr_memcnt + ", gr_goal=" + gr_goal
+				 + ", gr_regdate=" + gr_regdate + ", gr_appyn=" + gr_appyn
+				 + ", gr_delyn=" + gr_delyn + "]";
+	 }
+	 
+	 public String getGr_id() {
 		return gr_id;
 	}
+
 
 	public void setGr_id(String gr_id) {
 		this.gr_id = gr_id;
 	}
 
+
 	public String getGr_name() {
 		return gr_name;
 	}
+
 
 	public void setGr_name(String gr_name) {
 		this.gr_name = gr_name;
 	}
 
-	public String getGr_searchYN() {
-		return gr_searchYN;
+
+	public String getGr_searchyn() {
+		return gr_searchyn;
 	}
 
-	public void setGr_searchYN(String gr_searchYN) {
-		this.gr_searchYN = gr_searchYN;
+
+	public void setGr_searchyn(String gr_searchyn) {
+		this.gr_searchyn = gr_searchyn;
 	}
 
-	public String getGr_joinYN() {
-		return gr_joinYN;
+
+	public String getGr_joinyn() {
+		return gr_joinyn;
 	}
 
-	public void setGr_joinYN(String gr_joinYN) {
-		this.gr_joinYN = gr_joinYN;
+
+	public void setGr_joinyn(String gr_joinyn) {
+		this.gr_joinyn = gr_joinyn;
 	}
 
-	public int getGr_maxMem() {
-		return gr_maxMem;
+
+	public int getGr_memcnt() {
+		return gr_memcnt;
 	}
 
-	public void setGr_maxMem(int gr_maxMem) {
-		this.gr_maxMem = gr_maxMem;
+
+	public void setGr_memcnt(int gr_memcnt) {
+		this.gr_memcnt = gr_memcnt;
 	}
 
-	public int getGr_memCnt() {
-		return gr_memCnt;
-	}
-
-	public void setGr_memCnt(int gr_memCnt) {
-		this.gr_memCnt = gr_memCnt;
-	}
 
 	public String getGr_goal() {
 		return gr_goal;
 	}
 
+
 	public void setGr_goal(String gr_goal) {
 		this.gr_goal = gr_goal;
 	}
 
-	public String getGr_regDate() {
-		return gr_regDate;
+
+	public String getGr_regdate() {
+		return gr_regdate;
 	}
 
-	public void setGr_regDate(String gr_regDate) {
-		this.gr_regDate = gr_regDate;
+
+	public void setGr_regdate(String gr_regdate) {
+		this.gr_regdate = gr_regdate;
 	}
 
-	public String getGr_appYn() {
-		return gr_appYn;
+
+	public String getGr_appyn() {
+		return gr_appyn;
 	}
 
-	public void setGr_appYn(String gr_appYn) {
-		this.gr_appYn = gr_appYn;
+
+	public void setGr_appyn(String gr_appyn) {
+		this.gr_appyn = gr_appyn;
 	}
 
-	public String getGr_delYN() {
-		return gr_delYN;
+
+	public String getGr_delyn() {
+		return gr_delyn;
 	}
 
-	public void setGr_delYN(String gr_delYN) {
-		this.gr_delYN = gr_delYN;
+
+	public void setGr_delyn(String gr_delyn) {
+		this.gr_delyn = gr_delyn;
 	}
 
-	@Override
-	public String toString() {
-		return "GroupDto [gr_Id=" + gr_id + ", gr_name=" + gr_name
-				+ ", gr_searchYN=" + gr_searchYN + ", gr_joinYN=" + gr_joinYN
-				+ ", gr_maxMem=" + gr_maxMem + ", gr_memCnt=" + gr_memCnt
-				+ ", gr_goal=" + gr_goal + ", gr_regDate=" + gr_regDate
-				+ ", gr_appYn=" + gr_appYn + ", gr_delYN=" + gr_delYN + "]";
-	}
+
+
+
+	
+
+	
 
 }
