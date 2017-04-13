@@ -1,4 +1,4 @@
-package com.pm.rc.model.service;
+package com.pm.rc.model.dao;
 
 import java.util.List;
 import java.util.Map;
@@ -7,10 +7,10 @@ import com.pm.rc.dto.MemberDto;
 
 /**
  * 회원계정 관련 기능 인터페이스
- * @author 김혜원
+ * @author 김호빈
  * @version AccountService Beta 1.0
- * */
-public interface AccountService {
+ **/
+public interface AccountDao {
 	
 	/**
 	 * 로그인 프로세스
@@ -27,7 +27,7 @@ public interface AccountService {
 	 * @return 중복되면 사용불가, 중복이 없으면 사용가능
 	 * @author 김호빈
 	 */
-	public String memIdSelect(String id);
+	public String memIdSelect (String id);
 	
 	/**
 	 * 회원 등록 프로세스
@@ -35,11 +35,11 @@ public interface AccountService {
 	 * @return 정상적으로 등록되면 true, 등록되지 않으면 false 반환
 	 * @author 김호빈
 	 */
-	public boolean memInsert(MemberDto dto);
+	public boolean memInsert (MemberDto dto);
 	
 	/**
 	 * 아이디 찾기(아이디 분실했을 때)
-	 * @param map - MemberDto를 key로 하고 회원이 입력한 값을 value로 전송
+	 * @param map - MemberDto를 value로 하여 회원이 입력한 값을 담아 전송
 	 * @return 두가지 값을 비교하여 나오는 아이디를 String으로 반환
 	 * @author 김호빈
 	 */
@@ -47,26 +47,55 @@ public interface AccountService {
 	
 	/**
 	 * 비밀번호 변경
-	 * @author 김혜원
-	 * */
+	 * @param id - 회원이 입력한 값을 value로 전송하여 해당하는 id에 해당하는 pw column을 변경
+	 * @return update 성공하면 true, 실패하면 false 반환
+	 * @author 김호빈
+	 */
 	public boolean memPwModify(String id);
 	
 	/**
-	 * 계정정보조회
-	 * @author 김혜원
-	 * */
+	 * 계정정보조회 (개인정보수정페이지 들어갈 때 깔리는 정보)
+	 * @param id - 세션에 입력되어있는 아이디 값을 value로 전송하여 해당하는 컬럼 select
+	 * @return id값에 해당하는 정보를 MemberDto에 담아 반환함
+	 * @author 김호빈
+	 */
 	public MemberDto memSelect(String id);
 	
 	/**
-	 * 계정 정보 수정(mem_id, MemberDto)
-	 * @author 김혜원
-	 * */
+	 * 계정정보수정 (개인정보 수정페이지에서 수정 버튼 클릭 시 처리)
+	 * @param map - 회원이 수정하기위해 입력한 정보를 map에 담아 전송 
+	 * @return 수정 성공하면 true, 실패하면 false 반환
+	 * @author 김호빈
+	 */
 	public boolean memInfoModify(Map<String, MemberDto> map);
 	
 	/**
-	 * 서비스 탈퇴 (dao많음 주의)
-	 * @author 김혜원
-	 * */
-	public boolean memDelete(String id);
+	 * 서비스 탈퇴1 (회원이 가입 중인 그룹 조회)
+	 * @param mem_id - 세션에서 id값 받아오기
+	 * @return mem_id를 포함하는 gr_id 리스트 반환
+	 */
+	public List<String> memDelete_1 (String mem_id);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
