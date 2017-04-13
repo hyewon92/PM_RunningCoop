@@ -70,11 +70,11 @@ public interface AccountDao {
 	public boolean memInfoModify(Map<String, MemberDto> map);
 	
 	/**
-	 * 서비스 탈퇴1 (회원이 가입 중인 그룹 조회)
+	 * 서비스 탈퇴1 (회원이 가입 중인 그룹 조회) - 작업중
 	 * @param mem_id - 세션에서 id값 받아오기
 	 * @return mem_id를 포함하는 gr_id 리스트 반환
 	 */
-	public List<String> memDelete_1 (String mem_id);
+	public List<String> memDelete (String mem_id);
 	
 	
 	
