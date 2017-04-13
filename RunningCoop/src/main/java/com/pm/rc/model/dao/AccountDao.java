@@ -70,15 +70,81 @@ public interface AccountDao {
 	public boolean memInfoModify(Map<String, MemberDto> map);
 	
 	/**
-	 * 서비스 탈퇴1 (회원이 가입 중인 그룹 조회) - 작업중 주석변경
+	 * 서비스 탈퇴 전 GM인 그룹 찾기
+	 * @param mem_id - 세션에서 id값 받아오기
+	 * @return mem_id를 포함하는 group 정보 리스트 반환
+	 */
+	public Map<String, String[]> levelGmSelect (String mem_id);
+	
+	/**
+	 * 서비스 탈퇴 전 PM인 그룹 프로젝트 찾기
+	 * @param mem_id - 세션에서 id값 받아오기
+	 * @return mem_id를 포함하는 project 정보 리스트 반환
+	 */
+	public List<String[]> levelPmSelect (Map<String, String[]> map);
+	
+	/**
+	 * 회원이 가입한 그룹 목록 출력
 	 * @param mem_id - 세션에서 id값 받아오기
 	 * @return mem_id를 포함하는 gr_id 리스트 반환
 	 */
-	public List<String> memDelete (String mem_id);
+	public Map<String, String[]> memDelete_1 (String mem_id);
 	
+	/**
+	 * 소속된 그룹의 참여 프로젝트 목록 출력
+	 * @param map = mem_id, gr_id를 Map에 담아 값 전달
+	 * @return mem_id 와 pr_id 배열을 Map으로 반환
+	 */
+	public Map<String, String[]> memDelete_2 (Map<String, String[]> map);
 	
+	/**
+	 * 그룹 프로젝트 탈퇴 처리 및 프로젝트 멤버 수 조정
+	 * @param map - memDelete_2의 반환값을 투입.
+	 * @return 탈퇴 및 멤버수 조정이 모두 정상 처리되면 true, 하나라도 실패하면 false
+	 */
+	public boolean memDelete_3 (Map<String, String[]> map);
 	
+	/**
+	 * 그룹 탈퇴 처리 및 그룹 멤버 수 조정
+	 * @param map - memDelete_1의 반환값을 투입.
+	 * @return 탈퇴 및 멤버수 조정이 모두 정상 처리되면 true, 하나라도 실패하면 false
+	 */
+	public boolean memDelete_4 (Map<String, String[]> map);
 	
+	/**
+	 * 개인 프로젝트 목록 조회
+	 * @param mem_id - session에서 받아온 mem_id 투입
+	 * @return mem_id 와 pr_id String배열을 Map으로 반환
+	 */
+	public Map<String, String[]> memDelete_5 (String mem_id);
+	
+	/**
+	 * 개인 프로젝트 비활성화
+	 * @param map - memDelete_5의 반환값 투입
+	 * @return 모두 비활성화 처리되면 true, 하나라도 실패하면 false;
+	 */
+	public boolean memDelete_6 (Map<String, String[]> map);
+	
+	/**
+	 * 개인 프로젝트 탈퇴 처리 및 프로젝트 멤버 수 조정
+	 * @param map - memDelete_5의 반환값 투입
+	 * @return 탈퇴 및 멤버수 조정이 모두 정상 처리되면 true, 하나라도 실패하면 false
+	 */
+	public boolean memDelete_7 (Map<String, String[]> map);
+	
+	/**
+	 * 그룹 가입 신청리스트에서 멤버정보 삭제
+	 * @param mem_id - session에서 받아온 mem_id값
+	 * @return 삭제 되면 true, 실패하면 false
+	 */
+	public boolean memDelete_8 (String mem_id);
+	
+	/**
+	 * 회원 비활성화
+	 * @param mem_id - session에서 받아온 mem_id값
+	 * @return -회원 비활성화 성공하면 true, 실패하면 false
+	 */
+	public boolean memDelete_9 (String mem_id);
 	
 	
 	
