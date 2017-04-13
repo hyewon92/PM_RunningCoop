@@ -13,30 +13,41 @@ public interface ScheduleService {
 
 	/**
 	 * 팀 일정 조회
+	 * @param pr_id 프로젝트 아이디
+	 * @return List&lt;ScheduleDto&gt;
 	 * @author 김혜원
 	 * */
 	public List<ScheduleDto> teamSchSelect(String pr_id);
 	
 	/**
 	 * 개인 일정 조회
+	 * @param mem_id 멤버아이디
+	 * @return  List&lt;ScheduleDto&gt;
 	 * @author 김혜원
 	 * */
 	public List<ScheduleDto> mySchSelect2(String mem_id);
 	
 	/**
 	 * 일정 등록
+	 * @param dto ScheduleDto객체
+	 * @return boolean
 	 * @author 김혜원
 	 * */
 	public boolean schInsert(ScheduleDto dto);
 	
 	/**
-	 * 일정 수정(sch_seq, ScheduleDto)
+	 * 일정 수정
+	 * @param map value:sch_seq(일정 번호), ScheduleDto객체
+	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean schInsert(Map<String, ScheduleDto> map);
+	public boolean schInsert(Map<String, Object> map);
 	
 	/**
 	 * 일정 삭제
+	 * @param seq sch_seq(일정번호)
+	 * @return boolean
+	 * @author 김혜원
 	 * */
 	public boolean schModify(String seq);
 	

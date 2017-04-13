@@ -14,20 +14,19 @@ public interface AccountService {
 	
 	/**
 	 * 로그인 프로세스
-	 * @param id - 회원이 로그인시 입력한 아이디
-	 * @param pw - 회원이 로그인시 입력한 패스워드
+	 * @param map value:mem_id(회원아이디), mem_pw(회원비밀번호)
 	 * @return MemberDto로 회원의 아이디와 이름을 받아 세션을 생성할 때 사용
 	 * @author 김호빈
 	 */
-	public List<MemberDto> loginPro(String id, String pw);
+	public List<MemberDto> loginPro(Map<String, String> map);
 	
 	/**
 	 * 회원가입 시 아이디 중복 조회 프로세스
-	 * @param id - 회원이 입력한 아이디를 value로 전송
+	 * @param mem_id - 회원이 입력한 아이디를 value로 전송
 	 * @return 중복되면 사용불가, 중복이 없으면 사용가능
 	 * @author 김호빈
 	 */
-	public String memIdSelect(String id);
+	public String memIdSelect(String mem_id);
 	
 	/**
 	 * 회원 등록 프로세스
@@ -49,13 +48,13 @@ public interface AccountService {
 	 * 비밀번호 변경
 	 * @author 김혜원
 	 * */
-	public boolean memPwModify(String id);
+	public boolean memPwModify(String mem_id);
 	
 	/**
 	 * 계정정보조회
 	 * @author 김혜원
 	 * */
-	public MemberDto memSelect(String id);
+	public MemberDto memSelect(String mem_id);
 	
 	/**
 	 * 계정 정보 수정(mem_id, MemberDto)
@@ -64,9 +63,24 @@ public interface AccountService {
 	public boolean memInfoModify(Map<String, MemberDto> map);
 	
 	/**
+	 * GM으로 소속된 그룹 찾기
+	 * @param mem_id 회원아이디
+	 * @author 김혜원
+	 * */
+	public Map<String, String[]> levelGmSelect(String mem_id); 
+	
+	
+	/**
+	 * PM으로 소속된 프로젝트 찾기
+	 * @param mem_id 회원아이디
+	 * @author 김혜원
+	 * */
+	public Map<String, String[]> levelPmSelect(String mem_id); 
+	
+	/**
 	 * 서비스 탈퇴 (dao많음 주의)
 	 * @author 김혜원
 	 * */
-	public boolean memDelete(String id);
+	public boolean memDelete(String mem_id);
 
 }
