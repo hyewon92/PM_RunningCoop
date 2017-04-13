@@ -1,18 +1,18 @@
 package com.pm.rc.dto;
 
 public class GroupDto {
-	
-	 private String gr_id;  
-	 private String gr_name;     
-	 private String gr_searchYN; 
-	 private String gr_joinYN;   
-	 private int gr_memCnt;   
-	 private String gr_goal;     
-	 private String gr_regDate;  
-	 private String gr_appYN;
-	 private String gr_delYN;   
-	 
-	 public GroupDto(){}
+
+	private String gr_id;  
+	private String gr_name;     
+	private String gr_searchYN; 
+	private String gr_joinYN;   
+	private int gr_memCnt;   
+	private String gr_goal;     
+	private String gr_regDate;  
+	private String gr_appYN;
+	private String gr_delYN;   
+
+	public GroupDto(){}
 
 	public String getGr_id() {
 		return gr_id;
@@ -94,12 +94,5 @@ public class GroupDto {
 				+ ", gr_regDate=" + gr_regDate + ", gr_appYN=" + gr_appYN
 				+ ", gr_delYN=" + gr_delYN + "]";
 	}
-	 
-	 
-	 
-
-	
-
-	
 
 }

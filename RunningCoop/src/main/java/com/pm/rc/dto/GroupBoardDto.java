@@ -1,7 +1,6 @@
 package com.pm.rc.dto;
 
 public class GroupBoardDto {
-	
 
 	private String br_uuid;
 	private String gr_id;
@@ -16,8 +15,6 @@ public class GroupBoardDto {
 	
 	public GroupBoardDto(){}
 
-	
-	
 	public String getBr_uuid() {
 		return br_uuid;
 	}
@@ -98,8 +95,6 @@ public class GroupBoardDto {
 		this.br_refer = br_refer;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "GroupBoardDto [br_uuid=" + br_uuid + ", gr_id=" + gr_id
@@ -109,6 +104,4 @@ public class GroupBoardDto {
 				+ ", br_comYN=" + br_comYN + ", br_refer=" + br_refer + "]";
 	}
 
-
-	
 }
