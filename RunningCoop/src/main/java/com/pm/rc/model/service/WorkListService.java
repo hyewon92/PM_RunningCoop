@@ -17,8 +17,11 @@ public interface WorkListService {
 	
 	/**
 	 * 업무리스트 조회
+	 * @param pr_id 프로젝트아이디
+	 * @return List&lt;WorkListDto&gt;
+	 * @author 김혜원
 	 * */
-	public List<WorkListDto> wkListSelect();
+	public List<WorkListDto> wkListSelect(String pr_id);
 	
 	/**
 	 * 프로젝트 업무 리스트 추가
@@ -35,6 +38,23 @@ public interface WorkListService {
 	 * @author 김혜원
 	 * */
 	public boolean wkListDelete(String wk_id);
+	
+	/**
+	 * 프로젝트 업무 리스트 수정
+	 * @param dto WorkListDto객체
+	 * @return boolean
+	 * @author 김혜원
+	 * */
+	public boolean wkListModify(WorkListDto dto);
+
+	/**
+	 * 워크리스트 작업진행률 수정
+	 * @param map value:wk_id(업무리스트 아이디), wk_proRate(업무 진행률)
+	 * @return boolean
+	 * @author 김혜원
+	 * */
+	public boolean wkRateMoidfy(Map<String, String> map);
+
 	
 	/**
 	 * 하위업무리스트 조회
@@ -67,47 +87,7 @@ public interface WorkListService {
 	 * @author 김혜원
 	 * */
 	public boolean wdDelete(String wd_id);
-	
-	/**
-	 * 업무리스트 페이지 댓글 추가
-	 * @param map value:wk_id(업무리스트 아이디)값, WorkCommentDto객체
-	 * @return boolean
-	 * @author 김혜원
-	 * */
-	public boolean wCommentInsert(Map<String, Object> map);
-	
-	/**
-	 * 업무리스트 페이지 댓글 수정
-	 * @param map value:wcom_id(워크리스트 코멘트아이디), WorkCommentDto
-	 * @return boolean
-	 * @author 김혜원
-	 * */
-	public boolean wCommentModify(Map<String, Object> map);
-	
-	/**
-	 * 업무리스트 페이지 댓글 삭제
-	 * @param wcom_id 워크리스트 코멘트 아이디
-	 * @return boolean
-	 * @author 김혜원
-	 * */
-	public boolean wCommentDelete(String wcom_id);
-	
-	/**
-	 * 첨부파일 등록
-	 * @param dto GroupBoardDto객체
-	 * @return boolean
-	 * @author 김혜원
-	 * */
-	public boolean gbAttachInsert(GroupBoardDto dto);
-	
-	/**
-	 * 첨부파일 삭제
-	 * @param gatt_seq 그룹/프로젝트 게시판 첨부파일 번호
-	 * @return boolean
-	 * @author 김혜원
-	 * */
-	public boolean gbAttachModify(String gatt_seq);
-	
+
 	/**
 	 * 하위업무 애로사항 체크
 	 * @param wd_id 하위업무리스트 아이디
@@ -125,11 +105,56 @@ public interface WorkListService {
 	public boolean wdComplModify(String wd_id);
 	
 	/**
-	 * 워크리스트 작업진행률 수정
-	 * @param wk_id 업무리스트 아이디
+	 * 업무리스트 페이지 댓글 조회
+	 * @param wk_id 워크리스트 아이디
+	 * @return List&lt;WorkCommentDto&gt;
+	 * */
+	public List<WorkCommentDto> wCommListSelect(String wk_id);
+	
+	/**
+	 * 업무리스트 페이지 댓글 추가
+	 * @param dto WorkCommentDto객체
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean wkRateMoidfy(String wk_id);
+	public boolean wCommentInsert(WorkCommentDto dto);
+	
+	/**
+	 * 업무리스트 페이지 댓글 수정
+	 * @param dto WorkCommentDto
+	 * @return boolean
+	 * @author 김혜원
+	 * */
+	public boolean wCommentModify(WorkCommentDto dto);
+	
+	/**
+	 * 업무리스트 페이지 댓글 삭제
+	 * @param wcom_id 워크리스트 코멘트 아이디
+	 * @return boolean
+	 * @author 김혜원
+	 * */
+	public boolean wCommentDelete(String wcom_id);
+	
+	/**첨부파일 조회
+	 * @param wk_id 워크리스트 아이디
+	 * @return List&lt;GbAttachDto&gt;
+	 * */
+	public List<GbAttachDto> btAttachSelect(String wk_id);
+	
+	/**
+	 * 첨부파일 등록
+	 * @param dto GroupBoardDto객체
+	 * @return boolean
+	 * @author 김혜원
+	 * */
+	public boolean gbAttachInsert(GroupBoardDto dto);
+	
+	/**
+	 * 첨부파일 삭제
+	 * @param gatt_seq 그룹/프로젝트 게시판 첨부파일 번호
+	 * @return boolean
+	 * @author 김혜원
+	 * */
+	public boolean gbAttachModify(String gatt_seq);
 
 }

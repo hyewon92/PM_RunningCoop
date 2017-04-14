@@ -77,10 +77,10 @@
 	</filter-mapping> 
 	
 	
-	<!-- 에러코드가 뜰 경우 특정 페이지로 이동시키는 것 -->
-	<error-page>
+<!-- 에러코드가 뜰 경우 특정 페이지로 이동시키는 것 -->
+<!--  	<error-page>
 		<error-code>404</error-code>
 		<location>/main.do</location>
-	</error-page>
+	</error-page> -->
 
 </web-app>

@@ -12,6 +12,8 @@ public class WorkListDto {
 	private String wk_complYN;
 	private String wk_delYN;
 	
+	private GbAttachDto gbAttach;
+	
 	public WorkListDto(){}
 
 	public String getWk_id() {
@@ -85,6 +87,14 @@ public class WorkListDto {
 	public void setWk_delYN(String wk_delYN) {
 		this.wk_delYN = wk_delYN;
 	}
+	
+	public GbAttachDto getGbAttach() {
+		return gbAttach;
+	}
+
+	public void setGbAttach(GbAttachDto gbAttach) {
+		this.gbAttach = gbAttach;
+	}
 
 	@Override
 	public String toString() {
@@ -92,7 +102,7 @@ public class WorkListDto {
 				+ mem_id + ", wk_title=" + wk_title + ", wk_proRate="
 				+ wk_proRate + ", wk_endDate=" + wk_endDate + ", wk_regDate="
 				+ wk_regDate + ", wk_complYN=" + wk_complYN + ", wk_delYN="
-				+ wk_delYN + "]";
+				+ wk_delYN + ", gbAttach=" + gbAttach + "]";
 	}
-	
+
 }
