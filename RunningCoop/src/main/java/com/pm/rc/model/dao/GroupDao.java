@@ -194,11 +194,11 @@ public interface GroupDao {
 
 	/**
 	 * 그룹게시판 게시글 수정
-	 * @param map value:br_uuid(그룹게시글 번호), GroupBoardDto(회원아이디)
+	 * @param dto GroupBoardDto객체
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean gboardModify(Map<String, Object> map);
+	public boolean gboardModify(GroupBoardDto dto);
 	
 	/**
 	 * 첨부파일 등록(그룹게시글 등록 or 수정)

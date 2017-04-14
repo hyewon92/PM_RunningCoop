@@ -1,4 +1,4 @@
-package com.pm.rc.model.service;
+package com.pm.rc.model.dao;
 
 import java.util.List;
 import java.util.Map;
@@ -9,8 +9,8 @@ import com.pm.rc.dto.ScheduleDto;
  * 일정관리 관련 기능 인터페이스
  * @author 김혜원
  * */
-public interface ScheduleService {
-
+public interface ScheduleDao {
+	
 	/**
 	 * 팀 일정 조회
 	 * @param pr_id 프로젝트 아이디
@@ -58,5 +58,5 @@ public interface ScheduleService {
 	 * @author 김혜원
 	 * */
 	public boolean schDelete(String seq);
-	
+
 }
