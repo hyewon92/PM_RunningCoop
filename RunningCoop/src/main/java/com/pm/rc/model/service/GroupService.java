@@ -71,7 +71,6 @@ public interface GroupService {
 	
 	/**
 	 * 시스템 회원 조회(아이디로 검색)->초대로
-	 * @return List&lt;MemberDto&gt;
 	 * @param mem_id 회원아이디
 	 * @return List&lt;MemberDto&gt;
 	 * @author 김혜원
@@ -149,11 +148,11 @@ public interface GroupService {
 	
 	/**
 	 * 그룹게시판 게시글 수정
-	 * @param map value:br_uuid(그룹게시글 번호), GroupBoardDto(회원아이디)
+	 * @param dto GroupBoardDto객체
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean gboardModify(Map<String, Object> map);
+	public boolean gboardModify(GroupBoardDto dto);
 	
 	/**
 	 * 그룹게시판 게시글 삭제

@@ -28,11 +28,11 @@ public interface ManagerService {
 	
 	/**
 	 * 공지사항 수정
-	 * @param map value:sbr_uuid(시스템게시글 번호), SystemBoardDto객체
+	 * @param dto SystemBoardDto객체
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean noticeModify(Map<String, Object> map);
+	public boolean noticeModify(SystemBoardDto dto);
 	
 	/**
 	 * 공지사항 삭제

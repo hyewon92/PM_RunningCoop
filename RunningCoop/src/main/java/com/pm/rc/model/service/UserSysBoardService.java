@@ -21,11 +21,11 @@ public interface UserSysBoardService {
 	
 	/**
 	 * 문의 게시글 수정
-	 * @param map value:sbr_uuid(시스템 게시글 번호), SystemBoardDto객체
+	 * @param dto SystemBoardDto객체
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean qnaBoardModify(Map<String, Object> map);
+	public boolean qnaBoardModify(SystemBoardDto dto);
 	
 	/**
 	 * 문의 게시글 삭제

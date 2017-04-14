@@ -47,10 +47,11 @@ public interface ProjectService {
 	
 	/**
 	 * 시스템 전체  프로젝트 조회(검색)
+	 * @param pr_name 프로젝트명
 	 * @return List&lt;ProjectDto&gt;
 	 * @author 김혜원
 	 * */
-	public List<ProjectDto> allPrSelect();
+	public List<ProjectDto> allPrSelect(String pr_name);
 	
 	/**
 	 * 프로젝트명으로 검색 
@@ -78,11 +79,11 @@ public interface ProjectService {
 	
 	/**
 	 * 프로젝트 수정
-	 * @param map value: pr_id(프로젝트아이디), ProjectDto객체
+	 * @param ProjectDto
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean prModify(Map<String, Object> map);
+	public boolean prModify(ProjectDto dto);
 	
 	/**
 	 * 프로젝트 삭제
