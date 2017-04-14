@@ -57,5 +57,4 @@ public class GroupWaitDto {
 				+ ", wait_regDate=" + wait_regDate + "]";
 	}
 	
-	
 }

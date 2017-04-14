@@ -105,9 +105,4 @@ public class ScheduleDto {
 				+ ", sch_regDate=" + sch_regDate + "]";
 	}
 	
-	
-	
-	
-
-	
 }

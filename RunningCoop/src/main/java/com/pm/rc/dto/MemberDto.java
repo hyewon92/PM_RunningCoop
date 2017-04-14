@@ -9,6 +9,7 @@ public class MemberDto {
 	private String mem_phone;
 	private String mem_regDate;
 	private String mem_delYN;
+	private String mem_level;
 	
 	public MemberDto(){}
 
@@ -67,13 +68,21 @@ public class MemberDto {
 	public void setMem_delYN(String mem_delYN) {
 		this.mem_delYN = mem_delYN;
 	}
+	
+	public String getMem_level() {
+		return mem_level;
+	}
+
+	public void setMem_level(String mem_level) {
+		this.mem_delYN = mem_level;
+	}
 
 	@Override
 	public String toString() {
 		return "MemberDto [mem_id=" + mem_id + ", mem_pw=" + mem_pw
 				+ ", mem_name=" + mem_name + ", mem_email=" + mem_email
 				+ ", mem_phone=" + mem_phone + ", mem_regDate=" + mem_regDate
-				+ ", mem_delYN=" + mem_delYN + "]";
+				+ ", mem_delYN=" + mem_delYN + ", mem_level=" + mem_level + "]";
 	}
 
 }

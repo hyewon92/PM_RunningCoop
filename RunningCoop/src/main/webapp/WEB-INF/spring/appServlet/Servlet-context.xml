@@ -7,7 +7,7 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
 	<!-- 2. Dispatcher로 패키지 탐색 범위 설정 -->
-	<context:component-scan base-package="com.pm.rc"/>
+	<context:component-scan base-package="com.pm.rc.control"/>
 	<!-- 3. annotation으로 Controller탐색 -->
 	<mvc:annotation-driven />
 	
