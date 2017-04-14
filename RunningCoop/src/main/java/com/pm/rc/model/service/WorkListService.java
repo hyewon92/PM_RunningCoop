@@ -1,17 +1,40 @@
 package com.pm.rc.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.pm.rc.dto.GbAttachDto;
 import com.pm.rc.dto.GroupBoardDto;
 import com.pm.rc.dto.WorkCommentDto;
 import com.pm.rc.dto.WorkDetailDto;
+import com.pm.rc.dto.WorkListDto;
 
 /**
  * 업무리스트 관련 기능 인터페이스
  * @author 김혜원
  * */
 public interface WorkListService {
+	
+	/**
+	 * 업무리스트 조회
+	 * */
+	public List<WorkListDto> wkListSelect();
+	
+	/**
+	 * 프로젝트 업무 리스트 추가
+	 * @param dto WorkListDto객체
+	 * @return boolean
+	 * @author 김혜원
+	 * */
+	public boolean wkListInsert(WorkListDto dto);
+	
+	/**
+	 * 프로젝트 업무 리스트 삭제
+	 * @param wk_id 워크리스트 아이디
+	 * @return boolean
+	 * @author 김혜원
+	 * */
+	public boolean wkListDelete(String wk_id);
 	
 	/**
 	 * 하위업무리스트 조회

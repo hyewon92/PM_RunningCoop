@@ -118,22 +118,6 @@ public interface ProjectService {
 	public List<MemberDto> prMemSelect(String pr_id);
 	
 	/**
-	 * 프로젝트 업무 리스트 추가
-	 * @param dto WorkListDto객체
-	 * @return boolean
-	 * @author 김혜원
-	 * */
-	public boolean wkListInsert(WorkListDto dto);
-	
-	/**
-	 * 프로젝트 업무 리스트 삭제
-	 * @param wk_id 워크리스트 아이디
-	 * @return boolean
-	 * @author 김혜원
-	 * */
-	public boolean wkListDelete(String wk_id);
-	
-	/**
 	 * 프로젝트 담당자 수정(pr_id, mem_id)
 	 * @param map value:pr_id(프로젝트아이디), mem_id(회원아이디)
 	 * @return boolean
