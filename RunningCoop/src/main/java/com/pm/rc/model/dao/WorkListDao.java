@@ -1,18 +1,16 @@
-package com.pm.rc.model.service;
+package com.pm.rc.model.dao;
 
 import java.util.Map;
 
-import com.pm.rc.dto.GbAttachDto;
 import com.pm.rc.dto.GroupBoardDto;
-import com.pm.rc.dto.WorkCommentDto;
 import com.pm.rc.dto.WorkDetailDto;
 
 /**
  * 업무리스트 관련 기능 인터페이스
  * @author 김혜원
  * */
-public interface WorkListService {
-	
+public interface WorkListDao {
+
 	/**
 	 * 하위업무리스트 조회
 	 * @param wk_id 워크리스트 아이디
@@ -108,5 +106,5 @@ public interface WorkListService {
 	 * @author 김혜원
 	 * */
 	public boolean wkRateMoidfy(String wk_id);
-
+	
 }

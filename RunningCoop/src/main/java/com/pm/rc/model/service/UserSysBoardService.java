@@ -13,7 +13,7 @@ public interface UserSysBoardService {
 	
 	/**
 	 * 문의 게시글 등록
-	 * @param SystemBoardDto
+	 * @param dto SystemBoardDto객체
 	 * @return boolean
 	 * @author 김혜원
 	 * */
