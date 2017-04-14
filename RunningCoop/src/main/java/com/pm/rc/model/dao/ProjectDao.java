@@ -1,20 +1,14 @@
-package com.pm.rc.model.service;
+package com.pm.rc.model.dao;
 
 import java.util.List;
 import java.util.Map;
 
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.ProjectDto;
-import com.pm.rc.dto.WorkListDto;
 
-/** 
- * 프로젝트 관련 기능 인터페이스
- * @author 김혜원
- * */
-public interface ProjectService {
-
+public interface ProjectDao {
 	/**
-	 * 소속 그룹+내가 참여하는 진행중인 프로젝트(메인) 조회
+	 * 소속 그룹+내가 참여하는 진행중인 프로젝트(메인) 조회 o
 	 * @param map value:mem_id(회원아이디), gr_id(그룹아이디)
 	 * @return List&lt;ProjectDto&gt;
 	 * @author 김혜원
@@ -30,7 +24,7 @@ public interface ProjectService {
 	public List<ProjectDto> myProSelect(String mem_id);
 	
 	/**
-	 * 내가 완료한 프로젝트
+	 * 내가 완료한 프로젝트 o
 	 * @param mem_id 회원아이디
 	 * @return List&lt;ProjectDto&gt;
 	 * @author 김혜원
@@ -38,15 +32,15 @@ public interface ProjectService {
 	public List<ProjectDto> myDidPrSelect(String mem_id);
 	
 	/**
-	 * 내가 진행중인 프로젝트
+	 * 내가 진행중인 프로젝트 o
 	 * @param mem_id 회원아이디
 	 * @return List&lt;ProjectDto&gt;
 	 * @author 김혜원
 	 * */
 	public List<ProjectDto> myDoingPrSelect(String mem_id);
 	
-	/**
-	 * 내가 해야 할 프로젝트
+	/** 
+	 * 내가 해야 할 프로젝트 o
 	 * @param mem_id 회원아이디
 	 * @return List&lt;ProjectDto&gt;
 	 * @author 김혜원
@@ -54,10 +48,10 @@ public interface ProjectService {
 	public List<ProjectDto> myTodoPrSelect(String mem_id);
 	
 	/**
-	 * 시스템 전체  프로젝트 조회(검색)
+	 * 시스템 전체  프로젝트 조회(검색) o 
 	 * @param pr_name 프로젝트명
 	 * @return List&lt;ProjectDto&gt;
-	 * @author 김혜원
+	 * @author 김혜원 
 	 * */
 	public List<ProjectDto> allPrSelect(String pr_name);
 	
@@ -78,17 +72,12 @@ public interface ProjectService {
 	public ProjectDto prDetailSelect(String pr_id);
 	
 	/**
-	 * 그룹 프로젝트 생성
+	 * 프로젝트 생성
 	 * @param dto ProjectDto객체
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean prInsert(Map<String, String>  map);
-	
-	/**
-	 * 개인 프로젝트 생성
-	 * @param map value:mem_id(회원아이디), gr_id(그룹아이디)
-	 */
+	public boolean prInsert(ProjectDto dto);
 	
 	/**
 	 * 프로젝트 수정
@@ -145,5 +134,5 @@ public interface ProjectService {
 	 * @author 김혜원
 	 * */
 	public boolean prRateModify(String pr_id);
-	
+
 }
