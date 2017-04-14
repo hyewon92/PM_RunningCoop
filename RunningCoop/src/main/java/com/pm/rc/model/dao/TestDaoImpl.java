@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+
 //22. Model 연결을 위한 MyBatis 실행
 @Repository
 public class TestDaoImpl implements TestDao {

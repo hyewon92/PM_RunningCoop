@@ -26,6 +26,6 @@ public class TestController {
 		System.out.println("name="+name);
 		service.testPrint(name);
 		logger.info("first.jsp 실행");
-		return "/WEB-INF/views/first.jsp";
+		return "first";
 	}
 }
