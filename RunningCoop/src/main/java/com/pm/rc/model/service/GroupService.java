@@ -6,7 +6,6 @@ import java.util.Map;
 import com.pm.rc.dto.GroupBoardDto;
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
-import com.pm.rc.dto.ProjectDto;
 
 /**
  * 그룹관련 기능 인터페이스
