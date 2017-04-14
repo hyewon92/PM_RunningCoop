@@ -14,6 +14,8 @@ public class SystemBoardDto {
 	private String sbr_noticeYN;
 	private String sbr_regDate;
 	
+	private SbAttachDto sbAttach;
+	
 	public SystemBoardDto(){}
 
 	public String getSbr_uuid() {
@@ -104,6 +106,14 @@ public class SystemBoardDto {
 		this.sbr_regDate = sbr_regDate;
 	}
 
+	public SbAttachDto getSbAttach() {
+		return sbAttach;
+	}
+
+	public void setSbAttach(SbAttachDto sbAttach) {
+		this.sbAttach = sbAttach;
+	}
+
 	@Override
 	public String toString() {
 		return "SystemBoardDto [sbr_uuid=" + sbr_uuid + ", mem_id=" + mem_id
@@ -111,7 +121,8 @@ public class SystemBoardDto {
 				+ ", sbr_refer=" + sbr_refer + ", sbr_step=" + sbr_step
 				+ ", sbr_depth=" + sbr_depth + ", sbr_scrYN=" + sbr_scrYN
 				+ ", sbr_pw=" + sbr_pw + ", sbr_noticeYN=" + sbr_noticeYN
-				+ ", sbr_regDate=" + sbr_regDate + "]";
+				+ ", sbr_regDate=" + sbr_regDate + ", sbAttach=" + sbAttach
+				+ "]";
 	}
-	
+
 }

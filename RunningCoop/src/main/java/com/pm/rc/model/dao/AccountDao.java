@@ -14,12 +14,11 @@ public interface AccountDao {
 	
 	/**
 	 * 로그인 프로세스
-	 * @param id - 회원이 로그인시 입력한 아이디
-	 * @param pw - 회원이 로그인시 입력한 패스워드
+	 * @param map = 입력받은 id와 pw를 담은 map으로 값 전송
 	 * @return MemberDto로 회원의 아이디와 이름을 받아 세션을 생성할 때 사용
 	 * @author 김호빈
 	 */
-	public List<MemberDto> loginPro(String id, String pw);
+	public List<MemberDto> loginPro(Map<String, String> map);
 	
 	/**
 	 * 회원가입 시 아이디 중복 조회 프로세스
@@ -145,23 +144,6 @@ public interface AccountDao {
 	 * @return -회원 비활성화 성공하면 true, 실패하면 false
 	 */
 	public boolean memDelete_9 (String mem_id);
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 
 }

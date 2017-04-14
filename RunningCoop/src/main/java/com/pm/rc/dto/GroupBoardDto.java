@@ -13,6 +13,16 @@ public class GroupBoardDto {
 	private String br_comYN;
 	private String br_refer;
 	
+	private GbAttachDto gbAttach;
+	
+	public GbAttachDto getGbAttach() {
+		return gbAttach;
+	}
+
+	public void setGbAttach(GbAttachDto gbAttach) {
+		this.gbAttach = gbAttach;
+	}
+
 	public GroupBoardDto(){}
 
 	public String getBr_uuid() {
@@ -101,7 +111,9 @@ public class GroupBoardDto {
 				+ ", mem_id=" + mem_id + ", br_title=" + br_title
 				+ ", br_content=" + br_content + ", br_regDate=" + br_regDate
 				+ ", br_delYN=" + br_delYN + ", br_noticeYN=" + br_noticeYN
-				+ ", br_comYN=" + br_comYN + ", br_refer=" + br_refer + "]";
+				+ ", br_comYN=" + br_comYN + ", br_refer=" + br_refer
+				+ ", gbAttach=" + gbAttach + "]";
 	}
+
 
 }
