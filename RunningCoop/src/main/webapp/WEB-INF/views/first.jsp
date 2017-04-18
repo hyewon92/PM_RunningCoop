@@ -10,10 +10,6 @@
 
 first페이지
 
-${list}
-
-
-
 
 </body>
 </html>
