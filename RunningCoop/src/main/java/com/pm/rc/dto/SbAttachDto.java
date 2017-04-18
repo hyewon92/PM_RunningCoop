@@ -4,11 +4,13 @@ public class SbAttachDto {
 	
 	private int satt_seq;
 	private String satt_name;
-	private int satt_size;
+	private String satt_size;
 	private String satt_path;
 	private String satt_regDate;
 	private String sbr_uuid;
+	private String satt_rname;
 	
+
 	public SbAttachDto(){}
 
 	public int getSatt_seq() {
@@ -27,11 +29,11 @@ public class SbAttachDto {
 		this.satt_name = satt_name;
 	}
 
-	public int getSatt_size() {
+	public String getSatt_size() {
 		return satt_size;
 	}
 
-	public void setSatt_size(int satt_size) {
+	public void setSatt_size(String satt_size) {
 		this.satt_size = satt_size;
 	}
 
@@ -59,12 +61,21 @@ public class SbAttachDto {
 		this.sbr_uuid = sbr_uuid;
 	}
 
+	public String getSatt_rname() {
+		return satt_rname;
+	}
+	
+	public void setSatt_rname(String satt_rname) {
+		this.satt_rname = satt_rname;
+	}
+
 	@Override
 	public String toString() {
 		return "SbAttachDto [satt_seq=" + satt_seq + ", satt_name=" + satt_name
 				+ ", satt_size=" + satt_size + ", satt_path=" + satt_path
 				+ ", satt_regDate=" + satt_regDate + ", sbr_uuid=" + sbr_uuid
-				+ "]";
+				+ ", satt_rname=" + satt_rname + "]";
 	}
+	
 	
 }
