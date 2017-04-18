@@ -1,4 +1,4 @@
-package com.pm.rc.model.service;
+package com.pm.rc.model.dao;
 
 import java.util.List;
 
@@ -6,11 +6,7 @@ import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.SystemBoardDto;
 
-/**
- * 시스템 관리자 기능 인터페이스(회원관리는 AccountService로)
- * @author 김혜원
- * */
-public interface ManagerService {
+public interface ManagerDao {
 	
 	/**
 	 * 그룹생성승인요청 리스트 출력  (전부)
@@ -28,12 +24,20 @@ public interface ManagerService {
 	public List<GroupDto> grApplySelectGr(String gr_name);
 	
 	/**
-	 * 그룹 생성 거절 다음 해당 그룹 관리자 삭제
+	 * 그룹 생성 거절 다음 해당 그룹 관리자 삭제 (그룹생성Dao)
 	 * @param gr_id 그룹아이디
 	 * @return boolean
 	 * @author 라한솔
 	 */
 	public boolean grDelete (String gr_id);
+	
+	/**
+	 * 그룹 생성 거절 다음 해당 그룹 관리자 삭제 (해당 그룹 관리자 삭제)
+	 * @param gr_id 그룹아디
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean grDelete2 (String gr_id);
 	
 	/**
 	 * 회원 목록 출력 
@@ -113,5 +117,5 @@ public interface ManagerService {
 	 * @author 김혜원
 	 * */
 	public boolean qnaReplyDelete(String sbr_uuid);
-	
+
 }
