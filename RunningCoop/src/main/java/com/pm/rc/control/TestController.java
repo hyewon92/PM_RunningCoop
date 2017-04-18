@@ -4,9 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.pm.rc.model.service.AccountService;
 import com.pm.rc.model.service.TestService;
 
 //4. dispatcher에 의해 연결된 Class @Controller 생성
@@ -28,4 +30,5 @@ public class TestController {
 		logger.info("first.jsp 실행");
 		return "first";
 	}
+	
 }
