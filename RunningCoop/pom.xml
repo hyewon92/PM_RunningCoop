@@ -212,7 +212,6 @@
 			<version>09May2002</version>
 		</dependency>
 
-
 		<!-- Mail API -->
 		<dependency>
 			<groupId>javax.mail</groupId>
