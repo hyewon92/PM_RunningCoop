@@ -205,6 +205,13 @@
 			<version>1.9.13</version>
 		</dependency>
 
+		<!-- file -->
+		<dependency>
+			<groupId>com.servlets</groupId>
+			<artifactId>cos</artifactId>
+			<version>09May2002</version>
+		</dependency>
+
 		<!-- Mail API -->
 		<dependency>
 			<groupId>javax.mail</groupId>
@@ -217,6 +224,7 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>4.3.7.RELEASE</version>
 		</dependency>
+		
 	</dependencies>
 
 	<build>
