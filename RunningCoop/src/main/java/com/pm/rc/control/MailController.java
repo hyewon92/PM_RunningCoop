@@ -51,7 +51,7 @@ public class MailController {
 		String setFrom = "pmrunningcoop@gmail.com";
 		String toMail = request.getParameter("toMail");
 		String title = "<RunningCoop> "+request.getParameter("title")+"님 비밀번호 변경 메일입니다";
-		String content = "임시 비밀번호: "+mem_pw+"\n페이지 접속:http://localhost:8088/RunningCoop/main.do \n\n<RunningCoop개발팀 올림>";
+		String content = "임시 비밀번호: "+mem_pw+"\n페이지 접속:http://localhost:8088/RunningCoop/main.do \n\n\n<RunningCoop개발팀 올림>";
 		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("mem_id", mem_id);
