@@ -84,7 +84,7 @@ public interface GroupService {
 	public List<MemberDto> grWaitList(String gr_id);
 	
 	/**
-	 * 그룹멤버추가
+	 * 그룹가입승인
 	 * @param map value:gr_id(그룹아이디), mem_id(회원아이디)
 	 * @author 김혜원
 	 * */

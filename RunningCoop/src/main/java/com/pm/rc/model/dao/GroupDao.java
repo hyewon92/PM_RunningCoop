@@ -112,7 +112,7 @@ public interface GroupDao {
 	 * @param gr_id 그룹아이디
 	 * @author 김혜원
 	 * */
-	public boolean grMemInsert3(String gr_id);
+	public boolean grMemInsert3(Map<String, String> map);
 	
 	/**
 	 * 그룹 가입 요청 거절

@@ -69,9 +69,13 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
+	@Transactional
 	public boolean grMemInsert(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean isc = false;
+		isc = groupdao.grMemInsert1(map);
+		isc = groupdao.grMemInsert2(map);
+		isc = groupdao.grMemInsert3(map);
+		return isc;
 	}
 
 	@Override
@@ -163,6 +167,7 @@ public class GroupServiceImp implements GroupService{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 
 
 }

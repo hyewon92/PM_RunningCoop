@@ -17,13 +17,25 @@
 		}
 	}
 	
-	function val(){
+	function accept1(memid){
 		alert("${ grid }");
+		var gr_id ="${ grid }";
+// 		var mem_id = $(memid).parent().siblings().eq(2).find("#memid").text();
+		var mem_id = $(memid).parent().prev().text();
+		alert(mem_id);
 		
+// 		location.href="./groupAccept.do?mem_id="+mem_id+"&gr_id="+gr_id;
+				
 	}
 	
-</script>
+	function refusal1(memid){
+		
+		alert("asdf");
+	}
+	
 
+</script>
+<% String mem_id = (String)session.getAttribute("mem_id"); %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
@@ -54,7 +66,8 @@
 		<tr>
 			<td>${memWait.mem_name}</td> 
 			<td>${memWait.groupwaitdto.wait_regDate}</td>
-			<td><input type="button" value="수락" onclick="val()"><input type="button" value="거절"></td>
+			<td id="memid">${memWait.mem_id}</td>
+			<td><input type="button" value="수락" onclick="accept1(this)"><input type="button" value="거절" onclick="refusal1(this)"></td>
 		</tr>					
 	</c:forEach>
 </table>	

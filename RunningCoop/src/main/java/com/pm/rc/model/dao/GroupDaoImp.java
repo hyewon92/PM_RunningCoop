@@ -89,20 +89,20 @@ public class GroupDaoImp implements GroupDao{
 
 	@Override
 	public boolean grMemInsert1(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		int rst = sqlSession.insert(NAMESPACE+"grMemInsert1",map);
+		return rst>0? true:false;
 	}
 
 	@Override
 	public boolean grMemInsert2(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		int rst = sqlSession.delete(NAMESPACE+"grMemInsert2" , map);
+		return rst>0? true:false;
 	}
 
 	@Override
-	public boolean grMemInsert3(String gr_id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean grMemInsert3(Map<String, String> map) {
+		int rst = sqlSession.update(NAMESPACE+"grMemInsert3" , map);
+		return rst>0? true:false;
 	}
 
 	@Override

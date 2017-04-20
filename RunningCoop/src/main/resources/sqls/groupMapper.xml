@@ -67,24 +67,25 @@
 	</insert>
 
 	<select id="grWaitList" parameterType="java.lang.String" resultMap="memDTO">
-		SELECT M.MEM_NAME mem_name, GW.WAIT_REGDATE wait_regDate
+		SELECT M.MEM_NAME mem_name, GW.WAIT_REGDATE wait_regDate ,M.MEM_ID 
 		FROM RC_MEMBER M, RC_GRWAIT GW
 		WHERE GW.GR_ID = #{gr_id} AND M.MEM_ID = GW.MEM_ID AND M.MEM_DELYN ='N'
 	</select>
 	
-	<insert id="">
+	
+	<insert id="grMemInsert1" parameterType="java.util.Map">
 	INSERT INTO RC_GROUPMEM (GR_ID, MEM_ID)
-	VALUES ('GR1704100001', 'USER1');
+	VALUES (#{gr_id}, #{mem_id})
 	</insert>
 	
-	<delete id="">
-	DELETE FROM RC_GRWAIT WHERE GR_ID = 'GR1704100001' AND MEM_ID = 'USER1';
+	<delete id="grMemInsert2" parameterType="java.util.Map">
+	DELETE FROM RC_GRWAIT WHERE GR_ID = #{gr_id} AND MEM_ID = #{mem_id};
 	</delete>
 	
-	<update id="">
+	<update id="grMemInsert3" parameterType="java.util.Map">
 	UPDATE RC_GROUP SET GR_MEMCNT = 
- 	 (SELECT COUNT (*) FROM RC_GROUPMEM WHERE GR_ID = 'GR1704110002')
-  	WHERE GR_ID = '??';
+ 	 (SELECT COUNT (*) FROM RC_GROUPMEM WHERE GR_ID = #{gr_id})
+  	WHERE GR_ID = #{gr_id}
 	</update>
 	
 
