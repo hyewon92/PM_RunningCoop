@@ -18,6 +18,8 @@
 			<mvc:mapping path="/giveGm.do"/>
 			<mvc:mapping path="/writeModifyForm.do"/>
 			<mvc:mapping path="/memInfoModify.do"/>
+			<mvc:mapping path="/viewSchedule.do"/>
+			<mvc:mapping path="/insertSchedule.do"/>
 			<bean class="com.pm.rc.interceptor.LoginCheckInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

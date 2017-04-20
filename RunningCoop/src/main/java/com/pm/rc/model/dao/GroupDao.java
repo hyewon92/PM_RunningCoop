@@ -21,23 +21,23 @@ public interface GroupDao {
 	 * @return List&lt;GroupDto&gt;
 	 * @author 김혜원
 	 * */
-	public List<GroupDto> myGrSelect(String mem_id);
-	
-	/**
-	 * 그룹 검색 조회(그룹명)
-	 * @param gr_name 그룹명
-	 * @return List&lt;GroupDto&gt;
-	 * @author 김혜원
-	 * */
-	public List<GroupDto> allGrSelect(String gr_name);
+	public List<GroupDto> myGrSelect(Map<String, String> map);
 	
 	/**
 	 * 그룹 상세 정보 출력
 	 * @param gr_id 그룹아이디
+	 * @return List&lt;GroupDto&gt;
+	 * @author 김혜원
+	 * */
+	public List<Map<String, String>> grDetailSelect (Map<String, String> map);
+	
+	/**
+	 *  그룹 검색 조회(그룹명)
+	 * @param  gr_name 그룹명
 	 * @return GroupDto
 	 * @author 김혜원
 	 * */
-	public GroupDto grDetailSelect(String gr_id);
+	public  List<GroupDto>  allGrSelect(Map<String, String> map);
 	
 	/**
 	 * 그룹 생성--1.그룹테이블
@@ -61,7 +61,7 @@ public interface GroupDao {
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean grModify(GroupDto dto);
+	public boolean grModify(Map<String, String> map);
 	
 	/**
 	 * 그룹 가입 신청

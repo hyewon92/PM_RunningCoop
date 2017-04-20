@@ -23,7 +23,10 @@
 		<mapper resource="/sqls/accountMapper.xml"/>
 		<mapper resource="/sqls/sysBoardMapper.xml"/>
 		<mapper resource="/sqls/groupMapper.xml"/>
+<<<<<<< HEAD
 		<mapper resource="/sqls/scheduleMapper.xml"/>
+=======
+>>>>>>> branch 'master' of https://github.com/hyewon92/PM_RunningCoop
 		<!-- <mapper resource="/sqls/groupBoardMapper.xml"/>
 		<mapper resource="/sqls/managerMapper.xml"/>
 		<mapper resource="/sqls/projectMapper.xml"/>  -->
