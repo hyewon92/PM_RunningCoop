@@ -13,13 +13,16 @@
 	<!-- intercepter설정(controller실행 전이나 후에 실행 될 intercepter 로직 class 지정 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
-		 <!-- 	<mvc:mapping path="/memIdSelect.do"/>  -->
-			<mvc:mapping path="/goLeave.do"/>
-			<mvc:mapping path="/giveGm.do"/>
-			<mvc:mapping path="/writeModifyForm.do"/>
-			<mvc:mapping path="/memInfoModify.do"/>
-			<mvc:mapping path="/viewSchedule.do"/>
-			<mvc:mapping path="/insertSchedule.do"/>
+			<mvc:mapping path="/*.do"/>
+			<mvc:exclude-mapping path="/main.do"/> 
+			<mvc:exclude-mapping path="/memIdSelect.do"/>
+			<mvc:exclude-mapping path="/ckLogin.do"/>
+			<mvc:exclude-mapping path="/searchAccount.do"/>
+			<mvc:exclude-mapping path="/searchId.do"/>
+			<mvc:exclude-mapping path="/searchPw.do"/>
+			<mvc:exclude-mapping path="/resultPw.do"/>
+			<mvc:exclude-mapping path="/goJoin.do"/>
+			<mvc:exclude-mapping path="/ckJoin.do"/>
 			<bean class="com.pm.rc.interceptor.LoginCheckInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

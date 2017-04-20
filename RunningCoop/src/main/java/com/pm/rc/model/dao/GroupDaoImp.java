@@ -45,7 +45,6 @@ public class GroupDaoImp implements GroupDao{
 
 	@Override
 	public boolean grInsert1(Map<String, Object> map) {
-		mem_name
 		return false;
 	}
 
