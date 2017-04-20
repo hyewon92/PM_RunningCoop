@@ -127,7 +127,7 @@ public interface GroupService {
 	 * @return List&lt;GroupBoardDto&gt;
 	 * @author 김혜원
 	 * */
-	public List<GroupBoardDto> gbListSelect(Map<String, String> map);
+	public List<GroupBoardDto> gbListSelect(String gr_id);
 	
 	/**
 	 * 그룹게시판 게시글 검색

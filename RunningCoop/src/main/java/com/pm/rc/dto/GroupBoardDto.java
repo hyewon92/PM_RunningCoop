@@ -12,8 +12,16 @@ public class GroupBoardDto {
 	private String br_noticeYN;
 	private String br_comYN;
 	private String br_refer;
-	
+	private MemberDto memberdto;
 	private GbAttachDto gbAttach;
+	
+	public MemberDto getMemberdto() {
+		return memberdto;
+	}
+
+	public void setMemberdto(MemberDto memberdto) {
+		this.memberdto = memberdto;
+	}
 	
 	public GbAttachDto getGbAttach() {
 		return gbAttach;

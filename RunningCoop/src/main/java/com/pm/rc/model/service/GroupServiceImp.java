@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pm.rc.dto.GroupBoardDto;
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
+import com.pm.rc.model.dao.GroupBoardDao;
 import com.pm.rc.model.dao.GroupDao;
 
 @Service
@@ -17,6 +18,8 @@ public class GroupServiceImp implements GroupService{
 	
 	@Autowired
 	private GroupDao groupdao; 
+	@Autowired
+	private GroupBoardDao groupboarddao;
 
 	@Override
 	public List<GroupDto> myGrSelect(Map<String, String> map) {
@@ -110,9 +113,9 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public List<GroupBoardDto> gbListSelect(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<GroupBoardDto> gbListSelect(String gr_id) {
+		
+		return groupboarddao.gbListSelect(gr_id);
 	}
 
 	@Override

@@ -62,8 +62,10 @@ cursor: pointer;}
 				<td></td>
 			
 			</tr>
-			
-	<p style="border: 1px solid black; width: 65px;" onclick="location.href='./memModi.do?gr_id=${grSelect.GR_ID}'" id="memModi">멤버관리</p >
+			<tr>
+	<td><p style="border: 1px solid black; width: 65px;" onclick="location.href='./memModi.do?gr_id=${grSelect.GR_ID}'" id="memModi">멤버관리</p ></td>
+	<td><input type="button" onclick="location.href='./gbListSelect.do?gr_id=${grSelect.GR_ID}'">게시판관리</td>
+	</tr>
 		</c:forEach>
 	</table>
 	</form>

@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.pm.rc.dto.GroupBoardDto;
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.model.service.GroupService;
@@ -98,6 +99,7 @@ public class GroupController {
 		model.addAttribute("memList",lists);
 		
 		model.addAttribute("grid",gr_id);
+		
 		List<MemberDto> lists2 = service.grWaitList(gr_id);
 		model.addAttribute("grWait" , lists2);
 		
@@ -111,13 +113,10 @@ public class GroupController {
 		model.addAttribute("grid", req.getParameter("gr_id"));
 		return "Group/grListChild";
 	}
-	
-//	public String grMemMultDelete (String[] chkval){
-//		logger.info(Arrays.toString(chkval));
-//		Map<String, String> map = new HashMap<String, String>();
-//		map.put(key, value);
-//		map.put(key, value);
-//		service.grMemMultDelete(map);
+//	@RequestMapping(value="/MemMultDelete.do" , method=RequestMethod.POST)
+//	public String grMemMultDelete (String[] memid , String[] gr_id){
+//		logger.info(Arrays.toString(memid));
+//		service.grMemMultDelete(memid);
 //		return null;
 //	}
 	
@@ -143,17 +142,25 @@ public class GroupController {
 		map.put("gr_id",req.getParameter("gr_id"));
 		boolean n = service.grMemInsert(map);
 		
-		return "/memModi.do";
+		return "redirect:/memModi.do";
 	}
-//	@RequestMapping(value="/groupAccept.do")
-//	public String groupAccept (HttpServletRequest req){
-//		logger.info("그룹거절 시작");
-//		Map<String, String> map = new HashMap<String, String>();
-//		map.put("mem_id", req.getParameter("mem_id"));
-//		service.grMemReject(map);
-//		
-//		return "/memModi.do";
-//	}
+	@RequestMapping(value="/grouprefusal.do")
+	public String groupAccept (HttpServletRequest req){
+		logger.info("그룹거절 시작");
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("mem_id", req.getParameter("mem_id"));
+		service.grMemReject(map);
+		
+		return "redirect:/memModi.do";
+	}
+	
+	@RequestMapping(value="/gbListSelect.do")
+	public String gbListSelect(String gr_id , Model model){
+		logger.info("그룹게시판 목록출력");
+		List<GroupBoardDto> lists = service.gbListSelect(gr_id);
+		model.addAttribute("gblist" , lists);
+		return "Group/grboradList";
+	}
 
 	
 }

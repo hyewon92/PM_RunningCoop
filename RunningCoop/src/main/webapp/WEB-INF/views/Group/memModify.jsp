@@ -9,14 +9,14 @@
 <head>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
-	function chek(){
-		var chb = $("input:checkbox[name=memid]:checked");
+// 	function chek(){
+// 		var chb = $("input:checkbox[name=memid]:checked");
 		
-		for(var t = 0; t <chb.length; t++){
-			location.href="./grMemMultDelete.do?";
-			alert(chb.eq(t).val());
-		}
-	}
+// 		for(var t = 0; t <chb.length; t++){
+// 			location.href="./grMemMultDelete.do?";
+// 			alert(chb.eq(t).val());
+// 		}
+// 	}
 	
 	function accept1(memid){
 		alert("${ grid }");
@@ -33,7 +33,7 @@
 		var gr_id ="${ grid }";
 		var mem_id = $(memid).parent().prev().text();
 		
-		location.href="./groupAccept.do?mem_id="+mem_id+"&gr_id="+gr_id;
+		location.href="./grouprefusal.do?mem_id="+mem_id+"&gr_id="+gr_id;
 		alert("asdf");
 	}
 	
@@ -54,11 +54,8 @@
 </head>
 <body>
 	<h1>그룹 멤버 리스트</h1>
+	<form action="./MemMultDelete" method="post">
 <table>
-	<tr>
-	<td></td>
-	</tr>
-
 	<tr>
 	<td>아이디</td>
 	<td>이  름</td>
@@ -67,12 +64,12 @@
 		<tr>
 			<td><input type="checkbox" value="${memls.mem_id }" name="memid">${memls.mem_id } </td>
 			<td>${memls.mem_name }</td>
+			<td style="display: none;"><input type="text" name="gr_id" value="${ grid }"></td>
 		</tr>
 	</c:forEach>
-	<tr>
-			<td><input type="submit" value="azx"> </td>
-	</tr>
 </table>	
+	</form>
+			<input type="submit" value="azx">
 	<h1>가입 신청 리스트</h1>
 <table>
 	<c:forEach var="memWait" items="${grWait}">
