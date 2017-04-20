@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pm.rc.accountMapper">
+<mapper namespace="com.pm.rc.scheduleMapper">
 
 	<!-- 팀 일정 등록 -->
 	<insert id="teamSchInsert">
@@ -14,7 +14,7 @@
 	<insert id="schInsert">
 		INSERT INTO RC_SCHEDULE (SCH_SEQ, SCH_TITLE, SCH_STARTDATE, SCH_ENDDATE, SCH_CONTENT, MEM_ID, SCH_PROSYN)
 		VALUES
-		(SCHEDULE_SEQ.NEXTVAL, #{sch_title}, TO_DATE(#{sch_startDate},'YYYYMMDD'), TO_DATE(#{sch_endDate}, 'YYYYMMDD'), #{sch_content}, #{mem_id}, 'N')
+		(SCHEDULE_SEQ.NEXTVAL, #{sch_title}, TO_DATE(#{sch_startDate},'YYYY-MM-DDHH24:MI'), TO_DATE(#{sch_endDate}, 'YYYY-MM-DDHH24:MI'), #{sch_content}, #{mem_id}, 'N')
 	</insert>
 	
 	<!-- 일정 수정 -->

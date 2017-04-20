@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -21,19 +22,24 @@ public class ScheduleController {
 	//달력 띄우기
 	@RequestMapping(value = "/viewSchedule.do")
 	public String viewSchedule(int year, int month){
-		
+		logger.info("viewSchedule실행");
 		return "schedule/calendar";
 	}
 	
 	//일정입력화면 이동
 	@RequestMapping(value = "/writeSchedule.do")
-	public String schWrite(int year, int month, int date){
+	public String schWrite(Model model, int year, String month, String date){
+		logger.info("schWrite실행");
+		String day = year+"-"+month+"-"+date;
+		model.addAttribute("day", day);
 		return "schedule/schWrite";
 	}
 	
 	//일정등록
 	@RequestMapping(value = "/insertSchedule.do", method = RequestMethod.POST)
 	public String schInsert(ScheduleDto dto){
+		logger.info("schInsert실행");
+		System.out.println(dto.getSch_startDate());
 		boolean isc = scheduleService.schInsert(dto);
 		if(isc == false){
 			return "schedule/error";

@@ -51,14 +51,16 @@
 	}
 
 	//일정작성
-	public String schWrite(int year, int month, int date){
+	public String schWrite(int year, String month, String date){
+		System.out.println("month="+month);
+		System.out.println("date="+date);
 		return "<a href = './writeSchedule.do?year="+year+"&month="+month+"&date="+date+"'>"
 				+"<img class = 'plus' alt = '일정등록' src = 'images/plus.png'>";
 	}
 	
 	//날짜 형식 맞추기(두자리:0x~31)
 	public String dateForm(String date){
-		return date.trim().length()<2?"0"+date:date;
+		return date.trim().length()<2 ? "0"+date:date;
 	}
 	
 	//달력에 일정목록 출력
@@ -135,7 +137,9 @@
 				for(int i = 1; i <= lastDay; i++){
 			%>
 					<td style = "color:<%=weekColor(i, dayOfWeek)%>;"><%=i %>
-						<%-- <a href = "./writeSchedule.do?year=<%=year%>&month=<%=month%>&date=<%=i%>"> --%><%=schWrite(year, month, i)%></a>
+						<% String s_month = dateForm(String.valueOf(month)); %>
+						<% String s_i = dateForm(String.valueOf(i)); %>
+						<%=schWrite(year, s_month, s_i)%></a>
 					</td>
 					<%
 					//토요일이 되면 줄바꿈
