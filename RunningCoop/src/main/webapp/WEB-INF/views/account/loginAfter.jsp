@@ -17,6 +17,7 @@
 <%= userName%>님 접속중
 <input type = "button" value = "개인정보 수정" onclick = "location.href='./writeModifyForm.do?mem_id=<%=userId%>'">
 <input type = "button" value = "그룹선택(관리)" onclick = "location.href='./myGrSelect.do?mem_id=<%=userId%>'">
+<input type = "button" value = "일정보기" onclick = "location.href='./viewSchedule.do'">
 <form action="./allGrSelect.do" method="post">
 <div>
 	<input type="text" name="gr_name" />

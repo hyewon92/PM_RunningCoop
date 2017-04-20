@@ -78,8 +78,9 @@
 
 <%
 	//원하는 달로 이동하기 위해 현재 연도와 달 값 전달받음
-	String cyear = request.getParameter("year");
-	String cmonth = request.getParameter("month");
+	String cyear = (String)request.getAttribute("year");
+	String cmonth = (String)request.getAttribute("month");
+	System.out.println("year:"+cyear+"/month:"+cmonth);
 	//칼랜더 객체 생성
 	Calendar cal = Calendar.getInstance();
 	

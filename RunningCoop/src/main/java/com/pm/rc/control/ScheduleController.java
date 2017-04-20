@@ -1,5 +1,9 @@
 package com.pm.rc.control;
 
+import java.util.Calendar;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +25,12 @@ public class ScheduleController {
 	
 	//달력 띄우기
 	@RequestMapping(value = "/viewSchedule.do")
-	public String viewSchedule(int year, int month){
+	public String viewSchedule(HttpServletRequest req){
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH);
+		req.setAttribute("year", year);
+		req.setAttribute("month", month);
 		logger.info("viewSchedule실행");
 		return "schedule/calendar";
 	}
