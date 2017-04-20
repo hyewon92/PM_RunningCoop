@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pm.rc.project">
+
+	<select id="groupProSelect" parameterType="java.util.Map" resultType="ProjectDto">
+		SELECT P.PR_ID, P.PR_NAME, P.PR_PRORATE,
+		(SELECT TO_CHAR(P.PR_ENDDATE, 'YYYYMMDD') - TO_CHAR(SYSDATE,'YYYYMMDD') FROM
+		DUAL) PR_ENDDATE
+		FROM RC_PROJECT P
+		WHERE P.PR_ID =
+		(SELECT GP.PR_ID FROM RC_GRPRO GP WHERE GP.GR_ID = #{gr_id}
+		AND GP.PR_ID = (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID =
+		#{mem_id}))
+		AND P.PR_DELYN = 'N'
+	</select>
+	
+	<select id="myProSelect" parameterType="java.lang.String" resultType="ProjectDto">
+		SELECT P.PR_ID, P.PR_NAME, P.PR_PRORATE, 
+	(SELECT TO_CHAR(P.PR_ENDDATE, 'YYYYMMDD') - TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL) PR_ENDDATE
+	FROM RC_PROJECT P
+	WHERE PR_ID = (SELECT PR_ID FROM RC_PROMEM WHERE MEM_ID = #{mem_id})
+    AND P.PR_DELYN = 'N'
+	</select>
+</mapper>

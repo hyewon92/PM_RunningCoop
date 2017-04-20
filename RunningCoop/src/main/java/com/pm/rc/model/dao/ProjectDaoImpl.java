@@ -30,8 +30,7 @@ public class ProjectDaoImpl implements ProjectDao {
 
 	@Override
 	public List<ProjectDto> myProSelect(String mem_id) {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectList(NAMESPACE+"myProSelect", mem_id);
 	}
 
 	@Override

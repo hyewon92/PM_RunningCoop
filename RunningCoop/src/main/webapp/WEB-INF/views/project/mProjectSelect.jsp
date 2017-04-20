@@ -7,10 +7,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>그룹 프로젝트 선택화면</title>
+<title>개인 프로젝트 선택화면</title>
 <script type="text/javascript">
 	function createPro(){
-		location.href="./createGPro.do";
+		location.href="./createMPro.do";
 	}
 </script>
 </head>
@@ -33,5 +33,6 @@
 </c:choose>
 
 <input type="button" value="프로젝트 생성" onclick="createPro()"/>
+
 </body>
 </html>

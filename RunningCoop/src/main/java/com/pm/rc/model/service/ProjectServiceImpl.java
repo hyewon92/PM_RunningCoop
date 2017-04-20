@@ -22,8 +22,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public List<ProjectDto> myProSelect(String mem_id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.myProSelect(mem_id);
 	}
 
 	@Override

@@ -26,7 +26,7 @@ public class ProjectController {
 	private ProjectService service;
 	
 	// 메인화면에서 그룹 프로젝트 선택하는 화면
-	@RequestMapping(value="./gProSelect.do", method=RequestMethod.GET)
+	@RequestMapping(value="/gProSelect.do", method=RequestMethod.GET)
 	public String grProjectList(Model model, HttpServletRequest request){
 		List<ProjectDto> list = null;
 		Map<String, String> map = new HashMap<String, String>();
@@ -34,9 +34,15 @@ public class ProjectController {
 		map.put("gr_id", "GR1704110001");
 		list = service.groupProSelect(map);
 		model.addAttribute("list", list);
-		return "gProjectSelect";
+		return "project/gProjectSelect";
 	}
 	
-	
-
+	@RequestMapping(value="/iProSelect.do", method=RequestMethod.GET)
+	public String myProjectList(Model model, HttpServletRequest request){
+		List<ProjectDto> list = null;
+		String mem_id = "user1";
+		list = service.myProSelect(mem_id);
+		model.addAttribute("list", list);
+		return "project/mProjectSelect";
+	}
 }
