@@ -145,15 +145,15 @@ public class GroupController {
 		
 		return "/memModi.do";
 	}
-	@RequestMapping(value="/groupAccept.do")
-	public String groupAccept (HttpServletRequest req){
-		logger.info("그룹거절 시작");
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("mem_id", req.getParameter("mem_id"));
-		service.grMemReject(map);
-		
-		return "/memModi.do";
-	}
+//	@RequestMapping(value="/groupAccept.do")
+//	public String groupAccept (HttpServletRequest req){
+//		logger.info("그룹거절 시작");
+//		Map<String, String> map = new HashMap<String, String>();
+//		map.put("mem_id", req.getParameter("mem_id"));
+//		service.grMemReject(map);
+//		
+//		return "/memModi.do";
+//	}
 
 	
 }
