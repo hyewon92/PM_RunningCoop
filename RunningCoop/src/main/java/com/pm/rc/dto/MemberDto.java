@@ -10,9 +10,10 @@ public class MemberDto {
 	private String mem_regDate;
 	private String mem_delYN;
 	private String mem_level;
+	private GroupWaitDto groupwaitdto;
 	
 	public MemberDto(){}
-
+	
 	public String getMem_id() {
 		return mem_id;
 	}
@@ -77,6 +78,15 @@ public class MemberDto {
 		this.mem_delYN = mem_level;
 	}
 
+	public GroupWaitDto getGroupwaitdto() {
+		return groupwaitdto;
+	}
+
+	public void setGroupwaitdto(GroupWaitDto groupwaitdto) {
+		this.groupwaitdto = groupwaitdto;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "MemberDto [mem_id=" + mem_id + ", mem_pw=" + mem_pw

@@ -30,7 +30,7 @@ import com.pm.rc.model.service.UserSysBoardService;
 @Controller
 public class SysBoardController {
 	
-	Logger logger = LoggerFactory.getLogger(TestController.class);
+	Logger logger = LoggerFactory.getLogger(SysBoardController.class);
 	
 	@Autowired
 	private UserSysBoardService service;

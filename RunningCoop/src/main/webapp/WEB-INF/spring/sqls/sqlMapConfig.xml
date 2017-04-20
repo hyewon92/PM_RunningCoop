@@ -22,8 +22,8 @@
 		<mapper resource="/sqls/mapper01.xml"/>
 		<mapper resource="/sqls/accountMapper.xml"/>
 		<mapper resource="/sqls/sysBoardMapper.xml"/>
-		<!-- <mapper resource="/sqls/groupBoardMapper.xml"/>
 		<mapper resource="/sqls/groupMapper.xml"/>
+		<!-- <mapper resource="/sqls/groupBoardMapper.xml"/>
 		<mapper resource="/sqls/managerMapper.xml"/>
 		<mapper resource="/sqls/projectMapper.xml"/>
 		<mapper resource="/sqls/scheduleMapper.xml"/> 

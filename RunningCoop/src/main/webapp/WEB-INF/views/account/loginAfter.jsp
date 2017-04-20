@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE>
@@ -15,6 +16,12 @@
 %>
 <%= userName%>님 접속중
 <input type = "button" value = "개인정보 수정" onclick = "location.href='./writeModifyForm.do?mem_id=<%=userId%>'">
-<input type = "button" value = "그룹관리" onclick = "location.href='./grFirst.do?mem_id=<%=userId%>">
+<input type = "button" value = "그룹선택(관리)" onclick = "location.href='./myGrSelect.do?mem_id=<%=userId%>'">
+<form action="./allGrSelect.do" method="post">
+<div>
+	<input type="text" name="gr_name" />
+	<input type="submit" value="그룹검색"/>
+</div>
+</form>
 </body>
 </html>
