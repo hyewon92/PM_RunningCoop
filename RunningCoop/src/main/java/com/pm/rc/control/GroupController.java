@@ -32,8 +32,6 @@ public class GroupController {
 	// 23. IoC Autowired를 통해 실행되는 Service를 선언
 	@Autowired
 	private GroupService service;
-	@Autowired
-	private TestService service1;
 	
 	//5. mapping 메소드
 	@RequestMapping(value = "/first.do", method = RequestMethod.GET)
@@ -108,6 +106,7 @@ public class GroupController {
 	}	
 	@RequestMapping(value="/grListChild.do" , method=RequestMethod.GET)
 	public String test (HttpServletRequest req , Model model){
+		logger.info("그룹리스트 에서 ");
 		System.out.println(":444444444444444444444444444444444444444444444444444444");
 		model.addAttribute("grid", req.getParameter("gr_id"));
 		return "Group/grListChild";
@@ -134,6 +133,16 @@ public class GroupController {
 		map.put("wait_content", wait_content);
 		boolean n = service.grWaitInsert(map);
 		return n;
+	}
+	@RequestMapping(value="/groupAccept.do" )
+	public String grWaitAccept (HttpServletRequest req){
+		logger.info("그룹 가입신청 수락 시작");
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("mem_id", req.getParameter("mem_id"));
+		map.put("gr_id",req.getParameter("gr_id"));
+		boolean n = service.grMemInsert(map);
+		
+		return "Group/first";
 	}
 	
 }
