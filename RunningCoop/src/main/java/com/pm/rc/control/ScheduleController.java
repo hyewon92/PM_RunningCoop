@@ -1,7 +1,6 @@
 package com.pm.rc.control;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,17 +27,10 @@ public class ScheduleController {
 	
 	//달력 띄우기
 	@RequestMapping(value = "/viewSchedule.do")
-	public String viewSchedule(HttpServletRequest req, HttpSession session){
+	public String viewSchedule(HttpSession session, HttpServletRequest req){
 		String mem_id = (String)session.getAttribute("mem_id");
 		List<ScheduleDto> list = new ArrayList<ScheduleDto>();
 		list = scheduleService.mySchSelect(mem_id);
-		Calendar cal = Calendar.getInstance();
-		String year = String.valueOf(cal.get(Calendar.YEAR));
-		String month = String.valueOf(cal.get(Calendar.MONTH)+1);
-		System.out.println("현재 년도:"+year);
-		System.out.println("현재 월:"+month);
-		req.setAttribute("year", year);
-		req.setAttribute("month", month);
 		req.setAttribute("list", list);
 		logger.info("viewSchedule실행");
 		return "schedule/calendar";
@@ -61,7 +53,9 @@ public class ScheduleController {
 		if(isc == false){
 			return "schedule/error";
 		}else{
-			return "schedule/success";
+			String year = dto.getSch_startDate().substring(0, 4);
+			String month = dto.getSch_startDate().substring(4, 6);
+			return "redirect:/viewSchedule.do?year="+year+"&month="+month;
 		}
 	}
 }

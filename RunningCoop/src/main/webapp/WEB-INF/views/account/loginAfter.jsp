@@ -1,6 +1,6 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.Calendar" %>
 <!DOCTYPE>
 <html>
 <head>
@@ -15,9 +15,15 @@
 	String userId = (String)session.getAttribute("mem_id");
 %>
 <%= userName%>님 접속중
+
+<%
+	Calendar cal = Calendar.getInstance();
+	String year = String.valueOf(cal.get(Calendar.YEAR));
+	String month = String.valueOf(cal.get(Calendar.MONTH)+1);
+%>
 <input type = "button" value = "개인정보 수정" onclick = "location.href='./writeModifyForm.do?mem_id=<%=userId%>'">
 <input type = "button" value = "그룹선택(관리)" onclick = "location.href='./myGrSelect.do?mem_id=<%=userId%>'">
-<input type = "button" value = "일정보기" onclick = "location.href='./viewSchedule.do'">
+<input type = "button" value = "일정보기" onclick = "location.href='./viewSchedule.do?year=<%=year%>&month=<%=month%>'">
 <input type = "button" value = "로그아웃" onclick = "location.href='./ckLogout.do'">
 <form action="./allGrSelect.do" method="post">
 <div>
