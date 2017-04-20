@@ -1,7 +1,10 @@
 package com.pm.rc.model.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,8 +72,29 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public boolean iPrInsert(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		Date date = new Date();
+		SimpleDateFormat dateForm = new SimpleDateFormat("yyMMdd");
+		String id_1 = "PR";
+		String id_2 = dateForm.format(date).toString();
+		String uuid = createUUID();
+		String id_3 = uuid.substring(uuid.lastIndexOf("-")+9);
+		String pr_id = id_1+id_2+id_3;
+		
+		map.put("pr_id", pr_id);
+		boolean isc = false;
+		boolean pisc = false;
+		boolean misc = false;
+		
+		pisc = dao.iPrInsert_1(map);
+		
+		if(pisc){
+			misc = dao.iPrInsert_2(map);
+		}
+		
+		if(pisc == true && misc == true){
+			isc = true;
+		}
+		return isc;
 	}
 
 	@Override
@@ -119,6 +143,10 @@ public class ProjectServiceImpl implements ProjectService {
 	public boolean prRateEdit(String pr_id) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public String createUUID(){
+		return UUID.randomUUID().toString();
 	}
 
 }

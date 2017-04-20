@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -25,7 +27,7 @@ public class ProjectController {
 	@Autowired
 	private ProjectService service;
 	
-	// 메인화면에서 그룹 프로젝트 선택하는 화면
+	// 메인화면에서 그룹 프로젝트 선택
 	@RequestMapping(value="/gProSelect.do", method=RequestMethod.GET)
 	public String grProjectList(Model model, HttpServletRequest request){
 		List<ProjectDto> list = null;
@@ -37,12 +39,44 @@ public class ProjectController {
 		return "project/gProjectSelect";
 	}
 	
+	// 메인화면에서 개인 프로젝트 선택
 	@RequestMapping(value="/iProSelect.do", method=RequestMethod.GET)
-	public String myProjectList(Model model, HttpServletRequest request){
+	public String myProjectList(Model model, HttpServletRequest request, HttpSession session){
 		List<ProjectDto> list = null;
-		String mem_id = "user1";
+		String mem_id = (String) session.getAttribute("mem_id");
 		list = service.myProSelect(mem_id);
 		model.addAttribute("list", list);
 		return "project/mProjectSelect";
 	}
+	
+	// 개인 프로젝트 생성화면 연결
+	@RequestMapping(value="/createMPro.do", method=RequestMethod.GET)
+	public String myProCreateMove(){
+		return "project/mProCreate";
+	}
+	
+	// 개인 프로젝트 생성 프로세스
+	@RequestMapping(value="/mProCreate.do", method=RequestMethod.POST)
+	public String myProCreate(HttpSession session, HttpServletRequest request){
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("mem_id", (String) session.getAttribute("mem_id"));
+		map.put("pr_name", request.getParameter("pr_name"));
+		map.put("pr_startdate", request.getParameter("pr_startdate"));
+		map.put("pr_enddate", request.getParameter("pr_enddate"));
+		map.put("pr_goal", request.getParameter("pr_goal"));
+		map.put("pr_etc", request.getParameter("pr_etc"));
+		boolean isc = false;
+		isc = service.iPrInsert(map);
+		if(isc){
+			System.out.println("개인 프로젝트 등록 성공");
+			return "redirect:/iProSelect.do";
+		} else {
+			System.out.println("개인 프로젝트 등록 실패");
+			return "redirect:/createMPro.do";
+		}
+	}
+	
+	
+	
+	
 }

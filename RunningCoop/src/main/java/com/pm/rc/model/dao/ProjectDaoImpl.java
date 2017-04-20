@@ -71,7 +71,6 @@ public class ProjectDaoImpl implements ProjectDao {
 
 	@Override
 	public boolean gPrInsert_1(Map<String, String> map) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -89,14 +88,22 @@ public class ProjectDaoImpl implements ProjectDao {
 
 	@Override
 	public boolean iPrInsert_1(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		int num = sqlSession.insert(NAMESPACE+"iProInsert", map);
+		if (num > 0){
+			return true;
+		} else {
+			return false; 
+		}
 	}
 
 	@Override
 	public boolean iPrInsert_2(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		int num = sqlSession.insert(NAMESPACE+"iPromemInsert", map);
+		if(num > 0){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

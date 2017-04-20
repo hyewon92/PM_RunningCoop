@@ -2,23 +2,51 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pm.rc.project">
 
-	<select id="groupProSelect" parameterType="java.util.Map" resultType="ProjectDto">
+	<select id="groupProSelect" parameterType="java.util.Map"
+		resultType="ProjectDto">
 		SELECT P.PR_ID, P.PR_NAME, P.PR_PRORATE,
-		(SELECT TO_CHAR(P.PR_ENDDATE, 'YYYYMMDD') - TO_CHAR(SYSDATE,'YYYYMMDD') FROM
+		(SELECT
+		TO_CHAR(P.PR_ENDDATE, 'YYYYMMDD') - TO_CHAR(SYSDATE,'YYYYMMDD') FROM
 		DUAL) PR_ENDDATE
 		FROM RC_PROJECT P
 		WHERE P.PR_ID =
-		(SELECT GP.PR_ID FROM RC_GRPRO GP WHERE GP.GR_ID = #{gr_id}
-		AND GP.PR_ID = (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID =
+		(SELECT GP.PR_ID FROM
+		RC_GRPRO GP WHERE GP.GR_ID = #{gr_id}
+		AND GP.PR_ID = (SELECT PM.PR_ID
+		FROM RC_PROMEM PM WHERE PM.MEM_ID =
 		#{mem_id}))
 		AND P.PR_DELYN = 'N'
 	</select>
-	
-	<select id="myProSelect" parameterType="java.lang.String" resultType="ProjectDto">
-		SELECT P.PR_ID, P.PR_NAME, P.PR_PRORATE, 
-	(SELECT TO_CHAR(P.PR_ENDDATE, 'YYYYMMDD') - TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL) PR_ENDDATE
-	FROM RC_PROJECT P
-	WHERE PR_ID = (SELECT PR_ID FROM RC_PROMEM WHERE MEM_ID = #{mem_id})
-    AND P.PR_DELYN = 'N'
+
+	<select id="myProSelect" parameterType="java.lang.String"
+		resultType="ProjectDto">
+		SELECT P.PR_ID, P.PR_NAME, P.PR_PRORATE,
+		(SELECT
+		TO_CHAR(P.PR_ENDDATE, 'YYYYMMDD') - TO_CHAR(SYSDATE,'YYYYMMDD') FROM
+		DUAL) PR_ENDDATE
+		FROM RC_PROJECT P
+		WHERE NOT P.PR_ID IN (SELECT GP.PR_ID
+		FROM RC_GRPRO GP)
+		AND P.PR_ID = (SELECT PR_ID FROM RC_PROMEM WHERE
+		MEM_ID = #{mem_id})
+		AND P.PR_DELYN = 'N'
 	</select>
+
+	<insert id="iProInsert" parameterType="java.util.Map">
+		INSERT INTO RC_PROJECT
+		(PR_ID, PR_NAME, PR_STARTDATE, PR_ENDDATE, PR_GOAL, PR_ETC)
+		VALUES
+		(#{pr_id}, #{pr_name}, TO_DATE(#{pr_startdate}, 'YYYYMMDD'),
+		TO_DATE(#{pr_enddate}, 'YYYYMMDD'),
+		#{pr_goal}, #{pr_etc})
+	</insert>
+
+	<insert id="iPromemInsert" parameterType="java.util.Map">
+		INSERT INTO RC_PROMEM
+		(PR_ID, MEM_ID, PR_LEVEL)
+		VALUES
+		(#{pr_id}, #{mem_id}, 'PM')
+	</insert>
+
+
 </mapper>
