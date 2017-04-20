@@ -143,9 +143,16 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public boolean gboardDelete(String br_uuid) {
-		// TODO Auto-generated method stub
-		return false;
+	@Transactional
+	public boolean gboardDelete(String[] br_uuid) {
+			boolean isc = false;
+			for(int i = 0; i<br_uuid.length; i++){
+				isc=groupboarddao.gboardDelete(br_uuid[i]);
+				if(isc==false){
+					break;
+				}
+			}
+		return isc;
 	}
 
 	@Override

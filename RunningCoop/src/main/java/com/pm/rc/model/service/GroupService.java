@@ -167,7 +167,7 @@ public interface GroupService {
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean gboardDelete(String br_uuid);
+	public boolean gboardDelete(String[] br_uuid);
 	
 	/**
 	 * 그룹게시판 댓글 등록

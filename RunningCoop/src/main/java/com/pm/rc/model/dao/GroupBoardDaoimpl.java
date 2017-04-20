@@ -17,7 +17,7 @@ public class GroupBoardDaoimpl implements GroupBoardDao{
 	
 	private Logger logger = LoggerFactory.getLogger(GroupDaoImp.class);
 	
-	private final String NAMESPACE = "com.pm.rc.groupboard";
+	private final String NAMESPACE = "com.pm.rc.groupboard.";
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
@@ -85,8 +85,9 @@ public class GroupBoardDaoimpl implements GroupBoardDao{
 
 	@Override
 	public boolean gboardDelete(String br_uuid) {
-		// TODO Auto-generated method stub
-		return false;
+		int rst  = sqlSession.update(NAMESPACE+"gboardDelete", br_uuid);
+		logger.info("gboardDelete 작동결과");
+		return rst>0 ? true : false;
 	}
 
 	@Override

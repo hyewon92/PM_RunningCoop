@@ -161,6 +161,13 @@ public class GroupController {
 		model.addAttribute("gblist" , lists);
 		return "Group/grboradList";
 	}
+	@RequestMapping(value="/bordeMultDelet.do" ,method=RequestMethod.GET)
+	public String grbdMultDelet(String[] cnkUuid){
+		logger.info("그룹게시판 다중삭제");
+		service.gboardDelete(cnkUuid);
+		
+		return "redirect:/memModi.do";
+	}
 
 	
 }

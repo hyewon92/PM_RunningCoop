@@ -4,8 +4,8 @@
 		<resultMap type="GroupBoardDto" id="groupboarddto">
 		<result property="br_uuid" column="BR_UUID"/>
 		<result property="br_title" column="BR_TITLE"/>
-		<result property="br_regdate" column="BR_REGDATE"/>
-		<result property="br_noticeyn" column="BR_NOTICEYN"/>
+		<result property="br_regDate" column="BR_REGDATE"/>
+		<result property="br_noticeYN" column="BR_NOTICEYN"/>
 		<result property="memberdto.mem_name" column="MEM_NAME"/>
 	</resultMap>
 	
@@ -14,4 +14,9 @@
 		FROM RC_GRBOARD BR, RC_MEMBER M
 		WHERE GR_ID = #{gr_id} AND BR.MEM_ID = M.MEM_ID AND BR.BR_DELYN = 'N'
 	</select>
+	
+	<update id="gboardDelete" parameterType="java.lang.String">
+	UPDATE RC_GRBOARD SET BR_DELYN = 'Y'
+	WHERE BR_UUID = #{br_uuid}
+	</update>
 </mapper>
