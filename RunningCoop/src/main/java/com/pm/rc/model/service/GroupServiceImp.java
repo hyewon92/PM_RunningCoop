@@ -80,8 +80,9 @@ public class GroupServiceImp implements GroupService{
 
 	@Override
 	public boolean grMemReject(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean isc =false;
+		isc = groupdao.grMemInsert2(map);
+		return isc;
 	}
 
 	@Override

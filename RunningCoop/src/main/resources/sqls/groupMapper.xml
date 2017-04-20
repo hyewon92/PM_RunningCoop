@@ -79,7 +79,7 @@
 	</insert>
 	
 	<delete id="grMemInsert2" parameterType="java.util.Map">
-	DELETE FROM RC_GRWAIT WHERE GR_ID = #{gr_id} AND MEM_ID = #{mem_id};
+	DELETE FROM RC_GRWAIT WHERE GR_ID = #{gr_id} AND MEM_ID = #{mem_id}
 	</delete>
 	
 	<update id="grMemInsert3" parameterType="java.util.Map">

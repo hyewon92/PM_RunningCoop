@@ -13,6 +13,7 @@
 		var chb = $("input:checkbox[name=memid]:checked");
 		
 		for(var t = 0; t <chb.length; t++){
+			location.href="./grMemMultDelete.do?";
 			alert(chb.eq(t).val());
 		}
 	}
@@ -24,13 +25,25 @@
 		var mem_id = $(memid).parent().prev().text();
 		alert(mem_id);
 		
-// 		location.href="./groupAccept.do?mem_id="+mem_id+"&gr_id="+gr_id;
+		location.href="./groupAccept.do?mem_id="+mem_id+"&gr_id="+gr_id;
 				
 	}
 	
 	function refusal1(memid){
+		var gr_id ="${ grid }";
+		var mem_id = $(memid).parent().prev().text();
 		
+		location.href="./groupAccept.do?mem_id="+mem_id+"&gr_id="+gr_id;
 		alert("asdf");
+	}
+	
+	function groupBye(){
+		var rst = confirm("그룹을 해체하시겠습니까?");
+		
+		if(rst){
+			location.href = "./groupDelete.do?"
+		}
+		
 	}
 	
 
@@ -57,7 +70,7 @@
 		</tr>
 	</c:forEach>
 	<tr>
-			<td><input type="button" onclick="chek()" value="체크체크"> </td>
+			<td><input type="submit" value="azx"> </td>
 	</tr>
 </table>	
 	<h1>가입 신청 리스트</h1>
@@ -71,6 +84,9 @@
 		</tr>					
 	</c:forEach>
 </table>	
+
+	<h1>그룹 해체</h1>
+	<input type="button" value="그룹 해체" onclick="groupBye()">
 	
 </body>
 </html>
