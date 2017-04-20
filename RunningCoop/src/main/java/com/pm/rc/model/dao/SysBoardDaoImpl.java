@@ -60,6 +60,13 @@ public class SysBoardDaoImpl implements SysBoardDao {
 		view = sqlSession.selectOne(NAMESPACE+"scrViewSelect", map);
 		return view;
 	}
+	
+	@Override
+	public Map<String, String> editBoardViewSelect(Map<String, String> map){
+		Map<String, String> view = new HashMap<String, String>();
+		view = sqlSession.selectOne(NAMESPACE+"editViewSelect", map);
+		return view;
+	};
 
 	@Override
 	public Map<String, String> sysViewSelect(Map<String, String> map) {
@@ -68,12 +75,12 @@ public class SysBoardDaoImpl implements SysBoardDao {
 	}
 
 	@Override
-	public Map<String, String> sysAttachSelect(Map<String, String> map) {
-		Map<String, String> attach = new HashMap<String, String>();
+	public Map<String, SbAttachDto> sysAttachSelect(Map<String, String> map) {
+		Map<String, SbAttachDto> attach = new HashMap<String, SbAttachDto>();
 		attach = sqlSession.selectOne(NAMESPACE+"sysAttachSelect", map);
 		return attach;
 	}
-
+	
 	@Override
 	public boolean noticeBoardInsert(SystemBoardDto dto) {
 		// TODO Auto-generated method stub
@@ -121,15 +128,36 @@ public class SysBoardDaoImpl implements SysBoardDao {
 	}
 
 	@Override
-	public boolean sysBoardDelete(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean sysBoardDelete(String sbr_uuid) {
+		boolean isc = false;
+		int num = sqlSession.update(NAMESPACE+"sysBoardDelete", sbr_uuid);
+		if(num > 0){
+			isc = true;
+		}
+		return isc;
+	}
+	
+	@Override
+	public boolean FileCheck(String sbr_uuid) {
+		boolean isc = false;
+		Map<String, String> uuid = new HashMap<String, String>();
+		uuid.put("sbr_uuid", sbr_uuid);
+		Map<String, SbAttachDto> attach = new HashMap<String, SbAttachDto>();
+		attach = sqlSession.selectOne(NAMESPACE+"sysAttachSelect", uuid);
+		if( attach != null){
+			isc = true;
+		}
+		return isc;
 	}
 
 	@Override
-	public boolean FileDelete(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean FileDelete(String sbr_uuid) {
+		boolean isc = false;
+		int num = sqlSession.delete(NAMESPACE+"sysAttachDelete", sbr_uuid);
+		if (num > 0){
+			isc = true;
+		}
+		return isc;
 	}
 
 

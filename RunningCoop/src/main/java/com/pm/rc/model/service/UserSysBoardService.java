@@ -49,6 +49,13 @@ public interface UserSysBoardService {
 	public Map<String, String> sysBoardViewSelect(Map<String, String> map);
 	
 	/**
+	 * 수정 시 게시글 출력
+	 * @param sbr_uuid 수정할 게시글 uuid
+	 * @return Map 형태로 해당 게시글 반환
+	 */
+	public Map<String, String> editBoardViewSelect(Map<String, String> map);
+	
+	/**
 	 * 문의 게시글 등록
 	 * @param dto SystemBoardDto객체
 	 * @return boolean
@@ -62,7 +69,7 @@ public interface UserSysBoardService {
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean qnaBoardModify(SystemBoardDto dto);
+	public boolean qnaBoardEdit(SystemBoardDto dto, SbAttachDto satt);
 	
 	/**
 	 * 문의 게시글 삭제
@@ -71,6 +78,13 @@ public interface UserSysBoardService {
 	 * @author 김혜원
 	 * */
 	public boolean qnaBoardDelete(String sbr_uuid);
+	
+	/**
+	 * 첨부파일 조회 메소드
+	 * @param sbr_uuid
+	 * @return 첨부파일 정보를 Dto로 반환
+	 */
+	public Map<String, SbAttachDto> sysAttachSelect(Map<String, String> map);
 	
 	
 }

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.ProcessBuilder.Redirect;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +33,12 @@ public class SysBoardController {
 	
 	@Autowired
 	private UserSysBoardService service;
+	
+	// 에디터 이동
+	@RequestMapping(value = "/editor.do", method = RequestMethod.GET)
+	public String editorMove(){
+		return "sysBoard/daumOpenEditor";
+	}
 	
 	// 공지 게시글 목록
 	@RequestMapping(value = "/noticeList.do", method = RequestMethod.GET)
@@ -213,9 +218,47 @@ public class SysBoardController {
 		return "redirect:/qnaList.do";
 	}
 	
+	// 수정페이지 이동
 	@RequestMapping(value="/boardEditMove.do", method = RequestMethod.GET)
-	public String qnaEditPageMove(){
+	public String boardEditPageMove(HttpServletRequest request, Model model){
+		String sbr_uuid = request.getParameter("sbr_uuid");
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("sbr_uuid", sbr_uuid);
+		Map<String, String> view = service.editBoardViewSelect(map);
+		model.addAttribute("view", view);
+		return "sysBoard/boardEdit";
+	}
+	
+	// 게시글 수정
+	@RequestMapping(value="/boardEdit.do", method = RequestMethod.POST)
+	public String BoardEdit(Model model){
+		
 		return null;
+	}
+	
+	// 게시글 삭제
+	@RequestMapping(value="/boardDelete.do", method = RequestMethod.GET)
+	public String BoardDelete(HttpServletRequest request){
+		boolean isc = false;
+		String sbr_uuid = request.getParameter("sbr_uuid");
+		Map<String, String> uuid = new HashMap<String, String>();
+		uuid.put("sbr_uuid", sbr_uuid);
+		Map<String, SbAttachDto> attach = new HashMap<String, SbAttachDto>();
+		attach = service.sysAttachSelect(uuid);
+		if(attach != null){
+			String savePath = ""+attach.get("SATT_PATH");
+			String fileName = ""+attach.get("SATT_RNAME");
+			
+			File file = new File(savePath+fileName);
+			
+			file.delete();
+		}
+		isc = service.qnaBoardDelete(sbr_uuid);
+		if (isc){
+			return "redirect:/qnaList.do";
+		} else {
+			return "redirect:/qnaList.do";
+		}
 	}
 	
 	// UUID 생성 메소드

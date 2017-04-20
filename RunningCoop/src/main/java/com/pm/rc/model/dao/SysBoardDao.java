@@ -50,9 +50,16 @@ public interface SysBoardDao {
 	/**
 	 * 비공개 게시글 내용 출력
 	 * @param dto : sbr_uuid와 sbr_pw를 담아 전송
-	 * @return 해당하는 게시글의 정보를 dto형태로 반환
+	 * @return 해당하는 게시글의 정보를 Map형태로 반환
 	 */
 	public Map<String, String> scrViewSelect (Map<String, String> map);
+	
+	/**
+	 * 수정 시 게시글 내용 출력
+	 * @param sbr_uuid : 해당하는 게시글의 uuid
+	 * @return 해당하는 게시글의 정보를 Map형태로 반환
+	 */
+	public Map<String, String> editBoardViewSelect(Map<String, String> map);
 	
 	/**
 	 * 관리자가 게시글을 조회할 때 게시글 내용 출력
@@ -66,7 +73,7 @@ public interface SysBoardDao {
 	 * @param map sbr_uuid에 게시글 고유값을 담아 전송
 	 * @return 해당하는 조건의 첨부파일을 list로 반환
 	 */
-	public Map<String, String> sysAttachSelect(Map<String, String> map);
+	public Map<String, SbAttachDto> sysAttachSelect(Map<String, String> map);
 	
 	/**
 	 * 공지게시판 게시글 작성
@@ -112,16 +119,24 @@ public interface SysBoardDao {
 	
 	/**
 	 * 게시글 삭제 (공지/문의 통합)
-	 * @param map sbr_uuid에 해당하는 게시글의 게시글 uuid를 값으로 전송
+	 * @param sbr_uuid 해당하는 게시글의 게시글 uuid를 값으로 전송
 	 * @return 삭제 성공하면 true, 실패하면 false
 	 */
-	public boolean sysBoardDelete (Map<String, String> map);
+	public boolean sysBoardDelete (String sbr_uuid);
+	
+	/**
+	 * 게시글에 첨부파일이 있는지 확인
+	 * @param sbr_uuid
+	 * @return 있으면 true, 없으면 false
+	 */
+	public boolean FileCheck (String sbr_uuid);
 	
 	/**
 	 * 삭제되는 게시글의 첨부파일을 삭제
-	 * @param map sbr_uuid에 삭제되는 게시글의  uuid를 담아 전송
+	 * @param sbr_uuid 삭제되는 게시글의  uuid를 담아 전송
 	 * @return 삭제 성공하면 true, 실패하면 false
 	 */
-	public boolean FileDelete (Map<String, String> map);
+	public boolean FileDelete (String sbr_uuid);
+	
 
 }
