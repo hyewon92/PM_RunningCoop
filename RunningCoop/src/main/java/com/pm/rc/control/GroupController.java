@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.model.service.GroupService;
-import com.pm.rc.model.service.TestService;
 
 //4. dispatcher에 의해 연결된 Class @Controller 생성
 @Controller
@@ -32,8 +31,6 @@ public class GroupController {
 	// 23. IoC Autowired를 통해 실행되는 Service를 선언
 	@Autowired
 	private GroupService service;
-	@Autowired
-	private TestService service1;
 	
 	//5. mapping 메소드
 	@RequestMapping(value = "/first.do", method = RequestMethod.GET)

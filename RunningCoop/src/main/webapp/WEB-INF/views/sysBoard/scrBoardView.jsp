@@ -25,7 +25,12 @@
 	
 	function Edit(){
 		var sbr_uuid = $("#sbr_uuid").val();
-		location.href = "./boardEditMove.do?sbr_uuid"+sbr_uuid;
+		location.href = "./boardEditMove.do?sbr_uuid="+sbr_uuid;
+	}
+	
+	function Delete(){
+		var sbr_uuid = $("#sbr_uuid").val();
+		location.href = "./boardDelete.do?sbr_uuid="+sbr_uuid;
 	}
 	
 	$(function(){

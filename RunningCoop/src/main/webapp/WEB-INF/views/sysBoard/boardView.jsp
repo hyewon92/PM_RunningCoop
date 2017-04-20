@@ -23,6 +23,16 @@
 		history.back();
 	}
 	
+	function Edit(){
+		var sbr_uuid = $("#sbr_uuid").val();
+		location.href = "./boardEditMove.do?sbr_uuid="+sbr_uuid;
+	}
+	
+	function Delete(){
+		var sbr_uuid = $("#sbr_uuid").val();
+		location.href = "./boardDelete.do?sbr_uuid="+sbr_uuid;
+	}
+	
 	$(function(){
 		var sessionID = $("#session").val();
 		var mem_id = $("#mem_id").val();
@@ -50,7 +60,9 @@
 	</tr>
 	<tr>
 		<th>제목</th>
-		<td>${ view.get("SBR_TITLE") }</td>
+		<td>
+		<input type="hidden" value="${ view.get("SBR_UUID")}" id = "sbr_uuid"/>
+		${ view.get("SBR_TITLE") }</td>
 	</tr>
 	<tr>
 		<th>첨부파일</th>

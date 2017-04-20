@@ -7,10 +7,6 @@ import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.ProjectDto;
 import com.pm.rc.dto.WorkListDto;
 
-/** 
- * 프로젝트 관련 기능 인터페이스
- * @author 김혜원
- * */
 public interface ProjectService {
 
 	/**
@@ -35,7 +31,7 @@ public interface ProjectService {
 	 * @return List&lt;ProjectDto&gt;
 	 * @author 김혜원
 	 * */
-	public List<ProjectDto> myDidPrSelect(String mem_id);
+	public Map<String, String> myDidPrSelect(String mem_id);
 	
 	/**
 	 * 내가 진행중인 프로젝트
@@ -43,7 +39,7 @@ public interface ProjectService {
 	 * @return List&lt;ProjectDto&gt;
 	 * @author 김혜원
 	 * */
-	public List<ProjectDto> myDoingPrSelect(String mem_id);
+	public Map<String, String> myDoingPrSelect(String mem_id);
 	
 	/**
 	 * 내가 해야 할 프로젝트
@@ -51,7 +47,7 @@ public interface ProjectService {
 	 * @return List&lt;ProjectDto&gt;
 	 * @author 김혜원
 	 * */
-	public List<ProjectDto> myTodoPrSelect(String mem_id);
+	public Map<String, String> myTodoPrSelect(String mem_id);
 	
 	/**
 	 * 시스템 전체  프로젝트 조회(검색)
@@ -59,15 +55,15 @@ public interface ProjectService {
 	 * @return List&lt;ProjectDto&gt;
 	 * @author 김혜원
 	 * */
-	public List<ProjectDto> allPrSelect(String pr_name);
+	public Map<String, String> allPrSearchSelect(String pr_name);
 	
 	/**
-	 * 프로젝트명으로 검색 
-	 * @param pr_name 프로젝트명
+	 * 프로젝트명으로 검색 (내 프로젝트 목록에서 검색)
+	 * @param map mem_id, pr_name을 받아서 검색
 	 * @return List&lt;ProjectDto&gt;
 	 * @author 김혜원
 	 * */
-	public List<ProjectDto> prNameSelect(String pr_name);
+	public Map<String, String> myPrSearchSelect(Map<String, String> map);
 
 	/**
 	 * 프로젝트 상세정보 조회
@@ -75,36 +71,43 @@ public interface ProjectService {
 	 * @return ProjectDto
 	 * @author 김혜원
 	 * */
-	public ProjectDto prDetailSelect(String pr_id);
+	public Map<String, String> prDetailSelect(String pr_id);
 	
 	/**
 	 * 그룹 프로젝트 생성
-	 * @param dto ProjectDto객체
+	 * @param map, group 정보, project정보, mem_id를 담아 전송
 	 * @return boolean
-	 * @author 김혜원
 	 * */
-	public boolean prInsert(Map<String, String>  map);
+	public boolean gPrInsert(Map<String, String>  map);
 	
 	/**
 	 * 개인 프로젝트 생성
-	 * @param map value:mem_id(회원아이디), gr_id(그룹아이디)
+	 * @param map value:mem_id(회원아이디), project 정보
 	 */
+	public boolean iPrInsert(Map<String, String> map);
 	
 	/**
-	 * 프로젝트 수정
+	 * 프로젝트 기본정보 수정
 	 * @param ProjectDto
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean prModify(ProjectDto dto);
+	public boolean projectEdit(ProjectDto dto);
 	
 	/**
 	 * 프로젝트 삭제
-	 * @param pr_id 프로젝트아이디
+	 * @param map pr_id, mem_id 등을 담아 전송
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean prDelete(String pr_id);
+	public boolean projectDelete(Map<String, String> map);
+	
+	/**
+	 * 프로젝트 초대 가능 멤버 조회 (그룹 내 프로젝트에 참여하지 않는 멤버)
+	 * @param map
+	 * @return
+	 */
+	public Map<String, String> prMemInsertSearch(Map<String, String> map);
 	
 	/**
 	 * 프로젝트 멤버 추가
@@ -128,11 +131,11 @@ public interface ProjectService {
 	 * @return List&lt;MemberDto&gt;
 	 * @author 김혜원
 	 * */
-	public List<MemberDto> prMemSelect(String pr_id);
+	public Map<String, String> prMemListSelect(String pr_id);
 	
 	/**
 	 * 프로젝트 담당자 수정(pr_id, mem_id)
-	 * @param map value:pr_id(프로젝트아이디), mem_id(회원아이디)
+	 * @param map value:pr_id(프로젝트아이디), mem_id(기존 매니저 회원아이디), mem_id(새로운 매니저 회원 아이디)
 	 * @return boolean
 	 * @author 김혜원
 	 * */
@@ -144,6 +147,6 @@ public interface ProjectService {
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean prRateModify(String pr_id);
+	public boolean prRateEdit(String pr_id);
 	
 }
