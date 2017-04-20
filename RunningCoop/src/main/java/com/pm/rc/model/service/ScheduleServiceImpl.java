@@ -25,8 +25,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public List<ScheduleDto> mySchSelect2(String mem_id) {
-		return null;
+	public List<ScheduleDto> mySchSelect(String mem_id) {
+		return scheduleDao.mySchSelect(mem_id);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List"%>
+<%@ page import="java.util.ArrayList"%>
 <%@ page import="com.pm.rc.dto.ScheduleDto"%>
 <%@ page import="java.util.Calendar" %>
 <!DOCTYPE>
@@ -52,8 +53,6 @@
 
 	//일정작성
 	public String schWrite(int year, String month, String date){
-		System.out.println("month="+month);
-		System.out.println("date="+date);
 		return "<a href = './writeSchedule.do?year="+year+"&month="+month+"&date="+date+"'>"
 				+"<img class = 'plus' alt = '일정등록' src = 'images/plus.png'>";
 	}
@@ -65,12 +64,13 @@
 	
 	//달력에 일정목록 출력
 	public String schListView(int month, int day, List<ScheduleDto> lists){
-		String list = "";
 		for(ScheduleDto dto:lists){
-			int startMonth = Integer.parseInt(dto.getSch_startDate().replace("-", "").substring(4, 6));
-			int endMonth = Integer.parseInt(dto.getSch_endDate().replace("-", "").substring(4, 6));
-			int startDate = Integer.parseInt(dto.getSch_startDate().replace("-", "").substring(6, 8));
-			int endDate = Integer.parseInt(dto.getSch_endDate().replace("-", "").substring(6, 8));
+			int startYear = Integer.parseInt(dto.getSch_startDate().substring(0,4));
+			int startMonth = Integer.parseInt(dto.getSch_startDate().substring(4, 6));
+			int startDate = Integer.parseInt(dto.getSch_startDate().substring(6, 8));
+			int endYear = Integer.parseInt(dto.getSch_endDate().substring(0,4));
+			int endMonth = Integer.parseInt(dto.getSch_endDate().substring(4, 6));
+			int endDate = Integer.parseInt(dto.getSch_endDate().substring(6, 8));
 		}
 		return "";
 	}
@@ -81,6 +81,10 @@
 	String cyear = (String)request.getAttribute("year");
 	String cmonth = (String)request.getAttribute("month");
 	System.out.println("year:"+cyear+"/month:"+cmonth);
+	
+	//회원 일정정보 가져오기
+	List<ScheduleDto> lists = (List<ScheduleDto>)request.getAttribute("list");
+	
 	//칼랜더 객체 생성
 	Calendar cal = Calendar.getInstance();
 	
@@ -141,6 +145,7 @@
 						<% String s_month = dateForm(String.valueOf(month)); %>
 						<% String s_i = dateForm(String.valueOf(i)); %>
 						<%=schWrite(year, s_month, s_i)%></a>
+					<%-- 	<div id="list"><%=schListView(year, month, i) %></div> --%>
 					</td>
 					<%
 					//토요일이 되면 줄바꿈

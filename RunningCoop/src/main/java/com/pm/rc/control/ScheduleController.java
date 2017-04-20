@@ -1,8 +1,11 @@
 package com.pm.rc.control;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +28,18 @@ public class ScheduleController {
 	
 	//달력 띄우기
 	@RequestMapping(value = "/viewSchedule.do")
-	public String viewSchedule(HttpServletRequest req){
+	public String viewSchedule(HttpServletRequest req, HttpSession session){
+		String mem_id = (String)session.getAttribute("mem_id");
+		List<ScheduleDto> list = new ArrayList<ScheduleDto>();
+		list = scheduleService.mySchSelect(mem_id);
 		Calendar cal = Calendar.getInstance();
-		int year = cal.get(Calendar.YEAR);
-		int month = cal.get(Calendar.MONTH);
+		String year = String.valueOf(cal.get(Calendar.YEAR));
+		String month = String.valueOf(cal.get(Calendar.MONTH)+1);
+		System.out.println("현재 년도:"+year);
+		System.out.println("현재 월:"+month);
 		req.setAttribute("year", year);
 		req.setAttribute("month", month);
+		req.setAttribute("list", list);
 		logger.info("viewSchedule실행");
 		return "schedule/calendar";
 	}
@@ -48,7 +57,6 @@ public class ScheduleController {
 	@RequestMapping(value = "/insertSchedule.do", method = RequestMethod.POST)
 	public String schInsert(ScheduleDto dto){
 		logger.info("schInsert실행");
-		System.out.println(dto.getSch_startDate());
 		boolean isc = scheduleService.schInsert(dto);
 		if(isc == false){
 			return "schedule/error";

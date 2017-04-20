@@ -33,7 +33,7 @@ public interface ScheduleDao {
 	 * @return  List&lt;ScheduleDto&gt;
 	 * @author 김혜원
 	 * */
-	public List<ScheduleDto> mySchSelect2(String mem_id);
+	public List<ScheduleDto> mySchSelect(String mem_id);
 	
 	/**
 	 * 개인 일정 등록

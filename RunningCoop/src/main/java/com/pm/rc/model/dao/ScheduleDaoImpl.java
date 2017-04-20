@@ -1,5 +1,6 @@
 package com.pm.rc.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -14,7 +15,7 @@ import com.pm.rc.dto.ScheduleDto;
 public class ScheduleDaoImpl implements ScheduleDao {
 	
 	private Logger logger = LoggerFactory.getLogger(ScheduleDaoImpl.class);
-	private final String NAMESPACE = "com.pm.rc.accountMapper.";
+	private final String NAMESPACE = "com.pm.rc.scheduleMapper.";
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
@@ -30,8 +31,10 @@ public class ScheduleDaoImpl implements ScheduleDao {
 	}
 
 	@Override
-	public List<ScheduleDto> mySchSelect2(String mem_id) {
-		return null;
+	public List<ScheduleDto> mySchSelect(String mem_id) {
+		List<ScheduleDto> lists = new ArrayList<ScheduleDto>();
+		lists = sqlSession.selectList(NAMESPACE+"mySchSelect", mem_id);
+		return lists;
 	}
 
 	@Override

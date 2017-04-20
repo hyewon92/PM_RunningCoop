@@ -11,7 +11,7 @@
 	</insert>
 
 	<!-- 개인 일정 등록 -->
-	<insert id="schInsert">
+	<insert id="schInsert" parameterType="ScheduleDto">
 		INSERT INTO RC_SCHEDULE (SCH_SEQ, SCH_TITLE, SCH_STARTDATE, SCH_ENDDATE, SCH_CONTENT, MEM_ID, SCH_PROSYN)
 		VALUES
 		(SCHEDULE_SEQ.NEXTVAL, #{sch_title}, TO_DATE(#{sch_startDate},'YYYY-MM-DDHH24:MI'), TO_DATE(#{sch_endDate}, 'YYYY-MM-DDHH24:MI'), #{sch_content}, #{mem_id}, 'N')
@@ -29,5 +29,12 @@
 		UPDATE RC_SCHEDULE SET SCH_DELYN = 'Y'
 		WHERE SCH_SEQ = #{sch_seq}
 	</delete>
+	
+	<!-- 일정 조회 -->
+	<select id="mySchSelect" parameterType="java.lang.String" resultType="ScheduleDto">
+		SELECT S.SCH_SEQ, TO_CHAR(S.SCH_STARTDATE,'YYYYMMDDHHMI') SCH_STARTDATE, TO_CHAR(S.SCH_ENDDATE,'YYYYMMDDHHMI') SCH_ENDDATE, S.SCH_TITLE 
+  		FROM RC_SCHEDULE S
+		WHERE S.MEM_ID = #{mem_id} OR S.PR_ID IN (SELECT P.PR_ID FROM RC_PROMEM P WHERE P.MEM_ID = #{mem_id})
+	</select>
 
 </mapper>
