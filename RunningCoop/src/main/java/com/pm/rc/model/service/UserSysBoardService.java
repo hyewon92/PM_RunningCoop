@@ -55,6 +55,8 @@ public interface UserSysBoardService {
 	 */
 	public Map<String, String> editBoardViewSelect(Map<String, String> map);
 	
+	public List<Map<String, SbAttachDto>> editAttachViewSelect(Map<String, String> map);
+	
 	/**
 	 * 문의 게시글 등록
 	 * @param dto SystemBoardDto객체
@@ -84,7 +86,7 @@ public interface UserSysBoardService {
 	 * @param sbr_uuid
 	 * @return 첨부파일 정보를 Dto로 반환
 	 */
-	public Map<String, SbAttachDto> sysAttachSelect(Map<String, String> map);
+	public List<Map<String, SbAttachDto>> sysAttachSelect(Map<String, String> map);
 	
 	
 }

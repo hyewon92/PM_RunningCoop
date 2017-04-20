@@ -20,29 +20,12 @@
 <body>
 <input type="hidden" value="${ sbr_uuid }"/>
 <c:set var="view"  value="${ view }"/>
-<form action="./boardEdit.do" method="POST">
-	<table>
-		<tr>
-			<th>제목</th>
-			<td><input type="textbox" name = "sbr_title" value="${ view.get('SBR_TITLE') }"/></td>
-		</tr>
-		<tr>
-			<th>첨부파일</th>
-			<td>
-				<input type="file" name = "satt_name" value="${ view.get('SATT_NAME') }"/>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2">
-				<textarea cols="50" rows="30">${ view.get("SBR_CONTENT") }</textarea>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2">
-				<input type="submit" value="수정"/>
-			</td>
-		</tr>
-	</table>
+<form id="boardWrite" action="./boardEdit.do" method="POST">
+			<span>제목</span><input type="textbox" name = "sbr_title" value="${ view.get('SBR_TITLE') }"/><br>
+			<span>첨부파일</span>
+			<span><a href="#">${ view.get("SATT_NAME") }</a>${ view.get("SATT_SIZE") }</span><br>
+			<jsp:include page="daumOpenEditor.jsp"></jsp:include><br>
+			<input type="submit" value="수정"/>
 </form>
 </body>
 </html>

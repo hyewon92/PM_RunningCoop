@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pm.rc.dto.ProjectDto;
 import com.pm.rc.model.service.ProjectService;
@@ -75,6 +76,28 @@ public class ProjectController {
 			return "redirect:/createMPro.do";
 		}
 	}
+	
+	// 프로젝트 정보 화면
+	@RequestMapping(value="/detailPro.do", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, String> proDetail(HttpServletRequest request){
+		String pr_id = request.getParameter("pr_id");
+		Map<String, String> map = new HashMap<String, String>();
+		map = service.prDetailSelect(pr_id);
+		return map;
+	}
+	
+	// 프로젝트 진행화면 이동
+	@RequestMapping(value="/goProject.do", method=RequestMethod.GET)
+	public String goToProject(HttpServletRequest request){
+		String pr_id = request.getParameter("pr_id");
+		Map<String, String> list = new HashMap<String, String>();
+		return "project/workList";
+	}
+	
+	
+	
+	
 	
 	
 	

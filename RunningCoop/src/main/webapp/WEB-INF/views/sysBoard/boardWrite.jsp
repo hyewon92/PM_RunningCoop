@@ -36,44 +36,40 @@
 	}
 </script>
 <style type="text/css">
-table {
-	border-collapse: collapse;
+.formTable {
+	width: 100%;
+	display: table;
 }
 
-tr, th, td {
-	border: 2px solid black;
+.tableBody {
+	display: table-row-group;
+}
+
+.tableRow {
+	border: 1px solid black;
+	display: table-row;
+}
+
+.tableCol {
+	border: 1px solid black;
+	display: table-cell;
 }
 </style>
 </head>
 <body>
-	<a href="./editor.do">에디터로 이동</a>
-	<form id="boardWrite" action="./boardWrite.do" method="post"
-		enctype="multipart/form-data">
+	<form id="boardWrite" action="./boardWrite.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="mem_id" value="${ mem_id }" />
-		<table>
-			<tr>
-				<th>제목</th>
-				<td><input type="textbox" name="sbr_title" /></td>
-			<tr>
-				<td><input type="checkbox" id="sbr_scryn" name="sbr_scryn" />비밀글
-				</td>
-				<td><input type="textbox" id="sbr_pw" name="sbr_pw"
-					style="display: none" />
-			</tr>
-			<tr>
-				<td colspan="3">
-					<jsp:include page="daumOpenEditor.jsp"></jsp:include></td>
-			</tr>
-			<tr>
-				<th>첨부파일</th>
-				<td colspan="2"><input type="file" id="file" name="satt_name" />
-					<input type="hidden" id="filesize" name="satt_size" /></td>
-			</tr>
-			<tr>
-				<td colspan="3"><input type="submit" value="등록" /> <input
-					type="button" value="목록으로" onclick="back()" /></td>
-			</tr>
-		</table>
+						<span> 제목 </span>
+						<input type="textbox" name="sbr_title" />
+						<input type="checkbox" id="sbr_scryn" name="sbr_scryn" />비밀글
+						<input type="textbox" id="sbr_pw" name="sbr_pw"
+							style="display: none" />
+						<jsp:include page="daumOpenEditor.jsp" flush="false"></jsp:include>
+						<span> 첨부파일 </span>
+						<input type="file" id="file" name="satt_name" /> <input
+							type="hidden" id="filesize" name="satt_size" />
+						<input type="submit" value="등록" /> <input type="button"
+							value="목록으로" onclick="back()" />
 	</form>
 </body>
 </html>

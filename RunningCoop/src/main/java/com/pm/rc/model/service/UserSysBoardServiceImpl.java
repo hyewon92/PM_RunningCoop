@@ -47,33 +47,20 @@ public class UserSysBoardServiceImpl implements UserSysBoardService {
 		} else if (pw != null){
 			view = sysBoardDao.scrViewSelect(map);
 		}
-		attach = sysBoardDao.sysAttachSelect(map);
-		if(attach != null){
-			String satt_name = ""+attach.get("SATT_NAME");
-			String satt_size = ""+attach.get("SATT_SIZE");
-			view.put("SATT_NAME", satt_name);
-			view.put("SATT_SIZE", satt_size);
-		}
 		return view;
 	}
 	
 	@Override
 	public Map<String, String> editBoardViewSelect(Map<String, String> map){
 		Map<String, String> view = new HashMap<String, String>();
-		Map<String, SbAttachDto> attach = new HashMap<String, SbAttachDto>();
 		view = sysBoardDao.editBoardViewSelect(map);
-		attach = sysBoardDao.sysAttachSelect(map);
-		if(attach != null){
-			String satt_seq = ""+attach.get("SATT_SEQ");
-			String satt_name = ""+attach.get("SATT_NAME");
-			String satt_size = ""+attach.get("SATT_SIZE");
-			String satt_path = ""+attach.get("SATT_PATH");
-			view.put("SATT_SEQ", satt_seq);
-			view.put("SATT_NAME", satt_name);
-			view.put("SATT_SIZE", satt_size);
-			view.put("SATT_PATH", satt_path);
-		}
 		return view;
+	};
+	
+	public List<Map<String, SbAttachDto>> editAttachViewSelect(Map<String, String> map){
+		List<Map<String, SbAttachDto>> attach = null;
+		attach = sysBoardDao.sysAttachSelect(map);
+		return attach;
 	};
 
 	@Override
@@ -111,7 +98,7 @@ public class UserSysBoardServiceImpl implements UserSysBoardService {
 	}
 
 	@Override
-	public Map<String, SbAttachDto> sysAttachSelect(Map<String, String> map) {
+	public List<Map<String, SbAttachDto>> sysAttachSelect(Map<String, String> map) {
 		return sysBoardDao.sysAttachSelect(map);
 	}
 

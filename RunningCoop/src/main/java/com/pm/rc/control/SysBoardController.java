@@ -37,15 +37,19 @@ public class SysBoardController {
 	// 에디터 이동
 	@RequestMapping(value = "/editor.do", method = RequestMethod.GET)
 	public String editorMove(){
+		
 		return "sysBoard/daumOpenEditor";
 	}
 	
 	// 공지 게시글 목록
 	@RequestMapping(value = "/noticeList.do", method = RequestMethod.GET)
 	public String noticeList(Model model, HttpSession session){
+		
 		List<Map<String, String>> list = null;
-			list = service.noticeListSelect();
-			model.addAttribute("list", list);
+		list = service.noticeListSelect();
+		
+		model.addAttribute("list", list);
+		
 		return "sysBoard/noticeList";
 	}
 	
@@ -53,56 +57,88 @@ public class SysBoardController {
 	@RequestMapping(value = "/noticeSList.do", method = RequestMethod.POST)
 	public String noticeSList(Model model, HttpServletRequest request){
 		String sbr_title = request.getParameter("sbr_title");
-		List<Map<String, String>> list = null;
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("sbr_title", sbr_title);
+		
+		List<Map<String, String>> list = null;
 		list = service.noticeSearchSelect(map);
+		
 		model.addAttribute("slist", list);
+		
 		return "sysBoard/noticeSList";
 	}
 	
 	// 공개 게시글 보기 페이지
 	@RequestMapping(value="/boardView.do", method = RequestMethod.GET)
 	public String boardView(Model model, HttpServletRequest request, HttpSession session){
+		
 		String sbr_uuid = request.getParameter("sbr_uuid");
 		String sessionId = (String) session.getAttribute("mem_id");
 		Map<String, String> uuid = new HashMap<String, String>();
 		uuid.put("sbr_uuid", sbr_uuid);
+		
 		Map<String, String> view = new HashMap<String, String>();
 		view = service.sysBoardViewSelect(uuid);
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("sbr_uuid", sbr_uuid);
+		
+		List<Map<String, SbAttachDto>> list = null;
+		list = service.sysAttachSelect(map);
+		
 		model.addAttribute("view", view);
 		model.addAttribute("mem_id", sessionId);
+		
+		if(list != null){
+			model.addAttribute("attach", list);
+		}
+		
 		return "sysBoard/boardView";
 	}
 	
 	// 비밀 게시글 보기 페이지
 	@RequestMapping(value="/scrBoardView.do", method = RequestMethod.POST)
 	public String scrBoardView(Model model, HttpServletRequest request, HttpSession session){
+		
 		String sbr_uuid = request.getParameter("sbr_uuid");
 		String sbr_pw = request.getParameter("sbr_pw");
 		String sessionId = (String) session.getAttribute("mem_id");
+		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("sbr_uuid", sbr_uuid);
 		map.put("sbr_pw", sbr_pw);
+		
 		Map<String, String> view = new HashMap<String, String>();
 		view = service.sysBoardViewSelect(map);
+		
+		List<Map<String, SbAttachDto>> list = null;
+		list = service.sysAttachSelect(map);
+		
 		String page = "";
+		
 		if(view == null){
 			page =  "sysBoard/nonCorrectPW";
 		} else {
 			model.addAttribute("view", view);
 			model.addAttribute("mem_id", sessionId);
+			if(list != null){
+				model.addAttribute("attach", list);
+			}
 			page = "sysBoard/scrBoardView";
 		}
+		
 		return page;
 	}
 	
 	// 문의 게시판 목록 출력
 	@RequestMapping(value="/qnaList.do", method = RequestMethod.GET)
 	public String qnaList(Model model){
+		
 		List<Map<String, String>> list = null;
 		list = service.qnaListSelect();
+		
 		model.addAttribute("list", list);
+		
 		return "sysBoard/qnaList";
 	}
 	
@@ -110,11 +146,14 @@ public class SysBoardController {
 	@RequestMapping(value="/qnaSList.do", method = RequestMethod.POST)
 	public String qnaSList(Model model, HttpServletRequest request){
 		String sbr_title = request.getParameter("sbr_title");
-		List<Map<String, String>> list = null;
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("sbr_title", sbr_title);
+		
+		List<Map<String, String>> list = null;
 		list = service.qnaSearchSelect(map);
+		
 		model.addAttribute("list", list);
+		
 		return "sysBoard/qnaSList";
 	}
 	
@@ -224,8 +263,11 @@ public class SysBoardController {
 		String sbr_uuid = request.getParameter("sbr_uuid");
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("sbr_uuid", sbr_uuid);
+		
 		Map<String, String> view = service.editBoardViewSelect(map);
+		
 		model.addAttribute("view", view);
+		
 		return "sysBoard/boardEdit";
 	}
 	
@@ -240,20 +282,27 @@ public class SysBoardController {
 	@RequestMapping(value="/boardDelete.do", method = RequestMethod.GET)
 	public String BoardDelete(HttpServletRequest request){
 		boolean isc = false;
+		
 		String sbr_uuid = request.getParameter("sbr_uuid");
 		Map<String, String> uuid = new HashMap<String, String>();
 		uuid.put("sbr_uuid", sbr_uuid);
-		Map<String, SbAttachDto> attach = new HashMap<String, SbAttachDto>();
+		
+		List<Map<String, SbAttachDto>> attach = null;
 		attach = service.sysAttachSelect(uuid);
+		
 		if(attach != null){
-			String savePath = ""+attach.get("SATT_PATH");
-			String fileName = ""+attach.get("SATT_RNAME");
-			
-			File file = new File(savePath+fileName);
-			
-			file.delete();
+			for(int i = 0; i < attach.size(); i++){
+				String savePath = ""+attach.get(i).get("SATT_PATH");
+				String fileName = ""+attach.get(i).get("SATT_RNAME");
+				
+				File file = new File(savePath+fileName);
+				
+				file.delete();
+			}
 		}
+		
 		isc = service.qnaBoardDelete(sbr_uuid);
+		
 		if (isc){
 			return "redirect:/qnaList.do";
 		} else {

@@ -75,9 +75,9 @@ public class SysBoardDaoImpl implements SysBoardDao {
 	}
 
 	@Override
-	public Map<String, SbAttachDto> sysAttachSelect(Map<String, String> map) {
-		Map<String, SbAttachDto> attach = new HashMap<String, SbAttachDto>();
-		attach = sqlSession.selectOne(NAMESPACE+"sysAttachSelect", map);
+	public List<Map<String, SbAttachDto>> sysAttachSelect(Map<String, String> map) {
+		List<Map<String, SbAttachDto>> attach = null;
+		attach = sqlSession.selectList(NAMESPACE+"sysAttachSelect", map);
 		return attach;
 	}
 	

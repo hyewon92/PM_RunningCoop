@@ -81,12 +81,19 @@
 		WHERE M.MEM_ID = SB.MEM_ID AND SB.SBR_SCRYN = 'Y' AND SB.SBR_UUID = #{sbr_uuid} AND SB.SBR_PW = #{sbr_pw}
 	</select>
 	
+	<!-- 수정용 게시글 화면 -->
+	<select id="editViewSelect" parameterType="java.lang.String" resultType="java.util.Map">
+		SELECT SB.SBR_UUID, SB.MEM_ID, M.MEM_NAME, TO_CHAR(SB.SBR_REGDATE, 'YYYY/MM/DD') SBR_REGDATE,
+		SB.SBR_TITLE, SB.SBR_CONTENT
+		FROM RC_MEMBER M, RC_SYSBOARD SB
+		WHERE M.MEM_ID = SB.MEM_ID AND SB.SBR_UUID = #{sbr_uuid}
+	</select>
+	
 	<!-- 게시글 첨부파일 보기 -->
-	<select id="sysAttachSelect" parameterType="java.lang.String" resultType="java.util.Map">
-		SELECT SA.SATT_SEQ, SA.SATT_NAME, SA.SATT_SIZE, SA.SATT_RNAME FROM RC_SYSATTACH SA
+	<select id="sysAttachSelect" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT SA.SATT_SEQ, SA.SATT_NAME, SA.SATT_SIZE, SA.SATT_RNAME, SA.SATT_PATH FROM RC_SYSATTACH SA
 		WHERE SA.SBR_UUID = #{sbr_uuid}
 	</select>
-
 
 	<!-- 문의게시판 글 작성 -->
 	<insert id="qnaBoardInsert" parameterType="SystemBoardDto">
@@ -107,8 +114,17 @@
 			VALUES
 		(SYSATTACH_SEQ.NEXTVAL, #{sbr_uuid}, #{satt_name}, #{satt_size}, #{satt_rname}, #{satt_path})
 	</insert>
-
-
-
+	
+	<!-- 게시글 삭제 -->
+	<update id="sysBoardDelete" parameterType="java.lang.String">
+		UPDATE RC_SYSBOARD SET SBR_DELYN = 'Y'
+		WHERE SBR_UUID = #{ sbr_uuid }
+	</update>
+	
+	<!-- 첨부파일 삭제 -->
+	<delete id="sysAttachDelete" parameterType="java.lang.String">
+		DELETE FROM RC_SYSATTACH
+ 		WHERE SBR_UUID = #{ sbr_uuid }
+	</delete>
 
 </mapper>

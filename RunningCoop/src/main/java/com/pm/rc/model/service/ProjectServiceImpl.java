@@ -60,8 +60,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public Map<String, String> prDetailSelect(String pr_id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.prDetailSelect(pr_id);
 	}
 
 	@Override
@@ -77,7 +76,9 @@ public class ProjectServiceImpl implements ProjectService {
 		String id_1 = "PR";
 		String id_2 = dateForm.format(date).toString();
 		String uuid = createUUID();
+		System.out.println(uuid);
 		String id_3 = uuid.substring(uuid.lastIndexOf("-")+9);
+		System.out.println(id_3);
 		String pr_id = id_1+id_2+id_3;
 		
 		map.put("pr_id", pr_id);

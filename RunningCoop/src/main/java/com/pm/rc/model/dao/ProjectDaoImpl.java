@@ -65,8 +65,7 @@ public class ProjectDaoImpl implements ProjectDao {
 
 	@Override
 	public Map<String, String> prDetailSelect(String pr_id) {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne(NAMESPACE+"prDetailSelect", pr_id);
 	}
 
 	@Override
