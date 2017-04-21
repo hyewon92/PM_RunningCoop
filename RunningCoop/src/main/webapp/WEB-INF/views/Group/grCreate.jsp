@@ -25,7 +25,7 @@
 		<tr>
 			<td><input type="text"  name="gr_name" id="grname"></td>
 			<td><input type="text" name="gr_goal" id="grgoal"></td>
-			<td><input type="text" value="<%=mem_id%>"></td>
+			<td><input type="text" name="mem_id" value="<%=mem_id%>"></td>
 		</tr>
 		<tr><td><input type="submit" value="그룹생성"></td></tr>
 	</table>

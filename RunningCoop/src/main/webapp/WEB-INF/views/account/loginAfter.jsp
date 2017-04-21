@@ -5,6 +5,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+	function openChild(){
+		window.open("./showGrCreate.do", "GroupCreate", "width=640, height=450, resizable = no, scrollbars = no");
+	}
+</script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -25,7 +30,7 @@
 <input type = "button" value = "그룹선택(관리)" onclick = "location.href='./myGrSelect.do?mem_id=<%=userId%>'">
 <input type = "button" value = "일정보기" onclick = "location.href='./viewSchedule.do?year=<%=year%>&month=<%=month%>'">
 <input type = "button" value = "로그아웃" onclick = "location.href='./ckLogout.do'">
-<input type="button" value="그룹생성" onclick="">
+<input type="button" value="그룹생성" onclick="openChild()">
 <form action="./allGrSelect.do" method="post">
 <div>
 	<input type="text" name="gr_name" />

@@ -178,6 +178,12 @@ public class GroupController {
 		
 		return "redirect:/gbListSelect.do?gr_id="+GroupId;
 	}
+	@RequestMapping(value="/showGrCreate.do")
+	public String groupCreateChilde(){
+		
+		return "Group/grCreate";
+	}
+	
 	@RequestMapping(value="/groupCreate.do" , method=RequestMethod.POST)
 	public String grCreate(Map<String, String> map , HttpServletRequest req){
 		logger.info("그룹생성 시작");
@@ -195,6 +201,8 @@ public class GroupController {
 	      map.put("gr_name", req.getParameter("gr_name"));
 	      map.put("gr_goal", req.getParameter("gr_goal"));
 	      map.put("mem_id", req.getParameter("mem_id"));
+	      
+	      service.grInsert(map);
 	      
 		return "good";
 	}
