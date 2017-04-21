@@ -67,9 +67,8 @@
 	<tr>
 		<th>첨부파일</th>
 		<td>
-			<c:forEach var="attach" items="${ attach }">
-				<p>${ attach.get("SATT_NAME") }${ attach.get("SATT_SIZE") }</p>
-			</c:forEach>
+			<c:set var="attach" value="${ attach }"/>
+				<p><a href="./fileDown.do?satt_seq=${ attach.get('SATT_SEQ') }">${ attach.get("SATT_NAME") }</a>${ attach.get("SATT_SIZE") }</p>
 		</td>
 	</tr>
 	<tr>

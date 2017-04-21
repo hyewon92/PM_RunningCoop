@@ -61,15 +61,16 @@
 	<tr>
 		<th>제목</th>
 		<td>
-		<input type="hidden" value="${ view.get("SBR_UUID")}" id = "sbr_uuid"/>
+		<input type="hidden" value="${ view.get('SBR_UUID')}" id = "sbr_uuid"/>
 		${ view.get("SBR_TITLE") }</td>
 	</tr>
 	<tr>
 		<th>첨부파일</th>
 		<td>
-			<c:forEach var="attach" items="${ attach }">
-				<p>${ attach.get("SATT_NAME") }${ attach.get("SATT_SIZE") }</p>
-			</c:forEach>
+			<c:set var="attach" value="${ attach }"/>
+				<p><a href="./fileDown.do?sbr_uuid=${ view.get('SBR_UUID') }">${ attach.get("SATT_NAME") }</a>
+				<c:set var="size" value="12345"/>
+				<fmt:formatNumber value="${size}" pattern = "#######.##"/>${ attach.get('SATT_SIZE')/1000 }KB</p>
 		</td>
 	</tr>
 	<tr>

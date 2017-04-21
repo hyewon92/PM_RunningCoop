@@ -82,9 +82,9 @@ public interface UserSysBoardService {
 	/**
 	 * 첨부파일 조회 메소드
 	 * @param sbr_uuid
-	 * @return 첨부파일 정보를 Dto로 반환
+	 * @return 첨부파일 정보를 Map로 반환
 	 */
-	public List<Map<String, String>> sysAttachSelect(Map<String, String> map);
+	public Map<String, String> sysAttachSelect(Map<String, String> map);
 	
 	
 }

@@ -73,7 +73,7 @@ public interface SysBoardDao {
 	 * @param map sbr_uuid에 게시글 고유값을 담아 전송
 	 * @return 해당하는 조건의 첨부파일을 list로 반환
 	 */
-	public List<Map<String, String>> sysAttachSelect(Map<String, String> map);
+	public Map<String, String> sysAttachSelect(Map<String, String> map);
 	
 	/**
 	 * 공지게시판 게시글 작성

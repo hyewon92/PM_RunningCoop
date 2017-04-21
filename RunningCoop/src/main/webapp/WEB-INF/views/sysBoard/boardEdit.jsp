@@ -41,13 +41,12 @@ tr, th, td {
 		<div>
 			<fieldset>
 				<legend>첨부파일</legend>
-				<c:forEach var="attach" items="${ attach }">
+				<c:set var="attach" value="${ attach }" />
 					<p>
 						<input type="hidden" name="satt_seq" value="${ attach.get('SATT_SEQ') }" />
 						<a href="#">${ attach.get("SATT_NAME") }</a>
-						${ attach.get("SATT_SIZE") }
+						${ attach.get("SATT_SIZE")/1024 }KB
 					</p>
-				</c:forEach>
 			</fieldset>
 		</div>
 		

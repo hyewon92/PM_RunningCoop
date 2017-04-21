@@ -4,14 +4,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +25,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-import com.pm.rc.dto.SbAttachDto;
-import com.pm.rc.dto.SystemBoardDto;
 import com.pm.rc.model.service.UserSysBoardService;
 
 @Controller
@@ -44,6 +45,8 @@ public class SysBoardController {
 	// 공지 게시글 목록
 	@RequestMapping(value = "/noticeList.do", method = RequestMethod.GET)
 	public String noticeList(Model model, HttpSession session){
+		
+		logger.info("================== 공지 게시판으로 이동 ==================");
 
 		List<Map<String, String>> list = null;
 		list = service.noticeListSelect();
@@ -56,9 +59,14 @@ public class SysBoardController {
 	// 공지 게시글 검색 목록
 	@RequestMapping(value = "/noticeSList.do", method = RequestMethod.POST)
 	public String noticeSList(Model model, HttpServletRequest request){
+		
 		String sbr_title = request.getParameter("sbr_title");
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("sbr_title", sbr_title);
+		
+		logger.info("================== 공지 게시글 검색 ==================");
+		logger.info("검색할 제목 : "+sbr_title);
+		logger.info("================================================");
 
 		List<Map<String, String>> list = null;
 		list = service.noticeSearchSelect(map);
@@ -82,8 +90,13 @@ public class SysBoardController {
 
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("sbr_uuid", sbr_uuid);
+		
+		logger.info("================== 공지 게시글 보기 ==================");
+		logger.info("현재 접속 중인 세션 : "+sessionId);
+		logger.info("조회할 게시글 번호 : "+sbr_uuid);
+		logger.info("================================================");
 
-		List<Map<String, String>> list = null;
+		Map<String, String> list = null;
 		list = service.sysAttachSelect(map);
 
 		model.addAttribute("view", view);
@@ -107,11 +120,17 @@ public class SysBoardController {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("sbr_uuid", sbr_uuid);
 		map.put("sbr_pw", sbr_pw);
+		
+		logger.info("================== 공지 게시글 보기 ==================");
+		logger.info("현재 접속 중인 세션 : "+sessionId);
+		logger.info("조회할 게시글 번호 : "+sbr_uuid);
+		logger.info("게시글 비밀번호 : "+sbr_pw);
+		logger.info("================================================");
 
 		Map<String, String> view = new HashMap<String, String>();
 		view = service.sysBoardViewSelect(map);
 
-		List<Map<String, String>> list = null;
+		Map<String, String> list = null;
 		list = service.sysAttachSelect(map);
 
 		String page = "";
@@ -133,6 +152,8 @@ public class SysBoardController {
 	// 문의 게시판 목록 출력
 	@RequestMapping(value="/qnaList.do", method = RequestMethod.GET)
 	public String qnaList(Model model){
+		
+		logger.info("================== 문의 게시판으로 이동 ==================");
 
 		List<Map<String, String>> list = null;
 		list = service.qnaListSelect();
@@ -145,9 +166,14 @@ public class SysBoardController {
 	// 문의 게시글 검색 목록 출력
 	@RequestMapping(value="/qnaSList.do", method = RequestMethod.POST)
 	public String qnaSList(Model model, HttpServletRequest request){
+		
 		String sbr_title = request.getParameter("sbr_title");
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("sbr_title", sbr_title);
+		
+		logger.info("================== 문의 게시글 검색 ==================");
+		logger.info("검색할 제목 : "+sbr_title);
+		logger.info("================================================");
 
 		List<Map<String, String>> list = null;
 		list = service.qnaSearchSelect(map);
@@ -160,12 +186,13 @@ public class SysBoardController {
 	// 게시글 작성페이지로 이동
 	@RequestMapping(value="/writeForm.do", method = RequestMethod.GET)
 	public String boardWrite(){
+		logger.info("================== 게시글 작성 페이지 이동 ==================");
 		return "sysBoard/boardWrite";
 	}
 
 	// 게시글 작성 폼
 	@RequestMapping(value="/boardWrite.do", method = RequestMethod.POST)
-	public String test05(HttpServletRequest request, HttpSession session){
+	public String doWriteForm(HttpServletRequest request, HttpSession session){
 		String mem_id = (String) session.getAttribute("mem_id");
 
 		//UUID 생성 메소드
@@ -181,7 +208,7 @@ public class SysBoardController {
 
 		// multipartRequest 객체를 생성하기 위한 세팅
 		//실제 파일이 저장될 경로
-		String savePath = "C:\\Users\\bin\\git\\PM_RunningCoop\\RunningCoop\\src\\main\\webapp\\WEB-INF\\files\\";
+		String savePath = "C:\\Users\\fileSave\\";
 		//파일 크기 제한 (5MB)
 		int maxFileSize = 1024 * 1024 * 5;
 
@@ -275,7 +302,7 @@ public class SysBoardController {
 		Map<String, String> view = new HashMap<String, String>();
 		view = service.editBoardViewSelect(map);
 		
-		List<Map<String, String>> attach = null;
+		Map<String, String> attach = null;
 		attach = service.sysAttachSelect(map);
 
 		model.addAttribute("view", view);
@@ -300,19 +327,15 @@ public class SysBoardController {
 		Map<String, String> uuid = new HashMap<String, String>();
 		uuid.put("sbr_uuid", sbr_uuid);
 
-		List<Map<String, String>> attach = null;
+		Map<String, String> attach = null;
 		attach = service.sysAttachSelect(uuid);
 
-		if(attach != null){
-			for(int i = 0; i < attach.size(); i++){
-				String savePath = ""+attach.get(i).get("SATT_PATH");
-				String fileName = ""+attach.get(i).get("SATT_RNAME");
+		String savePath = ""+attach.get("SATT_PATH");
+		String fileName = ""+attach.get("SATT_RNAME");
 
-				File file = new File(savePath+fileName);
+		File file = new File(savePath+fileName);
 
-				file.delete();
-			}
-		}
+		file.delete();
 
 		isc = service.qnaBoardDelete(sbr_uuid);
 
@@ -321,6 +344,39 @@ public class SysBoardController {
 		} else {
 			return "redirect:/qnaList.do";
 		}
+	}
+	
+	@RequestMapping(value="/fileDown.do", method=RequestMethod.GET)
+	public void fileDownload(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		String sbr_uuid = request.getParameter("sbr_uuid");
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("sbr_uuid", sbr_uuid);
+		
+		Map<String, String> file = new HashMap<String, String>();
+		file = service.sysAttachSelect(map);
+		
+		String path = file.get("SATT_PATH");
+		String fileName = file.get("SATT_RNAME");
+		String newFileName = file.get("SATT_NAME");
+		
+		String filePath = path + fileName;
+		
+		logger.info("================== 파일 다운로드  ==================");
+		logger.info("다운로드할 파일명 :"+fileName);
+		logger.info("파일 경로 :"+path);
+		logger.info("반환할 파일 명 :"+newFileName);
+		logger.info("===============================================");
+		
+		byte fileByte[] = FileUtils.readFileToByteArray(new File(filePath));
+		
+		response.setContentType("application/octet-stream");
+		response.setContentLength(fileByte.length);
+		response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(newFileName, "UTF-8")+"\";");
+		response.setHeader("Content-Transfer_Encoding", "binary");
+		
+		response.getOutputStream().write(fileByte);
+		response.getOutputStream().flush();
+		response.getOutputStream().close();
 	}
 
 	// UUID 생성 메소드

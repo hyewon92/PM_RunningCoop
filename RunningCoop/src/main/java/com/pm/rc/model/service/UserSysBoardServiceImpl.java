@@ -97,7 +97,7 @@ public class UserSysBoardServiceImpl implements UserSysBoardService {
 	}
 
 	@Override
-	public List<Map<String, String>> sysAttachSelect(Map<String, String> map) {
+	public Map<String, String> sysAttachSelect(Map<String, String> map) {
 		return sysBoardDao.sysAttachSelect(map);
 	}
 

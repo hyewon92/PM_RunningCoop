@@ -37,12 +37,6 @@
 		history.back();
 	}
 	
-	function input_view(){
-		var input_file = "<input type='file' name='sbr_name'/>";
-		var input_file_size = "<input type='hidden' name='sbr_size'/>";
-		var br = "<br/>"
-		$("#file_attach_list").append(input_file).append(input_size).append(br);
-	}
 </script>
 <style type="text/css">
 .formTable {
@@ -79,7 +73,8 @@
 						<jsp:include page="daumOpenEditor.jsp" flush="false"></jsp:include>
 			<fieldset id="file_attach_list">
 				<legend>첨부파일</legend>
-				<button onclick="input_view()">추가</button><br>
+				<input type="file" id="file" name="sbr_name"/>
+				<input type="hidden" id="filesize" name="sbr_size" />
 			</fieldset>
 	</form>
 
