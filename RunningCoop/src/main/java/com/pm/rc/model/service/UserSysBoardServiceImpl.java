@@ -3,6 +3,7 @@ package com.pm.rc.model.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import com.pm.rc.model.dao.SysBoardDao;
 
 @Service
 public class UserSysBoardServiceImpl implements UserSysBoardService {
-	
+
 	@Autowired
 	private SysBoardDao sysBoardDao;
 
@@ -49,31 +50,29 @@ public class UserSysBoardServiceImpl implements UserSysBoardService {
 		}
 		return view;
 	}
-	
+
 	@Override
 	public Map<String, String> editBoardViewSelect(Map<String, String> map){
 		Map<String, String> view = new HashMap<String, String>();
 		view = sysBoardDao.editBoardViewSelect(map);
 		return view;
 	};
-	
-	public List<Map<String, SbAttachDto>> editAttachViewSelect(Map<String, String> map){
-		List<Map<String, SbAttachDto>> attach = null;
-		attach = sysBoardDao.sysAttachSelect(map);
-		return attach;
-	};
 
 	@Override
-	public boolean qnaBoardInsert(SystemBoardDto dto, SbAttachDto satt) {
-		boolean board = sysBoardDao.qnaBoardInsert(dto);
-		boolean attach = sysBoardDao.FileInsert(satt);
-		boolean isc = false;
-		if(board == true && attach == true){
-			isc = true;
-		} else {
-			isc = false;
+	public boolean qnaBoardInsert(Map<String, Object> map) {
+
+		boolean board = sysBoardDao.qnaBoardInsert(map);
+		boolean attach = false;
+
+		if(map.get("satt_name") != null){
+			attach = sysBoardDao.FileInsert(map);
 		}
-		return isc;
+
+		if(board == true && attach == true){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
@@ -98,10 +97,11 @@ public class UserSysBoardServiceImpl implements UserSysBoardService {
 	}
 
 	@Override
-	public List<Map<String, SbAttachDto>> sysAttachSelect(Map<String, String> map) {
+	public List<Map<String, String>> sysAttachSelect(Map<String, String> map) {
 		return sysBoardDao.sysAttachSelect(map);
 	}
 
-	
+
+
 
 }

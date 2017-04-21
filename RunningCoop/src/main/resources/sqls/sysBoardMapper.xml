@@ -96,20 +96,20 @@
 	</select>
 
 	<!-- 문의게시판 글 작성 -->
-	<insert id="qnaBoardInsert" parameterType="SystemBoardDto">
+	<insert id="qnaBoardInsert" parameterType="java.util.Map">
 		INSERT INTO
 		RC_SYSBOARD
 		(SBR_UUID, MEM_ID, SBR_TITLE, SBR_CONTENT, SBR_SCRYN,
 		SBR_PW, SBR_NOTICEYN, SBR_REFER, SBR_REGDATE)
 		VALUES
 		(#{sbr_uuid},
-		#{mem_id}, #{sbr_title}, #{sbr_content}, #{sbr_scrYN}, #{sbr_pw}, 'N',
+		#{mem_id}, #{sbr_title}, #{sbr_content}, #{sbr_scryn}, #{sbr_pw}, 'N',
 		(SELECT NVL(MAX(SBR_REFER)+1, 1) FROM RC_SYSBOARD)
 		, SYSDATE)
 	</insert>
 	
 	<!-- 첨부파일 등록 -->
-	<insert id="FileInsert" parameterType="SbAttachDto">
+	<insert id="FileInsert" parameterType="java.util.Map">
 		INSERT INTO RC_SYSATTACH (SATT_SEQ, SBR_UUID, SATT_NAME, SATT_SIZE, SATT_RNAME, SATT_PATH)
 			VALUES
 		(SYSATTACH_SEQ.NEXTVAL, #{sbr_uuid}, #{satt_name}, #{satt_size}, #{satt_rname}, #{satt_path})

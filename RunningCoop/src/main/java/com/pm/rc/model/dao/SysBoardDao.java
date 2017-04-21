@@ -73,35 +73,35 @@ public interface SysBoardDao {
 	 * @param map sbr_uuid에 게시글 고유값을 담아 전송
 	 * @return 해당하는 조건의 첨부파일을 list로 반환
 	 */
-	public List<Map<String, SbAttachDto>> sysAttachSelect(Map<String, String> map);
+	public List<Map<String, String>> sysAttachSelect(Map<String, String> map);
 	
 	/**
 	 * 공지게시판 게시글 작성
 	 * @param dto 입력받은  정보를 dto형태로 전송
 	 * @return 작성 성공하면 true, 실패하면 false
 	 */
-	public boolean noticeBoardInsert(SystemBoardDto dto);
+	public boolean noticeBoardInsert(Map<String, Object> map);
 	
 	/**
 	 * 문의게시판 게시글 작성
 	 * @param dto 입력받은 정보를 dto형태로 전송
 	 * @return 작성 성공하면 true, 실패하면 false
 	 */
-	public boolean qnaBoardInsert (SystemBoardDto dto);
+	public boolean qnaBoardInsert (Map<String, Object> map);
 	
 	/**
 	 * 관리자가 문의글에 답글을 작성
 	 * @param dto : 입력한 정보를 dto형태로 전송
 	 * @return 등록 성공하면 true, 실패하면 false
 	 */
-	public boolean qnaReplyInsert (SystemBoardDto dto);
+	public boolean qnaReplyInsert (Map<String, Object> map);
 	
 	/**
 	 * 게시글 작성 시 파일 업로드
 	 * @param dto 입력받은 정보를 dto형태로 전송
 	 * @return 작성 성공하면 true, 실패하면 false
 	 */
-	public boolean FileInsert (SbAttachDto dto);
+	public boolean FileInsert (Map<String, Object> map);
 	
 	/**
 	 * 게시글 수정 (공지/문의 통합)

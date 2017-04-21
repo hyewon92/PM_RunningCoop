@@ -75,22 +75,22 @@ public class SysBoardDaoImpl implements SysBoardDao {
 	}
 
 	@Override
-	public List<Map<String, SbAttachDto>> sysAttachSelect(Map<String, String> map) {
-		List<Map<String, SbAttachDto>> attach = null;
+	public List<Map<String, String>> sysAttachSelect(Map<String, String> map) {
+		List<Map<String, String>> attach = null;
 		attach = sqlSession.selectList(NAMESPACE+"sysAttachSelect", map);
 		return attach;
 	}
 	
 	@Override
-	public boolean noticeBoardInsert(SystemBoardDto dto) {
+	public boolean noticeBoardInsert(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean qnaBoardInsert(SystemBoardDto dto) {
+	public boolean qnaBoardInsert(Map<String, Object> map) {
 		boolean isc = false;
-		int num = sqlSession.insert(NAMESPACE+"qnaBoardInsert", dto);
+		int num = sqlSession.insert(NAMESPACE+"qnaBoardInsert", map);
 		if(num > 0){
 			isc = true;
 		} else {
@@ -100,15 +100,15 @@ public class SysBoardDaoImpl implements SysBoardDao {
 	}
 
 	@Override
-	public boolean qnaReplyInsert(SystemBoardDto dto) {
+	public boolean qnaReplyInsert(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean FileInsert(SbAttachDto dto) {
+	public boolean FileInsert(Map<String, Object> map) {
 		boolean isc = false;
-		int num = sqlSession.insert(NAMESPACE+"FileInsert", dto);
+		int num = sqlSession.insert(NAMESPACE+"FileInsert", map);
 		if(num > 0){
 			isc = true;
 		}

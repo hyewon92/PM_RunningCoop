@@ -66,7 +66,11 @@
 	</tr>
 	<tr>
 		<th>첨부파일</th>
-		<td>${ view.get("SATT_NAME") }, ${ view.get("SATT_SIZE") }</td>
+		<td>
+			<c:forEach var="attach" items="${ attach }">
+				<p>${ attach.get("SATT_NAME") }${ attach.get("SATT_SIZE") }</p>
+			</c:forEach>
+		</td>
 	</tr>
 	<tr>
 		<td colspan="2">${ view.get("SBR_CONTENT") }</td>
