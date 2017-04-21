@@ -45,7 +45,7 @@ public interface GroupDao {
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean grInsert1(Map<String, Object> map);
+	public boolean grInsert1(Map<String, String> map);
 	
 	/**
 	 * 그룹 생성--2.그룹소속테이블

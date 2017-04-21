@@ -5,8 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>개인정보 수정</title>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js">
-</script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 	function pw_chk(){
 		if($("#pw").val()!=$("#pw2").val()){

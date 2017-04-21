@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
+import com.pm.rc.util.logExecute;
 
 @Repository
 public class GroupDaoImp implements GroupDao{
@@ -44,14 +45,17 @@ public class GroupDaoImp implements GroupDao{
 	}
 
 	@Override
-	public boolean grInsert1(Map<String, Object> map) {
-		return false;
+	public boolean grInsert1(Map<String, String> map) {
+		logger.info("grInsert1 작동결과 그룹생성" );
+		int rst = sqlSession.insert(NAMESPACE+"grInsert1", map);
+		return rst>0? true:false;
 	}
 
 	@Override
 	public boolean grInsert2(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		logger.info("grInsert2 작동결과 그룹생성2");
+		int rst = sqlSession.insert(NAMESPACE+"grInsert2",map);
+		return rst>0? true:false;
 	}
 
 	@Override

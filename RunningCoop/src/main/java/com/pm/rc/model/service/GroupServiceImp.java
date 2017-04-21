@@ -37,9 +37,12 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public boolean grInsert(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return false;
+	@Transactional
+	public boolean grInsert(Map<String, String> map) {
+		boolean rst = false;
+		rst = groupdao.grInsert1(map);
+		rst = groupdao.grInsert2(map);
+		return rst;
 	}
 
 	@Override

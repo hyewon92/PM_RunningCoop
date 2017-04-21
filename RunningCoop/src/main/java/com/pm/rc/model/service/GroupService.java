@@ -43,7 +43,7 @@ public interface GroupService {
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean grInsert(Map<String, Object> map);
+	public boolean grInsert(Map<String, String> map);
 	
 	/**
 	 * 그룹 정보 수정

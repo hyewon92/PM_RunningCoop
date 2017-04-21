@@ -2,10 +2,13 @@ package com.pm.rc.control;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,8 +29,11 @@ import com.pm.rc.model.service.GroupService;
 @Controller
 public class GroupController {
 	
+	
 	//8. log처리를 위한 logger객체 생성
 	Logger logger = LoggerFactory.getLogger(GroupController.class);
+	
+	private String GroupId = "";
 	
 	// 23. IoC Autowired를 통해 실행되는 Service를 선언
 	@Autowired
@@ -136,38 +142,66 @@ public class GroupController {
 	
 	@RequestMapping(value="/groupAccept.do" )
 	public String grWaitAccept (HttpServletRequest req){
+		String grid = req.getParameter("gr_id");
 		logger.info("그룹 가입신청 수락 시작");
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("mem_id", req.getParameter("mem_id"));
 		map.put("gr_id",req.getParameter("gr_id"));
 		boolean n = service.grMemInsert(map);
 		
-		return "redirect:/memModi.do";
+		return "redirect:/memModi.do?gr_id="+grid;
 	}
 	@RequestMapping(value="/grouprefusal.do")
 	public String groupAccept (HttpServletRequest req){
+		String gr_id = req.getParameter("gr_id");
 		logger.info("그룹거절 시작");
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("mem_id", req.getParameter("mem_id"));
+		map.put("gr_Id", req.getParameter("gr_id"));
 		service.grMemReject(map);
 		
-		return "redirect:/memModi.do";
+		return "redirect:/memModi.do?gr_id="+gr_id;
 	}
 	
 	@RequestMapping(value="/gbListSelect.do")
 	public String gbListSelect(String gr_id , Model model){
 		logger.info("그룹게시판 목록출력");
+		GroupId = gr_id;
 		List<GroupBoardDto> lists = service.gbListSelect(gr_id);
 		model.addAttribute("gblist" , lists);
 		return "Group/grboradList";
 	}
 	@RequestMapping(value="/bordeMultDelet.do" ,method=RequestMethod.GET)
-	public String grbdMultDelet(String[] cnkUuid){
+	public String grbdMultDelet(String[] cnkUuid ){
 		logger.info("그룹게시판 다중삭제");
 		service.gboardDelete(cnkUuid);
 		
-		return "redirect:/memModi.do";
+		return "redirect:/gbListSelect.do?gr_id="+GroupId;
 	}
-
+	@RequestMapping(value="/groupCreate.do" , method=RequestMethod.POST)
+	public String grCreate(Map<String, String> map , HttpServletRequest req){
+		logger.info("그룹생성 시작");
+		Date date = new Date();
+	      SimpleDateFormat dateForm = new SimpleDateFormat("yyMMdd");
+	      String id_1 = "GR";
+	      String id_2 = dateForm.format(date).toString();
+	      String uuid = createUUID();
+	      System.out.println(uuid);
+	      String id_3 = uuid.substring(uuid.lastIndexOf("-")+9);
+	      System.out.println(id_3);
+	      String gr_id = id_1+id_2+id_3;
+	      
+	      map.put("gr_id", gr_id);
+	      map.put("gr_name", req.getParameter("gr_name"));
+	      map.put("gr_goal", req.getParameter("gr_goal"));
+	      map.put("mem_id", req.getParameter("mem_id"));
+	      
+		return "good";
+	}
 	
+	
+	public String createUUID(){
+	      return UUID.randomUUID().toString();
+	   }
+
 }

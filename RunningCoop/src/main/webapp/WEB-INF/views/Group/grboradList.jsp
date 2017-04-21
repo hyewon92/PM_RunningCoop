@@ -40,8 +40,8 @@
 		<td style="display: none;">${bdlist.br_noticeYN}</td>
 	</tr>
 	</c:forEach>
+	
 	</table>
 </form>
-
 </body>
 </html>
