@@ -48,13 +48,6 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
-		<!-- AspectJ -->
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>${org.aspectj-version}</version>
-		</dependency>
-
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -180,11 +173,11 @@
 		</dependency>
 
 		<!-- Aspect 처리 -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.aspectj</groupId> -->
-		<!-- <artifactId>aspectjrt</artifactId> -->
-		<!-- <version>${org.aspectj-version}</version> -->
-		<!-- </dependency> -->
+		<dependency>
+		<groupId>org.aspectj</groupId>
+		<artifactId>aspectjrt</artifactId>
+		<version>${org.aspectj-version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -224,6 +217,19 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>4.3.7.RELEASE</version>
 		</dependency>
+		
+		  <!-- Commons FileUpload 라이브러리 -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+         
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
 		
 	</dependencies>
 

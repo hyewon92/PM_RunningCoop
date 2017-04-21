@@ -1,14 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>시스템게시판 글쓰기 화면(사용자 문의글)</title>
-
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery-latest.js"></script>
+<link rel="stylesheet" href="daumOpenEditor/css/editor.css" type="text/css" charset="utf-8" />
+<script src="daumOpenEditor/js/editor_loader.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
+	/* 비밀글 체크 시 비밀번호 입력가능한 인풋박스 출력 script */
 	$(document).ready(function() {
 		$("#sbr_scryn").click(function() {
 			var chkyn = $(this).is(":checked");
@@ -18,21 +18,30 @@
 				$("#sbr_pw").css("display", "none");
 			}
 		});
-
-		$("#file").bind('change', function() {
-			var maxFileSize = 1024 * 1024 * 5;
-			var InputFileSize = this.files[0].size;
-			if (InputFileSize > maxFileSize) {
-				alert("파일이 너무 큽니다");
-				$(this).val("");
+		
+		/* file의 크기를 구하는 script */
+	$("#file").bind('change', function() {
+		var maxFileSize = 1024 * 1024 * 5;
+		var InputFileSize = this.files[0].size;
+		if (InputFileSize > maxFileSize) {
+			alert("파일이 너무 큽니다");
+			$(this).val("");
 			} else {
 				$("#filesize").val(InputFileSize);
 			}
 		});
 	});
-
+	
+	/* 목록으로 돌아가는 script */
 	function back() {
 		history.back();
+	}
+	
+	function input_view(){
+		var input_file = "<input type='file' name='sbr_name'/>";
+		var input_file_size = "<input type='hidden' name='sbr_size'/>";
+		var br = "<br/>"
+		$("#file_attach_list").append(input_file).append(input_size).append(br);
 	}
 </script>
 <style type="text/css">
@@ -59,31 +68,28 @@
 <body>
 	<form id="boardWrite" action="./boardWrite.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="mem_id" value="${ mem_id }" />
-						<span> 제목 </span>
-						<input type="textbox" name="sbr_title" />
-						<input type="checkbox" id="sbr_scryn" name="sbr_scryn" />비밀글
-						<input type="textbox" id="sbr_pw" name="sbr_pw"
-							style="display: none" />
+			<div>
+				<span> 제목 </span>
+				<input type="textbox" name="sbr_title" />
+			</div>
+			<div>
+						<input type="checkbox" id="sbr_scryn" name="sbr_scryn" /><span>비밀글</span>
+						<input type="textbox" id="sbr_pw" name="sbr_pw" style="display: none" />
+			</div>			
 						<jsp:include page="daumOpenEditor.jsp" flush="false"></jsp:include>
-						<span> 첨부파일 </span>
-						<input type="file" id="file" name="satt_name" /> <input
-							type="hidden" id="filesize" name="satt_size" />
+			<fieldset id="file_attach_list">
+				<legend>첨부파일</legend>
+				<button onclick="input_view()">추가</button><br>
+			</fieldset>
 	</form>
-	
+
+<!-- 다음 에디터 함수 -->
 <script type="text/javascript">
 	/* 예제용 함수 */
 	function saveContent() {
 		Editor.save(); // 이 함수를 호출하여 글을 등록하면 된다.
 	}
 
-	/**
-	 * Editor.save()를 호출한 경우 데이터가 유효한지 검사하기 위해 부르는 콜백함수로
-	 * 상황에 맞게 수정하여 사용한다.
-	 * 모든 데이터가 유효할 경우에 true를 리턴한다.
-	 * @function
-	 * @param {Object} editor - 에디터에서 넘겨주는 editor 객체
-	 * @returns {Boolean} 모든 데이터가 유효할 경우에 true
-	 */
 	function validForm(editor) {
 		// Place your validation logic here
 
@@ -98,14 +104,6 @@
 		return true;
 	}
 
-	/**
-	 * Editor.save()를 호출한 경우 validForm callback 이 수행된 이후
-	 * 실제 form submit을 위해 form 필드를 생성, 변경하기 위해 부르는 콜백함수로
-	 * 각자 상황에 맞게 적절히 응용하여 사용한다.
-	 * @function
-	 * @param {Object} editor - 에디터에서 넘겨주는 editor 객체
-	 * @returns {Boolean} 정상적인 경우에 true
-	 */
 	function setForm(editor) {
         var i, input;
         var form = editor.getForm();
@@ -117,8 +115,6 @@
         textarea.value = content;
         form.createField(textarea);
 
-        /* 아래의 코드는 첨부된 데이터를 필드를 생성하여 값을 할당하는 부분으로 상황에 맞게 수정하여 사용한다.
-         첨부된 데이터 중에 주어진 종류(image,file..)에 해당하는 것만 배열로 넘겨준다. */
         var images = editor.getAttachments('image');
         for (i = 0; i < images.length; i++) {
             // existStage는 현재 본문에 존재하는지 여부
