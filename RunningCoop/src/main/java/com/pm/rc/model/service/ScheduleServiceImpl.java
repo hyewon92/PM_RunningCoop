@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pm.rc.dto.ProjectDto;
 import com.pm.rc.dto.ScheduleDto;
 import com.pm.rc.model.dao.ScheduleDao;
 
@@ -25,7 +26,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public List<ScheduleDto> mySchSelect(String mem_id) {
+	public List<ProjectDto> mySchSelect(String mem_id) {
 		return scheduleDao.mySchSelect(mem_id);
 	}
 

@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.pm.rc.dto.ProjectDto;
 import com.pm.rc.dto.ScheduleDto;
 
 @Repository
@@ -31,8 +32,8 @@ public class ScheduleDaoImpl implements ScheduleDao {
 	}
 
 	@Override
-	public List<ScheduleDto> mySchSelect(String mem_id) {
-		List<ScheduleDto> lists = new ArrayList<ScheduleDto>();
+	public List<ProjectDto> mySchSelect(String mem_id) {
+		List<ProjectDto> lists = new ArrayList<ProjectDto>();
 		lists = sqlSession.selectList(NAMESPACE+"mySchSelect", mem_id);
 		return lists;
 	}

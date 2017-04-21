@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.pm.rc.dto.ProjectDto;
 import com.pm.rc.dto.ScheduleDto;
 import com.pm.rc.model.service.ScheduleService;
 
@@ -29,7 +30,7 @@ public class ScheduleController {
 	@RequestMapping(value = "/viewSchedule.do")
 	public String viewSchedule(HttpSession session, HttpServletRequest req){
 		String mem_id = (String)session.getAttribute("mem_id");
-		List<ScheduleDto> list = new ArrayList<ScheduleDto>();
+		List<ProjectDto> list = new ArrayList<ProjectDto>();
 		list = scheduleService.mySchSelect(mem_id);
 		req.setAttribute("list", list);
 		logger.info("viewSchedule실행");

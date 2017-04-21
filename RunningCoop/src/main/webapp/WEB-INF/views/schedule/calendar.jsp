@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
-<%@ page import="com.pm.rc.dto.ScheduleDto"%>
+<%@ page import="com.pm.rc.dto.ProjectDto"%>
 <%@ page import="java.util.Calendar" %>
 <!DOCTYPE>
 <html>
@@ -65,17 +65,17 @@
 	}
 	
 	//달력에 일정목록 출력
-	public String schListView(int year, int month, int day, List<ScheduleDto> lists){
-		for(ScheduleDto dto:lists){
+	public String schListView(int year, int month, int day, List<ProjectDto> lists){
+		for(ProjectDto dto:lists){
 			System.out.println(dto);
 			String s_year = dateForm(String.valueOf(year));
 			String s_month = dateForm(String.valueOf(month));
 			String date = s_year+s_month;
-			int startDate = Integer.parseInt(dto.getSch_startDate().substring(6, 8));
-			int endDate = Integer.parseInt(dto.getSch_endDate().substring(6, 8));
-			if(dto.getSch_startDate().substring(0, 6).equals(date)&&dto.getSch_endDate().substring(0, 6).equals(date)&&day<=startDate&&endDate<=day){
-				System.out.println(dto.getSch_startDate()+":"+dto.getSch_title());
-				return dto.getSch_title();
+			int startDate = Integer.parseInt(dto.getScheduleDto().getSch_startDate().substring(6, 8));
+			int endDate = Integer.parseInt(dto.getScheduleDto().getSch_endDate().substring(6, 8));
+			if(dto.getScheduleDto().getSch_startDate().substring(0, 6).equals(date)&&dto.getScheduleDto().getSch_endDate().substring(0, 6).equals(date)&&startDate<=day&&day<=endDate){
+				System.out.println(dto.getScheduleDto().getSch_startDate()+":"+dto.getScheduleDto().getSch_title());
+				return dto.getScheduleDto().getSch_prosYN().equals("Y") ? "("+dto.getPr_name()+"팀)"+dto.getScheduleDto().getSch_title():dto.getScheduleDto().getSch_title();
 			}
 		}
 		return "";
@@ -88,7 +88,7 @@
 	System.out.println("year:"+cyear+"/month:"+cmonth);
 	
 	//회원 일정 목록
-	ArrayList<ScheduleDto> lists = (ArrayList<ScheduleDto>)request.getAttribute("list");
+	ArrayList<ProjectDto> lists = (ArrayList<ProjectDto>)request.getAttribute("list");
 	
 	//칼랜더 객체 생성
 	Calendar cal = Calendar.getInstance();

@@ -2,6 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pm.rc.scheduleMapper">
 
+	<resultMap type = "ProjectDto" id = "SchProDto">
+		<result property = "scheduleDto.sch_seq" column="SCH_SEQ"/>
+		<result property = "scheduleDto.mem_id" column="MEM_ID"/>
+		<result property = "scheduleDto.sch_startDate" column="SCH_STARTDATE"/>
+		<result property = "scheduleDto.sch_endDate" column="SCH_ENDDATE"/>
+		<result property = "scheduleDto.sch_title" column="SCH_TITLE"/>
+		<result property = "scheduleDto.pr_id" column="PR_ID"/>
+		<result property = "pr_name" column="PR_NAME"/>
+		<result property = "scheduleDto.sch_prosYN" column="SCH_PROSYN"/>
+	</resultMap>
+
 	<!-- 팀 일정 등록 -->
 	<insert id="teamSchInsert">
 		INSERT INTO RC_SCHEDULE (SCH_SEQ, PR_ID, SCH_TITLE, SCH_CONTENT, SCH_STARTDATE, SCH_ENDDATE, SCH_PROSYN)
@@ -31,10 +42,14 @@
 	</delete>
 	
 	<!-- 일정 조회 -->
-	<select id="mySchSelect" parameterType="java.lang.String" resultType="ScheduleDto">
-		SELECT S.SCH_SEQ, TO_CHAR(S.SCH_STARTDATE,'YYYYMMDDHHMI') SCH_STARTDATE, TO_CHAR(S.SCH_ENDDATE,'YYYYMMDDHHMI') SCH_ENDDATE, S.SCH_TITLE 
-  		FROM RC_SCHEDULE S
-		WHERE S.MEM_ID = #{mem_id} OR S.PR_ID IN (SELECT P.PR_ID FROM RC_PROMEM P WHERE P.MEM_ID = #{mem_id})
+	<select id="mySchSelect" parameterType="java.lang.String" resultMap="SchProDto">
+		SELECT S.SCH_SEQ, S.MEM_ID, TO_CHAR(S.SCH_STARTDATE,'YYYYMMDDHHMI') SCH_STARTDATE, TO_CHAR(S.SCH_ENDDATE,'YYYYMMDDHHMI') SCH_ENDDATE, S.SCH_TITLE,  P.PR_ID, P.PR_NAME, S.SCH_PROSYN 
+  		FROM RC_SCHEDULE S, RC_PROJECT P
+		WHERE (S.PR_ID = P.PR_ID(+) AND S.SCH_PROSYN = 'N' AND S.MEM_ID = #{mem_id})
+		UNION
+		SELECT S.SCH_SEQ, S.MEM_ID, TO_CHAR(S.SCH_STARTDATE,'YYYYMMDDHHMI') SCH_STARTDATE, TO_CHAR(S.SCH_ENDDATE,'YYYYMMDDHHMI') SCH_ENDDATE, S.SCH_TITLE,  P.PR_ID, P.PR_NAME, S.SCH_PROSYN 
+  		FROM RC_SCHEDULE S, RC_PROJECT P
+		WHERE (P.PR_ID = S.PR_ID AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id}) AND S.SCH_PROSYN = 'Y')
 	</select>
 
 </mapper>

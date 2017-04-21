@@ -14,6 +14,7 @@ public class ProjectDto {
 	private String pr_regDate;
 	private String pr_condition;
 	private String pr_delYN;
+	private ScheduleDto scheduleDto;
 	
 	public ProjectDto(){}
 
@@ -113,6 +114,14 @@ public class ProjectDto {
 		this.pr_delYN = pr_delYN;
 	}
 
+	public ScheduleDto getScheduleDto() {
+		return scheduleDto;
+	}
+
+	public void setScheduleDto(ScheduleDto scheduleDto) {
+		this.scheduleDto = scheduleDto;
+	}
+
 	@Override
 	public String toString() {
 		return "ProjectDto [pr_id=" + pr_id + ", pr_name=" + pr_name
@@ -121,7 +130,7 @@ public class ProjectDto {
 				+ pr_endDate + ", pr_proRate=" + pr_proRate + ", pr_searchYN="
 				+ pr_searchYN + ", pr_etc=" + pr_etc + ", pr_regDate="
 				+ pr_regDate + ", pr_condition=" + pr_condition + ", pr_delYN="
-				+ pr_delYN + "]";
+				+ pr_delYN + ", scheduleDto=" + scheduleDto + "]";
 	}
 
 }

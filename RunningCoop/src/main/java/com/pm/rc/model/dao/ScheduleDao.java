@@ -1,8 +1,8 @@
 package com.pm.rc.model.dao;
 
 import java.util.List;
-import java.util.Map;
 
+import com.pm.rc.dto.ProjectDto;
 import com.pm.rc.dto.ScheduleDto;
 
 /**
@@ -33,7 +33,7 @@ public interface ScheduleDao {
 	 * @return  List&lt;ScheduleDto&gt;
 	 * @author 김혜원
 	 * */
-	public List<ScheduleDto> mySchSelect(String mem_id);
+	public List<ProjectDto> mySchSelect(String mem_id);
 	
 	/**
 	 * 개인 일정 등록
