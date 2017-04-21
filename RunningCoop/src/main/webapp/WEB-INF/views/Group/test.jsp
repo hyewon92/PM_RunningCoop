@@ -26,6 +26,8 @@
 		<option label="${test1.gr_name }"></option>
 	</c:forEach>
 </select>
+
+<p><input type="button" onclick="location.href='./grApply.do'">
 	
 </body>
 </html>

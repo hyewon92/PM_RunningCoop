@@ -24,6 +24,7 @@ import com.pm.rc.dto.GroupBoardDto;
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.model.service.GroupService;
+import com.pm.rc.model.service.ManagerService;
 
 //4. dispatcher에 의해 연결된 Class @Controller 생성
 @Controller
@@ -38,6 +39,9 @@ public class GroupController {
 	// 23. IoC Autowired를 통해 실행되는 Service를 선언
 	@Autowired
 	private GroupService service;
+	
+	@Autowired
+	private ManagerService managserService;
 	
 	//5. mapping 메소드
 	@RequestMapping(value = "/first.do", method = RequestMethod.GET)
@@ -206,8 +210,22 @@ public class GroupController {
 	      
 		return "good";
 	}
-	
-	
+	@RequestMapping(value="/grApply.do")
+	public String groupApply(Model model){
+		List<GroupDto> lists = managserService.grApplySelect();
+		model.addAttribute("Apply",lists);
+		return "Group/grApply";
+	}
+	@RequestMapping(value="/grApplyYse.do" , method=RequestMethod.POST)
+	public String grApplyYse(String[] gr_id){
+		managserService.grAppModify(gr_id);
+		return "gooooodddd";
+	}
+	@RequestMapping(value="/grApplyNo.do" , method=RequestMethod.POST)
+	public String grApplyNo(String[] gr_id){
+		
+		return null;
+	}
 	public String createUUID(){
 	      return UUID.randomUUID().toString();
 	   }

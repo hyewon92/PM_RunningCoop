@@ -33,7 +33,7 @@ public interface ManagerService {
 	 * @return boolean
 	 * @author 라한솔
 	 */
-	public boolean grDelete (String gr_id);
+	public boolean grDelete (String[] gr_id);
 	
 	/**
 	 * 회원 목록 출력 
@@ -56,7 +56,7 @@ public interface ManagerService {
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean grAppModify(String gr_id);	
+	public boolean grAppModify(String[] gr_id);	
 	
 	/**
 	 * 공지사항 등록

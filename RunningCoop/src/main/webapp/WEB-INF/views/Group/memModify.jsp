@@ -43,7 +43,6 @@
 		if(rst){
 			location.href = "./groupDelete.do?"
 		}
-		
 	}
 	
 

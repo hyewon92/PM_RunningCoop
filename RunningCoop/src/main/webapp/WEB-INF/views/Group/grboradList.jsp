@@ -33,7 +33,8 @@
 		</tr>
 	<c:forEach var="bdlist" items="${gblist}" varStatus="status">
 		<tr>
-		<td><input type="checkbox" value="${bdlist.br_uuid}" name="cnkUuid"></td><td>${bdlist.br_title}</td>
+		<td><input type="checkbox" value="${bdlist.br_uuid}" name="cnkUuid"></td>
+		<td>${bdlist.br_title}</td>
 		<td>${bdlist.memberdto.mem_name}</td>
 		<td>${bdlist.br_regDate }</td>
 		<td style="display: none;">${bdlist.br_uuid}</td>
