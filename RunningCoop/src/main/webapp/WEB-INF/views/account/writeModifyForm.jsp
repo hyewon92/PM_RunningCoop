@@ -15,6 +15,7 @@
 			$("#pw").val("");
 		}else{
 			alert("비밀번호가 확인됐습니다.");
+			$("#modifyInfo").prop("disabled", false);
 		}
 	}
 	$(function(){

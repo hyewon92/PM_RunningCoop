@@ -41,7 +41,7 @@
 		WHERE SCH_SEQ = #{sch_seq}
 	</delete>
 	
-	<!-- 일정 조회 -->
+	<!-- 일정 목록 조회 -->
 	<select id="mySchSelect" parameterType="java.lang.String" resultMap="SchProDto">
 		SELECT S.SCH_SEQ, S.MEM_ID, TO_CHAR(S.SCH_STARTDATE,'YYYYMMDDHHMI') SCH_STARTDATE, TO_CHAR(S.SCH_ENDDATE,'YYYYMMDDHHMI') SCH_ENDDATE, S.SCH_TITLE,  P.PR_ID, P.PR_NAME, S.SCH_PROSYN 
   		FROM RC_SCHEDULE S, RC_PROJECT P
@@ -51,5 +51,12 @@
   		FROM RC_SCHEDULE S, RC_PROJECT P
 		WHERE (P.PR_ID = S.PR_ID AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id}) AND S.SCH_PROSYN = 'Y')
 	</select>
+	
+	<!-- 일정 상세내용 조회 -->
+	<select id="mySchView" parameterType="java.lang.String" resultType="ScheduleDto">
+		SELECT SCH_SEQ, TO_CHAR(SCH_STARTDATE,'YYYY-MM-DD HH:MI') SCH_STARTDATE, TO_CHAR(SCH_STARTDATE,'YYYY-MM-DD HH:MI') SCH_ENDDATE, SCH_TITLE, SCH_CONTENT
+		FROM RC_SCHEDULE
+		WHERE SCH_SEQ = #{sch_Seq}
+	</select>	
 
 </mapper>

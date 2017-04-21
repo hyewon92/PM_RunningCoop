@@ -29,6 +29,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public List<ProjectDto> mySchSelect(String mem_id) {
 		return scheduleDao.mySchSelect(mem_id);
 	}
+	
+	@Override
+	public ScheduleDto mySchView(String sch_seq) {
+		return scheduleDao.mySchView(sch_seq);
+	}
 
 	@Override
 	public boolean schInsert(ScheduleDto dto) {

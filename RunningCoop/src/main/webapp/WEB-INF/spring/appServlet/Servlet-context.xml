@@ -20,6 +20,7 @@
 			<mvc:exclude-mapping path="/searchAccount.do"/>
 			<mvc:exclude-mapping path="/searchId.do"/>
 			<mvc:exclude-mapping path="/searchPw.do"/>
+			<mvc:exclude-mapping path="/pwMailSending.do"/>
 			<mvc:exclude-mapping path="/resultPw.do"/>
 			<mvc:exclude-mapping path="/goJoin.do"/>
 			<mvc:exclude-mapping path="/ckJoin.do"/>

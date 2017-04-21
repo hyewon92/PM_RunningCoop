@@ -36,6 +36,14 @@ public interface ScheduleService {
 	public List<ProjectDto> mySchSelect(String mem_id);
 	
 	/**
+	 * 일정 상세정보 조회
+	 * @param sch_seq 일정 시퀀스 번호
+	 * @return  ScheduleDto
+	 * @author 김혜원
+	 * */
+	public ScheduleDto mySchView(String sch_seq);
+	
+	/**
 	 * 개인 일정 등록
 	 * @param dto ScheduleDto객체
 	 * @return boolean

@@ -13,33 +13,100 @@
 	#calendar th{
 		background-color: aqua;
 	} 
+	
 	#calendar td{
 		background-color: #ffe4c4; 
 		height: 80px;
 		vertical-align: top;
 	}
+	
 	a{
 		text-decoration: none; 
 	}
+	
 	#list div{
 		background-color: orange;
 	}
+	
 	#list{
 	font-size: 8pt;
 	}
+	
 	.plus{
 		width:15px;
 		height: 15px;
 		float: right;
 	}
+	
 	.arrow{
 		width:30px;
 		height:30px;
 	}
+	
 	b{
 		font-size: 30pt;
 	}
+	
+	.scheduleDetail{
+		border: 1px solid gray;
+		border-collapse: collapse;
+		display: none;
+	}
+	
+	.scheduleBox{
+		border: 1px solid gray;
+		border-collapse: collapse;
+		display: none;
+	}
 </style>
+
+<script type="text/javascript" src = "http://code.jquery.com/jquery-latest.js"></script>
+
+<script type="text/javascript">
+	function showDetail(val){
+		$.ajax({
+			type : "POST",
+			url : "./detailSchedule.do",
+			data: "sch_seq="+val,
+			async: false,
+			success: function(msg){
+				showSchDetail(msg)
+			}
+		});
+	}
+	
+	function showSchDetail(schedule){
+		var sch_startDate = schedule.dto.sch_startDate;
+		var sch_endDate = schedule.dto.sch_endDate;
+		var sch_title = schedule.dto.sch_title;
+		var sch_content = schedule.dto.sch_content;
+		
+		$("#sch_startDate").text("시작:"+sch_startDate);
+		$("#sch_endDate").text("종료:"+sch_endDate);
+		$("#sch_title").text(sch_title);
+		$("#sch_content").text(sch_content);
+		
+		$(".scheduleDetail").css("display", "block");
+	}
+	
+	function openWriteForm(val1, val2, val3){
+		var array = [val1, val2, val3];
+		var day = array.join("-");
+		alert(typeof day);
+		$(".scheduleBox").css("display", "block");
+		$("#sch_startDateVal").val(day);
+		$("#sch_endDateVal").val(day);
+	}
+	
+	$(function(){
+		$(".scheduleBox").submit(function(){
+			var startTotal = $("#sch_startDate").val()+" "+$("#sch_startTime").val();
+			$("#startTotal").val(startTotal);
+			var endTotal = $("#sch_endDate").val()+" "+$("#sch_endTime").val();
+			$("#endTotal").val(endTotal);
+		});
+	});
+</script>
 </head>
 
 <%!
@@ -58,8 +125,9 @@
 	public String schWrite(int year, String month, String date){
 		System.out.println("month="+month);
 		System.out.println("date="+date);
-		return "<a href = './writeSchedule.do?year="+year+"&month="+month+"&date="+date+"'>"
-				+"<img class = 'plus' alt = '일정등록' src = 'images/plus.png'>";
+		
+		 /* "<a href = './writeSchedule.do?year="+year+"&month="+month+"&date="+date+"'>" */
+		return	"<img class = 'plus' alt = '일정등록' src = 'images/plus.png' onclick='openWriteForm(\""+year+"\",\""+month+"\",\""+date+"\")'>";
 	}
 	
 	//날짜 형식 맞추기(두자리:0x~31)
@@ -75,6 +143,7 @@
 			String s_month = dateForm(String.valueOf(month));
 			String date = s_year+s_month;
 			String title = dto.getScheduleDto().getSch_title();
+			String event = "<span class = 'listChk' onclick = 'showDetail("+dto.getScheduleDto().getSch_seq()+")'>[조회]</span>";
 			
 			int startDate = Integer.parseInt(dto.getScheduleDto().getSch_startDate().substring(6, 8));
 			int endDate = Integer.parseInt(dto.getScheduleDto().getSch_endDate().substring(6, 8));
@@ -83,7 +152,7 @@
 				if(dto.getScheduleDto().getSch_prosYN().equals("Y")){
 					title = dto.getPr_name()+":"+title;
 				}
-				return title.length()>=5 ? title.substring(0, 6)+"..":title;
+				return title.length()>5 ? title.substring(0, 6)+".."+event:title+event;
 			}
 		}
 		return "";
@@ -177,6 +246,45 @@
 		%>
 		</tr>
 	</table>
+	
+	<!-- 일정 상세정보 출력부분 -->
+	<table class = "scheduleDetail">
+		<tr>
+			<td id = "sch_startDate"></td>
+			<td id = "sch_endDate"></td>
+		</tr>
+		<tr>
+			<td id = "sch_title" colspan = "2"></td>
+		</tr>
+		<tr>
+			<td id = "sch_content" colspan = "2"></td>
+		</tr>
+	</table>
+	
+	<!-- 일정 등록 부분 -->
+	<%
+		String mem_id = (String)session.getAttribute("mem_id");
+	%>
+	
+	<form class = "scheduleBox" action="./insertSchedule.do" method="post">	
+		<div>
+		<input type = "hidden" name = "mem_id" value = <%=mem_id%>>
+		시작
+		<input type="date" id = "sch_startDateVal">
+		<input type = "time" id = "sch_startTime">
+		<input type = "hidden" id = "startTotal" name = "sch_startDate">
+		~
+		종료<input type="date" id = "sch_endDateVal">
+		<input type = "time" id = "sch_endTime">
+		<input type = "hidden" id = "endTotal" name = "sch_endDate">
+		<br>
+		제목:<input type="text" name = "sch_title"><br>
+		내용:<input type="text" name = "sch_content">
+		</div>
+		<div>
+			<input type = "submit" value = "등록">
+		</div>
+	</form>
 
 </body>
 </html>

@@ -81,6 +81,7 @@ public class ProjectController {
 	@RequestMapping(value="/detailPro.do", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> proDetail(HttpServletRequest request){
+		logger.info("proDetail실행");
 		String pr_id = request.getParameter("pr_id");
 		Map<String, String> map = new HashMap<String, String>();
 		map = service.prDetailSelect(pr_id);
