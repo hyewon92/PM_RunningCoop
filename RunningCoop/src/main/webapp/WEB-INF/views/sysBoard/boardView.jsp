@@ -69,8 +69,7 @@
 		<td>
 			<c:set var="attach" value="${ attach }"/>
 				<p><a href="./fileDown.do?sbr_uuid=${ view.get('SBR_UUID') }">${ attach.get("SATT_NAME") }</a>
-				<c:set var="size" value="12345"/>
-				<fmt:formatNumber value="${size}" pattern = "#######.##"/>${ attach.get('SATT_SIZE')/1000 }KB</p>
+				(${ attach.get('SATT_SIZE')/1000 }KB)</p>
 		</td>
 	</tr>
 	<tr>

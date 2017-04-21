@@ -17,11 +17,11 @@ public interface WorkListService {
 	
 	/**
 	 * 업무리스트 조회
-	 * @param pr_id 프로젝트아이디
-	 * @return List&lt;WorkListDto&gt;
+	 * @param pr_id 프로젝트아이디와 dao 실행 조건이 담긴 키값을 담은 map
+	 * @return List로 전체업무리스트 반환
 	 * @author 김혜원
 	 * */
-	public List<WorkListDto> wkListSelect(String pr_id);
+	public List<Map<String, String>> wkListSelect(Map<String, String> map);
 	
 	/**
 	 * 프로젝트 업무 리스트 추가

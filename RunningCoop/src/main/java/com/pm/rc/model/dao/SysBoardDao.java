@@ -108,14 +108,14 @@ public interface SysBoardDao {
 	 * @param dto : 입력받은 정보를 dto형태로 전송
 	 * @return 수정 성공하면 true, 실패하면 false
 	 */
-	public boolean sysBoardUpdate (SystemBoardDto dto);
+	public boolean sysBoardUpdate (Map<String, String> map);
 	
 	/**
 	 * 수정되는 게시글의 첨부파일을 수정 (공지/문의 통합)
 	 * @param dto : 입력받은 정보를 dto형태로 전송
 	 * @return 수정 성공하면 true, 실패하면 false
 	 */
-	public boolean FileUpdate (SbAttachDto dto);
+	public boolean FileUpdate (Map<String, String> map);
 	
 	/**
 	 * 게시글 삭제 (공지/문의 통합)

@@ -75,7 +75,7 @@
 			<div class="pr_list">
 				<p>${ list.pr_id }</p>
 				<span class="pr_detail" onclick="detailPro('${ list.pr_id}')">정보보기</span>
-				<p onclick="goToProject('${ list. pr_id }')">${ list.pr_name }</p>
+				<p onclick="goToProject('${ list.pr_id }')">${ list.pr_name }</p>
 				<p>${ list.pr_proRate }</p>
 				<p>${ list.pr_endDate }</p>
 			</div>

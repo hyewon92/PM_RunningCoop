@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pm.rc.worklist">
+
+	<select id="wkListSelect1" parameterType="java.lang.String" resultType="java.util.Map">
+		SELECT W.WK_ID, W.WK_TITLE, M.MEM_NAME, W.WK_PRORATE
+  		FROM RC_WORKLIST W, RC_MEMBER M
+  		WHERE W.PR_ID = #{pr_id} AND W.WK_PRORATE = 0 AND W.MEM_ID = M.MEM_ID AND WK_DELYN = 'N'
+	</select>
+	
+	<select id="wkListSelect2" parameterType="java.lang.String" resultType="java.util.Map">
+  		<![CDATA[
+		SELECT W.WK_ID, W.WK_TITLE, M.MEM_NAME, W.WK_PRORATE
+  		FROM RC_WORKLIST W, RC_MEMBER M
+  		WHERE W.PR_ID = #{pr_id} AND W.WK_PRORATE > 0 AND W.WK_PRORATE < 100 AND W.MEM_ID = M.MEM_ID AND WK_DELYN = 'N'
+  		]]>
+	</select>
+	
+	<select id="wkListSelect3" parameterType="java.lang.String" resultType="java.util.Map">
+		SELECT W.WK_ID, W.WK_TITLE, M.MEM_NAME, W.WK_PRORATE
+ 		FROM RC_WORKLIST W, RC_MEMBER M
+  		WHERE W.PR_ID = #{pr_id} AND W.WK_PRORATE = 100 AND W.MEM_ID = M.MEM_ID AND WK_DELYN = 'N'
+	</select>
+</mapper>

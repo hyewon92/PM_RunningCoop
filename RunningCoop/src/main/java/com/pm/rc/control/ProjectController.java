@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pm.rc.dto.ProjectDto;
 import com.pm.rc.model.service.ProjectService;
+import com.pm.rc.model.service.WorkListService;
 
 @Controller
 public class ProjectController {
@@ -27,6 +28,9 @@ public class ProjectController {
 	
 	@Autowired
 	private ProjectService service;
+	
+	@Autowired
+	private WorkListService wService;
 	
 	// 메인화면에서 그룹 프로젝트 선택
 	@RequestMapping(value="/gProSelect.do", method=RequestMethod.GET)
@@ -90,9 +94,33 @@ public class ProjectController {
 	
 	// 프로젝트 진행화면 이동
 	@RequestMapping(value="/goProject.do", method=RequestMethod.GET)
-	public String goToProject(HttpServletRequest request){
+	public String goToProject(Model model, HttpServletRequest request){
 		String pr_id = request.getParameter("pr_id");
-		Map<String, String> list = new HashMap<String, String>();
+		
+		logger.info("=================== 프로젝트 업무리스트 보기 =======================");
+		logger.info("업무리스트를 볼 프로젝트 id :"+pr_id);
+		logger.info("===========================================================");
+		
+		List<Map<String, String>> todo = null;
+		List<Map<String, String>> doing = null;
+		List<Map<String, String>> done = null;
+		
+		Map<String, String> map = new HashMap<String, String>();
+		
+		map.put("pr_id", pr_id);
+		map.put("wk_condition", "todo");
+		todo = wService.wkListSelect(map);
+		
+		map.replace("wk_condition", "doing");
+		doing = wService.wkListSelect(map);
+		
+		map.replace("wk_condition", "done");
+		done = wService.wkListSelect(map);
+		
+		model.addAttribute("todo", todo);
+		model.addAttribute("doing", doing);
+		model.addAttribute("done", done);
+		
 		return "project/workList";
 	}
 	

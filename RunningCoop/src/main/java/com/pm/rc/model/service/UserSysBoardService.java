@@ -69,7 +69,7 @@ public interface UserSysBoardService {
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean qnaBoardEdit(SystemBoardDto dto, SbAttachDto satt);
+	public boolean qnaBoardEdit(Map<String, String> map);
 	
 	/**
 	 * 문의 게시글 삭제

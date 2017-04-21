@@ -66,6 +66,8 @@ public class UserSysBoardServiceImpl implements UserSysBoardService {
 
 		if(map.get("satt_name") != null){
 			attach = sysBoardDao.FileInsert(map);
+		} else {
+			attach = true;
 		}
 
 		if(board == true && attach == true){
@@ -76,9 +78,22 @@ public class UserSysBoardServiceImpl implements UserSysBoardService {
 	}
 
 	@Override
-	public boolean qnaBoardEdit(SystemBoardDto dto, SbAttachDto satt) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean qnaBoardEdit(Map<String, String> map) {
+		
+		boolean updateBoard = sysBoardDao.sysBoardUpdate(map);
+		boolean updateFile = false;
+		
+		if(map.get("satt_name")!=null){
+			updateFile = sysBoardDao.FileUpdate(map);
+		} else {
+			updateFile = true;
+		}
+		
+		if( updateBoard == true && updateFile == true){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

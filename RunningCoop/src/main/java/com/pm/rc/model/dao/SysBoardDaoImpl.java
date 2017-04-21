@@ -116,15 +116,25 @@ public class SysBoardDaoImpl implements SysBoardDao {
 	}
 
 	@Override
-	public boolean sysBoardUpdate(SystemBoardDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean sysBoardUpdate(Map<String, String> map) {
+		boolean isc = false;
+		int num = sqlSession.update(NAMESPACE+"sysBoardUpdate", map);
+		if(num > 0){
+			isc = true;
+		}else{
+			isc = false;
+		}
+		return isc;
 	}
 
 	@Override
-	public boolean FileUpdate(SbAttachDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean FileUpdate(Map<String, String> map) {
+		int num = sqlSession.update(NAMESPACE+"fileUpdate", map);
+		if(num > 0){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

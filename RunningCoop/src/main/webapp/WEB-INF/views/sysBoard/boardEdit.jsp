@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="daumOpenEditor/css/editor.css" type="text/css" charset="utf-8" />
 <script src="daumOpenEditor/js/editor_loader.js" type="text/javascript" charset="utf-8"></script>
 <script src="daumOpenEditor/js/editor_creator.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 
 <style type="text/css">
 table {
@@ -26,27 +27,56 @@ tr, th, td {
 	function back() {
 		history.back();
 	}
+	
+	/* 비밀글 체크 시 비밀번호 입력가능한 인풋박스 출력 script */
+	$(document).ready(function() {
+		$("#sbr_scryn").click(function() {
+			var chkyn = $(this).is(":checked");
+			if (chkyn == true) {
+				$("#sbr_pw").css("display", "block");
+			} else if (chkyn == false) {
+				$("#sbr_pw").css("display", "none");
+			}
+		});
+	
+	$("#file").bind('change', function() {
+		var maxFileSize = 1024 * 1024 * 5;
+		var InputFileSize = this.files[0].size;
+		if (InputFileSize > maxFileSize) {
+			alert("파일이 너무 큽니다");
+			$(this).val("");
+			} else {
+				$("#filesize").val(InputFileSize);
+			}
+		});
+	});
 </script>
 
 </head>
 <body>
-	<input type="hidden" value="${ sbr_uuid }" />
 	<c:set var="view" value="${ view }" />
 	<form id="boardEdit" action="./boardEdit.do" method="post" enctype="multipart/form-data">
 	
 		<div>
+		<input type="hidden" name="sbr_uuid" value="${ view.get('SBR_UUID') }"/>
 			<span>제목</span>
 			<input type="textbox" name="sbr_title" value="${ view.get('SBR_TITLE') }" />
 		</div>
 		<div>
+						<input type="checkbox" id="sbr_scryn" name="sbr_scryn" /><span>비밀글</span>
+						<input type="textbox" id="sbr_pw" name="sbr_pw" style="display: none" />
+			</div>
+		<div>
 			<fieldset>
 				<legend>첨부파일</legend>
 				<c:set var="attach" value="${ attach }" />
-					<p>
-						<input type="hidden" name="satt_seq" value="${ attach.get('SATT_SEQ') }" />
-						<a href="#">${ attach.get("SATT_NAME") }</a>
-						${ attach.get("SATT_SIZE")/1024 }KB
+					<p>기존파일 : 
+						${ attach.get("SATT_NAME") }(${ attach.get("SATT_SIZE")/1024 }KB)
 					</p>
+					<p> 새로운 파일
+					<input type="hidden" id="filesize" name="satt_size" value=""/>
+					<input type="file" id="file" name="satt_name"/>
+					</p> 
 			</fieldset>
 		</div>
 		

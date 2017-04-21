@@ -18,26 +18,26 @@ public interface WorkListDao {
 	/**
 	 * 업무리스트 조회--1.진행중
 	 * @param pr_id 프로젝트아이디
-	 * @return List&lt;WorkListDto&gt;
+	 * @return List로 업무리스트 반환
 	 * @author 김혜원
 	 * */
-	public List<WorkListDto> wkListSelect1(String pr_id);
+	public List<Map<String, String>> wkListSelect1(Map<String, String> map);
 	
 	/**
 	 * 업무리스트 조회--2.진행예정
 	 * @param pr_id 프로젝트아이디
-	 * @return List&lt;WorkListDto&gt;
+	 * @return List 로 업무리스트 반환
 	 * @author 김혜원
 	 * */
-	public List<WorkListDto> wkListSelect2(String pr_id);
+	public List<Map<String, String>> wkListSelect2(Map<String, String> map);
 	
 	/**
-	 * 업무리스트 조회--2.진행온료
+	 * 업무리스트 조회--3.진행완료
 	 * @param pr_id 프로젝트아이디
-	 * @return List&lt;WorkListDto&gt;
+	 * @return List map 으로 업무리스트 반환
 	 * @author 김혜원
 	 * */
-	public List<WorkListDto> wkListSelect3(String pr_id);
+	public List<Map<String, String>> wkListSelect3(Map<String, String> map);
 	
 	/**
 	 * 프로젝트 업무 리스트 추가

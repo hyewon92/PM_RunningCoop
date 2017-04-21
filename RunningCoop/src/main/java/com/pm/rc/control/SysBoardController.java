@@ -208,7 +208,7 @@ public class SysBoardController {
 
 		// multipartRequest 객체를 생성하기 위한 세팅
 		//실제 파일이 저장될 경로
-		String savePath = "C:\\Users\\fileSave\\";
+		String savePath = "C:\\RC_fileSave\\";
 		//파일 크기 제한 (5MB)
 		int maxFileSize = 1024 * 1024 * 5;
 
@@ -296,6 +296,7 @@ public class SysBoardController {
 	public String boardEditPageMove(HttpServletRequest request, Model model){
 		String sbr_uuid = request.getParameter("sbr_uuid");
 		
+		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("sbr_uuid", sbr_uuid);
 
@@ -313,9 +314,105 @@ public class SysBoardController {
 
 	// 게시글 수정
 	@RequestMapping(value="/boardEdit.do", method = RequestMethod.POST)
-	public String BoardEdit(Model model){
+	public String BoardEdit(Model model, HttpServletRequest request){
+		
+		// multipartRequest 객체를 생성하기 위한 세팅
+		//실제 파일이 저장될 경로
+		String savePath = "C:\\RC_fileSave\\";
+		//파일 크기 제한 (5MB)
+		int maxFileSize = 1024 * 1024 * 5;
 
-		return null;
+		try {
+			MultipartRequest multi = new MultipartRequest(request, savePath, maxFileSize, "UTF-8", new DefaultFileRenamePolicy());
+			
+			String sbr_uuid = (String) multi.getParameter("sbr_uuid");
+			
+			logger.info("바꿀 게시글 uuid : "+sbr_uuid);
+			
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("sbr_uuid", sbr_uuid);
+			
+			String oldFileName = multi.getFilesystemName("satt_name");
+			map.put("satt_name", oldFileName);
+			
+			if(oldFileName != null){
+				
+				// 기존 파일 삭제
+				Map<String, String> originFile = new HashMap<String, String>();
+				originFile = service.sysAttachSelect(map);
+				
+				File delFile = new File(originFile.get("SATT_PATH")+originFile.get("SATT_RNAME"));
+				delFile.delete();
+				
+				// 새 파일 이름으로 바꾸기 위한 uuid 생성
+				String fuuid = createUUID();
+				int indexnum = fuuid.lastIndexOf("-");
+				String file_uuid = fuuid.substring(indexnum+1);
+
+				String newFileName = file_uuid + oldFileName;
+
+				// 첨부파일 실제경로 저장
+				File OldFile = new File(savePath + oldFileName);
+				File NewFile = new File(savePath + newFileName);
+
+				byte[] buf = new byte[1024];
+				FileInputStream fin = null;
+				FileOutputStream fot = null;
+				int read = 0;
+
+				if( !OldFile.renameTo(NewFile)){
+					buf = new byte[1024];
+					read = 0;
+					fin = new FileInputStream(OldFile);
+					fot = new FileOutputStream(NewFile);
+
+					while((read=fin.read(buf, 0, buf.length))!=1){
+						fot.write(buf, 0, buf.length);
+					}
+
+					fin.close();
+					fot.close();
+
+					OldFile.delete();
+				}
+
+				// 첨부파일 등록 (DB)
+				map.put("satt_rname", newFileName);
+				map.put("satt_size", multi.getParameter("satt_size"));
+				map.put("satt_path", savePath);
+			}
+
+			// 게시글 등록 (DB)
+			map.put("sbr_title", multi.getParameter("sbr_title"));
+			map.put("sbr_content", multi.getParameter("sbr_content"));
+			
+			String scrpw = multi.getParameter("sbr_pw");
+
+			boolean isc = false;
+
+			// scrpw에 값이 들어오면 비밀글로 등록, 값이 없으면 공개글로 등록
+			if(scrpw != null && scrpw.length() > 0){
+				String sbr_scryn = "Y";
+				map.put("sbr_scryn", sbr_scryn);
+				map.put("sbr_pw", scrpw);
+				isc = service.qnaBoardEdit(map);
+			} else if (scrpw == null || scrpw.length() == 0){
+				String sbr_scryn = "N";
+				map.put("sbr_scryn", sbr_scryn);
+				map.put("sbr_pw", scrpw);
+				isc = service.qnaBoardEdit(map);
+			}
+
+			if(isc == true){
+				System.out.println("문의게시판 게시글 수정 성공");
+			} else {
+				System.out.println("문의게시판 게시글 수정 실패");
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "redirect:/qnaList.do";
 	}
 
 	// 게시글 삭제

@@ -68,7 +68,7 @@
 		<th>첨부파일</th>
 		<td>
 			<c:set var="attach" value="${ attach }"/>
-				<p><a href="./fileDown.do?satt_seq=${ attach.get('SATT_SEQ') }">${ attach.get("SATT_NAME") }</a>${ attach.get("SATT_SIZE") }</p>
+				<p><a href="./fileDown.do?sbr_uuid=${ view.get('SBR_UUID') }">${ attach.get("SATT_NAME") }</a>(${ attach.get("SATT_SIZE")/1024 }KB)</p>
 		</td>
 	</tr>
 	<tr>
