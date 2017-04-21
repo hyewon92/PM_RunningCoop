@@ -24,6 +24,9 @@
 	#list div{
 		background-color: orange;
 	}
+	#list{
+	font-size: 8pt;
+	}
 	.plus{
 		width:15px;
 		height: 15px;
@@ -71,11 +74,16 @@
 			String s_year = dateForm(String.valueOf(year));
 			String s_month = dateForm(String.valueOf(month));
 			String date = s_year+s_month;
+			String title = dto.getScheduleDto().getSch_title();
+			
 			int startDate = Integer.parseInt(dto.getScheduleDto().getSch_startDate().substring(6, 8));
 			int endDate = Integer.parseInt(dto.getScheduleDto().getSch_endDate().substring(6, 8));
 			if(dto.getScheduleDto().getSch_startDate().substring(0, 6).equals(date)&&dto.getScheduleDto().getSch_endDate().substring(0, 6).equals(date)&&startDate<=day&&day<=endDate){
 				System.out.println(dto.getScheduleDto().getSch_startDate()+":"+dto.getScheduleDto().getSch_title());
-				return dto.getScheduleDto().getSch_prosYN().equals("Y") ? "("+dto.getPr_name()+"팀)"+dto.getScheduleDto().getSch_title():dto.getScheduleDto().getSch_title();
+				if(dto.getScheduleDto().getSch_prosYN().equals("Y")){
+					title = dto.getPr_name()+":"+title;
+				}
+				return title.length()>=5 ? title.substring(0, 6)+"..":title;
 			}
 		}
 		return "";
