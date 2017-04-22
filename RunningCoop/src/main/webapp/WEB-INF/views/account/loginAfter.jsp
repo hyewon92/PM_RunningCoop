@@ -37,7 +37,7 @@
 	<input type="text" name="gr_name" />
 	<input type="submit" value="그룹검색"/>
 </div>
-<input type = "button" value = "로그아웃" onclick = "location.href='./ckLogout.do'">
 </form>
+<input type = "button" value = "로그아웃" onclick = "location.href='./ckLogout.do'">
 </body>
 </html>

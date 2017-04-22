@@ -24,8 +24,8 @@ public class ManagerServiceimpl implements ManagerService {
 
 	@Override
 	public List<GroupDto> grApplySelectGr(String gr_name) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return managerdao.grApplySelectGr(gr_name);
 	}
 
 	@Override
@@ -33,8 +33,8 @@ public class ManagerServiceimpl implements ManagerService {
 	public boolean grDelete(String[] gr_id) {
 		boolean rst = false;
 		for(int i = 0 ; i< gr_id.length; i++){
-			rst = managerdao.grDelete(gr_id[i]);
 			rst = managerdao.grDelete2(gr_id[i]);
+			rst = managerdao.grDelete(gr_id[i]);
 		}
 		return rst;
 	}

@@ -27,7 +27,14 @@
 	</c:forEach>
 </select>
 
-<p><input type="button" onclick="location.href='./grApply.do'">
+<p><input type="button" onclick="location.href='./grApply.do'" value="그룹승인관리"></p>
+
+<form action="./grApplySelectGroup.do" method="post">
+<div>
+	<input type="text" name="gr_name" />
+	<input type="submit" value="그룹검색"/>
+</div>
+</form>
 	
 </body>
 </html>

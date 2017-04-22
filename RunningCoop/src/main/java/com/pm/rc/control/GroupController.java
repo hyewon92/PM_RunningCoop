@@ -31,6 +31,10 @@ import com.pm.rc.model.service.ManagerService;
 public class GroupController {
 	
 	
+	public String createUUID(){
+		return UUID.randomUUID().toString();
+	}
+	
 	//8. log처리를 위한 logger객체 생성
 	Logger logger = LoggerFactory.getLogger(GroupController.class);
 	
@@ -212,22 +216,29 @@ public class GroupController {
 	}
 	@RequestMapping(value="/grApply.do")
 	public String groupApply(Model model){
+		logger.info("그룹생성신청리스트출력시작");
 		List<GroupDto> lists = managserService.grApplySelect();
 		model.addAttribute("Apply",lists);
 		return "Group/grApply";
 	}
 	@RequestMapping(value="/grApplyYse.do" , method=RequestMethod.POST)
 	public String grApplyYse(String[] gr_id){
+		logger.info("그룹생성승인시작");
 		managserService.grAppModify(gr_id);
 		return "gooooodddd";
 	}
 	@RequestMapping(value="/grApplyNo.do" , method=RequestMethod.POST)
 	public String grApplyNo(String[] gr_id){
+		logger.info("그룹승인거절시작");
+		managserService.grDelete(gr_id);
 		
-		return null;
+		return "grApplyNooooooooooooo";
 	}
-	public String createUUID(){
-	      return UUID.randomUUID().toString();
-	   }
+	
+	@RequestMapping(value="/grApplySelectGroup.do" , method=RequestMethod.POST)
+	public String grApplySelectGroup(String gr_name){
+		managserService.grApplySelectGr(gr_name);
+		return "grApplySelectGroupppppppppppp";
+	}
 
 }

@@ -31,8 +31,9 @@ public class ManagerDaoimpl implements ManagerDao {
 
 	@Override
 	public List<GroupDto> grApplySelectGr(String gr_name) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("그룹생성신청 그룹이름으로 검색 시작");
+		List<GroupDto> lists = sqlSession.selectList(NAMESPACE+"grApplySelectGr" , gr_name);
+		return lists;
 	}
 
 	@Override
