@@ -67,6 +67,10 @@
 		</tr>
 	</c:forEach>
 </table>	
+
+
+
+
 	</form>
 			<input type="submit" value="azx">
 	<h1>가입 신청 리스트</h1>

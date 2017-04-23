@@ -21,6 +21,11 @@ public class ManagerServiceimpl implements ManagerService {
 	public List<GroupDto> grApplySelect() {
 		return managerdao.grApplySelect();
 	}
+	
+	@Override
+	public List<GroupDto> grApplySelectGroup(String gr_id) {
+		return managerdao.grApplySelectGroup(gr_id);
+	}
 
 	@Override
 	public List<GroupDto> grApplySelectGr(String gr_name) {
@@ -102,5 +107,7 @@ public class ManagerServiceimpl implements ManagerService {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+
 
 }

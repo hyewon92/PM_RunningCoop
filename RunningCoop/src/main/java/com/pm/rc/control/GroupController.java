@@ -84,8 +84,11 @@ public class GroupController {
 		model.addAttribute("grSelect" , lists);
 		return "Group/grmodify";
 	}
-	@RequestMapping(value="/realGrmodify.do", method= RequestMethod.GET)
+	@RequestMapping(value="/realGrmodify.do", method= RequestMethod.POST)
 	public String grmodify (Model model, HttpServletRequest request){
+		String retrGrid = request.getParameter("gr_id");
+		
+		System.out.println("grrrrrrrrrrrrrrrrrrrrrrrrrrrridddddddddddddddddddddddddddddddddddddddddddddddd"+retrGrid);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("gr_id", request.getParameter("gr_id"));
 		map.put("gr_goal", request.getParameter("gr_goal"));
@@ -93,7 +96,7 @@ public class GroupController {
 		map.put("gr_joinyn", request.getParameter("gr_joinyn"));
 		logger.info("그룹수정 수정입니다");
 		service.grModify(map);
-		return "Group/grmodify";
+		return "redirect:/grmodify.do?gr_id="+retrGrid;
 	}
 	
 	@RequestMapping(value="/allGrSelect.do", method=RequestMethod.POST)
@@ -165,8 +168,8 @@ public class GroupController {
 		logger.info("그룹거절 시작");
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("mem_id", req.getParameter("mem_id"));
-		map.put("gr_Id", req.getParameter("gr_id"));
-		service.grMemReject(map);
+		map.put("gr_id",req.getParameter("gr_id"));
+		boolean n = service.grMemReject(map);
 		
 		return "redirect:/memModi.do?gr_id="+gr_id;
 	}
@@ -240,5 +243,15 @@ public class GroupController {
 		managserService.grApplySelectGr(gr_name);
 		return "grApplySelectGroupppppppppppp";
 	}
+	@RequestMapping(value="/groupInfoChild.do" )
+	public String groupInfoChild(String gr_id , Model model){
+		List<GroupDto> lists = managserService.grApplySelectGroup(gr_id);
+		model.addAttribute("info" , lists);
+		
+		return "Group/applyChild";
+	}
+	
+	
+	
 
 }

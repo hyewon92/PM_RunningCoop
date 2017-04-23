@@ -2,6 +2,8 @@ package com.pm.rc.model.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.SystemBoardDto;
@@ -117,5 +119,11 @@ public interface ManagerDao {
 	 * @author 김혜원
 	 * */
 	public boolean qnaReplyDelete(String sbr_uuid);
-
+	
+	/**
+	 * 그룹승인화면에서 그룹선택시 간략정보 출력
+	 * @param String gr_Id
+	 * @return List&lt;GroupDto&gt;
+	 */
+	public List<GroupDto> grApplySelectGroup(String gr_id);
 }

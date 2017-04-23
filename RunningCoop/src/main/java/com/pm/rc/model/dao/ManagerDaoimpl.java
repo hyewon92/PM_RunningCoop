@@ -28,6 +28,13 @@ public class ManagerDaoimpl implements ManagerDao {
 		List<GroupDto> lists = sqlSession.selectList(NAMESPACE+"grApplySelect");
 		return lists;
 	}
+	
+	@Override
+	public List<GroupDto> grApplySelectGroup(String gr_id) {
+		logger.info("그룹신청간략정보");
+		List<GroupDto> lists = sqlSession.selectList(NAMESPACE+"grApplySelectGroup" , gr_id);
+		return lists;
+	}
 
 	@Override
 	public List<GroupDto> grApplySelectGr(String gr_name) {
@@ -107,5 +114,7 @@ public class ManagerDaoimpl implements ManagerDao {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+
 
 }

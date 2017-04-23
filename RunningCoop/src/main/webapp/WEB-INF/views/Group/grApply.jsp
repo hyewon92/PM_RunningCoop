@@ -25,7 +25,18 @@
 			$(this).attr("action","grApplyNo.do");
 		});
 	}
+	function gropuChildOpen(grid){
+		var ra = $(grid).parent().siblings().eq(0).find("input[name=gr_id]").val();
+		
+		alert(ra);
+		window.open("./groupInfoChild.do?gr_id="+ra, "InfoChild", "width=570, height=350, resizable = no, scrollbars = no");
+	}
 </script>
+<style type="text/css">
+#groupChild{
+cursor: pointer;
+}
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
@@ -33,11 +44,10 @@
 	<form id="aa" action="" method="post">
 	<table>
 	<tr>
-		<td><input type="submit" value="승인" onclick="test01()"><input type="submit" value="거절" onclick="test02()"></td>
+		<td colspan="2"><input type="submit" value="승인" onclick="test01()"><input type="submit" value="거절" onclick="test02()"></td>
 	</tr>
 		<tr>
 			<td><input type="checkbox" onclick="cheakAll(this.checked)"></td>
-			<td>그룹아이디</td>
 			<td>그룹명</td>
 			<td>그룹관리지</td>
 			<td>신청일자</td>
@@ -45,8 +55,7 @@
 	<c:forEach var="apply" items="${Apply}">
 		<tr>
 			<td><input type="checkbox" name="gr_id" value="${apply.GR_ID}"></td>
-			<td>${apply.GR_ID}</td>
-			<td>${apply.GR_NAME}</td>
+			<td><a onclick="gropuChildOpen(this)" id="groupChild">${apply.GR_NAME}</a></td>
 			<td>${apply.MEM_NAME}</td>
 			<td>${apply.GR_REGDATE}</td>
 		</tr>

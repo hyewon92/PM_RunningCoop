@@ -47,7 +47,6 @@ public class GroupServiceImp implements GroupService{
 
 	@Override
 	public boolean grModify(Map<String, String> map) {
-		// TODO Auto-generated method stub
 		return groupdao.grModify(map);
 	}
 
@@ -58,8 +57,9 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
+	@Transactional
 	public boolean grDelete(String gr_id) {
-		// TODO Auto-generated method stub
+//		boolean rst = groupdao.
 		return false;
 	}
 
@@ -87,7 +87,7 @@ public class GroupServiceImp implements GroupService{
 	@Override
 	public boolean grMemReject(Map<String, String> map) {
 		boolean isc =false;
-		isc = groupdao.grMemInsert2(map);
+		isc = groupdao.grMemReject(map);
 		return isc;
 	}
 

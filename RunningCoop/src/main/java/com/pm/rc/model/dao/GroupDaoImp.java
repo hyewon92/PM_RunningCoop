@@ -1,4 +1,4 @@
-package com.pm.rc.model.dao;
+ package com.pm.rc.model.dao;
 
 import java.util.List;
 import java.util.Map;
@@ -111,8 +111,8 @@ public class GroupDaoImp implements GroupDao{
 
 	@Override
 	public boolean grMemReject(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		int rst = sqlSession.delete(NAMESPACE+"grMemReject", map);
+		return rst>0? true:false;
 	}
 
 	@Override
@@ -124,8 +124,9 @@ public class GroupDaoImp implements GroupDao{
 
 	@Override
 	public boolean grMemDelete2(String gr_id) {
-		// TODO Auto-generated method stub
-		return false;
+		logger.info("그룹인원삭제2 작동중"); 
+		int n = sqlSession.update(NAMESPACE+"grMemDelete2" , gr_id);
+		return n>0? true:false;
 	}
 
 	@Override

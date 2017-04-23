@@ -106,7 +106,11 @@
 		(SELECT COUNT (*) FROM RC_GROUPMEM WHERE GR_ID = #{gr_id})
 		WHERE GR_ID = #{gr_id}
 	</update>
-
+	
+	<delete id="grMemReject" parameterType="java.util.Map">
+		DELETE FROM RC_GRWAIT WHERE GR_ID = #{gr_id} AND MEM_ID = #{mem_id}
+	</delete>
+	
 	<insert id="grInsert1" parameterType="java.util.Map" >
 		INSERT INTO RC_GROUP (GR_ID, GR_NAME, GR_GOAL)
 		VALUES

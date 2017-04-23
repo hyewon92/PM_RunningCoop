@@ -114,4 +114,11 @@ public interface ManagerService {
 	 * */
 	public boolean qnaReplyDelete(String sbr_uuid);
 	
+	/**
+	 * 그룹승인화면에서 그룹선택시 간략정보 출력
+	 * @param String gr_Id
+	 * @return List&lt;GroupDto&gt;
+	 */
+	public List<GroupDto> grApplySelectGroup(String gr_id);
+	
 }
