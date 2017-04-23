@@ -12,6 +12,7 @@ public class ScheduleDto {
 	private String mem_id;
 	private String sch_delYN;
 	private String sch_regDate;
+	private ProjectDto projectDto;
 	
 	public ScheduleDto(){}
 
@@ -94,6 +95,15 @@ public class ScheduleDto {
 	public void setSch_regDate(String sch_regDate) {
 		this.sch_regDate = sch_regDate;
 	}
+	
+
+	public ProjectDto getProjectDto() {
+		return projectDto;
+	}
+
+	public void setProjectDto(ProjectDto projectDto) {
+		this.projectDto = projectDto;
+	}
 
 	@Override
 	public String toString() {
@@ -102,7 +112,8 @@ public class ScheduleDto {
 				+ sch_startDate + ", sch_endDate=" + sch_endDate
 				+ ", sch_prosYN=" + sch_prosYN + ", pr_id=" + pr_id
 				+ ", mem_id=" + mem_id + ", sch_delYN=" + sch_delYN
-				+ ", sch_regDate=" + sch_regDate + "]";
+				+ ", sch_regDate=" + sch_regDate + ", projectDto=" + projectDto
+				+ "]";
 	}
 	
 }

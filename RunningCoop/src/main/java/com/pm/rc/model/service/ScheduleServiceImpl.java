@@ -26,7 +26,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public List<ProjectDto> mySchSelect(String mem_id) {
+	public List<ScheduleDto> mySchSelect(String mem_id) {
 		return scheduleDao.mySchSelect(mem_id);
 	}
 	
@@ -42,12 +42,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	@Override
 	public boolean schModify(ScheduleDto dto) {
-		return false;
+		return scheduleDao.schModify(dto);
 	}
 
 	@Override
 	public boolean schDelete(String seq) {
-		return false;
+		return scheduleDao.schDelete(seq);
 	}
 
 }

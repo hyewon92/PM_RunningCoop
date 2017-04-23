@@ -32,8 +32,8 @@ public class ScheduleDaoImpl implements ScheduleDao {
 	}
 
 	@Override
-	public List<ProjectDto> mySchSelect(String mem_id) {
-		List<ProjectDto> lists = new ArrayList<ProjectDto>();
+	public List<ScheduleDto> mySchSelect(String mem_id) {
+		List<ScheduleDto> lists = new ArrayList<ScheduleDto>();
 		lists = sqlSession.selectList(NAMESPACE+"mySchSelect", mem_id);
 		return lists;
 	}
@@ -53,12 +53,14 @@ public class ScheduleDaoImpl implements ScheduleDao {
 
 	@Override
 	public boolean schModify(ScheduleDto dto) {
-		return false;
+		int n = sqlSession.update(NAMESPACE+"schModify", dto);
+		return n>0 ? true:false;
 	}
 
 	@Override
 	public boolean schDelete(String seq) {
-		return false;
+		int n = sqlSession.delete(NAMESPACE+"schDelete", seq);
+		return n>0 ? true:false;
 	}
 
 }

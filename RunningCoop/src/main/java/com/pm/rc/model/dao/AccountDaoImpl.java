@@ -23,6 +23,7 @@ public class AccountDaoImpl implements AccountDao {
 
 	@Override
 	public MemberDto loginPro(Map<String, String> map) {
+		logger.info("loginPro실행");
 		MemberDto loginDto = new MemberDto();
 		loginDto = sqlSession.selectOne(NAMESPACE+"loginPro", map);
 		return loginDto;
@@ -30,18 +31,21 @@ public class AccountDaoImpl implements AccountDao {
 
 	@Override
 	public String memIdSelect(String mem_id) {
+		logger.info("memIdSelect실행");
 		String result = sqlSession.selectOne(NAMESPACE+"memIdSelect", mem_id);
 		return result;
 	}
 
 	@Override
 	public boolean memInsert(MemberDto dto) {
+		logger.info("memInsert실행");
 		int n = sqlSession.insert(NAMESPACE+"memInsert", dto);
 		return n>0 ? true:false;
 	}
 
 	@Override
 	public String memIdSearch(Map<String, String> map) {
+		logger.info("memIdSearch실행");
 		String result = sqlSession.selectOne(NAMESPACE+"memIdSearch", map);
 		return result;
 	}

@@ -33,7 +33,7 @@ public interface ScheduleService {
 	 * @return  List&lt;ScheduleDto&gt;
 	 * @author 김혜원
 	 * */
-	public List<ProjectDto> mySchSelect(String mem_id);
+	public List<ScheduleDto> mySchSelect(String mem_id);
 	
 	/**
 	 * 일정 상세정보 조회

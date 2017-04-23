@@ -34,7 +34,7 @@ public class ScheduleController {
 	public String viewSchedule(HttpSession session, HttpServletRequest req){
 		logger.info("viewSchedule실행");
 		String mem_id = (String)session.getAttribute("mem_id");
-		List<ProjectDto> list = new ArrayList<ProjectDto>();
+		List<ScheduleDto> list = new ArrayList<ScheduleDto>();
 		list = scheduleService.mySchSelect(mem_id);
 		req.setAttribute("list", list);
 		logger.info("viewSchedule실행");
@@ -44,7 +44,7 @@ public class ScheduleController {
 	//일정 상세정보 조회
 	@RequestMapping(value = "/detailSchedule.do", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, ScheduleDto> mySchView(HttpServletRequest req){
+	public Map<String, ScheduleDto> detailSchedule(HttpServletRequest req){
 		logger.info("mySchView실행");
 		String sch_seq = req.getParameter("sch_seq");
 		Map<String, ScheduleDto> map = new HashMap<String, ScheduleDto>();
@@ -65,15 +65,43 @@ public class ScheduleController {
 	*/
 	//일정등록
 	@RequestMapping(value = "/insertSchedule.do", method = RequestMethod.POST)
-	public String schInsert(ScheduleDto dto){
-		logger.info("schInsert실행");
+	public String insertSchedule(ScheduleDto dto){
+		logger.info("insertSchedule실행");
 		boolean isc = scheduleService.schInsert(dto);
+		if(isc == false){
+			return "schedule/error";
+		}else{
+			String year = dto.getSch_startDate().substring(0, 4);
+			String month = dto.getSch_startDate().substring(5, 7);
+			return "redirect:/viewSchedule.do?year="+year+"&month="+month;
+		}
+	}
+	
+	//일정수정
+	@RequestMapping(value = "/modifySchedule.do", method = RequestMethod.POST)
+	public void modifySchedule(ScheduleDto dto){
+		logger.info("modifySchedule실행");
+		System.out.println("=============="+dto.getSch_content()+dto.getSch_startDate()+"==================");
+/*		boolean isc = scheduleService.schModify(dto);
 		if(isc == false){
 			return "schedule/error";
 		}else{
 			String year = dto.getSch_startDate().substring(0, 4);
 			String month = dto.getSch_startDate().substring(4, 6);
 			return "redirect:/viewSchedule.do?year="+year+"&month="+month;
-		}
+		}*/
 	}
+	
+	@RequestMapping(value = "/deleteSchedule.do", method = RequestMethod.GET)
+	public String deleteSchedule(String sch_seq){
+		logger.info("deleteSchedule실행");
+		boolean isc = scheduleService.schDelete(sch_seq);
+		if(isc == false){
+			return "schedule/error";
+		}else{
+			
+		}
+		return "redirect:/viewSchedule.do";
+	}
+	
 }
