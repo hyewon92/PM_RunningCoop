@@ -44,15 +44,29 @@
 		WHERE (P.PR_ID = S.PR_ID AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id}) AND S.SCH_PROSYN = 'Y') AND S.SCH_DELYN='N'
 	</select>
 	
+	<!-- 지정일 일정 리스트 -->
+	<select id="DailySchSelect" parameterType="java.lang.String" resultMap="SchProDto">
+		<![CDATA[SELECT S.SCH_SEQ, S.SCH_TITLE, S.PR_ID, P.PR_NAME 
+		FROM RC_SCHEDULE S, RC_PROJECT P 
+		WHERE S.PR_ID = P.PR_ID(+) 
+		AND (TO_CHAR(S.SCH_STARTDATE,'YYYY-MM-DD') <= #{date} AND TO_CHAR(S.SCH_ENDDATE,'YYYY-MM-DD') >= #{date} 
+		AND S.MEM_ID = 'user12')
+		UNION
+		SELECT S.SCH_SEQ, S.SCH_TITLE, S.PR_ID, P.PR_NAME 
+		FROM RC_SCHEDULE S, RC_PROJECT P 
+		WHERE S.PR_ID = P.PR_ID AND (TO_CHAR(S.SCH_STARTDATE,'YYYY-MM-DD') <= #{date} AND TO_CHAR(S.SCH_ENDDATE,'YYYY-MM-DD') >= #{date} 
+		AND S.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id}))]]>
+	</select>	
+	
 	<!-- 일정 상세내용 조회 -->
-	<select id="mySchView" parameterType="java.lang.String" resultType="ScheduleDto">
-		SELECT SCH_SEQ, TO_CHAR(SCH_STARTDATE,'YYYY-MM-DD HH24:MI') SCH_STARTDATE, TO_CHAR(SCH_ENDDATE,'YYYY-MM-DD HH24:MI') SCH_ENDDATE, SCH_TITLE, SCH_CONTENT
-		FROM RC_SCHEDULE
-		WHERE SCH_SEQ = #{sch_seq}
+	<select id="mySchView" parameterType="java.lang.String" resultMap="SchProDto">
+		SELECT S.SCH_SEQ, S.PR_ID, P.PR_NAME, TO_CHAR(S.SCH_STARTDATE,'YYYY-MM-DD HH24:MI') SCH_STARTDATE, TO_CHAR(S.SCH_ENDDATE,'YYYY-MM-DD HH24:MI') SCH_ENDDATE, S.SCH_TITLE, S.SCH_CONTENT
+		FROM RC_SCHEDULE S, RC_PROJECT P
+		WHERE S.SCH_SEQ = #{sch_seq} AND S.PR_ID = P.PR_ID(+)
 	</select>	
 	
 	<!-- 팀 일정 등록 -->
-	<insert id="teamSchInsert">
+	<insert id="teamSchInsert" parameterType="ScheduleDto">
 		INSERT INTO RC_SCHEDULE (SCH_SEQ, PR_ID, SCH_TITLE, SCH_CONTENT, SCH_STARTDATE, SCH_ENDDATE, SCH_PROSYN)
 		VALUES
 		(SCHEDULE_SEQ.NEXTVAL, #{pr_id}, #{sch_title}, #{sch_content}, TO_DATE(#{sch_startDate}, 'YYYY-MM-DDHH24:MI'),
@@ -67,10 +81,10 @@
 	</select>
 	
 	<!-- 팀 일정 상세내용 조회 -->
-	<select id="teamSchView" parameterType="java.lang.String" resultType="ScheduleDto">
-		SELECT SCH_SEQ, PR_ID, TO_CHAR(SCH_STARTDATE,'YYYY-MM-DD HH24:MI') SCH_STARTDATE, TO_CHAR(SCH_ENDDATE,'YYYY-MM-DD HH24:MI') SCH_ENDDATE, SCH_TITLE, SCH_CONTENT
-		FROM RC_SCHEDULE
-		WHERE SCH_SEQ = #{sch_seq}
+	<select id="teamSchView" parameterType="java.lang.String" resultMap="SchProDto">
+		SELECT S.SCH_SEQ, S.PR_ID, P.PR_NAME, TO_CHAR(S.SCH_STARTDATE,'YYYY-MM-DD HH24:MI') SCH_STARTDATE, TO_CHAR(S.SCH_ENDDATE,'YYYY-MM-DD HH24:MI') SCH_ENDDATE, S.SCH_TITLE, S.SCH_CONTENT
+		FROM RC_SCHEDULE S, RC_PROJECT P
+		WHERE SCH_SEQ = #{sch_seq} AND S.PR_ID = P.PR_ID
 	</select>	
 
 </mapper>

@@ -2,6 +2,7 @@ package com.pm.rc.model.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -34,6 +35,14 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		logger.info("teamSchInsert실행");
 		int n = sqlSession.insert(NAMESPACE+"teamSchInsert", dto);
 		return n>0 ? true:false;
+	}
+	
+	@Override
+	public List<String> DailySchSelect(Map<String, String> map) {
+		logger.info("DailySchSelect 실행");
+		List<String> lists = new ArrayList<String>();
+		lists = sqlSession.selectList(NAMESPACE+"DailySchSelect", map);
+		return lists;
 	}
 	
 	@Override

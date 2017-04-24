@@ -1,6 +1,7 @@
 package com.pm.rc.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pm.rc.dto.ProjectDto;
 import com.pm.rc.dto.ScheduleDto;
@@ -26,6 +27,14 @@ public interface ScheduleDao {
 	 * @author 김혜원
 	 * */
 	public boolean teamSchInsert(ScheduleDto dto);
+	
+	/**
+	 * 지정일 일정 리스트 조회
+	 * @param map value: mem_id(회원아이디), date(지정일);
+	 * @return List&lt;String&gt;
+	 * @author 김혜원
+	 * */
+	public List<String> DailySchSelect(Map<String, String> map);
 	
 	/**
 	 * 팀 일정 상세정보 조회

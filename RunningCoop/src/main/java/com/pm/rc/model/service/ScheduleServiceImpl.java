@@ -1,6 +1,7 @@
 package com.pm.rc.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public List<ScheduleDto> mySchSelect(String mem_id) {
 		return scheduleDao.mySchSelect(mem_id);
+	}
+	
+	@Override
+	public List<String> DailySchSelect(Map<String, String> map) {
+		return scheduleDao.DailySchSelect(map);
 	}
 	
 	@Override

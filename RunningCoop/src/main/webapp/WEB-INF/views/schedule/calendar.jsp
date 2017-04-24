@@ -64,6 +64,33 @@ b {
 	src="http://code.jquery.com/jquery-latest.js"></script>
 
 <script type="text/javascript">
+/* 	function dailyList(val1, val2, val3){
+		$.ajax({
+			type : "POST",
+			url : "./dailySchSelect.do",
+			data: "date="+val1+"-"+val2+"-"+val3,
+			async: false,
+			success: function(msg){
+				showDailyList(msg)
+			}
+		});
+	}
+	
+	function showDailyList(schedule){
+		if(schedule == null){
+			$(".leftDetail").append("<p>해당 일에 등록된 일정이 없습니다.</p>");
+		}else{
+			for(var i = 0; i < schedule.length; i++){
+				var sch_seq = schedule[i].sch_seq;
+				var sch_title = schedule[i].sch_title;
+				var pr_id = schedule[i].pr_id;
+				var pr_name = schedule[i].pr_name;
+				
+				$(".leftDetail").append("<span class = 'listChk' onclick = 'showDetail("+sch_seq+")'>"+pr_name+sch_title+"</span><br>");
+			}
+		}
+	}
+ */
 	function showDetail(val){
 		$.ajax({
 			type : "POST",
@@ -72,12 +99,16 @@ b {
 			async: false,
 			success: function(msg){
 				showSchDetail(msg)
+			},
+			error:function(){
+				alert("error");
 			}
 		});
 	}
 	
 	function showSchDetail(schedule){
 		var sch_seq = schedule.dto.sch_seq;
+		var pr_id = schedule.dto.pr_id;
 		var sch_startDate = schedule.dto.sch_startDate;
 		var sch_endDate = schedule.dto.sch_endDate;
 		var sch_title = schedule.dto.sch_title;
@@ -86,9 +117,14 @@ b {
 		$("#sch_seq").val(sch_seq);
 		$("#sch_startDate").text("시작:"+sch_startDate);
 		$("#sch_endDate").text("종료:"+sch_endDate);
-		$("#sch_title").text(sch_title);
 		$("#sch_content").text(sch_content);
-		
+			
+ 		if(pr_id == null){
+			$("#sch_title").text(sch_title);
+		}else{
+			$("#sch_title").text(schedule.dto.projectDto.pr_name+":"+sch_title);
+		}
+		 
 		$(".scheduleBox").css("display", "none");
 		$(".scheduleDetailBox").css("display", "block");
 		$(".scheduleModiBox").css("display", "none");
@@ -276,8 +312,11 @@ b {
 				//1일부터 구한 달력의 lastDay까지 날짜 출력
 				for(int i = 1; i <= lastDay; i++){
 			%>
-			<td style="color:<%=weekColor(i, dayOfWeek)%>;"><%=i %> <% String s_month = dateForm(String.valueOf(month)); %>
-				<% String s_i = dateForm(String.valueOf(i)); %> <%=schWrite(year, s_month, s_i)%></a>
+			<td style="color:<%=weekColor(i, dayOfWeek)%>;">
+				<% String s_month = dateForm(String.valueOf(month)); %>
+				<% String s_i = dateForm(String.valueOf(i)); %> 
+				<%=schWrite(year, s_month, s_i)%>
+				<%-- <span class = "dailyList" onclick = "dailyList('<%=year%>', '<%=s_month%>', '<%=s_i%>')"> --%><%=i %><!-- </span> -->
 				<div id="list"><%=schListView(year, month, i, lists) %></div></td>
 			<%
 					//토요일이 되면 줄바꿈
@@ -301,6 +340,10 @@ b {
 
 	<!-- 일정 상세정보 출력부분 -->
 	<div class="scheduleDetailBox">
+		<div class = "leftDetail">
+			<span id = "sch_title"></span>
+			
+		</div>
 		<table class="scheduleDetail">
 			<input type="hidden" id="sch_seq">
 			<tr>

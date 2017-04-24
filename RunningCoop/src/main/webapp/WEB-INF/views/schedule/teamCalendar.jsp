@@ -79,6 +79,7 @@ b {
 	function showSchDetail(schedule){
 		var sch_seq = schedule.dto.sch_seq;
 		var pr_id = schedule.dto.pr_id;
+		var pr_name = schedule.dto.projectDto.pr_name;
 		var sch_startDate = schedule.dto.sch_startDate;
 		var sch_endDate = schedule.dto.sch_endDate;
 		var sch_title = schedule.dto.sch_title;
@@ -88,7 +89,7 @@ b {
 		$("#pr_id").val(pr_id);
 		$("#sch_startDate").text("시작:"+sch_startDate);
 		$("#sch_endDate").text("종료:"+sch_endDate);
-		$("#sch_title").text(sch_title);
+		$("#sch_title").text(pr_name+":"+sch_title);
 		$("#sch_content").text(sch_content);
 		
 		$(".scheduleBox").css("display", "none");
@@ -98,8 +99,9 @@ b {
 	
 	function goDelete(){
 		var sch_seq = $("#sch_seq").val();
+		var pr_id = $("#pr_id").val();
 		if(confirm("정말로 삭제하시겠습니까?")){
-			location.href = "./deleteTeamSchedule.do?sch_seq="+sch_seq;
+			location.href = "./deleteTeamSchedule.do?pr_id="+pr_id+"&sch_seq="+sch_seq;
 		}
 	}
 	

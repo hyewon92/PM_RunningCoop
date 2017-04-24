@@ -40,6 +40,23 @@ public class ScheduleController {
 		return "schedule/calendar";
 	}
 	
+/*	//지정일 일정목록 조회
+	@RequestMapping(value = "/dailySchSelect.do", method = RequestMethod.POST)
+	public String dailySchSelect(HttpSession session, HttpServletRequest req, String date){
+		logger.info("DailySchSelect실행");
+		Map<String, String> map = new HashMap<String, String>();
+		String mem_id = (String)session.getAttribute("mem_id");
+		map.put("mem_id", mem_id);
+		map.put("date", date);
+		List<String> list = new ArrayList<String>();
+		list = scheduleService.DailySchSelect(map);
+		req.setAttribute("dailyList", list);
+		
+		String year = date.substring(0, 4);
+		String month = date.substring(6, 8);
+		return "redirect:/viewSchedule.do?year="+year+"&month="+month;
+	}
+	*/
 	//일정 상세정보 조회
 	@RequestMapping(value = "/detailSchedule.do", method = RequestMethod.POST)
 	@ResponseBody
@@ -48,7 +65,13 @@ public class ScheduleController {
 		String sch_seq = req.getParameter("sch_seq");
 		Map<String, ScheduleDto> map = new HashMap<String, ScheduleDto>();
 		ScheduleDto dto = new ScheduleDto();
-		dto = scheduleService.mySchView(sch_seq);
+		System.out.println("dddd");
+//		if(dto.getProjectDto().getPr_name()==null){
+		
+//			dto.getProjectDto().setPr_name("aa");
+//		}else{
+			dto = scheduleService.mySchView(sch_seq);
+//		}
 		map.put("dto", dto);
 		return map;
 	}
@@ -80,7 +103,6 @@ public class ScheduleController {
 	@RequestMapping(value = "/modifySchedule.do", method = RequestMethod.POST)
 	public String modifySchedule(ScheduleDto dto){
 		logger.info("modifySchedule실행");
-		System.out.println("=============="+dto.getSch_content()+dto.getSch_startDate()+"==================");
 		boolean isc = scheduleService.schModify(dto);
 		if(isc == false){
 			return "schedule/error";
@@ -99,9 +121,8 @@ public class ScheduleController {
 		if(isc == false){
 			return "schedule/error";
 		}else{
-			
+			return "redirect:/viewSchedule.do";
 		}
-		return "redirect:/viewSchedule.do";
 	}
 	
 	//팀일정화면이동(PM권한)
@@ -127,6 +148,7 @@ public class ScheduleController {
 		Map<String, ScheduleDto> map = new HashMap<String, ScheduleDto>();
 		ScheduleDto dto = new ScheduleDto();
 		dto = scheduleService.teamSchView(sch_seq);
+		System.out.println("pr_name="+dto.getProjectDto().getPr_name());
 		map.put("dto", dto);
 		return map;
 	}
@@ -147,7 +169,7 @@ public class ScheduleController {
 	}
 	
 	//팀일정 수정
-	@RequestMapping(value = "/modifyTeamSchedule.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/modifyTeamSchedule.do", method = RequestMethod.POST)
 	public String modifyTeamSchedule(ScheduleDto dto){
 		logger.info("modifyTeamSchedule실행");
 		boolean isc = scheduleService.schModify(dto);
@@ -156,7 +178,22 @@ public class ScheduleController {
 		}else{
 			String year = dto.getSch_startDate().substring(0, 4);
 			String month = dto.getSch_startDate().substring(5, 7);
-			return "redirect:/viewTeamSchedule.do?pr_id=&year="+year+"&month="+month;
+			String pr_id = dto.getPr_id();
+			return "redirect:/viewTeamSchedule.do?pr_id="+pr_id+"&year="+year+"&month="+month;
+		}
+	}
+	
+	//팀일정 삭제
+	@RequestMapping(value = "/deleteTeamSchedule.do", method = RequestMethod.GET)
+	public String deleteTeamSchedule(String pr_id, String sch_seq){
+		logger.info("deleteTeamSchedule실행");
+		System.out.println("pr_id="+pr_id);
+		System.out.println("sch_seq="+sch_seq);
+		boolean isc = scheduleService.schDelete(sch_seq);
+		if(isc == false){
+			return "schedule/error";
+		}else{
+			return "redirect:/viewTeamSchedule.do?pr_id="+pr_id;
 		}
 	}
 	
