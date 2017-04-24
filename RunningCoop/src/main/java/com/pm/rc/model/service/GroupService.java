@@ -6,12 +6,20 @@ import java.util.Map;
 import com.pm.rc.dto.GroupBoardDto;
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
+import com.pm.rc.dto.PagingDto;
 
 /**
  * 그룹관련 기능 인터페이스
  * @author 김혜원
  * */
 public interface GroupService {
+	
+	/**
+	 * 그룹 이름으로 검색 결과 페이징 처리부분
+	 * @author 라한솔
+	 */
+	public List<GroupDto> selectPaging(PagingDto paging);
+	public int selectTotalPaging(String gr_name);
 	
 	/**
 	 * 내가 가입한 그룹 조회

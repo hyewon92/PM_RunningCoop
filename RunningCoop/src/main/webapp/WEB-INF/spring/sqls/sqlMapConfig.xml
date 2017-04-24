@@ -16,6 +16,7 @@
 		<typeAlias type="com.pm.rc.dto.WorkCommentDto" alias="WorkCommentDto"/>
 		<typeAlias type="com.pm.rc.dto.WorkDetailDto" alias="WorkDetailDto"/>
 		<typeAlias type="com.pm.rc.dto.WorkListDto" alias="WorkListDto"/>
+		<typeAlias type="com.pm.rc.dto.PagingDto" alias="pagingDto"/>
 	</typeAliases>
 	
 	<mappers>

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.pm.rc.dto.GroupBoardDto;
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
+import com.pm.rc.dto.PagingDto;
 import com.pm.rc.model.service.GroupService;
 import com.pm.rc.model.service.ManagerService;
 
@@ -99,13 +100,24 @@ public class GroupController {
 		return "redirect:/grmodify.do?gr_id="+retrGrid;
 	}
 	
-	@RequestMapping(value="/allGrSelect.do", method=RequestMethod.POST)
+	@RequestMapping(value="/allGrSelect.do", method={RequestMethod.POST ,RequestMethod.GET})
 	public String allGrSelect (Model model , HttpServletRequest request) {
+		PagingDto paging = new PagingDto(request.getParameter("index"),
+									     request.getParameter("pageStartNum"),
+									     request.getParameter("listCnt"),
+									     request.getParameter("gr_name"));
+		
+		List<GroupDto> lists = service.selectPaging(paging);
+		paging.setTotal(service.selectTotalPaging(request.getParameter("gr_name")));
 		logger.info("그룹검색하기 그룹이름이름으로");
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("gr_name" , request.getParameter("gr_name"));
-		List<GroupDto> lists = service.allGrSelect(map);
-		model.addAttribute("allGrlists", lists);
+		String grid = request.getParameter("gr_name");
+		
+		model.addAttribute("lists",lists);
+		model.addAttribute("paging",paging);
+		model.addAttribute("gr_name",grid);
+//		Map<String, String> map = new HashMap<String, String>();
+//		map.put("gr_name" , request.getParameter("gr_name"));
+		//List<GroupDto> lists = service.allGrSelect(map);
 		return "Group/grList";
 	}
 	@RequestMapping(value="/memModi.do" , method=RequestMethod.GET)

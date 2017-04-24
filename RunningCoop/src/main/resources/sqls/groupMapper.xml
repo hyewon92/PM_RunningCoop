@@ -122,6 +122,26 @@
 		VALUES
 		(#{gr_id}, #{mem_id}, 'GM')
 	</insert>
+	
+	
+		<select id="createPaging" parameterType="pagingDto" resultType="systemboarddto">
+		SELECT *
+		FROM ( SELECT ROWNUM RNUM, P.*
+		      FROM (
+	            SELECT G.GR_ID, G.GR_NAME, M.MEM_NAME, G.GR_REGDATE FROM RC_GROUP G, RC_MEMBER M 
+				WHERE M.MEM_ID = (SELECT GM.MEM_ID FROM RC_GROUPMEM GM WHERE GM.GR_ID = G.GR_ID AND GM.GR_LEVEL = 'GM')
+				AND G.GR_NAME LIKE '%'||#{gr_name}||'%'
+				ORDER BY G.GR_REGDATE DESC
+		      ) P
+		    )	
+		WHERE RNUM BETWEEN #{start} AND #{last}
+	</select>
+	<!-- 2. Total Query -->
+	<select id="countTotalpaging" resultType="java.lang.Integer" parameterType="pagingDto">
+		SELECT NVL(COUNT(*),0)
+		FROM RC_GROUP G, RC_MEMBER M
+		WHERE M.MEM_ID = (SELECT GM.MEM_ID FROM RC_GROUPMEM GM WHERE GM.GR_ID = G.GR_ID AND GM.GR_LEVEL = 'GM') AND G.GR_NAME LIKE '%'||#{gr_name}||'%'
+	</select>
 
 
 

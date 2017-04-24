@@ -7,6 +7,7 @@ import com.pm.rc.dto.GbAttachDto;
 import com.pm.rc.dto.GroupBoardDto;
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
+import com.pm.rc.dto.PagingDto;
 
 /**
  * 그룹 관련 기능 인터페이스
@@ -14,6 +15,13 @@ import com.pm.rc.dto.MemberDto;
  * @version GroupService Beta 1.0
  **/
 public interface GroupDao {
+	
+	/**
+	 * 그룹 검색화면 페이징 처리
+	 * @author 라한솔
+	 */
+	public int selectTotalPaging(String gr_name);
+	public List<GroupDto> selectPaging(PagingDto paging);
 
 	/**
 	 *내가 가입한 그룹 조회(접속할 그룹 선택)

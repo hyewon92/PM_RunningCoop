@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
+import com.pm.rc.dto.PagingDto;
 import com.pm.rc.util.logExecute;
 
 @Repository
@@ -140,6 +141,16 @@ public class GroupDaoImp implements GroupDao{
 	public boolean grMgrModify(Map<String, String> map) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public int selectTotalPaging(String gr_name) {
+		return sqlSession.selectOne(NAMESPACE+"countTotalpaging" , gr_name);
+	}
+
+	@Override
+	public List<GroupDto> selectPaging(PagingDto paging) {
+		return sqlSession.selectList(NAMESPACE+"createPaging" , paging);
 	}
 
 }

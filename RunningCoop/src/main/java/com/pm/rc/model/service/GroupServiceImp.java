@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pm.rc.dto.GroupBoardDto;
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
+import com.pm.rc.dto.PagingDto;
 import com.pm.rc.model.dao.GroupBoardDao;
 import com.pm.rc.model.dao.GroupDao;
 
@@ -180,6 +181,17 @@ public class GroupServiceImp implements GroupService{
 	public boolean grMgrModify(Map<String, String> map) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public List<GroupDto> selectPaging(PagingDto paging) {
+		return groupdao.selectPaging(paging);
+	}
+
+	@Override
+	public int selectTotalPaging(String gr_name) {
+		// TODO Auto-generated method stub
+		return groupdao.selectTotalPaging(gr_name);
 	}
 
 
