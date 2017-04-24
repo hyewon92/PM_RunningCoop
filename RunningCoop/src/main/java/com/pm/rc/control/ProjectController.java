@@ -124,6 +124,8 @@ public class ProjectController {
 		done = wService.wkListSelect(map);
 
 		model.addAttribute("done", done);
+		
+		model.addAttribute("pr_id", pr_id);
 
 		return "project/workList";
 	}
@@ -165,8 +167,11 @@ public class ProjectController {
 
 		boolean isc = false;
 		isc = wService.wdInsert(dto);
+		
+		boolean isc2 = false;
+		isc2 = wService.wkRateModify(wk_id);
 
-		if (isc){
+		if (isc && isc2){
 			System.out.println("하위 업무 추가 성공");
 		} else {
 			System.out.println("하위 업무 추가 실패");
@@ -178,6 +183,7 @@ public class ProjectController {
 		return list;
 	}
 
+	//하위 업무 수정
 	@RequestMapping(value="/wdEdit.do", method=RequestMethod.POST)
 	@ResponseBody
 	public List<WorkDetailDto> workDetailEdit(HttpServletRequest request){
@@ -204,6 +210,89 @@ public class ProjectController {
 			System.out.println("하위 업무 수정 성공");
 		} else {
 			System.out.println("하위 업무 수정 실패");
+		}
+		
+		List<WorkDetailDto> list = null;
+		list = wService.wdSelect(wk_id);
+		
+		return list;
+	}
+	
+	//하위 업무 완료 처리
+	@RequestMapping(value="/wdComplete.do", method=RequestMethod.POST)
+	@ResponseBody
+	public List<WorkDetailDto> workDetailComplete(HttpServletRequest request){
+		String wd_id = request.getParameter("wd_id");
+		String wk_id = request.getParameter("wk_id");
+		
+		logger.info("=============== 하위 업무 완료 처리 ===============");
+		logger.info("완료할 하위 업무 id : "+wd_id);
+		logger.info("============================================");
+		
+		boolean isc = false;
+		isc = wService.wdComplModify(wd_id);
+		
+		boolean isc2 = false;
+		isc2 = wService.wkRateModify(wk_id);
+		
+		if(isc && isc2){
+			System.out.println("하위 업무 완료 수정 성공");
+		} else {
+			System.out.println("하위 업무 완료 수정 실패");
+		}
+		
+		List<WorkDetailDto> list = null;
+		list = wService.wdSelect(wk_id);
+		
+		return list;
+	}
+	
+	//하위 업무 애로사항 표시
+	@RequestMapping(value="/wdError.do", method=RequestMethod.POST)
+	@ResponseBody
+	public List<WorkDetailDto> workDetailError(HttpServletRequest request){
+		String wd_id = request.getParameter("wd_id");
+		String wk_id = request.getParameter("wk_id");
+		
+		logger.info("=============== 하위 업무 애로사항 표시 처리 =================");
+		logger.info("애로사항 표시할 하위 업무 id :"+wd_id);
+		logger.info("====================================================");
+		
+		boolean isc = false;
+		isc = wService.wdErrorChk(wd_id);
+		
+		if(isc){
+			System.out.println("하위 업무 애로사항 표시 성공");
+		} else {
+			System.out.println("하위 업무 애로사항 표시 실패");
+		}
+		
+		List<WorkDetailDto> list = null;
+		list = wService.wdSelect(wk_id);
+		
+		return list;
+	}
+	
+	@RequestMapping(value="/wdDelete.do", method=RequestMethod.POST)
+	@ResponseBody
+	public List<WorkDetailDto> workDetailDelete(HttpServletRequest request){
+		String wd_id = request.getParameter("wd_id");
+		String wk_id = request.getParameter("wk_id");
+		
+		logger.info("=============== 하위 업무 삭제 ===================");
+		logger.info("삭제할 하위 업무 아이디 : "+wd_id);
+		logger.info("=============================================");
+		
+		boolean isc = false;
+		isc = wService.wdDelete(wd_id);
+		
+		boolean isc2 = false;
+		isc2 = wService.wkRateModify(wk_id);
+		
+		if(isc && isc2){
+			System.out.println("하위 업무 삭제 성공");
+		} else {
+			System.out.println("하위 업무 삭제 실패");
 		}
 		
 		List<WorkDetailDto> list = null;

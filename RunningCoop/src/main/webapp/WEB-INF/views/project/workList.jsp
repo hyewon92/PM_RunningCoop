@@ -26,7 +26,7 @@
 			data : "wk_id="+val,
 			async : false,
 			success : function(msg){
-				$("#wd_Field").children("p").remove();
+				$("#wd_Field").children("p").remove().children("div").remove();
 				$(".work_Detail_View").css("display", "block");
 				showWorkDetail(msg)
 			}
@@ -63,7 +63,10 @@
 				.append("<span class='wd_title' onclick='wdEditForm("+wd_id+")'>"+wd_title+"</span>/")
 				.append("<span>"+wd_erroryn+"</span>/")
 				.append("<span>"+wd_endDate+"</span>/")
-				.append("<span>"+wd_complyn+"</span><br>");
+				.append("<span>"+wd_complyn+"</span>")
+				.append("<input type='button' value='완료' onclick='wdComplete("+wd_id+")'/>")
+				.append("<input type='button' value='애로사항' onclick='wdError("+wd_id+")'/>")
+				.append("<input type='button' value='삭제' onclick='wdDelete("+wd_id+")'/>");
 				
 			}
 		}
@@ -80,7 +83,7 @@
 			data : {"wd_title":wd_title, "wd_endDate":wd_endDate, "wk_id":wk_id},
 			async : false,
 			success : function(msg){
-				$("#wd_Field").children("p").remove();
+				$("#wd_Field").children("p").remove().children("div").remove();
 				showWorkDetail(msg)
 			}
 			
@@ -93,29 +96,94 @@
 		$(val).after("<div>");
 		$(val).siblings("div").append("하위업무내용<input type='textbox' id = 'newWdTitle' name='wd_title' value=''/>")
 		.append("마감일자<input type='date' id = 'newWdEndDate' name='wd_endDate' value=''/>")
-		.append("<input type='button' value='수정' onclick='wdEdit("+wd_id+")'/>");
+		.append("<input type='button' value='수정' onclick='wdEdit("+wd_id+")'/>")
+		.append("<input type='button' value='취소' onclick='wdEdit_Cancle()'/>");
 	}
 	
 	function wdEdit(val){
 		var wd_title = $("#newWdTitle").val();
 		var wd_endDate = $("#newWdEndDate").val();
 		var wk_id = $("#wk_id").val();
+		var wd_id = $(val).children("span").eq(0).html();
 		
 		$.ajax({
 			type : "POST",
 			url : "./wdEdit.do",
-			data : {"wd_title":wd_title, "wd_endDate":wd_endDate, "wd_id":val, "wk_id":wk_id},
+			data : {"wd_title":wd_title, "wd_endDate":wd_endDate, "wd_id":wd_id, "wk_id":wk_id},
 			async : false,
 			success : function(msg){
-				$("#wd_Field").children("p").remove();
+				$("#wd_Field").children("p").remove().children("div").remove();
 				showWorkDetail(msg)
 			}
 		});
 	}
 	
+	function wdEdit_Cancle(){
+		$("#wd_Field").children("div").remove();
+	}
+	
+	function wdComplete(val){
+		var wd_id = $(val).children("span").eq(0).html();
+		var wk_id = $("#wk_id").val();
+		
+		$.ajax({
+			type : "POST",
+			url : "./wdComplete.do",
+			data : {"wd_id": wd_id, "wk_id": wk_id},
+			async : false,
+			success : function(msg){
+				$("#wd_Field").children("p").remove().children("div").remove();
+				showWorkDetail(msg)
+			}
+		});
+	}
+	
+	function wdError(val){
+		var wd_id = $(val).children("span").eq(0).html();
+		var wk_id = $("#wk_id").val();
+		
+		$.ajax({
+			type : "POST",
+			url : "./wdError.do",
+			data : {"wd_id": wd_id, "wk_id": wk_id},
+			async : false,
+			success : function(msg){
+				$("#wd_Field").children("p").remove().children("div").remove();
+				showWorkDetail(msg)
+			}
+		});
+	}
+	
+	function wdDelete(val){
+		var wd_id = $(val).children("span").eq(0).html();
+		var wk_id = $("#wk_id").val();
+		
+		$.ajax({
+			type : "POST",
+			url : "./wdDelete.do",
+			data : {"wd_id": wd_id, "wk_id": wk_id},
+			async : false,
+			success : function(msg){
+				$("#wd_Field").children("p").remove().children("div").remove();
+				showWorkDetail(msg)
+			}
+		});
+	}
+	
+	function backToProject(){
+		var pr_id = $("#pr_id").val();
+		location.href="./goProject.do?pr_id="+pr_id;
+	}
+	
+	function workEdit(val){
+		
+	}
+	
+	
 </script>
 </head>
 <body>
+<input type="hidden" id = "pr_id" value="${ pr_id }"/> 
 	<fieldset id="todoList">
 		<legend>Todo</legend>
 		<c:choose>
@@ -124,9 +192,10 @@
 			</c:when>
 			<c:otherwise>
 				<c:forEach var="todo" items="${ todo }">
-					<p onclick = "viewWork(${ todo.get('WK_ID') })">
+					<p onclick = "viewWork('${ todo.get('WK_ID') }')">
 						<input type="hidden" value="${ todo.get('WK_ID') }" /> 
-						${ todo.get('WK_TITLE') }/(${ todo.get('MEM_NAME') })/${ todo.get('WK_PRORATE') }
+						${ todo.get('WK_TITLE') }/(${ todo.get('MEM_NAME') })/${ todo.get('WK_PRORATE') }%
+						<input type="button" value="수정" onclick="workEdit(${ todo.get('WK_ID') })"/>
 					</p>
 				</c:forEach>
 			</c:otherwise>
@@ -143,6 +212,7 @@
 					<p onclick = "viewWork('${ doing.get('WK_ID') }')">
 						<input type="hidden" value="${ doing.get('WK_ID') }" /> 
 						${ doing.get("WK_TITLE") }/(${ doing.get("MEM_NAME") })/${ doing.get("WK_PRORATE") }%
+						<input type="button" value="수정" onclick="workEdit(${ doing.get('WK_ID') })"/>
 					</p>
 				</c:forEach>
 			</c:otherwise>
@@ -156,19 +226,20 @@
 			</c:when>
 			<c:otherwise>
 				<c:forEach var="done" items="${ done }">
-					<p onclick = "viewWork(${ done.get('WK_ID') })">
+					<p onclick = "viewWork('${ done.get('WK_ID') }')">
 						<input type="hidden" value="${ done.get('WK_ID') }" /> 
-						${ done.get("WK_TITLE") }/(${ done.get("MEM_NAME") })/${ done.get("WK_PRORATE") }
+						${ done.get("WK_TITLE") }/(${ done.get("MEM_NAME") })/${ done.get("WK_PRORATE") }%
+						<input type="button" value="수정" onclick="workEdit(${ done.get('WK_ID') })"/>
 					</p>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
 	</fieldset>
 	<div id = "work_Detail" class = "work_Detail_View">
+	<input type="button" value="닫기" onclick="backToProject()"/>
 		<div id = "work_Detail_Insert">
-			<form>
-			업무명 <input type = "textbox" id = "insert_wd_title" name="wd_title" value=""/> 마감기한<input type = "date" id="insert_wd_endDate" name = "wd_endDate" value=""/>
-			</form>
+			업무명 <input type = "text" id = "insert_wd_title" name="wd_title" value=""/> 
+			마감기한<input type = "date" id="insert_wd_endDate" name = "wd_endDate" value=""/>
 			<input type = "button" value = "추가" onclick = "wd_Insert()"/>
 		</div>
 		<fieldset id = "wd_Field">

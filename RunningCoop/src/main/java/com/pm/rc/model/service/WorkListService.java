@@ -53,7 +53,7 @@ public interface WorkListService {
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean wkRateMoidfy(Map<String, String> map);
+	public boolean wkRateModify(String wk_id);
 
 	
 	/**

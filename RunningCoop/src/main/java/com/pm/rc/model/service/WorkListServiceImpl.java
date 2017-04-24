@@ -2,6 +2,7 @@ package com.pm.rc.model.service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -55,9 +56,25 @@ public class WorkListServiceImpl implements WorkListService {
 	}
 
 	@Override
-	public boolean wkRateMoidfy(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean wkRateModify(String wk_id) {
+		int allWork = 0;
+		int complWork = 0;
+		int proRate = 0;
+		
+		allWork = dao.wkRateModify_1(wk_id);
+		complWork = dao.wkRateModify_2(wk_id);
+		System.out.println(complWork);
+		proRate = (int)((double)complWork/(double)allWork * 100);
+		System.out.println(proRate);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("wk_id", wk_id);
+		map.put("wk_proRate", proRate);
+		
+		boolean isc = false;
+		isc	= dao.wkRateModify_3(map);
+		
+		return isc;
 	}
 
 	@Override
@@ -88,20 +105,17 @@ public class WorkListServiceImpl implements WorkListService {
 
 	@Override
 	public boolean wdDelete(String wd_id) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.wdDelete(wd_id);
 	}
 
 	@Override
 	public boolean wdErrorChk(String wd_id) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.wdErrorChk(wd_id);
 	}
 
 	@Override
 	public boolean wdComplModify(String wd_id) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.wdComplModify(wd_id);
 	}
 
 	@Override

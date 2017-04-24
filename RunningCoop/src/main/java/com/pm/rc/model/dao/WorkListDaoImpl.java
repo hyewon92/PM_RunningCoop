@@ -60,10 +60,31 @@ public class WorkListDaoImpl implements WorkListDao {
 		return false;
 	}
 
+	
 	@Override
-	public boolean wkRateMoidfy(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+	public int wkRateModify_1(String wk_id){
+		List<WorkDetailDto> list = null;
+		list = sqlSession.selectList(NAMESPACE+"wdSelect", wk_id);
+		int size = list.size();
+		return size;
+	}
+	
+	@Override
+	public int wkRateModify_2(String wk_id){
+		List<WorkDetailDto> list = null;
+		list = sqlSession.selectList(NAMESPACE+"wdComplSelect", wk_id);
+		int size = list.size();
+		return size;
+	}
+	
+	@Override
+	public boolean wkRateModify_3(Map<String, Object> map){
+		int num = sqlSession.update(NAMESPACE+"wkProRateEdit", map);
+		if (num > 0){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
@@ -95,20 +116,32 @@ public class WorkListDaoImpl implements WorkListDao {
 
 	@Override
 	public boolean wdDelete(String wd_id) {
-		// TODO Auto-generated method stub
-		return false;
+		int num = sqlSession.update(NAMESPACE+"wdDelete", wd_id);
+		if(num > 0){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
 	public boolean wdErrorChk(String wd_id) {
-		// TODO Auto-generated method stub
-		return false;
+		int num = sqlSession.update(NAMESPACE+"wdErrorChk", wd_id);
+		if(num > 0){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
 	public boolean wdComplModify(String wd_id) {
-		// TODO Auto-generated method stub
-		return false;
+		int num = sqlSession.update(NAMESPACE+"wdComplModify", wd_id);
+		if(num > 0){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

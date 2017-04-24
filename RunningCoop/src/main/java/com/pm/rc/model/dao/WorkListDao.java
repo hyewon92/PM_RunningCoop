@@ -56,7 +56,7 @@ public interface WorkListDao {
 	public boolean wkListDelete(String wk_id);
 	
 	/**
-	 * 프로젝트 업무 리스트 수정
+	 * 프로젝트 업무 리스트 수정 프로세스
 	 * @param dto WorkListDto객체
 	 * @return boolean
 	 * @author 김혜원
@@ -64,12 +64,26 @@ public interface WorkListDao {
 	public boolean wkListModify(WorkListDto dto);
 
 	/**
-	 * 워크리스트 작업진행률 수정
-	 * @param map value:wk_id(업무리스트 아이디), wk_proRate(업무 진행률)
-	 * @return boolean
+	 * 워크리스트 작업진행률 수정 프로세스 1 : 해당 업무의 전체 하위 업무 수
+	 * @param wk_id 업무 아이디
+	 * @return int
 	 * @author 김혜원
 	 * */
-	public boolean wkRateMoidfy(Map<String, String> map);
+	public int wkRateModify_1(String wk_id);
+	
+	/**
+	 * 업무리스트 작업진행률 수정 프로세스 2 : 해당 업무의 완료 업무 수
+	 * @param wk_id 업무 아이디
+	 * @return int로 업무 수 반환
+	 */
+	public int wkRateModify_2(String wk_id);
+	
+	/**
+	 * 업무리스트 작업진행률 수정 프로세스 3 : 해당 업무의 작업진행률 수정
+	 * @param wk_id 업무 아이디
+	 * @return 수정 성공하면 true, 실패하면 false
+	 */
+	public boolean wkRateModify_3(Map<String, Object> map);
 	
 	/**
 	 * 하위업무리스트 조회

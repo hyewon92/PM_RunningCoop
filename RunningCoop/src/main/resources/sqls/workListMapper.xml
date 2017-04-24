@@ -27,7 +27,13 @@
 		SELECT WK_ID, WD_ID, WD_TITLE, WD_ERRORYN, TO_CHAR (WD_ENDDATE, 'YYMMDD') WD_ENDDATE, WD_COMPLYN
   		FROM RC_WORKDETAIL
   		WHERE WK_ID = #{wk_id} AND WD_DELYN = 'N'
-  		ORDER BY WD_REGDATE
+  		ORDER BY WD_ENDDATE
+	</select>
+	
+	<select id="wdComplSelect" parameterType="java.lang.String" resultType="WorkDetailDto">
+		SELECT WK_ID, WD_ID, WD_TITLE, WD_ERRORYN, TO_CHAR (WD_ENDDATE, 'YYMMDD') WD_ENDDATE, WD_COMPLYN
+  		FROM RC_WORKDETAIL
+  		WHERE WK_ID = #{wk_id} AND WD_DELYN = 'N' AND WD_COMPLYN = 'Y'
 	</select>
 	
 	<insert id="wdInsert" parameterType="WorkDetailDto">
@@ -40,6 +46,26 @@
 		UPDATE RC_WORKDETAIL SET WD_TITLE = #{wd_title}, WD_ENDDATE = TO_DATE(#{wd_endDate}, 'YYYY-MM-DD')
   		WHERE WD_ID = #{wd_id}
 	</update>
+	
+	<update id="wdComplModify" parameterType="java.lang.String">
+		UPDATE RC_WORKDETAIL SET WD_COMPLYN = 'Y'
+  		WHERE WD_ID = #{wd_id}
+	</update>
+	
+	<update id="wdErrorChk" parameterType="java.lang.String">
+		UPDATE RC_WORKDETAIL SET WD_ERRORYN = 'Y'
+ 		WHERE WD_ID = #{wd_id}
+	</update>
+	
+	<update id="wdDelete" parameterType="java.lang.String">
+		UPDATE RC_WORKDETAIL SET WD_DELYN = 'Y' 
+  		WHERE WD_ID = #{wd_id}
+  	</update>
+  	
+  	<update id="wkProRateEdit" parameterType="java.util.Map">
+  		UPDATE RC_WORKLIST SET WK_PRORATE = #{wk_proRate}
+  		WHERE WK_ID = #{wk_id}
+  	</update>
 
 	
 </mapper>
