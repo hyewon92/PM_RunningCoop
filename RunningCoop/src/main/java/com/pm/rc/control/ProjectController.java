@@ -3,6 +3,7 @@ package com.pm.rc.control;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -24,15 +25,15 @@ import com.pm.rc.model.service.WorkListService;
 
 @Controller
 public class ProjectController {
-	
+
 	Logger logger = LoggerFactory.getLogger(ProjectController.class);
-	
+
 	@Autowired
 	private ProjectService service;
-	
+
 	@Autowired
 	private WorkListService wService;
-	
+
 	// 메인화면에서 그룹 프로젝트 선택
 	@RequestMapping(value="/gProSelect.do", method=RequestMethod.GET)
 	public String grProjectList(Model model, HttpServletRequest request){
@@ -44,7 +45,7 @@ public class ProjectController {
 		model.addAttribute("list", list);
 		return "project/gProjectSelect";
 	}
-	
+
 	// 메인화면에서 개인 프로젝트 선택
 	@RequestMapping(value="/iProSelect.do", method=RequestMethod.GET)
 	public String myProjectList(Model model, HttpServletRequest request, HttpSession session){
@@ -54,13 +55,13 @@ public class ProjectController {
 		model.addAttribute("list", list);
 		return "project/mProjectSelect";
 	}
-	
+
 	// 개인 프로젝트 생성화면 연결
 	@RequestMapping(value="/createMPro.do", method=RequestMethod.GET)
 	public String myProCreateMove(){
 		return "project/mProCreate";
 	}
-	
+
 	// 개인 프로젝트 생성 프로세스
 	@RequestMapping(value="/mProCreate.do", method=RequestMethod.POST)
 	public String myProCreate(HttpSession session, HttpServletRequest request){
@@ -81,7 +82,7 @@ public class ProjectController {
 			return "redirect:/createMPro.do";
 		}
 	}
-	
+
 	// 프로젝트 정보 화면
 	@RequestMapping(value="/detailPro.do", method=RequestMethod.POST)
 	@ResponseBody
@@ -92,61 +93,128 @@ public class ProjectController {
 		map = service.prDetailSelect(pr_id);
 		return map;
 	}
-	
+
 	// 프로젝트 진행화면 이동
 	@RequestMapping(value="/goProject.do", method=RequestMethod.GET)
 	public String goToProject(Model model, HttpServletRequest request){
 		String pr_id = request.getParameter("pr_id");
-		
+
 		logger.info("=================== 프로젝트 업무리스트 보기 =======================");
 		logger.info("업무리스트를 볼 프로젝트 id :"+pr_id);
 		logger.info("===========================================================");
-		
+
 		List<Map<String, String>> todo = null;
 		List<Map<String, String>> doing = null;
 		List<Map<String, String>> done = null;
-		
+
 		Map<String, String> map = new HashMap<String, String>();
-		
+
 		map.put("pr_id", pr_id);
 		map.put("wk_condition", "todo");
 		todo = wService.wkListSelect(map);
 
 		model.addAttribute("todo", todo);
-		
+
 		map.replace("wk_condition", "doing");
 		doing = wService.wkListSelect(map);
 
 		model.addAttribute("doing", doing);
-		
+
 		map.replace("wk_condition", "done");
 		done = wService.wkListSelect(map);
-		
+
 		model.addAttribute("done", done);
-		
+
 		return "project/workList";
 	}
 	
+	// 하위업무리스트 조회 메소드
 	@RequestMapping(value="/detailWork.do", method=RequestMethod.POST)
 	@ResponseBody
 	public List<WorkDetailDto> workDetailView(Model model, HttpServletRequest request){
 		String wk_id = request.getParameter("wk_id");
-		
+
 		logger.info("=============== 업무 상세 조회 ================");
 		logger.info("조회할 업무 아이디 : "+wk_id);
 		logger.info("=========================================");
-		
+
 		List<WorkDetailDto> dto = null;
 		dto = wService.wdSelect(wk_id);
-		
+
 		return dto;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
+	// 하위 업무 추가 후 출력 메소드
+	@RequestMapping(value="/wdInsert.do", method=RequestMethod.POST)
+	@ResponseBody
+	public List<WorkDetailDto> workDetailInset(Model model, HttpServletRequest request){
+		String wd_title = request.getParameter("wd_title");
+		String wd_endDate = request.getParameter("wd_endDate");
+		String wk_id = request.getParameter("wk_id");
+
+		logger.info("=============== 하위 업무 추가 ================");
+		logger.info("상위 업무 id :"+wk_id);
+		logger.info("추가할 하위 업무 내용 : "+wd_title);
+		logger.info("추가할 하위 업무 마감기한 : "+wd_endDate);
+		logger.info("==========================================");
+
+		WorkDetailDto dto = new WorkDetailDto();
+		dto.setWk_id(wk_id);
+		dto.setWd_title(wd_title);
+		dto.setWd_endDate(wd_endDate);
+
+		boolean isc = false;
+		isc = wService.wdInsert(dto);
+
+		if (isc){
+			System.out.println("하위 업무 추가 성공");
+		} else {
+			System.out.println("하위 업무 추가 실패");
+		}
+
+		List<WorkDetailDto> list = null;
+		list = wService.wdSelect(wk_id);
+
+		return list;
+	}
+
+	@RequestMapping(value="/wdEdit.do", method=RequestMethod.POST)
+	@ResponseBody
+	public List<WorkDetailDto> workDetailEdit(HttpServletRequest request){
+		String wd_id = request.getParameter("wd_id");
+		String wd_title = request.getParameter("wd_title");
+		String wd_endDate = request.getParameter("wd_endDate");
+		String wk_id = request.getParameter("wk_id");
+		
+		logger.info("=============== 하위 업무 수정 ================");
+		logger.info("수정할 하위업무 id :"+wd_id);
+		logger.info("수정할 하위 업무 내용 : "+wd_title);
+		logger.info("수정할 하위 업무 마감기한 : "+wd_endDate);
+		logger.info("==========================================");
+		
+		WorkDetailDto dto = new WorkDetailDto();
+		dto.setWd_id(wd_id);
+		dto.setWd_title(wd_title);
+		dto.setWd_endDate(wd_endDate);
+		
+		boolean isc = false;
+		isc = wService.wdModify(dto);
+		
+		if(isc){
+			System.out.println("하위 업무 수정 성공");
+		} else {
+			System.out.println("하위 업무 수정 실패");
+		}
+		
+		List<WorkDetailDto> list = null;
+		list = wService.wdSelect(wk_id);
+		
+		return list;
+	}
+
+
+
+
+
+
 }

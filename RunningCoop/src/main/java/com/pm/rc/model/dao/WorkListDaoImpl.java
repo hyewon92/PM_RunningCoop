@@ -75,14 +75,22 @@ public class WorkListDaoImpl implements WorkListDao {
 
 	@Override
 	public boolean wdInsert(WorkDetailDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+		int num = sqlSession.insert(NAMESPACE+"wdInsert", dto);
+		if(num > 0){
+			return true;
+		} else{
+			return false;
+		}
 	}
 
 	@Override
 	public boolean wdModify(WorkDetailDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+		int num = sqlSession.update(NAMESPACE+"wdModify", dto);
+		if(num > 0){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

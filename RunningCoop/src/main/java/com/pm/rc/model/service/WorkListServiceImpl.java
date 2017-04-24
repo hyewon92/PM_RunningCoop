@@ -1,7 +1,10 @@
 package com.pm.rc.model.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +39,6 @@ public class WorkListServiceImpl implements WorkListService {
 
 	@Override
 	public boolean wkListInsert(WorkListDto dto) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -65,14 +67,23 @@ public class WorkListServiceImpl implements WorkListService {
 
 	@Override
 	public boolean wdInsert(WorkDetailDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+		Date date = new Date();
+		SimpleDateFormat dateForm = new SimpleDateFormat("yyMMdd");
+		
+		String id_1 = "WD";
+		String id_2 = dateForm.format(date).toString();
+		String uuid = createUUID();
+		String id_3 = uuid.substring(uuid.lastIndexOf("-")+8);
+		String wd_id = id_1+id_2+id_3;
+		
+		dto.setWd_id(wd_id);
+		
+		return dao.wdInsert(dto);
 	}
 
 	@Override
 	public boolean wdModify(WorkDetailDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.wdModify(dto);
 	}
 
 	@Override
@@ -134,5 +145,10 @@ public class WorkListServiceImpl implements WorkListService {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	// UUID 생성 메소드
+		public String createUUID(){
+			return UUID.randomUUID().toString();
+		}
 
 }

@@ -13,6 +13,10 @@
 	.work_Detail_View{
 		display : none;
 	}
+	
+	.wd_title{
+		cursor: pointer;
+	}
 </style>
 <script type="text/javascript">
 	function viewWork(val){
@@ -34,6 +38,8 @@
 		 if(nodes == null){
 			$("#wd_Field").append("<p>하위 업무가 없습니다</p>");
 		} else {
+			$("#wk_id").val(nodes[0].wk_id);
+			$("#wd_Field").append("<p>선택|하위업무아이디|하위업무내용|애로사항여부|마감일자|완료여부</p>");
 			  for(var i = 0; i < nodes.length; i++){
 				var wd_id = nodes[i].wd_id;
 				var wd_title = nodes[i].wd_title;
@@ -51,7 +57,13 @@
 				} else {
 					wd_complyn = "미완료업무";
 				}
-				$("#wd_Field").append("<p>"+wd_id+"/"+wd_title+"/"+wd_erroryn+"/"+wd_endDate+"/"+wd_complyn+"</p>");
+				$("#wd_Field").append("<p id="+wd_id+" class='wd_list'>");
+				$("#wd_Field").children("#"+wd_id).append("<input type='checkbox' name='wd_complyn'/>")
+				.append("<span>"+wd_id+"</span>/")
+				.append("<span class='wd_title' onclick='wdEditForm("+wd_id+")'>"+wd_title+"</span>/")
+				.append("<span>"+wd_erroryn+"</span>/")
+				.append("<span>"+wd_endDate+"</span>/")
+				.append("<span>"+wd_complyn+"</span><br>");
 				
 			}
 		}
@@ -59,11 +71,48 @@
 	}
 	
 	function wd_Insert(){
+		var wd_title = $("#insert_wd_title").val();
+		var wd_endDate = $("#insert_wd_endDate").val();
+		var wk_id = $("#wk_id").val();
 		$.ajax({
-			
+			type : "POST",
+			url : "./wdInsert.do",
+			data : {"wd_title":wd_title, "wd_endDate":wd_endDate, "wk_id":wk_id},
+			async : false,
+			success : function(msg){
+				$("#wd_Field").children("p").remove();
+				showWorkDetail(msg)
+			}
 			
 		});
 	}
+	
+	function wdEditForm(val){
+		var wd_id = $(val).children("span").eq(0).html();
+		$(val).siblings("div").remove();
+		$(val).after("<div>");
+		$(val).siblings("div").append("하위업무내용<input type='textbox' id = 'newWdTitle' name='wd_title' value=''/>")
+		.append("마감일자<input type='date' id = 'newWdEndDate' name='wd_endDate' value=''/>")
+		.append("<input type='button' value='수정' onclick='wdEdit("+wd_id+")'/>");
+	}
+	
+	function wdEdit(val){
+		var wd_title = $("#newWdTitle").val();
+		var wd_endDate = $("#newWdEndDate").val();
+		var wk_id = $("#wk_id").val();
+		
+		$.ajax({
+			type : "POST",
+			url : "./wdEdit.do",
+			data : {"wd_title":wd_title, "wd_endDate":wd_endDate, "wd_id":val, "wk_id":wk_id},
+			async : false,
+			success : function(msg){
+				$("#wd_Field").children("p").remove();
+				showWorkDetail(msg)
+			}
+		});
+	}
+	
 </script>
 </head>
 <body>
@@ -77,7 +126,7 @@
 				<c:forEach var="todo" items="${ todo }">
 					<p onclick = "viewWork(${ todo.get('WK_ID') })">
 						<input type="hidden" value="${ todo.get('WK_ID') }" /> 
-						${ todo.get('WK_TITLE') }/(${ todo.get('MEM_NAME' })/${ todo.get('WK_PRORATE') }
+						${ todo.get('WK_TITLE') }/(${ todo.get('MEM_NAME') })/${ todo.get('WK_PRORATE') }
 					</p>
 				</c:forEach>
 			</c:otherwise>
@@ -116,17 +165,17 @@
 		</c:choose>
 	</fieldset>
 	<div id = "work_Detail" class = "work_Detail_View">
-		<fieldset id = "wd_Field">
-			<legend>업무 상세화면</legend>
-			
-			
-		</fieldset>
 		<div id = "work_Detail_Insert">
 			<form>
-			업무명 <input type = "textbox" name="wd_title" value=""/> 마감기한<input type = "date" name = "wd_endDate" value=""/>
+			업무명 <input type = "textbox" id = "insert_wd_title" name="wd_title" value=""/> 마감기한<input type = "date" id="insert_wd_endDate" name = "wd_endDate" value=""/>
 			</form>
 			<input type = "button" value = "추가" onclick = "wd_Insert()"/>
 		</div>
+		<fieldset id = "wd_Field">
+			<legend>업무 상세화면</legend>
+			<input type="hidden" id = "wk_id" value=""/>
+		</fieldset>
+		
 	</div>
 
 </body>
