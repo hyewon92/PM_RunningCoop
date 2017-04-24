@@ -28,6 +28,14 @@ public interface ScheduleDao {
 	public boolean teamSchInsert(ScheduleDto dto);
 	
 	/**
+	 * 팀 일정 상세정보 조회
+	 * @param sch_seq 일정 시퀀스 번호
+	 * @return  ScheduleDto
+	 * @author 김혜원
+	 * */
+	public ScheduleDto teamSchView(String sch_seq);
+	
+	/**
 	 * 개인&팀 일정 조회
 	 * @param mem_id 멤버아이디
 	 * @return  List&lt;ScheduleDto&gt;

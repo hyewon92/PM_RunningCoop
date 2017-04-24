@@ -24,6 +24,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public boolean teamSchInsert(ScheduleDto dto) {
 		return scheduleDao.teamSchInsert(dto);
 	}
+	
+	@Override
+	public ScheduleDto teamSchView(String sch_seq) {
+		return scheduleDao.teamSchView(sch_seq);
+	}
 
 	@Override
 	public List<ScheduleDto> mySchSelect(String mem_id) {

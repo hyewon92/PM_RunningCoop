@@ -53,7 +53,7 @@ b {
 	display : none;
 }
 
-.scheduleBox, .schedulModiBox {
+.scheduleBox, .scheduleModiBox {
 	border: 1px solid gray;
 	border-collapse: collapse;
 	display: none;
@@ -78,12 +78,14 @@ b {
 	
 	function showSchDetail(schedule){
 		var sch_seq = schedule.dto.sch_seq;
+		var pr_id = schedule.dto.pr_id;
 		var sch_startDate = schedule.dto.sch_startDate;
 		var sch_endDate = schedule.dto.sch_endDate;
 		var sch_title = schedule.dto.sch_title;
 		var sch_content = schedule.dto.sch_content;
 		
 		$("#sch_seq").val(sch_seq);
+		$("#pr_id").val(pr_id);
 		$("#sch_startDate").text("시작:"+sch_startDate);
 		$("#sch_endDate").text("종료:"+sch_endDate);
 		$("#sch_title").text(sch_title);
@@ -91,7 +93,7 @@ b {
 		
 		$(".scheduleBox").css("display", "none");
 		$(".scheduleDetailBox").css("display", "block");
-		$(".schedulModiBox").css("display", "none");
+		$(".scheduleModiBox").css("display", "none");
 	}
 	
 	function goDelete(){
@@ -102,8 +104,8 @@ b {
 	}
 	
 	function goModify(){
-		alert($("#sch_startDate").text());
 		$("#sch_upSeq").val($("#sch_seq").val());
+		$("#upPr_id").val($("#pr_id").val());
 		$("#sch_upStartDate").val($("#sch_startDate").text().substring(3,13));
 		$("#sch_upStartTime").val($("#sch_startDate").text().substring(14));
 		$("#sch_upEndDate").val($("#sch_endDate").text().substring(3,13));
@@ -111,7 +113,7 @@ b {
 		$("#sch_upTitle").val($("#sch_title").text());
 		$("#sch_upContent").val($("#sch_content").text());
 		
-		$(".schedulModiBox").css("display", "block");
+		$(".scheduleModiBox").css("display", "block");
 		$(".scheduleBox").css("display", "none");
 		$(".scheduleDetailBox").css("display", "none");
 	}
@@ -120,19 +122,11 @@ b {
 		var array = [val1, val2, val3];
 		var day = array.join("-");
 		
-		$(".schedulModiBox").css("display", "none");
+		$(".scheduleModiBox").css("display", "none");
 		$(".scheduleDetailBox").css("display", "none");
 		$(".scheduleBox").css("display", "block");
 		$("#sch_newStartDate").val(day);
 		$("#sch_newEndDate").val(day);
-	}
-	
-	function ckDate(){
-		var upStartTotal = $("#sch_upStartDate").val()+" "+$("#sch_upStartTime").val();
-		$("#upStartTotal").val(upStartTotal);
-		var upEndTotal = $("#sch_upEndDate").val()+" "+$("#sch_upEndTime").val();
-		$("#upEndTotal").val(upEndTotal);
-		alert(upStartTotal+"/"+upEndTotal);
 	}
 	
 	$(function(){
@@ -313,6 +307,7 @@ b {
 	<div class="scheduleDetailBox">
 		<table class="scheduleDetail">
 			<input type="hidden" id="sch_seq">
+			<input type="hidden" id="pr_id">
 			<tr>
 				<td id="sch_startDate"></td>
 				<td id="sch_endDate"></td>
@@ -331,10 +326,10 @@ b {
 	</div>
 
 	<!-- 일정 수정 부분 -->
-	<form class="schedulModiBox" action="./modifyTeamSchedule.do" method="post">
+	<form class="scheduleModiBox" action="./modifyTeamSchedule.do" method="post">
 		<div>
 			<input type = "hidden" id = "sch_upSeq" name = "sch_seq"> 
-			<input type = "hidden" name = "pr_id" value = <%=pr_id%>> 
+			<input type = "hidden" id = "upPr_id" name = "pr_id"> 
 			시작 <input type = "date" id = "sch_upStartDate"> 
 			<input type = "time" id = "sch_upStartTime"> 
 			<input type = "hidden" id = "upStartTotal" name = "sch_startDate"> ~ 
@@ -343,7 +338,6 @@ b {
 			<input type = "hidden" id = "upEndTotal" name = "sch_endDate"> <br>
 			제목:<input type = "text" id = "sch_upTitle" name = "sch_title"><br> 
 			내용:<input type = "text" id = "sch_upContent" name="sch_content">
-			<input type = "button" value = "확인" onclick = "ckDate()">
 		</div>
 		<div>
 			<input type="submit" value="수정">

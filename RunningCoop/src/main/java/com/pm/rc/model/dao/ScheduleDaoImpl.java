@@ -35,6 +35,14 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		int n = sqlSession.insert(NAMESPACE+"teamSchInsert", dto);
 		return n>0 ? true:false;
 	}
+	
+	@Override
+	public ScheduleDto teamSchView(String sch_seq) {
+		logger.info("teamSchView실행");
+		ScheduleDto dto = new ScheduleDto();
+		dto = sqlSession.selectOne(NAMESPACE+"teamSchView", sch_seq);
+		return dto;
+	}
 
 	@Override
 	public List<ScheduleDto> mySchSelect(String mem_id) {

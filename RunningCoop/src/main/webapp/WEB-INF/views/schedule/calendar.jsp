@@ -53,7 +53,7 @@ b {
 	display : none;
 }
 
-.scheduleBox, .schedulModiBox {
+.scheduleBox, .scheduleModiBox {
 	border: 1px solid gray;
 	border-collapse: collapse;
 	display: none;
@@ -91,7 +91,7 @@ b {
 		
 		$(".scheduleBox").css("display", "none");
 		$(".scheduleDetailBox").css("display", "block");
-		$(".schedulModiBox").css("display", "none");
+		$(".scheduleModiBox").css("display", "none");
 	}
 	
 	function goDelete(){
@@ -111,7 +111,7 @@ b {
 		$("#sch_upTitle").val($("#sch_title").text());
 		$("#sch_upContent").val($("#sch_content").text());
 		
-		$(".schedulModiBox").css("display", "block");
+		$(".scheduleModiBox").css("display", "block");
 		$(".scheduleBox").css("display", "none");
 		$(".scheduleDetailBox").css("display", "none");
 	}
@@ -120,19 +120,11 @@ b {
 		var array = [val1, val2, val3];
 		var day = array.join("-");
 		
-		$(".schedulModiBox").css("display", "none");
+		$(".scheduleModiBox").css("display", "none");
 		$(".scheduleDetailBox").css("display", "none");
 		$(".scheduleBox").css("display", "block");
 		$("#sch_newStartDate").val(day);
 		$("#sch_newEndDate").val(day);
-	}
-	
-	function ckDate(){
-		var upStartTotal = $("#sch_upStartDate").val()+" "+$("#sch_upStartTime").val();
-		$("#upStartTotal").val(upStartTotal);
-		var upEndTotal = $("#sch_upEndDate").val()+" "+$("#sch_upEndTime").val();
-		$("#upEndTotal").val(upEndTotal);
-		alert(upStartTotal+"/"+upEndTotal);
 	}
 	
 	$(function(){
@@ -149,6 +141,7 @@ b {
 			var upEndTotal = $("#sch_upEndDate").val()+" "+$("#sch_upEndTime").val();
 			$("#upEndTotal").val(upEndTotal);
 			if($("#upStartTotal")==""||$("#upEndTotal")==""){
+				alert("날짜를 입력해주세요");
 				return false;
 			}
 		}); 
@@ -340,7 +333,6 @@ b {
 			<input type = "hidden" id = "upEndTotal" name = "sch_endDate"> <br>
 			제목:<input type = "text" id = "sch_upTitle" name = "sch_title"><br> 
 			내용:<input type = "text" id = "sch_upContent" name="sch_content">
-			<input type = "button" value = "확인" onclick = "ckDate()">
 		</div>
 		<div>
 			<input type="submit" value="수정">

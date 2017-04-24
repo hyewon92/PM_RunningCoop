@@ -48,7 +48,7 @@
 	<select id="mySchView" parameterType="java.lang.String" resultType="ScheduleDto">
 		SELECT SCH_SEQ, TO_CHAR(SCH_STARTDATE,'YYYY-MM-DD HH24:MI') SCH_STARTDATE, TO_CHAR(SCH_ENDDATE,'YYYY-MM-DD HH24:MI') SCH_ENDDATE, SCH_TITLE, SCH_CONTENT
 		FROM RC_SCHEDULE
-		WHERE SCH_SEQ = #{sch_upSeq}
+		WHERE SCH_SEQ = #{sch_seq}
 	</select>	
 	
 	<!-- 팀 일정 등록 -->
@@ -65,5 +65,12 @@
   		FROM RC_SCHEDULE S, RC_PROJECT P
 		WHERE (P.PR_ID = S.PR_ID AND P.PR_ID =#{pr_id} AND S.SCH_PROSYN = 'Y') AND S.SCH_DELYN='N'
 	</select>
+	
+	<!-- 팀 일정 상세내용 조회 -->
+	<select id="teamSchView" parameterType="java.lang.String" resultType="ScheduleDto">
+		SELECT SCH_SEQ, PR_ID, TO_CHAR(SCH_STARTDATE,'YYYY-MM-DD HH24:MI') SCH_STARTDATE, TO_CHAR(SCH_ENDDATE,'YYYY-MM-DD HH24:MI') SCH_ENDDATE, SCH_TITLE, SCH_CONTENT
+		FROM RC_SCHEDULE
+		WHERE SCH_SEQ = #{sch_seq}
+	</select>	
 
 </mapper>
