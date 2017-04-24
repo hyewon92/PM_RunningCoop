@@ -67,7 +67,7 @@ b {
 	function showDetail(val){
 		$.ajax({
 			type : "POST",
-			url : "./detailSchedule.do",
+			url : "./detailTeamSchedule.do",
 			data: "sch_seq="+val,
 			async: false,
 			success: function(msg){
@@ -97,7 +97,7 @@ b {
 	function goDelete(){
 		var sch_seq = $("#sch_seq").val();
 		if(confirm("정말로 삭제하시겠습니까?")){
-			location.href = "./deleteSchedule.do?sch_seq="+sch_seq;
+			location.href = "./deleteTeamSchedule.do?sch_seq="+sch_seq;
 		}
 	}
 	
@@ -211,7 +211,10 @@ b {
 %>
 <%
 	//회원 계정 정보
-	String mem_id = (String)session.getAttribute("mem_id");
+	/* String mem_id = (String)session.getAttribute("mem_id"); */
+	
+	//해당 프로젝트 아이디
+	String pr_id = (String)request.getAttribute("pr_id");
 
 	//원하는 달로 이동하기 위해 현재 연도와 달 값 전달받음
 	String cyear = (String)request.getParameter("year");
@@ -253,11 +256,11 @@ b {
 	<!-- 달력 출력 -->
 	<table id="calendar">
 		<caption>
-			<a href="./viewSchedule.do?year=<%=year-1%>&month=<%=month%>"><img alt="이전 년도 이동" class="arrow" src="images/bigLeft.png"></a> 
-			<a href="./viewSchedule.do?year=<%=year%>&month=<%=month-1%>"><img alt="이전 월 이동" class="arrow" src="images/left.png"></a> 
+			<a href="./viewTeamSchedule.do?pr_id=<%=pr_id%>&year=<%=year-1%>&month=<%=month%>"><img alt="이전 년도 이동" class="arrow" src="images/bigLeft.png"></a> 
+			<a href="./viewTeamSchedule.do?pr_id=<%=pr_id%>&year=<%=year%>&month=<%=month-1%>"><img alt="이전 월 이동" class="arrow" src="images/left.png"></a> 
 			<b><%=year %>년<%=month %>월</b> 
-			<a href="./viewSchedule.do?year=<%=year%>&month=<%=month+1%>"><img alt="이전 월 이동" class="arrow" src="images/right.png"></a> 
-			<a href="./viewSchedule.do?year=<%=year+1%>&month=<%=month%>"><img alt="이전 월 이동" class="arrow" src="images/bigRight.png"></a>
+			<a href="./viewTeamSchedule.do?pr_id=<%=pr_id%>&year=<%=year%>&month=<%=month+1%>"><img alt="이전 월 이동" class="arrow" src="images/right.png"></a> 
+			<a href="./viewTeamSchedule.do?pr_id=<%=pr_id%>&year=<%=year+1%>&month=<%=month%>"><img alt="이전 월 이동" class="arrow" src="images/bigRight.png"></a>
 		</caption>
 		<col width="80px">
 		<col width="80px">
@@ -328,10 +331,10 @@ b {
 	</div>
 
 	<!-- 일정 수정 부분 -->
-	<form class="scheduleModiBox" action="./modifySchedule.do" method="post">
+	<form class="schedulModiBox" action="./modifyTeamSchedule.do" method="post">
 		<div>
 			<input type = "hidden" id = "sch_upSeq" name = "sch_seq"> 
-			<input type = "hidden" name = "mem_id" value = <%=mem_id%>> 
+			<input type = "hidden" name = "pr_id" value = <%=pr_id%>> 
 			시작 <input type = "date" id = "sch_upStartDate"> 
 			<input type = "time" id = "sch_upStartTime"> 
 			<input type = "hidden" id = "upStartTotal" name = "sch_startDate"> ~ 
@@ -348,9 +351,9 @@ b {
 	</form>
 
 	<!-- 일정 등록 부분 -->
-	<form class="scheduleBox" action="./insertSchedule.do" method="post">
+	<form class="scheduleBox" action="./insertTeamSchedule.do" method="post">
 		<div>
-			<input type = "hidden" name = "mem_id" value = <%=mem_id%>> 
+			<input type = "hidden" name = "pr_id" value = <%=pr_id%>> 
 			시작 <input type = "date" id = "sch_newStartDate"> 
 			<input type = "time" id = "sch_newStartTime"> 
 			<input type = "hidden" id = "newStartTotal" name = "sch_startDate"> ~ 

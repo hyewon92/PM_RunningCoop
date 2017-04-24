@@ -31,7 +31,8 @@
 <input type = "button" value = "일정보기" onclick = "location.href='./viewSchedule.do?year=<%=year%>&month=<%=month%>'">
 <input type = "button" value = "그룹생성" onclick = "openChild()">
 <input type = "button" value = "문의게시판" onclick = "location.href = './qnaList.do'"> 
-<input type = "button" value = "공지게시판" onclick = "location.href = './noticeList.do'"> 
+<input type = "button" value = "공지게시판" onclick = "location.href = './noticeList.do'">
+<input type = "button" value = "프로젝트" onclick = "location.href = './iProSelect.do'">
 <form action="./allGrSelect.do" method="post">
 <div>
 	<input type="text" name="gr_name" />

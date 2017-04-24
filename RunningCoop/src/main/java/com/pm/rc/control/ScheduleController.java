@@ -37,7 +37,6 @@ public class ScheduleController {
 		List<ScheduleDto> list = new ArrayList<ScheduleDto>();
 		list = scheduleService.mySchSelect(mem_id);
 		req.setAttribute("list", list);
-		logger.info("viewSchedule실행");
 		return "schedule/calendar";
 	}
 	
@@ -79,19 +78,20 @@ public class ScheduleController {
 	
 	//일정수정
 	@RequestMapping(value = "/modifySchedule.do", method = RequestMethod.POST)
-	public void modifySchedule(ScheduleDto dto){
+	public String modifySchedule(ScheduleDto dto){
 		logger.info("modifySchedule실행");
 		System.out.println("=============="+dto.getSch_content()+dto.getSch_startDate()+"==================");
-/*		boolean isc = scheduleService.schModify(dto);
+		boolean isc = scheduleService.schModify(dto);
 		if(isc == false){
 			return "schedule/error";
 		}else{
 			String year = dto.getSch_startDate().substring(0, 4);
 			String month = dto.getSch_startDate().substring(4, 6);
 			return "redirect:/viewSchedule.do?year="+year+"&month="+month;
-		}*/
+		}
 	}
 	
+	//일정삭제
 	@RequestMapping(value = "/deleteSchedule.do", method = RequestMethod.GET)
 	public String deleteSchedule(String sch_seq){
 		logger.info("deleteSchedule실행");
@@ -102,6 +102,47 @@ public class ScheduleController {
 			
 		}
 		return "redirect:/viewSchedule.do";
+	}
+	
+	//팀일정화면이동(PM권한)
+	@RequestMapping(value = "/viewTeamSchedule.do")
+	public String viewTeamSchedule(HttpServletRequest req){
+		logger.info("viewTeamSchedule실행");
+		String pr_id = req.getParameter("pr_id");
+		List<ScheduleDto> list = new ArrayList<ScheduleDto>();
+		list = scheduleService.teamSchSelect(pr_id);
+		req.setAttribute("list", list);
+		req.setAttribute("pr_id", pr_id);
+		logger.info("viewSchedule실행");
+		return "schedule/teamCalendar";
+	}	
+	
+	//팀일정 상세정보 조회
+	@RequestMapping(value = "/detailTeamSchedule.do", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, ScheduleDto> detailTeamSchedule(HttpServletRequest req){
+		logger.info("mySchView실행");
+		String sch_seq = req.getParameter("sch_seq");
+		Map<String, ScheduleDto> map = new HashMap<String, ScheduleDto>();
+		ScheduleDto dto = new ScheduleDto();
+		dto = scheduleService.mySchView(sch_seq);
+		map.put("dto", dto);
+		return map;
+	}
+	
+	//팀일정 등록
+	@RequestMapping(value = "/insertTeamSchedule.do", method = RequestMethod.POST)
+	public String inserTeamSchedule(ScheduleDto dto){
+		logger.info("insertSchedule실행");
+		boolean isc = scheduleService.teamSchInsert(dto);
+		if(isc == false){
+			return "schedule/error";
+		}else{
+			String year = dto.getSch_startDate().substring(0, 4);
+			String month = dto.getSch_startDate().substring(5, 7);
+			String pr_id = dto.getPr_id();
+			return "redirect:/viewTeamSchedule.do?pr_id="+pr_id+"&year="+year+"&month="+month;
+		}
 	}
 	
 }

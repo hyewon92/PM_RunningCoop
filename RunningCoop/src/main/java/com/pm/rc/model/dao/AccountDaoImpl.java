@@ -52,6 +52,7 @@ public class AccountDaoImpl implements AccountDao {
 	
 	@Override
 	public boolean memIdEmailChk(Map<String, String> map) {
+		logger.info("memIdEmailChk실행");
 		int result = sqlSession.selectOne(NAMESPACE+"memIdEmailChk", map);
 		System.out.println("<<<<result>>>>:"+result);
 		return result==1 ? true:false;
@@ -59,24 +60,28 @@ public class AccountDaoImpl implements AccountDao {
 
 	@Override
 	public boolean memPwModify(Map<String, String> map) {
+		logger.info("memPwModify실행");
 		int n = sqlSession.update(NAMESPACE+"memPwModify", map);
 		return n>0 ? true:false;
 	}
 
 	@Override
 	public MemberDto memSelect(String mem_id) {
+		logger.info("memSelect실행");
 		MemberDto dto = sqlSession.selectOne(NAMESPACE+"memSelect", mem_id);
 		return dto;
 	}
 
 	@Override
 	public boolean memInfoModify(MemberDto dto) {
+		logger.info("memInfoModify실행");
 		int n = sqlSession.update(NAMESPACE+"memInfoModify", dto);
 		return n>0 ? true:false;
 	}
 
 	@Override
 	public List<Map<String, String>> levelGmSelect(String mem_id) {
+		logger.info("levelGmSelect실행");
 		List<Map<String, String>> result;
 		result = sqlSession.selectList(NAMESPACE+"levelGmSelect", mem_id);
 		return result;
@@ -84,6 +89,7 @@ public class AccountDaoImpl implements AccountDao {
 
 	@Override
 	public List<Map<String, String>> levelPmSelect(String mem_id) {
+		logger.info("levelPmSelect실행");
 		List<Map<String, String>> result;
 		result = sqlSession.selectList(NAMESPACE+"levelPmSelect", mem_id);
 		return result;
@@ -91,48 +97,56 @@ public class AccountDaoImpl implements AccountDao {
 
 	@Override
 	public boolean memDelete_1(String mem_id) {
+		logger.info("memDelete_1실행");
 		int n = sqlSession.delete(NAMESPACE+"memDelete_1", mem_id);
 		return n>0 ? true:false;
 	}
 
 	@Override
 	public boolean memDelete_2() {
+		logger.info("memDelete_2실행");
 		int n = sqlSession.update(NAMESPACE+"memDelete_2");
 		return n>0 ? true:false;
 	}
 
 	@Override
 	public boolean memDelete_3(String mem_id) {
+		logger.info("memDelete_3실행");
 		int n = sqlSession.delete(NAMESPACE+"memDelete_3", mem_id);
 		return n>0 ? true:false;
 	}
 
 	@Override
 	public boolean memDelete_4() {
+		logger.info("memDelete_4실행");
 		int n = sqlSession.update(NAMESPACE+"memDelete_4");
 		return n>0 ? true:false;
 	}
 
 	@Override
 	public boolean memDelete_5(String mem_id) {
+		logger.info("memDelete_5실행");
 		int n = sqlSession.update(NAMESPACE+"memDelete_5", mem_id);
 		return n>0 ? true:false;
 	}
 
 	@Override
 	public boolean memDelete_6(String mem_id) {
+		logger.info("memDelete_6실행");
 		int n = sqlSession.delete(NAMESPACE+"memDelete_6", mem_id);
 		return n>0 ? true:false;
 	}
 
 	@Override
 	public boolean memDelete_7(String mem_id) {
+		logger.info("memDelete_7실행");
 		int n = sqlSession.delete(NAMESPACE+"memDelete_7", mem_id);
 		return n>0 ? true:false;
 	}
 
 	@Override
 	public boolean memDelete_8(String mem_id) {
+		logger.info("memDelete_8실행");
 		int n = sqlSession.update(NAMESPACE+"memDelete_8", mem_id);
 		return n>0 ? true:false;
 	}

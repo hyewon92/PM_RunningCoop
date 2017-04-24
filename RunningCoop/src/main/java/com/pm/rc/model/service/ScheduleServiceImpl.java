@@ -17,12 +17,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	@Override
 	public List<ScheduleDto> teamSchSelect(String pr_id) {
-		return null;
+		return scheduleDao.teamSchSelect(pr_id);
 	}
 
 	@Override
 	public boolean teamSchInsert(ScheduleDto dto) {
-		return false;
+		return scheduleDao.teamSchInsert(dto);
 	}
 
 	@Override
