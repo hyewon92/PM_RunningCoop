@@ -17,6 +17,14 @@
 	.wd_title{
 		cursor: pointer;
 	}
+	
+	.work_Edit_Form{
+		display : none;
+	}
+	
+	.promem_list{
+		display : none;
+	}
 </style>
 <script type="text/javascript">
 	function viewWork(val){
@@ -176,13 +184,39 @@
 	}
 	
 	function workEdit(val){
+		$("#work_Edit_Form").css("display", "block");
+		$("#edit_wk_id").val(val);
+	}
+	
+	function wkEditClose(){
+		$("#edit_wk_id").val("");
+		$("#work_Edit_Form").css("display", "none");
+	}
+	
+	function searchMem(){
+		$("#promem_list").css("display", "block");
+		var pr_id = $("#pr_id").val();
 		
+		$.ajax({
+			type : "POST",
+			url : "./searchmem.do",
+			data : "pr_id="+pr_id,
+			async : false,
+			success : function(nodes){
+				$("#promem_list").children("fieldset").children("p").remove();
+				for(var i = 0; i < nodes.length; i++){
+					$("#promem_list").children("fieldset")
+					.append("<p><input type='hidden' name = 'mem_id' value='"+nodes[i].MEM_ID+"'/>"+nodes[i].MEM_NAME+"</p>");
+				}
+			}
+		});
 	}
 	
 	
 </script>
 </head>
 <body>
+<div>
 <input type="hidden" id = "pr_id" value="${ pr_id }"/> 
 	<fieldset id="todoList">
 		<legend>Todo</legend>
@@ -192,11 +226,11 @@
 			</c:when>
 			<c:otherwise>
 				<c:forEach var="todo" items="${ todo }">
-					<p onclick = "viewWork('${ todo.get('WK_ID') }')">
+					<span onclick = "viewWork('${ todo.get('WK_ID') }')">
 						<input type="hidden" value="${ todo.get('WK_ID') }" /> 
 						${ todo.get('WK_TITLE') }/(${ todo.get('MEM_NAME') })/${ todo.get('WK_PRORATE') }%
-						<input type="button" value="수정" onclick="workEdit(${ todo.get('WK_ID') })"/>
-					</p>
+					</span>
+					<input type="button" value="수정" onclick="workEdit('${ todo.get('WK_ID') }')"/><br>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
@@ -209,11 +243,11 @@
 			</c:when>
 			<c:otherwise>
 				<c:forEach var="doing" items="${ doing }">
-					<p onclick = "viewWork('${ doing.get('WK_ID') }')">
+					<span onclick = "viewWork('${ doing.get('WK_ID') }')">
 						<input type="hidden" value="${ doing.get('WK_ID') }" /> 
 						${ doing.get("WK_TITLE") }/(${ doing.get("MEM_NAME") })/${ doing.get("WK_PRORATE") }%
-						<input type="button" value="수정" onclick="workEdit(${ doing.get('WK_ID') })"/>
-					</p>
+					</span>
+					<input type="button" value="수정" onclick="workEdit('${ doing.get('WK_ID') }')"/><br>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
@@ -226,15 +260,33 @@
 			</c:when>
 			<c:otherwise>
 				<c:forEach var="done" items="${ done }">
-					<p onclick = "viewWork('${ done.get('WK_ID') }')">
+					<span onclick = "viewWork('${ done.get('WK_ID') }')">
 						<input type="hidden" value="${ done.get('WK_ID') }" /> 
 						${ done.get("WK_TITLE") }/(${ done.get("MEM_NAME") })/${ done.get("WK_PRORATE") }%
-						<input type="button" value="수정" onclick="workEdit(${ done.get('WK_ID') })"/>
-					</p>
+					</span>
+					<input type="button" value="수정" onclick="workEdit('${ done.get('WK_ID') }')"/><br>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
 	</fieldset>
+</div>
+<div id = "work_Edit_Form" class="work_Edit_Form">
+	<fieldset>
+		<legend>업무 수정 양식</legend>
+		<input type="text" id="edit_wk_id" name = "wk_id" value=""/>
+		<input type="button" value="닫기" onclick="wkEditClose()"/>
+		업무 내용<input type="text" name="wd_title" value=""/>
+		마감 기한<input type="date" name="wd_endDate" value=""/>
+		담당자 <input type="text" name="mem_id" value=""/>
+		<input type="button" value="멤버조회" onclick="searchMem()"/><br>
+		<input type="button" value="수정" onclick="work_Edit()"/>
+	</fieldset>
+</div>
+<div id = "promem_list" class="promem_list">
+	<fieldset>
+		<legend>프로젝트 멤버</legend>
+	</fieldset>
+</div>
 	<div id = "work_Detail" class = "work_Detail_View">
 	<input type="button" value="닫기" onclick="backToProject()"/>
 		<div id = "work_Detail_Insert">

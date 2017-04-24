@@ -273,6 +273,7 @@ public class ProjectController {
 		return list;
 	}
 	
+	//하위 업무 삭제
 	@RequestMapping(value="/wdDelete.do", method=RequestMethod.POST)
 	@ResponseBody
 	public List<WorkDetailDto> workDetailDelete(HttpServletRequest request){
@@ -297,6 +298,22 @@ public class ProjectController {
 		
 		List<WorkDetailDto> list = null;
 		list = wService.wdSelect(wk_id);
+		
+		return list;
+	}
+	
+	//프로젝트 멤버 조회
+	@RequestMapping(value="/searchmem.do", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Map<String, String>> promemSelect(HttpServletRequest request){
+		String pr_id = request.getParameter("pr_id");
+		
+		logger.info("=============== 프로젝트 참여 멤버 조회 ===================");
+		logger.info("멤버 조회할 프로젝트 아이디 : "+pr_id);
+		logger.info("==================================================");
+		
+		List<Map<String, String>> list = null;
+		list = service.prMemListSelect(pr_id);
 		
 		return list;
 	}

@@ -131,7 +131,7 @@ public interface ProjectService {
 	 * @return List&lt;MemberDto&gt;
 	 * @author 김혜원
 	 * */
-	public Map<String, String> prMemListSelect(String pr_id);
+	public List<Map<String, String>> prMemListSelect(String pr_id);
 	
 	/**
 	 * 프로젝트 담당자 수정(pr_id, mem_id)

@@ -129,9 +129,8 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public Map<String, String> prMemListSelect(String pr_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Map<String, String>> prMemListSelect(String pr_id) {
+		return dao.prMemListSelect(pr_id);
 	}
 
 	@Override

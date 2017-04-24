@@ -140,7 +140,7 @@ public interface ProjectDao {
 	 * @param pr_id 해당하는 프로젝트 아이디
 	 * @return
 	 */
-	public Map<String, String> prMemListSelect(String pr_id);
+	public List<Map<String, String>> prMemListSelect(String pr_id);
 	
 	/**
 	 * 프로젝트 멤버 삭제 절차 1 (프로젝트 멤버 삭제)
