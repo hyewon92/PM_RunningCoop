@@ -2,23 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pm.rc.worklist">
 
-	<select id="wkListSelect1" parameterType="java.lang.String" resultType="java.util.Map">
+	<select id="wkListSelect1" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT W.WK_ID, W.WK_TITLE, M.MEM_NAME, W.WK_PRORATE
-  		FROM RC_WORKLIST W, RC_MEMBER M
-  		WHERE W.PR_ID = #{pr_id} AND W.WK_PRORATE = 0 AND W.MEM_ID = M.MEM_ID AND WK_DELYN = 'N'
+		FROM RC_WORKLIST W, RC_MEMBER M
+		WHERE W.MEM_ID = M.MEM_ID AND W.WK_PRORATE = '0' AND W.WK_DELYN = 'N' AND W.PR_ID = #{pr_id}
 	</select>
 	
-	<select id="wkListSelect2" parameterType="java.lang.String" resultType="java.util.Map">
-  		<![CDATA[
-		SELECT W.WK_ID, W.WK_TITLE, M.MEM_NAME, W.WK_PRORATE
-  		FROM RC_WORKLIST W, RC_MEMBER M
-  		WHERE W.PR_ID = #{pr_id} AND W.WK_PRORATE > 0 AND W.WK_PRORATE < 100 AND W.MEM_ID = M.MEM_ID AND WK_DELYN = 'N'
-  		]]>
+	<select id="wkListSelect2" parameterType="java.util.Map" resultType="java.util.Map">
+		<![CDATA[
+			SELECT W.WK_ID, W.WK_TITLE, M.MEM_NAME, W.WK_PRORATE
+			FROM RC_WORKLIST W, RC_MEMBER M
+			WHERE W.MEM_ID = M.MEM_ID AND W.WK_PRORATE > '0' AND W.WK_PRORATE < '100' AND W.WK_DELYN = 'N' AND W.PR_ID = #{pr_id}
+		]]>
+		
 	</select>
 	
-	<select id="wkListSelect3" parameterType="java.lang.String" resultType="java.util.Map">
+	<select id="wkListSelect3" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT W.WK_ID, W.WK_TITLE, M.MEM_NAME, W.WK_PRORATE
- 		FROM RC_WORKLIST W, RC_MEMBER M
-  		WHERE W.PR_ID = #{pr_id} AND W.WK_PRORATE = 100 AND W.MEM_ID = M.MEM_ID AND WK_DELYN = 'N'
+		FROM RC_WORKLIST W, RC_MEMBER M
+		WHERE W.MEM_ID = M.MEM_ID AND W.WK_PRORATE = '100' AND W.WK_DELYN = 'N' AND W.PR_ID = #{pr_id}
 	</select>
+	
+	<select id="wdSelect" parameterType="java.lang.String" resultType="WorkDetailDto">
+		SELECT WD_ID, WD_TITLE, WD_ERRORYN, TO_CHAR (WD_ENDDATE, 'YYMMDD') WD_ENDDATE, WD_COMPLYN
+  		FROM RC_WORKDETAIL
+  		WHERE WK_ID = #{wk_id} AND WD_DELYN = 'N'
+	</select>
+
+	
 </mapper>

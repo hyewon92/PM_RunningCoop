@@ -77,7 +77,7 @@ public interface WorkListDao {
 	 * @return WorkDetailDto
 	 * @author 김혜원
 	 * */
-	public WorkDetailDto wdSelect(String wk_id);
+	public List<WorkDetailDto> wdSelect(String wk_id);
 	
 	/**
 	 * 하위업무리스트 추가

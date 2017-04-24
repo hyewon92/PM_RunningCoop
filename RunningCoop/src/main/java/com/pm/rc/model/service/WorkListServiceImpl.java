@@ -22,13 +22,15 @@ public class WorkListServiceImpl implements WorkListService {
 	@Override
 	public List<Map<String, String>> wkListSelect(Map<String, String> map) {
 		List<Map<String, String>> list = null;
+		
 		if(map.get("wk_condition").equals("todo")){
-			dao.wkListSelect1(map);
+			list = dao.wkListSelect1(map);
 		} else if(map.get("wk_condition").equals("doing")){
-			dao.wkListSelect2(map);
+			list = dao.wkListSelect2(map);
 		} else if(map.get("wk_condition").equals("done")){
-			dao.wkListSelect3(map);
+			list = dao.wkListSelect3(map);
 		}
+		
 		return list;
 	}
 
@@ -57,9 +59,8 @@ public class WorkListServiceImpl implements WorkListService {
 	}
 
 	@Override
-	public WorkDetailDto wdSelect(String wk_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<WorkDetailDto> wdSelect(String wk_id) {
+		return dao.wdSelect(wk_id);
 	}
 
 	@Override

@@ -23,17 +23,23 @@ public class WorkListDaoImpl implements WorkListDao {
 
 	@Override
 	public List<Map<String, String>> wkListSelect1(Map<String, String> map) {
-		return sqlSession.selectList(NAMESPACE+"wkListSelect1", map);
+		List<Map<String, String>> list = null;
+		list = sqlSession.selectList(NAMESPACE+"wkListSelect1", map);
+		return list;
 	}
 
 	@Override
 	public List<Map<String, String>> wkListSelect2(Map<String, String> map) {
-		return sqlSession.selectList(NAMESPACE+"wkListSelect2", map);
+		List<Map<String, String>> list = null;
+		list = sqlSession.selectList(NAMESPACE+"wkListSelect2", map);
+		return list;
 	}
 
 	@Override
 	public List<Map<String, String>> wkListSelect3(Map<String, String> map) {
-		return sqlSession.selectList(NAMESPACE+"wkListSelect3", map);
+		List<Map<String, String>> list = null;
+		list = sqlSession.selectList(NAMESPACE+"wkListSelect3", map);
+		return list;
 	}
 
 	@Override
@@ -61,9 +67,10 @@ public class WorkListDaoImpl implements WorkListDao {
 	}
 
 	@Override
-	public WorkDetailDto wdSelect(String wk_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<WorkDetailDto> wdSelect(String wk_id) {
+		List<WorkDetailDto> dto = null;
+		dto = sqlSession.selectList(NAMESPACE+"wdSelect", wk_id);
+		return dto;
 	}
 
 	@Override

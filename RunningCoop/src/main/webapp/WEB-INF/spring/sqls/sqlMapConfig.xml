@@ -27,5 +27,6 @@
 		<mapper resource="/sqls/projectMapper.xml"/>
 		<mapper resource="/sqls/groupBoardMapper.xml"/>
 		<mapper resource="/sqls/managerMapper.xml"/>
+		<mapper resource="/sqls/workListMapper.xml"/>
 	</mappers>
 </configuration>

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pm.rc.dto.ProjectDto;
+import com.pm.rc.dto.WorkDetailDto;
 import com.pm.rc.model.service.ProjectService;
 import com.pm.rc.model.service.WorkListService;
 
@@ -110,18 +111,35 @@ public class ProjectController {
 		map.put("pr_id", pr_id);
 		map.put("wk_condition", "todo");
 		todo = wService.wkListSelect(map);
+
+		model.addAttribute("todo", todo);
 		
 		map.replace("wk_condition", "doing");
 		doing = wService.wkListSelect(map);
+
+		model.addAttribute("doing", doing);
 		
 		map.replace("wk_condition", "done");
 		done = wService.wkListSelect(map);
 		
-		model.addAttribute("todo", todo);
-		model.addAttribute("doing", doing);
 		model.addAttribute("done", done);
 		
 		return "project/workList";
+	}
+	
+	@RequestMapping(value="/detailWork.do", method=RequestMethod.POST)
+	@ResponseBody
+	public List<WorkDetailDto> workDetailView(Model model, HttpServletRequest request){
+		String wk_id = request.getParameter("wk_id");
+		
+		logger.info("=============== 업무 상세 조회 ================");
+		logger.info("조회할 업무 아이디 : "+wk_id);
+		logger.info("=========================================");
+		
+		List<WorkDetailDto> dto = null;
+		dto = wService.wdSelect(wk_id);
+		
+		return dto;
 	}
 	
 	
