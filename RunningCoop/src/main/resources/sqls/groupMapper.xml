@@ -49,7 +49,7 @@
 	<select id="allGrSelect" parameterType="java.util.Map" resultMap="groupdto2">
 		SELECT 	G.GR_ID, G.GR_NAME, M.MEM_NAME
 		FROM 	RC_GROUP G, RC_MEMBER M
-		WHERE 	M.MEM_ID = (
+		WHERE 	M.MEM_ID IN (
 							SELECT 	GM.MEM_ID 
 							FROM 	RC_GROUPMEM GM
 							WHERE 	GM.GR_ID = G.GR_ID 
@@ -136,7 +136,7 @@
 		FROM ( SELECT ROWNUM RNUM, P.*
 		      FROM (
 	            SELECT G.GR_ID, G.GR_NAME, M.MEM_NAME, G.GR_REGDATE FROM RC_GROUP G, RC_MEMBER M 
-				WHERE M.MEM_ID = (SELECT GM.MEM_ID FROM RC_GROUPMEM GM WHERE GM.GR_ID = G.GR_ID AND GM.GR_LEVEL = 'GM')
+				WHERE M.MEM_ID IN (SELECT GM.MEM_ID FROM RC_GROUPMEM GM WHERE GM.GR_ID = G.GR_ID AND GM.GR_LEVEL = 'GM')
 				AND G.GR_NAME LIKE '%'||#{gr_name}||'%'
 				ORDER BY G.GR_REGDATE DESC
 		      ) P
@@ -147,7 +147,7 @@
 	<select id="countTotalpaging" resultType="java.lang.Integer" parameterType="pagingDto">
 		SELECT NVL(COUNT(*),0)
 		FROM RC_GROUP G, RC_MEMBER M
-		WHERE M.MEM_ID = (SELECT GM.MEM_ID FROM RC_GROUPMEM GM WHERE GM.GR_ID = G.GR_ID AND GM.GR_LEVEL = 'GM') AND G.GR_NAME LIKE '%'||#{gr_name}||'%'
+		WHERE M.MEM_ID IN (SELECT GM.MEM_ID FROM RC_GROUPMEM GM WHERE GM.GR_ID = G.GR_ID AND GM.GR_LEVEL = 'GM') AND G.GR_NAME LIKE '%'||#{gr_name}||'%'
 	</select>
 
 
