@@ -3,14 +3,14 @@
 <mapper namespace="com.pm.rc.worklist">
 
 	<select id="wkListSelect1" parameterType="java.util.Map" resultType="java.util.Map">
-		SELECT W.WK_ID, W.WK_TITLE, M.MEM_NAME, W.WK_PRORATE
+		SELECT W.WK_ID, W.WK_TITLE, M.MEM_ID, M.MEM_NAME, W.WK_PRORATE, TO_CHAR(W.WK_ENDDATE, 'YYYY-MM-DD') WK_ENDDATE
 		FROM RC_WORKLIST W, RC_MEMBER M
 		WHERE W.MEM_ID = M.MEM_ID AND W.WK_PRORATE = '0' AND W.WK_DELYN = 'N' AND W.PR_ID = #{pr_id}
 	</select>
 	
 	<select id="wkListSelect2" parameterType="java.util.Map" resultType="java.util.Map">
 		<![CDATA[
-			SELECT W.WK_ID, W.WK_TITLE, M.MEM_NAME, W.WK_PRORATE
+			SELECT W.WK_ID, W.WK_TITLE, M.MEM_ID, M.MEM_NAME, W.WK_PRORATE, TO_CHAR(W.WK_ENDDATE, 'YYYY-MM-DD') WK_ENDDATE
 			FROM RC_WORKLIST W, RC_MEMBER M
 			WHERE W.MEM_ID = M.MEM_ID AND W.WK_PRORATE > '0' AND W.WK_PRORATE < '100' AND W.WK_DELYN = 'N' AND W.PR_ID = #{pr_id}
 		]]>
@@ -18,7 +18,7 @@
 	</select>
 	
 	<select id="wkListSelect3" parameterType="java.util.Map" resultType="java.util.Map">
-		SELECT W.WK_ID, W.WK_TITLE, M.MEM_NAME, W.WK_PRORATE
+		SELECT W.WK_ID, W.WK_TITLE, M.MEM_ID, M.MEM_NAME, W.WK_PRORATE, TO_CHAR(W.WK_ENDDATE, 'YYYY-MM-DD') WK_ENDDATE
 		FROM RC_WORKLIST W, RC_MEMBER M
 		WHERE W.MEM_ID = M.MEM_ID AND W.WK_PRORATE = '100' AND W.WK_DELYN = 'N' AND W.PR_ID = #{pr_id}
 	</select>
@@ -64,6 +64,27 @@
   	
   	<update id="wkProRateEdit" parameterType="java.util.Map">
   		UPDATE RC_WORKLIST SET WK_PRORATE = #{wk_proRate}
+  		WHERE WK_ID = #{wk_id}
+  	</update>
+  	
+  	<update id="wkListModify" parameterType="WorkListDto">
+  		UPDATE RC_WORKLIST SET WK_TITLE = #{wk_title}, MEM_ID = #{mem_id}, WK_ENDDATE = TO_DATE(#{wk_endDate}, 'YYYY-MM-DD')
+  		WHERE WK_ID = #{wk_id}
+  	</update>
+  	
+  	<insert id="wkListInsert" parameterType="WorkListDto">
+  		INSERT INTO RC_WORKLIST (WK_ID, WK_TITLE, MEM_ID, WK_ENDDATE, PR_ID)
+    	VALUES 
+     	(#{wk_id}, #{wk_title}, #{mem_id}, TO_DATE (#{wk_endDate}, 'YYYY-MM-DD'), #{pr_id})
+  	</insert>
+  	
+  	<update id="wkListDelete_1" parameterType="java.lang.String">
+  		UPDATE RC_WORKDETAIL SET WD_DELYN = 'Y'
+  		WHERE WK_ID = #{wk_id}
+  	</update>
+  	
+  	<update id="wkListDelete_2" parameterType="java.lang.String">
+  		UPDATE RC_WORKLIST SET WK_DELYN = 'Y'
   		WHERE WK_ID = #{wk_id}
   	</update>
 

@@ -48,12 +48,19 @@ public interface WorkListDao {
 	public boolean wkListInsert(WorkListDto dto);
 	
 	/**
-	 * 프로젝트 업무 리스트 삭제
+	 * 프로젝트 업무 리스트 삭제 프로세스 1 : 하위업무 삭제
 	 * @param wk_id 워크리스트 아이디
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean wkListDelete(String wk_id);
+	public boolean wkListDelete_1(String wk_id);
+	
+	/**
+	 * 프로젝트 업무 리스트 삭제 프로세스 2 : 업무 삭제
+	 * @param wk_id
+	 * @return
+	 */
+	public boolean wkListDelete_2(String wk_id);
 	
 	/**
 	 * 프로젝트 업무 리스트 수정 프로세스

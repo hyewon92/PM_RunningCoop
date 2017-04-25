@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pm.rc.dto.ProjectDto;
 import com.pm.rc.dto.WorkDetailDto;
+import com.pm.rc.dto.WorkListDto;
 import com.pm.rc.model.service.ProjectService;
 import com.pm.rc.model.service.WorkListService;
 
@@ -316,6 +317,79 @@ public class ProjectController {
 		list = service.prMemListSelect(pr_id);
 		
 		return list;
+	}
+	
+	@RequestMapping(value="/workEdit.do", method=RequestMethod.POST)
+	public String work_Edit(HttpServletRequest request){
+		String pr_id = request.getParameter("pr_id");
+		String wk_id = request.getParameter("wk_id");
+		String wk_title = request.getParameter("wk_title");
+		String wk_endDate = request.getParameter("wk_endDate");
+		String mem_id = request.getParameter("mem_id");
+		
+		logger.info("=============== 업무 정보 변경 ===================");
+		logger.info("수정 할 업무 아이디 : "+wk_id);
+		logger.info("수정할 업무 내용 : "+wk_title);
+		logger.info("수정할 업무 마감기한 : "+wk_endDate);
+		logger.info("수정할 업무 담당자  : "+mem_id);
+		logger.info("=============================================");
+		
+		WorkListDto dto = new WorkListDto();
+		dto.setWk_id(wk_id);
+		dto.setMem_id(mem_id);
+		dto.setWk_title(wk_title);
+		dto.setWk_endDate(wk_endDate);
+		
+		boolean isc = false;
+		isc = wService.wkListModify(dto);
+
+		if(isc){
+			System.out.println("업무 정보 변경 성공");
+		} else {
+			System.out.println("업무 정보 변경 실패");
+		}
+		return "redirect:/goProject.do?pr_id="+pr_id;
+	}
+	
+	@RequestMapping(value="/workInsert.do", method=RequestMethod.POST)
+	public String work_Insert(HttpServletRequest request){
+		String pr_id = request.getParameter("pr_id");
+		String wk_title = request.getParameter("wk_title");
+		String wk_endDate = request.getParameter("wk_endDate");
+		String mem_id = request.getParameter("mem_id");
+		
+		WorkListDto dto = new WorkListDto();
+		dto.setWk_title(wk_title);
+		dto.setWk_endDate(wk_endDate);
+		dto.setMem_id(mem_id);
+		dto.setPr_id(pr_id);
+		
+		boolean isc = false;
+		isc = wService.wkListInsert(dto);
+		
+		if(isc){
+			System.out.println("업무 등록 성공");
+		} else {
+			System.out.println("업무 등록 실패");
+		}
+		
+		return "redirect:/goProject.do?pr_id="+pr_id;
+	}
+	
+	@RequestMapping(value="/workDelete.do", method=RequestMethod.GET)
+	public String work_Delete(HttpServletRequest request){
+		String pr_id = request.getParameter("pr_id");
+		String wk_id = request.getParameter("wk_id");
+		
+		boolean isc = false;
+		isc = wService.wkListDelete(wk_id);
+		
+		if(isc){
+			System.out.println("업무 삭제 성공");
+		} else {
+			System.out.println("업무 삭제 실패");
+		}
+		return "redirect:/goProject.do?pr_id="+pr_id;
 	}
 
 

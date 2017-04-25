@@ -44,20 +44,42 @@ public class WorkListDaoImpl implements WorkListDao {
 
 	@Override
 	public boolean wkListInsert(WorkListDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+		int num = sqlSession.insert(NAMESPACE+"wkListInsert", dto);
+		if( num > 0){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
-	public boolean wkListDelete(String wk_id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean wkListDelete_1(String wk_id) {
+		int num = sqlSession.update(NAMESPACE+"wkListDelete_1", wk_id);
+		if(num > 0){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean wkListDelete_2(String wk_id) {
+		int num = sqlSession.update(NAMESPACE+"wkListDelete_2", wk_id);
+		if (num > 0){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
 	public boolean wkListModify(WorkListDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+		int num = sqlSession.update(NAMESPACE+"wkListModify", dto);
+		if (num > 0){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	

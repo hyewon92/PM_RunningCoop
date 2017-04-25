@@ -40,19 +40,38 @@ public class WorkListServiceImpl implements WorkListService {
 
 	@Override
 	public boolean wkListInsert(WorkListDto dto) {
-		return false;
+		Date date = new Date();
+		SimpleDateFormat dateForm = new SimpleDateFormat("yyMMdd");
+		
+		String id_1 = "WK";
+		String id_2 = dateForm.format(date).toString();
+		String uuid = createUUID();
+		String id_3 = uuid.substring(uuid.lastIndexOf("-")+8);
+		String wk_id = id_1+id_2+id_3;
+		
+		dto.setWk_id(wk_id);
+		
+		return dao.wkListInsert(dto);
 	}
 
 	@Override
 	public boolean wkListDelete(String wk_id) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean isc1 = false;
+		boolean isc2 = false;
+		
+		isc1 = dao.wkListDelete_1(wk_id);
+		isc2 = dao.wkListDelete_2(wk_id);
+		
+		if (isc1 && isc2){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
 	public boolean wkListModify(WorkListDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.wkListModify(dto);
 	}
 
 	@Override

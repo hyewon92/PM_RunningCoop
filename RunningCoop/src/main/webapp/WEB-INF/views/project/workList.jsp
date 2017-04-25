@@ -25,6 +25,11 @@
 	.promem_list{
 		display : none;
 	}
+	
+	.workInsert_Form{
+		border : 1px solid black;
+		display : none;
+	}
 </style>
 <script type="text/javascript">
 	function viewWork(val){
@@ -183,13 +188,18 @@
 		location.href="./goProject.do?pr_id="+pr_id;
 	}
 	
-	function workEdit(val){
-		$("#work_Edit_Form").css("display", "block");
+	function workEdit(val, val2, val3, val4){
+		$(".workInsert_Form").css("display", "none");
+		$(".work_Edit_Form").css("display", "block");
 		$("#edit_wk_id").val(val);
+		$("#input_wk_title").val(val2);
+		$("#input_wk_endDate").val(val3);
+		$(".input_mem_id").eq(1).val(val4);
 	}
 	
 	function wkEditClose(){
 		$("#edit_wk_id").val("");
+		$("#work_Edit_Form").children("input[type=text]").val("").end().children("input[type=date]").val("");
 		$("#work_Edit_Form").css("display", "none");
 	}
 	
@@ -204,13 +214,52 @@
 			async : false,
 			success : function(nodes){
 				$("#promem_list").children("fieldset").children("p").remove();
+				$("#promem_list").children("fieldset").append("<input type='button' value='닫기' onclick='memList_Close()'/><br>");
 				for(var i = 0; i < nodes.length; i++){
+					var mem_name = nodes[i].MEM_NAME;
+					var mem_id = nodes[i].MEM_ID;
 					$("#promem_list").children("fieldset")
-					.append("<p><input type='hidden' name = 'mem_id' value='"+nodes[i].MEM_ID+"'/>"+nodes[i].MEM_NAME+"</p>");
+					.append("<span>"+mem_name+"</span>")
+					.append("<input type='button' value='선택' onclick='trans_Memid(\""+mem_id+"\")'/><br>");
 				}
 			}
 		});
 	}
+	
+	function memList_Close(){
+		$("#promem_list").css("display", "none").children("fieldset").children("legend").siblings().remove();
+	}
+	
+	function trans_Memid(val){
+		var mem_id = val;
+		if ($(".workInsert_Form").css("display") == "block"){
+			$(".input_mem_id").eq(0).val(mem_id);
+		} else if ($(".workInsert_Form").css("display") == "none"){
+			$(".input_mem_id").eq(1).val(mem_id);
+		}
+		$("#promem_list").css("display", "none").children("fieldset").children("legend").siblings().remove();
+	}
+	
+	function work_Edit(){
+		$("#work_Edit").submit();
+	}
+	
+	function workInsert(){
+		$(".work_Edit_Form").css("display", "none");
+		$(".workInsert_Form").css("display", "block");
+	}
+	
+	function workInsert_Form_Close(){
+		$("#wk_insert_form").children("input[type=text]").val("");
+		$("#wk_insert_form").children("input[type=date]").val("");
+		$(".workInsert_Form").css("display", "none");
+	}
+	
+	function workDelete(val){
+		var pr_id = $("#pr_id").val();
+		location.href="./workDelete.do?pr_id="+pr_id+"&wk_id="+val;
+	}
+	
 	
 	
 </script>
@@ -218,6 +267,17 @@
 <body>
 <div>
 <input type="hidden" id = "pr_id" value="${ pr_id }"/> 
+<div>
+	<input type="button" value="업무 추가" onclick="workInsert()"/>
+	<div id="workInsert_Form" class="workInsert_Form">
+		<input type="button" value="닫기" onclick="workInsert_Form_Close()"/>
+		<form id="wk_insert_form" action="./workInsert.do?pr_id=${ pr_id }" method="POST">
+			업무 명 : <input type="text" name="wk_title" value=""/><br>
+			업무 담당자 : <input type="text" class ="input_mem_id" name="mem_id" value=""/><input type="button" value="멤버조회" onclick="searchMem()"/><br>
+			업무 마감기한 : <input type="date" name="wk_endDate" value=""/><br>
+			<input type="submit" value="등록"/>
+		</form>
+	</div>
 	<fieldset id="todoList">
 		<legend>Todo</legend>
 		<c:choose>
@@ -230,11 +290,14 @@
 						<input type="hidden" value="${ todo.get('WK_ID') }" /> 
 						${ todo.get('WK_TITLE') }/(${ todo.get('MEM_NAME') })/${ todo.get('WK_PRORATE') }%
 					</span>
-					<input type="button" value="수정" onclick="workEdit('${ todo.get('WK_ID') }')"/><br>
+					<input type="button" value="수정" onclick="workEdit('${ todo.get('WK_ID') }', '${ todo.get('WK_TITLE') }', '${ todo.get('WK_ENDDATE') }', '${ todo.get('MEM_ID') }')"/>
+					<input type="button" value="삭제" onclick="workDelete('${ todo.get('WK_ID') }')"/><br>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
 	</fieldset>
+</div>
+<div>
 	<fieldset id="doingList">
 		<legend>Doing</legend>
 		<c:choose>
@@ -247,11 +310,14 @@
 						<input type="hidden" value="${ doing.get('WK_ID') }" /> 
 						${ doing.get("WK_TITLE") }/(${ doing.get("MEM_NAME") })/${ doing.get("WK_PRORATE") }%
 					</span>
-					<input type="button" value="수정" onclick="workEdit('${ doing.get('WK_ID') }')"/><br>
+					<input type="button" value="수정" onclick="workEdit('${ doing.get('WK_ID') }', '${ doing.get('WK_TITLE') }', '${ doing.get('WK_ENDDATE') }', '${ doing.get('MEM_ID') }')"/>
+					<input type="button" value="삭제" onclick="workDelete('${ doing.get('WK_ID') }')"/><br>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
 	</fieldset>
+</div>
+<div>
 	<fieldset id="doneList">
 		<legend>Done</legend>
 		<c:choose>
@@ -264,22 +330,24 @@
 						<input type="hidden" value="${ done.get('WK_ID') }" /> 
 						${ done.get("WK_TITLE") }/(${ done.get("MEM_NAME") })/${ done.get("WK_PRORATE") }%
 					</span>
-					<input type="button" value="수정" onclick="workEdit('${ done.get('WK_ID') }')"/><br>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
 	</fieldset>
 </div>
+</div>
 <div id = "work_Edit_Form" class="work_Edit_Form">
 	<fieldset>
 		<legend>업무 수정 양식</legend>
-		<input type="text" id="edit_wk_id" name = "wk_id" value=""/>
-		<input type="button" value="닫기" onclick="wkEditClose()"/>
-		업무 내용<input type="text" name="wd_title" value=""/>
-		마감 기한<input type="date" name="wd_endDate" value=""/>
-		담당자 <input type="text" name="mem_id" value=""/>
+		<form id = "work_edit" action="./workEdit.do?pr_id=${ pr_id }" method="POST">
+		<input type="hidden" id="edit_wk_id" name = "wk_id" value=""/>
+		<input type="button" value="닫기" onclick="wkEditClose()"/><br/>
+		업무 내용<input type="text" id = "input_wk_title" name="wk_title" value=""/>
+		마감 기한<input type="date" id = "input_wk_endDate" name="wk_endDate" value=""/>
+		담당자 <input type="text" class = "input_mem_id" name="mem_id" value=""/>
 		<input type="button" value="멤버조회" onclick="searchMem()"/><br>
-		<input type="button" value="수정" onclick="work_Edit()"/>
+		<input type="submit" value="수정" />
+		</form>
 	</fieldset>
 </div>
 <div id = "promem_list" class="promem_list">
