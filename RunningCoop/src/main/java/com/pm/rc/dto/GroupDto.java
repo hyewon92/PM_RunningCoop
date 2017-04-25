@@ -1,7 +1,11 @@
 package com.pm.rc.dto;
 
-public class GroupDto {
+import java.io.Serializable;
 
+public class GroupDto implements Serializable{
+
+
+	private static final long serialVersionUID = -6753307874830043392L;
 	private String gr_id;  
 	private String gr_name;     
 	private String gr_searchYN; 
@@ -10,9 +14,36 @@ public class GroupDto {
 	private String gr_goal;     
 	private String gr_regDate;  
 	private String gr_appYN;
-	private String gr_delYN;   
-
+	private String gr_delYN;
+	
+	private MemberDto memberdto;
+	
 	public GroupDto(){}
+
+	public GroupDto(String gr_id, String gr_name, String gr_searchYN,
+			String gr_joinYN, int gr_memCnt, String gr_goal, String gr_regDate,
+			String gr_appYN, String gr_delYN, MemberDto memberdto) {
+		super();
+		this.gr_id = gr_id;
+		this.gr_name = gr_name;
+		this.gr_searchYN = gr_searchYN;
+		this.gr_joinYN = gr_joinYN;
+		this.gr_memCnt = gr_memCnt;
+		this.gr_goal = gr_goal;
+		this.gr_regDate = gr_regDate;
+		this.gr_appYN = gr_appYN;
+		this.gr_delYN = gr_delYN;
+		this.memberdto = memberdto;
+	}
+
+	public MemberDto getMemberdto() {
+		return memberdto;
+	}
+
+	public void setMemberdto(MemberDto memberdto) {
+		this.memberdto = memberdto;
+	}
+
 
 	public String getGr_id() {
 		return gr_id;
@@ -92,7 +123,7 @@ public class GroupDto {
 				+ ", gr_searchYN=" + gr_searchYN + ", gr_joinYN=" + gr_joinYN
 				+ ", gr_memCnt=" + gr_memCnt + ", gr_goal=" + gr_goal
 				+ ", gr_regDate=" + gr_regDate + ", gr_appYN=" + gr_appYN
-				+ ", gr_delYN=" + gr_delYN + "]";
+				+ ", gr_delYN=" + gr_delYN + ", memberdto=" + memberdto + "]";
 	}
 
 }

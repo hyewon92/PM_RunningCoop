@@ -28,7 +28,6 @@
 		location.href="./groupAccept.do?mem_id="+mem_id+"&gr_id="+gr_id;
 				
 	}
-	
 	function refusal1(memid){
 		var gr_id ="${ grid }";
 		var mem_id = $(memid).parent().prev().text();
@@ -44,9 +43,15 @@
 			location.href = "./groupDelete.do?"
 		}
 	}
-	
-
+	function groupMemAdd(){
+// 		window.open("./grListChild.do?gr_id="+grid, "childForm", "width=570, height=350, resizable = no, scrollbars = no");
+		window.open("./groupSend.do", "sendForm", "width=570, height=350, resizable = no, scrollbars = no");
+	}
 </script>
+<style type="text/css">
+#groupMemAdd{
+cursor: pointer;}
+</style>
 <% String mem_id = (String)session.getAttribute("mem_id"); %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
@@ -67,12 +72,9 @@
 		</tr>
 	</c:forEach>
 </table>	
-
-
-
-
 	</form>
 			<input type="submit" value="azx">
+	<h1 id="groupMemAdd" onclick="groupMemAdd()">그룹초대</h1>		
 	<h1>가입 신청 리스트</h1>
 <table>
 	<c:forEach var="memWait" items="${grWait}">
@@ -84,9 +86,7 @@
 		</tr>					
 	</c:forEach>
 </table>	
-
 	<h1>그룹 해체</h1>
 	<input type="button" value="그룹 해체" onclick="groupBye()">
-	
 </body>
 </html>

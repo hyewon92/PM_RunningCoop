@@ -11,7 +11,7 @@
 var openwin;
 	function openChild(val){
 		
-		var grid = $(val).parent().siblings().eq(1).find("#gr_id").val();
+		var grid = $(val).prev().text();
 		alert(grid);
 		
 		window.name = "grList";
@@ -27,6 +27,11 @@ var openwin;
 <%@include file="/WEB-INF/views/Group/bootstrap.jsp"%>
 
 <script src="./js/paging.js"></script>
+<style type="text/css">
+#grname{
+cursor: pointer;
+}
+</style>
 </head>
 <body>
 
@@ -51,12 +56,13 @@ var openwin;
 					<th>그룹ID:</th>
 					<th>그룹이름:</th>
 					<th>담당자:</th>
+					<th style="display: none;"><input type="text" value="${gr_name}" name="gr_name"></th>
 				</tr>
-				<c:forEach var="dto" items="${lists}">
+				<c:forEach var="dtos" items="${lists}">
 					<tr>
-						<td>${dto.GR_ID}</td>
-						<td>${dto.gr_name}</td>
-						<td>${dto.MEM_NAME}</td>
+						<td>${dtos.gr_id}</td>
+						<td id="grname" onclick="openChild(this)">${dtos.gr_name}</td>
+						<td>${dtos.memberdto.mem_name}</td>
 					</tr>						
 				</c:forEach>
 			</table>

@@ -15,10 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pm.rc.dto.GroupBoardDto;
 import com.pm.rc.dto.GroupDto;
@@ -41,12 +43,15 @@ public class GroupController {
 	
 	private String GroupId = "";
 	
-	// 23. IoC Autowired를 통해 실행되는 Service를 선언
+	// Group 서비스
 	@Autowired
 	private GroupService service;
-	
+	// ManaGer 서비스
 	@Autowired
 	private ManagerService managserService;
+	// Mail 서비스
+	@Autowired
+	private JavaMailSender mailSend;
 	
 	//5. mapping 메소드
 	@RequestMapping(value = "/first.do", method = RequestMethod.GET)
@@ -108,13 +113,14 @@ public class GroupController {
 									     request.getParameter("gr_name"));
 		
 		List<GroupDto> lists = service.selectPaging(paging);
+//		lists.get(0).getMemberdto().getMem_name()
 		paging.setTotal(service.selectTotalPaging(request.getParameter("gr_name")));
 		logger.info("그룹검색하기 그룹이름이름으로");
 		String grid = request.getParameter("gr_name");
-		
 		model.addAttribute("lists",lists);
 		model.addAttribute("paging",paging);
 		model.addAttribute("gr_name",grid);
+		lists.forEach(System.err::println);
 //		Map<String, String> map = new HashMap<String, String>();
 //		map.put("gr_name" , request.getParameter("gr_name"));
 		//List<GroupDto> lists = service.allGrSelect(map);
@@ -194,6 +200,7 @@ public class GroupController {
 		model.addAttribute("gblist" , lists);
 		return "Group/grboradList";
 	}
+	
 	@RequestMapping(value="/bordeMultDelet.do" ,method=RequestMethod.GET)
 	public String grbdMultDelet(String[] cnkUuid ){
 		logger.info("그룹게시판 다중삭제");
@@ -262,8 +269,15 @@ public class GroupController {
 		
 		return "Group/applyChild";
 	}
-	
-	
-	
+	@RequestMapping(value="/autoauto.do" , method=RequestMethod.POST)
+	@ResponseBody
+	public List<GroupDto> autoTest (String value){
+		Map<String, String> map = new HashMap<String, String>();
+		System.err.println("ㅎㅎ2");
+		map.put("gr_name", value);
+		System.out.println(map.get("gr_name"));
+		List<GroupDto> lists = service.allGrSelect(map);
+		return lists;
+	}
 
 }

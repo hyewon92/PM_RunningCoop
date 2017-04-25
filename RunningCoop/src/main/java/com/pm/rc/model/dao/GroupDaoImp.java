@@ -40,6 +40,7 @@ public class GroupDaoImp implements GroupDao{
 
 	@Override
 	public List<GroupDto> allGrSelect(Map<String, String> map) {
+		System.err.println(map.get("gr_name"));
 		List<GroupDto> lists = sqlSession.selectList(NAMESPACE+"allGrSelect", map);
 		logger.info("allGrSelect 작동결과 (그룹검색)");
 		return lists;

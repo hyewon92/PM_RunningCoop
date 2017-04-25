@@ -6,7 +6,13 @@
 		<result property="mem_name" column="MEM_NAME" />
 		<result property="groupwaitdto.wait_regDate" column="WAIT_REGDATE" />
 	</resultMap>
-
+	
+	<resultMap type="GroupDto" id="groupdto2">
+		<result property="gr_id" column="GR_ID"/>
+		<result property="gr_name" column="GR_NAME"/>
+		<result property="gr_regDate" column="GR_REGDATE"/>
+		<result property="memberdto.mem_name" column="mem_name"/>
+	</resultMap>
 
 	<select id="myGrSelect" parameterType="java.util.Map"
 		resultType="GroupDto">
@@ -40,15 +46,16 @@
 		WHERE GR_ID = #{gr_id}
 	</update>
 
-	<select id="allGrSelect" parameterType="java.util.Map"
-		resultType="java.util.Map">
-		SELECT G.GR_ID, G.GR_NAME, M.MEM_NAME FROM RC_GROUP G,
-		RC_MEMBER M
-		WHERE M.MEM_ID = (SELECT GM.MEM_ID FROM RC_GROUPMEM GM
-		WHERE GM.GR_ID =
-		G.GR_ID AND GM.GR_LEVEL = 'GM')
-		AND G.GR_NAME LIKE
-		'%'||#{gr_name}||'%'
+	<select id="allGrSelect" parameterType="java.util.Map" resultMap="groupdto2">
+		SELECT 	G.GR_ID, G.GR_NAME, M.MEM_NAME
+		FROM 	RC_GROUP G, RC_MEMBER M
+		WHERE 	M.MEM_ID = (
+							SELECT 	GM.MEM_ID 
+							FROM 	RC_GROUPMEM GM
+							WHERE 	GM.GR_ID = G.GR_ID 
+									AND GM.GR_LEVEL = 'GM'
+						   )
+		AND G.GR_NAME LIKE '%'|| #{gr_name} ||'%'
 	</select>
 
 	<select id="grMemSelect" parameterType="java.lang.String"
@@ -124,7 +131,7 @@
 	</insert>
 	
 	
-		<select id="createPaging" parameterType="pagingDto" resultType="systemboarddto">
+		<select id="createPaging" parameterType="pagingDto" resultMap="groupdto2">
 		SELECT *
 		FROM ( SELECT ROWNUM RNUM, P.*
 		      FROM (
