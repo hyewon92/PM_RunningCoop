@@ -40,23 +40,20 @@ public class ScheduleController {
 		return "schedule/calendar";
 	}
 	
-/*	//지정일 일정목록 조회
+	//지정일 일정목록 조회
 	@RequestMapping(value = "/dailySchSelect.do", method = RequestMethod.POST)
-	public String dailySchSelect(HttpSession session, HttpServletRequest req, String date){
+	@ResponseBody
+	public List<ScheduleDto> dailySchSelect(HttpSession session, HttpServletRequest req, String date){
 		logger.info("DailySchSelect실행");
 		Map<String, String> map = new HashMap<String, String>();
 		String mem_id = (String)session.getAttribute("mem_id");
 		map.put("mem_id", mem_id);
 		map.put("date", date);
-		List<String> list = new ArrayList<String>();
+		List<ScheduleDto> list = new ArrayList<ScheduleDto>();
 		list = scheduleService.DailySchSelect(map);
-		req.setAttribute("dailyList", list);
-		
-		String year = date.substring(0, 4);
-		String month = date.substring(6, 8);
-		return "redirect:/viewSchedule.do?year="+year+"&month="+month;
+		return list;
 	}
-	*/
+	
 	//일정 상세정보 조회
 	@RequestMapping(value = "/detailSchedule.do", method = RequestMethod.POST)
 	@ResponseBody

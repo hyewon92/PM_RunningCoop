@@ -34,7 +34,7 @@ public interface ScheduleDao {
 	 * @return List&lt;String&gt;
 	 * @author 김혜원
 	 * */
-	public List<String> DailySchSelect(Map<String, String> map);
+	public List<ScheduleDto> DailySchSelect(Map<String, String> map);
 	
 	/**
 	 * 팀 일정 상세정보 조회

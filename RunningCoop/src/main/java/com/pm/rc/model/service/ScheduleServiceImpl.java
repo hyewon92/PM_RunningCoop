@@ -37,7 +37,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 	
 	@Override
-	public List<String> DailySchSelect(Map<String, String> map) {
+	public List<ScheduleDto> DailySchSelect(Map<String, String> map) {
 		return scheduleDao.DailySchSelect(map);
 	}
 	

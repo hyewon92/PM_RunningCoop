@@ -10,68 +10,123 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-#calendar th {
-	background-color: aqua;
-}
+	#calendar th {
+		background-color: aqua;
+	}
+	
+	#calendar td {
+		background-color: #ffe4c4;
+		height: 80px;
+		vertical-align: top;
+	}
+	
+	a {
+		text-decoration: none;
+	}
+	
+	#list div {
+		background-color: orange;
+	}
+	
+	#list {
+		font-size: 8pt;
+	}
+	
+	.plus {
+		width: 15px;
+		height: 15px;
+		float: right;
+	}
+	
+	.arrow {
+		width: 30px;
+		height: 30px;
+	}
+	
+	b {
+		font-size: 30pt;
+	}
+	
+	/* .scheduleDetailBox {
+		border: 1px solid gray;
+		border-collapse: collapse;
+		display : none;
+	} */
+	
+	.scheduleBox, .scheduleModiBox {
+		border: 1px solid gray;
+		border-collapse: collapse;
+		display: none;
+	}
 
-#calendar td {
-	background-color: #ffe4c4;
-	height: 80px;
-	vertical-align: top;
-}
-
-a {
-	text-decoration: none;
-}
-
-#list div {
-	background-color: orange;
-}
-
-#list {
-	font-size: 8pt;
-}
-
-.plus {
-	width: 15px;
-	height: 15px;
-	float: right;
-}
-
-.arrow {
-	width: 30px;
-	height: 30px;
-}
-
-b {
-	font-size: 30pt;
-}
-
-.scheduleDetailBox {
-	border: 1px solid gray;
-	border-collapse: collapse;
-	display : none;
-}
-
-.scheduleBox, .scheduleModiBox {
-	border: 1px solid gray;
-	border-collapse: collapse;
-	display: none;
-}
+	.listlBox{
+		border-collapse: collapse;
+		width: 300px;
+		float: left;
+		display: none;
+	}
+	
+	.detailBox{
+		border: 1px solid gray;
+		border-collapse: collapse;
+		display : none;
+		width: 500px;
+		float: rigth;
+	}
 </style>
 
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-latest.js"></script>
 
 <script type="text/javascript">
-	function showDetail(val){
+
+	function dailyList(val1, val2, val3){
+			$(".listBox").children().remove();
+		$.ajax({
+			type : "POST",
+			url : "./dailySchSelect.do",
+			data: "date="+val1+"-"+val2+"-"+val3,
+			async: false,
+			success: function(msg){
+				showDailyList(msg, val1, val2, val3)
+			}
+		});
+	}
+	
+	function showDailyList(schedule, val1, val2, val3){
+		if(schedule.length == 0){
+			$(".listBox").append("<p>해당 일에 등록된 일정이 없습니다.</p>");
+		}else{
+			for(var i = 0; i < schedule.length; i++){
+				if(schedule[i].projectDto!=null && schedule[i].projectDto!=undefined){
+					var pr_name = schedule[i].projectDto.pr_name;
+					var pr_id = schedule[i].pr_id;
+				}
+					var sch_seq = schedule[i].sch_seq;
+					var sch_title = schedule[i].sch_title;
+					var title = sch_title;
+					if(schedule[i].pr_id != null){
+						title = pr_name+":"+sch_title;
+					}
+				$(".listBox").css("display", "block");
+				$(".detailBox").css("display", "none");
+				$(".listBox").append("<span class = 'listChk' onclick = 'showDetail("+sch_seq+",\""+val1+"\",\""+val2+"\",\""+val3+"\")'>"+title+"</span><br>");
+			}
+		}
+	}
+
+	function showDetail(val1, val2, val3, val4){
 		$.ajax({
 			type : "POST",
 			url : "./detailTeamSchedule.do",
-			data: "sch_seq="+val,
+			data: "sch_seq="+val1,
 			async: false,
 			success: function(msg){
+				dailyList(val2, val3, val4);
 				showSchDetail(msg)
+			},
+			error:function(){
+				alert("error");
 			}
 		});
 	}
@@ -86,15 +141,15 @@ b {
 		var sch_content = schedule.dto.sch_content;
 		
 		$("#sch_seq").val(sch_seq);
-		$("#pr_id").val(pr_id);
 		$("#sch_startDate").text("시작:"+sch_startDate);
 		$("#sch_endDate").text("종료:"+sch_endDate);
 		$("#sch_title").text(pr_name+":"+sch_title);
 		$("#sch_content").text(sch_content);
-		
+			
 		$(".scheduleBox").css("display", "none");
-		$(".scheduleDetailBox").css("display", "block");
+		$(".detailBox").css("display", "block");
 		$(".scheduleModiBox").css("display", "none");
+		$(".listBox").css("display", "block");
 	}
 	
 	function goDelete(){
@@ -183,19 +238,18 @@ b {
 		String result = "";
 		String s_year = dateForm(String.valueOf(year));
 		String s_month = dateForm(String.valueOf(month));
+		String s_day = dateForm(String.valueOf(day));
 		String date = s_year+s_month;
 		for(ScheduleDto dto:lists){
 			System.out.println(dto);
 			String title = dto.getSch_title();
-			String event = "<span class = 'listChk' onclick = 'showDetail("+dto.getSch_seq()+")'>[조회]</span><br>";
+			String event = "<span class = 'listChk' onclick = 'showDetail("+dto.getSch_seq()+",\""+s_year+"\",\""+s_month+"\",\""+s_day+"\")'>[조회]</span><br>";
 			
 			int startDate = Integer.parseInt(dto.getSch_startDate().substring(6, 8));
 			int endDate = Integer.parseInt(dto.getSch_endDate().substring(6, 8));
 			if(dto.getSch_startDate().substring(0, 6).equals(date)&&dto.getSch_endDate().substring(0, 6).equals(date)&&startDate<=day&&day<=endDate){
 				System.out.println(dto.getSch_startDate()+":"+dto.getSch_title());
-				if(dto.getSch_prosYN().equals("Y")){
-					title = dto.getProjectDto().getPr_name()+":"+title;
-				}
+				title = dto.getProjectDto().getPr_name()+":"+title;
 				if(title.length()>6){
 					title = title.substring(0, 6)+"..";
 				}
@@ -206,8 +260,6 @@ b {
 	}
 %>
 <%
-	//회원 계정 정보
-	/* String mem_id = (String)session.getAttribute("mem_id"); */
 	
 	//해당 프로젝트 아이디
 	String pr_id = (String)request.getAttribute("pr_id");
@@ -282,8 +334,9 @@ b {
 				//1일부터 구한 달력의 lastDay까지 날짜 출력
 				for(int i = 1; i <= lastDay; i++){
 			%>
-			<td style="color:<%=weekColor(i, dayOfWeek)%>;"><%=i %> <% String s_month = dateForm(String.valueOf(month)); %>
+			<td style="color:<%=weekColor(i, dayOfWeek)%>;"><% String s_month = dateForm(String.valueOf(month)); %>
 				<% String s_i = dateForm(String.valueOf(i)); %> <%=schWrite(year, s_month, s_i)%></a>
+				<span class = "dailyList" onclick = "dailyList('<%=year%>', '<%=s_month%>', '<%=s_i%>')"><%=i %></span>
 				<div id="list"><%=schListView(year, month, i, lists) %></div></td>
 			<%
 					//토요일이 되면 줄바꿈
@@ -307,23 +360,27 @@ b {
 
 	<!-- 일정 상세정보 출력부분 -->
 	<div class="scheduleDetailBox">
-		<table class="scheduleDetail">
-			<input type="hidden" id="sch_seq">
-			<input type="hidden" id="pr_id">
-			<tr>
-				<td id="sch_startDate"></td>
-				<td id="sch_endDate"></td>
-			</tr>
-			<tr>
-				<td id="sch_title" colspan="2"></td>
-			</tr>
-			<tr>
-				<td id="sch_content" colspan="2"></td>
-			</tr>
-		</table>
-		<div>
-			<input type="button" value="수정" onclick="goModify()"> 
-			<input type="button" value="삭제" onclick="goDelete()">
+		<div class = "listBox">
+		</div>
+		<div class = "detailBox">
+			<table>
+				<input type="hidden" id="sch_seq">
+				<input type="hidden" id="pr_id">
+				<tr>
+					<td id="sch_startDate"></td>
+					<td id="sch_endDate"></td>
+				</tr>
+				<tr>
+					<td id="sch_title" colspan="2"></td>
+				</tr>
+				<tr>
+					<td id="sch_content" colspan="2"></td>
+				</tr>
+			</table>
+			<div>
+				<input type="button" value="수정" onclick="goModify()"> 
+				<input type="button" value="삭제" onclick="goDelete()">
+			</div>
 		</div>
 	</div>
 

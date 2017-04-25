@@ -47,10 +47,10 @@ public interface ScheduleService {
 	/**
 	 * 지정일 일정 리스트 조회
 	 * @param map value: mem_id(회원아이디), date(지정일);
-	 * @return List&lt;String&gt;
+	 * @return List&lt;ScheduleDto&gt;
 	 * @author 김혜원
 	 * */
-	public List<String> DailySchSelect(Map<String, String> map);
+	public List<ScheduleDto> DailySchSelect(Map<String, String> map);
 	
 	/**
 	 * 일정 상세정보 조회
