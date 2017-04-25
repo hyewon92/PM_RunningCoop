@@ -87,6 +87,19 @@
   		UPDATE RC_WORKLIST SET WK_DELYN = 'Y'
   		WHERE WK_ID = #{wk_id}
   	</update>
+  	
+  	<select id="wCommListSelect" parameterType="java.lang.String" resultType="java.util.Map">
+  		SELECT C.WCOM_ID, C.WCOM_CONTENT, M.MEM_NAME, TO_CHAR(C.WCOM_REGDATE, 'YYYY/MM/DD') WCOM_REGDATE
+  		FROM RC_WORKCOMMENT C, RC_MEMBER M
+  		WHERE WK_ID = #{wk_id} AND C.MEM_ID = M.MEM_ID AND WCOM_DELYN = 'N'
+  		ORDER BY WCOM_REGDATE DESC
+  	</select>
+  	
+  	<insert id="wCommentInsert" parameterType="WorkCommentDto">
+  		INSERT INTO RC_WORKCOMMENT (WCOM_ID, WK_ID, MEM_ID, WCOM_CONTENT)
+		VALUES
+		(#{wcom_id}, #{wk_id}, #{mem_id}, #{wcom_content})
+  	</insert>
 
 	
 </mapper>

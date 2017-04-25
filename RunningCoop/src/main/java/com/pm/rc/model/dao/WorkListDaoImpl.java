@@ -167,15 +167,18 @@ public class WorkListDaoImpl implements WorkListDao {
 	}
 
 	@Override
-	public List<WorkCommentDto> wCommListSelect(String wk_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Map<String, String>> wCommListSelect(String wk_id) {
+		return sqlSession.selectList(NAMESPACE+"wCommListSelect", wk_id);
 	}
 
 	@Override
 	public boolean wCommentInsert(WorkCommentDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+		int num = sqlSession.insert(NAMESPACE+"wCommentInsert", dto);
+		if(num > 0){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

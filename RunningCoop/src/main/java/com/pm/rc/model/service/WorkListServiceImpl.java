@@ -138,15 +138,24 @@ public class WorkListServiceImpl implements WorkListService {
 	}
 
 	@Override
-	public List<WorkCommentDto> wCommListSelect(String wk_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Map<String, String>> wCommListSelect(String wk_id) {
+		return dao.wCommListSelect(wk_id);
 	}
 
 	@Override
 	public boolean wCommentInsert(WorkCommentDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+		Date date = new Date();
+		SimpleDateFormat dateForm = new SimpleDateFormat("yyMMdd");
+		
+		String id_1 = "CM";
+		String id_2 = dateForm.format(date).toString();
+		String uuid = createUUID();
+		String id_3 = uuid.substring(uuid.lastIndexOf("-")+8);
+		String wcom_id = id_1+id_2+id_3;
+		
+		dto.setWcom_id(wcom_id);
+		
+		return dao.wCommentInsert(dto);
 	}
 
 	@Override

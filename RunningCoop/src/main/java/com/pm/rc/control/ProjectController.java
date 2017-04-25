@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pm.rc.dto.ProjectDto;
+import com.pm.rc.dto.WorkCommentDto;
 import com.pm.rc.dto.WorkDetailDto;
 import com.pm.rc.dto.WorkListDto;
 import com.pm.rc.model.service.ProjectService;
@@ -319,6 +320,7 @@ public class ProjectController {
 		return list;
 	}
 	
+	// 업무 수정
 	@RequestMapping(value="/workEdit.do", method=RequestMethod.POST)
 	public String work_Edit(HttpServletRequest request){
 		String pr_id = request.getParameter("pr_id");
@@ -351,12 +353,20 @@ public class ProjectController {
 		return "redirect:/goProject.do?pr_id="+pr_id;
 	}
 	
+	// 업무 추가
 	@RequestMapping(value="/workInsert.do", method=RequestMethod.POST)
 	public String work_Insert(HttpServletRequest request){
 		String pr_id = request.getParameter("pr_id");
 		String wk_title = request.getParameter("wk_title");
 		String wk_endDate = request.getParameter("wk_endDate");
 		String mem_id = request.getParameter("mem_id");
+		
+		logger.info("================= 업무 추가 =====================");
+		logger.info("업무 추가할 프로젝트 : "+pr_id);
+		logger.info("추가할 업무 내용 : "+wk_title);
+		logger.info("추가할 업무 마감기한 : "+wk_endDate);
+		logger.info("추가할 업무 담당자 : "+mem_id);
+		logger.info("=============================================");
 		
 		WorkListDto dto = new WorkListDto();
 		dto.setWk_title(wk_title);
@@ -376,10 +386,16 @@ public class ProjectController {
 		return "redirect:/goProject.do?pr_id="+pr_id;
 	}
 	
+	//업무 삭제
 	@RequestMapping(value="/workDelete.do", method=RequestMethod.GET)
 	public String work_Delete(HttpServletRequest request){
 		String pr_id = request.getParameter("pr_id");
 		String wk_id = request.getParameter("wk_id");
+		
+		logger.info("=============== 업무 정보 삭제 ===================");
+		logger.info("업무를 삭제할 프로젝트아이디 : "+pr_id);
+		logger.info("삭제할 업무 아이디 : "+wk_id);
+		logger.info("=============================================");
 		
 		boolean isc = false;
 		isc = wService.wkListDelete(wk_id);
@@ -391,9 +407,58 @@ public class ProjectController {
 		}
 		return "redirect:/goProject.do?pr_id="+pr_id;
 	}
-
-
-
+	
+	//업무 코멘트 출력
+	@RequestMapping(value="/wcomlist.do", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Map<String, String>> work_Comment_View(HttpServletRequest request){
+		String wk_id = request.getParameter("wk_id");
+		
+		logger.info("=============== 업무 코멘트 출력 ===================");
+		logger.info("코멘트 출력할 업무 아이디 : "+wk_id);
+		logger.info("=============================================");
+		
+		List<Map<String, String>> list = null;
+		
+		list = wService.wCommListSelect(wk_id);
+		
+		return list;
+	}
+	
+	//업무 코멘트 추가
+	@RequestMapping(value="/wcominsert.do", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Map<String, String>> work_Comment_Insert(HttpServletRequest request, HttpSession session){
+		String wk_id = request.getParameter("wk_id");
+		String wcom_content = request.getParameter("wcom_content");
+		String mem_id = (String)session.getAttribute("mem_id");
+		
+		logger.info("=============== 업무 코멘트 추가 ===================");
+		logger.info("코멘트 추가할 업무 아이디 : "+wk_id);
+		logger.info("코멘트 다는 회원 아이디 : "+mem_id);
+		logger.info("추가할 업무 코멘트 내용 : "+wcom_content);
+		logger.info("=============================================");
+		
+		WorkCommentDto dto = new WorkCommentDto();
+		dto.setMem_id(mem_id);
+		dto.setWcom_content(wcom_content);
+		dto.setWk_id(wk_id);
+		
+		boolean isc = false;
+		isc = wService.wCommentInsert(dto);
+		
+		if(isc){
+			System.out.println("업무 코멘트 추가 성공");
+		} else {
+			System.out.println("업무 코멘트 추가 실패");
+		}
+		
+		List<Map<String, String>> list = null;
+		
+		list = wService.wCommListSelect(wk_id);
+		
+		return list;
+	}
 
 
 

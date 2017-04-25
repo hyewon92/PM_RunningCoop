@@ -33,6 +33,7 @@
 </style>
 <script type="text/javascript">
 	function viewWork(val){
+		$("#wk_id").val(val);
 		$.ajax({
 			type : "POST",
 			url : "./detailWork.do",
@@ -46,12 +47,12 @@
 		});
 	}
 	
+	/* 하위 업무 리스트 출력 */
 	function showWorkDetail(nodes){
 		
 		 if(nodes == null){
 			$("#wd_Field").append("<p>하위 업무가 없습니다</p>");
 		} else {
-			$("#wk_id").val(nodes[0].wk_id);
 			$("#wd_Field").append("<p>선택|하위업무아이디|하위업무내용|애로사항여부|마감일자|완료여부</p>");
 			  for(var i = 0; i < nodes.length; i++){
 				var wd_id = nodes[i].wd_id;
@@ -80,9 +81,11 @@
 				.append("<input type='button' value='완료' onclick='wdComplete("+wd_id+")'/>")
 				.append("<input type='button' value='애로사항' onclick='wdError("+wd_id+")'/>")
 				.append("<input type='button' value='삭제' onclick='wdDelete("+wd_id+")'/>");
-				
 			}
 		}
+		
+		 /* 댓글 목록 출력 */
+		wcomListView()
 		
 	}
 	
@@ -260,6 +263,51 @@
 		location.href="./workDelete.do?pr_id="+pr_id+"&wk_id="+val;
 	}
 	
+	function wcomListView(){
+		var wk_id = $("#wk_id").val();
+		
+		$.ajax({
+			type : "POST",
+			url : "./wcomlist.do",
+			data : "wk_id="+wk_id,
+			async : false,
+			success : function(msg){
+				showcommentList(msg)
+			}
+		})
+	}
+	
+	function wcom_Insert(){
+		var wk_id = $("#wk_id").val();
+		var wcom_content = $("#new_wcom_content").val();
+		$("#new_wcom_content").val("");
+		
+		$.ajax({
+			type : "POST",
+			url : "./wcominsert.do",
+			data : {"wk_id": wk_id, "wcom_content": wcom_content},
+			async : false,
+			success : function(nodes){
+				showcommentList(nodes)
+			}
+		})
+	}
+	
+	function showcommentList(nodes){
+		$("#wk_Comment_List").children("table").remove().end().children("p").remove();
+		if( nodes.length == 0){
+			$("#wk_Comment_List").append("<p>댓글이 없습니다</p>");
+		} else {
+			$("#wk_Comment_List").append("<table>")
+			.children("table").append("<tr><td>작성자</td><td>내용</td><td>작성일</td></tr>");
+			for(var i = 0; i < nodes.length; i++){
+				$("#wk_Comment_List").children("table")
+				.append("<tr><td>"+nodes[i].MEM_NAME+"</td><td>"+nodes[i].WCOM_CONTENT+"</td><td>"+nodes[i].WCOM_REGDATE+"</td></tr>");
+			}
+		}
+		
+	}
+	
 	
 	
 </script>
@@ -329,7 +377,7 @@
 					<span onclick = "viewWork('${ done.get('WK_ID') }')">
 						<input type="hidden" value="${ done.get('WK_ID') }" /> 
 						${ done.get("WK_TITLE") }/(${ done.get("MEM_NAME") })/${ done.get("WK_PRORATE") }%
-					</span>
+					</span><br/>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
@@ -356,6 +404,7 @@
 	</fieldset>
 </div>
 	<div id = "work_Detail" class = "work_Detail_View">
+	<input type="hidden" id = "wk_id" value=""/>
 	<input type="button" value="닫기" onclick="backToProject()"/>
 		<div id = "work_Detail_Insert">
 			업무명 <input type = "text" id = "insert_wd_title" name="wd_title" value=""/> 
@@ -364,9 +413,16 @@
 		</div>
 		<fieldset id = "wd_Field">
 			<legend>업무 상세화면</legend>
-			<input type="hidden" id = "wk_id" value=""/>
 		</fieldset>
-		
+		<div class = "work_Comment_View">
+			<fieldset id = "wk_Comment_List">
+				<legend>댓글</legend>
+			</fieldset>
+			<div>
+				<input type="text" id="new_wcom_content" value=""/>
+				<input type="button" value="등록" onclick="wcom_Insert()"/>
+			</div>
+		</div>
 	</div>
 
 </body>

@@ -145,7 +145,7 @@ public interface WorkListDao {
 	 * @param wk_id 워크리스트 아이디
 	 * @return List&lt;WorkCommentDto&gt;
 	 * */
-	public List<WorkCommentDto> wCommListSelect(String wk_id);
+	public List<Map<String, String>> wCommListSelect(String wk_id);
 	
 	/**
 	 * 업무리스트 페이지 댓글 추가
