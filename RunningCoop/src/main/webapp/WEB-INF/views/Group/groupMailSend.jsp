@@ -7,12 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<form action="./goGroupMail.do" method="post">
 	<table>
 		<tr>보낸이</tr>
-		<tr><td><input type="text" ></td></tr>
-	
-	
+		<tr><td><input type="text" name="toSend"></td></tr>
 	</table>
+	</form>
 
 </body>
 </html>

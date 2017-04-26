@@ -74,6 +74,17 @@ public class MailController {
 			}
 			return "redirect:/searchPwMail.do";
 		}
+		
 	}
+	@RequestMapping(value="/groupSend.do")
+	public String groupSend (){
+		return "Group/groupMailSend";
+	}
+	@RequestMapping(value="/goGroupMail.do")
+	public String gogoMail(){
+		
+		return null;
+	}
+	
 	
 }
