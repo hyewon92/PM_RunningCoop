@@ -123,6 +123,15 @@ public class AccountController {
 		}
 	}
 	
+	//보인인증 번호(세션) 삭제
+	@RequestMapping(value = "/removeIdentify.do")
+	public void removeIdentify(HttpSession session){
+		logger.info("removeIdentify실행");
+		System.out.println("삭제 전 인증번호:"+session.getAttribute("identifyNum"));
+		session.removeAttribute("identifyNum");
+		System.out.println("삭제 후 인증번호:"+session.getAttribute("identifyNum"));
+	}
+	
 	//회원가입처리
 	@RequestMapping(value = "/chkJoin.do", method = RequestMethod.POST)
 	public String ckJoin(MemberDto dto){

@@ -61,7 +61,8 @@
 	
 	.listlBox{
 		border-collapse: collapse;
-		width: 300px;
+		width: 200px;
+		display: inline-block;
 		float: left;
 		display: none;
 	}
@@ -370,8 +371,8 @@
 		<div class = "listBox">
 		</div>
 		<div class  = "detailBox">
-			<table>
 				<input type="hidden" id="sch_seq">
+			<table>
 				<tr>
 					<td id="sch_startDate"></td>
 					<td id="sch_endDate"></td>
