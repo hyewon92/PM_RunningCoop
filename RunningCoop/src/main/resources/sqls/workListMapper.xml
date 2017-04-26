@@ -89,7 +89,7 @@
   	</update>
   	
   	<select id="wCommListSelect" parameterType="java.lang.String" resultType="java.util.Map">
-  		SELECT C.WCOM_ID, C.WCOM_CONTENT, M.MEM_NAME, TO_CHAR(C.WCOM_REGDATE, 'YYYY/MM/DD') WCOM_REGDATE
+  		SELECT C.WCOM_ID, C.WCOM_CONTENT, M.MEM_ID, M.MEM_NAME, TO_CHAR(C.WCOM_REGDATE, 'YYYY/MM/DD') WCOM_REGDATE
   		FROM RC_WORKCOMMENT C, RC_MEMBER M
   		WHERE WK_ID = #{wk_id} AND C.MEM_ID = M.MEM_ID AND WCOM_DELYN = 'N'
   		ORDER BY WCOM_REGDATE DESC
@@ -100,6 +100,39 @@
 		VALUES
 		(#{wcom_id}, #{wk_id}, #{mem_id}, #{wcom_content})
   	</insert>
+  	
+  	<update id="wCommentModify" parameterType="WorkCommentDto">
+  		UPDATE RC_WORKCOMMENT SET WCOM_CONTENT = #{wcom_content}
+  		WHERE WCOM_ID = #{wcom_id}
+  	</update>
+  	
+  	<update id="wCommentDelete" parameterType="java.lang.String">
+  		UPDATE RC_WORKCOMMENT SET WCOM_DELYN = 'Y'
+  		WHERE WCOM_ID = #{wcom_id}
+  	</update>
+  	
+  	<select id="gbAttachSelect" parameterType="java.lang.String" resultType="GbAttachDto">
+  		SELECT PA.GATT_SEQ, PA.GATT_NAME, PA.GATT_SIZE, TO_CHAR(PA.GATT_REGDATE, 'YYYY/MM/DD') GATT_REGDATE
+  		FROM RC_GNPATTACH PA
+  		WHERE PA.WK_ID = #{wk_id}
+  	</select>
+  	
+  	<insert id="gbAttachInsert" parameterType="GbAttachDto">
+  		INSERT INTO RC_GNPATTACH (GATT_SEQ, GATT_NAME, GATT_SIZE, GATT_PATH, GATT_RNAME, WK_ID)
+		VALUES
+		(GNPATTACH_SEQ.NEXTVAL, #{gatt_name}, #{gatt_size}, #{gatt_path}, #{gatt_rname}, #{wk_id})
+  	</insert>
+  	
+  	<select id="attachDownSelect" parameterType="java.lang.String" resultType="GbAttachDto">
+  		SELECT GATT_NAME, GATT_RNAME, GATT_PATH
+  		FROM RC_GNPATTACH
+  		WHERE GATT_SEQ = #{gatt_seq}
+  	</select>
+  	
+  	<delete id="gbAttachDelete" parameterType="java.lang.String">
+  		DELETE FROM RC_GNPATTACH
+  		WHERE GATT_SEQ = #{gatt_seq}
+  	</delete>
 
 	
 </mapper>

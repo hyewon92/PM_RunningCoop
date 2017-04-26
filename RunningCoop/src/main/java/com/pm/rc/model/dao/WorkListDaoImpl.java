@@ -183,32 +183,52 @@ public class WorkListDaoImpl implements WorkListDao {
 
 	@Override
 	public boolean wCommentModify(WorkCommentDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+		int num = sqlSession.update(NAMESPACE+"wCommentModify", dto);
+		if(num > 0){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
 	public boolean wCommentDelete(String wcom_id) {
-		// TODO Auto-generated method stub
-		return false;
+		int num = sqlSession.update(NAMESPACE+"wCommentDelete", wcom_id);
+		if(num > 0){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
-	public List<GbAttachDto> btAttachSelect(String wk_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<GbAttachDto> gbAttachSelect(String wk_id) {
+		return sqlSession.selectList(NAMESPACE+"gbAttachSelect", wk_id);
 	}
 
 	@Override
-	public boolean gbAttachInsert(GroupBoardDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean gbAttachInsert(GbAttachDto dto) {
+		int num = sqlSession.insert(NAMESPACE+"gbAttachInsert", dto);
+		if ( num > 0 ){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
-	public boolean gbAttachModify(String gatt_seq) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean gbAttachDelete(String gatt_seq) {
+		int num = sqlSession.delete(NAMESPACE+"gbAttachDelete", gatt_seq);
+		if( num > 0 ){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public GbAttachDto attachDownSelect(String gatt_seq) {
+		return sqlSession.selectOne(NAMESPACE+"attachDownSelect", gatt_seq);
 	}
 
 }

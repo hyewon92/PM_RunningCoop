@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.ProjectDto;
 import com.pm.rc.model.dao.ProjectDao;
 
@@ -96,6 +97,11 @@ public class ProjectServiceImpl implements ProjectService {
 			isc = true;
 		}
 		return isc;
+	}
+	
+	@Override
+	public MemberDto prManagerSelect(String pr_id){
+		return dao.prManagerSelect(pr_id);
 	}
 
 	@Override

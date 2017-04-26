@@ -101,6 +101,13 @@ public interface ProjectDao {
 	public boolean iPrInsert_2(Map<String, String> map);
 	
 	/**
+	 * 프로젝트 매니저 조회
+	 * @param pr_id
+	 * @return
+	 */
+	public MemberDto prManagerSelect(String pr_id);
+	
+	/**
 	 * 프로젝트 기본 정보 수정
 	 * @param dto
 	 * @return

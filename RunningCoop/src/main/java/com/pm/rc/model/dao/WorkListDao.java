@@ -175,7 +175,7 @@ public interface WorkListDao {
 	 * @param wk_id 워크리스트 아이디
 	 * @return List&lt;GbAttachDto&gt;
 	 * */
-	public List<GbAttachDto> btAttachSelect(String wk_id);
+	public List<GbAttachDto> gbAttachSelect(String wk_id);
 	
 	/**
 	 * 첨부파일 등록
@@ -183,7 +183,7 @@ public interface WorkListDao {
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean gbAttachInsert(GroupBoardDto dto);
+	public boolean gbAttachInsert(GbAttachDto dto);
 	
 	/**
 	 * 첨부파일 삭제
@@ -191,6 +191,13 @@ public interface WorkListDao {
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean gbAttachModify(String gatt_seq);
+	public boolean gbAttachDelete(String gatt_seq);
+	
+	/**
+	 * 첨부파일 다운 시 조회
+	 * @param gatt_seq
+	 * @return
+	 */
+	public GbAttachDto attachDownSelect(String gatt_seq);
 	
 }

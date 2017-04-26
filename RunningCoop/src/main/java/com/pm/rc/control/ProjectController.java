@@ -1,13 +1,22 @@
 package com.pm.rc.control;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +26,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import com.pm.rc.dto.GbAttachDto;
+import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.ProjectDto;
 import com.pm.rc.dto.WorkCommentDto;
 import com.pm.rc.dto.WorkDetailDto;
@@ -128,6 +143,11 @@ public class ProjectController {
 		model.addAttribute("done", done);
 		
 		model.addAttribute("pr_id", pr_id);
+		
+		MemberDto manager = new MemberDto();
+		manager = service.prManagerSelect(pr_id);
+		
+		model.addAttribute("manager", manager.getMem_id());
 
 		return "project/workList";
 	}
@@ -458,6 +478,220 @@ public class ProjectController {
 		list = wService.wCommListSelect(wk_id);
 		
 		return list;
+	}
+	
+	// 업무 코멘트 수정 기능
+	@RequestMapping(value="/wcomEdit.do", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Map<String, String>> work_Comment_Edit(HttpServletRequest request){
+		String wk_id = request.getParameter("wk_id");
+		String wcom_id = request.getParameter("wcom_id");
+		String wcom_content = request.getParameter("wcom_content");
+		
+		logger.info("=============== 업무 코멘트 수정 ===================");
+		logger.info("코멘트가 포함된 업무 아이디 : "+wk_id);
+		logger.info("수정할 코멘트 아이디 : "+wcom_id);
+		logger.info("수정할 코멘트 내용 : "+wcom_content);
+		logger.info("=============================================");
+		
+		WorkCommentDto dto = new WorkCommentDto();
+		dto.setWcom_id(wcom_id);
+		dto.setWcom_content(wcom_content);
+		
+		boolean isc = false;
+		isc = wService.wCommentModify(dto);
+		
+		if(isc){
+			System.out.println("업무 코멘트 수정 성공");
+		} else {
+			System.out.println("업무 코멘트 수정 실패");
+		}
+		
+		List<Map<String, String>> list = null;
+		list = wService.wCommListSelect(wk_id);
+		
+		return list;
+	}
+	
+	// 업무 코멘트 삭제 기능
+	@RequestMapping(value="/wcomDelete.do", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Map<String, String>> work_Comment_Delete(HttpServletRequest request){
+		String wk_id = request.getParameter("wk_id");
+		String wcom_id = request.getParameter("wcom_id");
+		
+		logger.info("=============== 업무 코멘트 삭제 ===================");
+		logger.info("코멘트가 포함된 업무 아이디 : "+wk_id);
+		logger.info("삭제할 코멘트 아이디 : "+wcom_id);
+		logger.info("=============================================");
+		
+		boolean isc = false;
+		isc = wService.wCommentDelete(wcom_id);
+		
+		if(isc){
+			System.out.println("업무 코멘트 삭제 성공");
+		} else {
+			System.out.println("업무 코멘트 삭제 실패");
+		}
+		
+		List<Map<String, String>> list = null;
+		list = wService.wCommListSelect(wk_id);
+		
+		return list;
+	}
+	
+	// 업무 첨부파일 목록 조회 및 출력 기능
+	@RequestMapping(value="/attachlist.do", method=RequestMethod.POST)
+	@ResponseBody
+	public List<GbAttachDto> work_Attach_View(HttpServletRequest request){
+		String wk_id = request.getParameter("wk_id");
+		
+		logger.info("=============== 업무 첨부파일 조회 ===================");
+		logger.info("첨부파일 조회할 업무 아이디 : "+wk_id);
+		logger.info("===============================================");
+		
+		List<GbAttachDto> list = null;
+		list = wService.gbAttachSelect(wk_id);
+		
+		return list;
+	}
+	
+	// 업무 첨부파일 추가 기능
+	@RequestMapping(value="/attachInsert.do", method=RequestMethod.POST)
+	@ResponseBody
+	public List<GbAttachDto> work_Attach_Insert(HttpServletRequest request, MultipartHttpServletRequest multipartRequest){
+		
+		String wk_id = multipartRequest.getParameter("wk_id");
+		
+		MultipartFile file = multipartRequest.getFile("gatt_name");
+		
+		String savePath = "C:\\RC_fileSave\\";
+		
+		String uuid = createUUID();
+		int indexNum = uuid.lastIndexOf("-");
+		
+		String oldFileName = file.getOriginalFilename();
+		String gatt_size = ""+file.getSize();
+		
+		String newFileName = uuid.substring(indexNum+1) + oldFileName;
+		
+		// 첨부파일 실제경로 저장
+		try {
+			file.transferTo(new File(savePath + newFileName));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		logger.info("=============== 업무 첨부파일 추가 ===================");
+		logger.info("첨부파일 추가할 업무 아이디 : "+wk_id);
+		logger.info("첨부파일 명 : "+oldFileName);
+		logger.info("첨부파일 크기 : "+gatt_size);
+		logger.info("첨부파일 경로 : "+savePath);
+		logger.info("첨부파일 실제이름 : "+newFileName);
+		logger.info("===============================================");
+		
+		GbAttachDto dto = new GbAttachDto();
+		dto.setWk_id(wk_id);
+		dto.setGatt_name(oldFileName);
+		dto.setGatt_rname(newFileName);
+		dto.setGatt_size(gatt_size);
+		dto.setGatt_path(savePath);
+		
+		boolean isc = false;
+		isc = wService.gbAttachInsert(dto);
+		
+		if(isc){
+			System.out.println("파일 추가 성공");
+		} else {
+			System.out.println("파일 추가 실패");
+		}
+		
+		List<GbAttachDto> list = null;
+		
+		list = wService.gbAttachSelect(wk_id);
+		
+		return list;
+	}
+	
+	//파일 다운로드
+	@RequestMapping(value="/gbfileDown.do", method=RequestMethod.GET)
+	public void fileDownload(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		String gatt_seq = request.getParameter("gatt_seq");
+		
+		GbAttachDto file = new GbAttachDto();
+		file = wService.attachDownSelect(gatt_seq);
+		
+		String path = file.getGatt_path();
+		String fileName = file.getGatt_rname();
+		String newFileName = file.getGatt_name();
+		
+		String filePath = path + fileName;
+		
+		logger.info("================== 파일 다운로드  ==================");
+		logger.info("다운로드할 파일명 :"+fileName);
+		logger.info("파일 경로 :"+path);
+		logger.info("반환할 파일 명 :"+newFileName);
+		logger.info("===============================================");
+		
+		byte fileByte[] = FileUtils.readFileToByteArray(new File(filePath));
+		
+		response.setContentType("application/octet-stream");
+		response.setContentLength(fileByte.length);
+		response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(newFileName, "UTF-8")+"\";");
+		response.setHeader("Content-Transfer_Encoding", "binary");
+		
+		response.getOutputStream().write(fileByte);
+		response.getOutputStream().flush();
+		response.getOutputStream().close();
+	}
+	
+	// 첨부파일 삭제
+	@RequestMapping(value="/attachdelete.do", method=RequestMethod.POST)
+	@ResponseBody
+	public List<GbAttachDto> attach_Delete(HttpServletRequest request){
+		String gatt_seq = request.getParameter("gatt_seq");
+		String wk_id = request.getParameter("wk_id");
+		
+		logger.info("================== 파일 삭제  ==================");
+		logger.info("삭제할 파일이 포함된 업무 아이디 : "+wk_id);
+		logger.info("삭제할 파일 번호 :"+gatt_seq);
+		logger.info("============================================");
+		
+		GbAttachDto file = new GbAttachDto();
+		file = wService.attachDownSelect(gatt_seq);
+		
+		String fileName = file.getGatt_rname();
+		String savePath = file.getGatt_path();
+		
+		File dFile = new File(savePath + fileName);
+		dFile.delete();
+		
+		boolean isc = false;
+		isc = wService.gbAttachDelete(gatt_seq);
+		
+		if(isc){
+			System.out.println("파일 삭제 성공");
+		} else {
+			System.out.println("파일 삭제 실패");
+		}
+		
+		List<GbAttachDto> list = null;
+		list = wService.gbAttachSelect(wk_id);
+		
+		return list;
+	}
+	
+	// 프로젝트 관리 페이지 이동
+	@RequestMapping(value="/goProManage.do", method=RequestMethod.GET)
+	public String goProject_Manager(Model model, HttpServletRequest request){
+		String pr_id = request.getParameter("pr_id");
+		model.addAttribute("pr_id", pr_id);
+		return "project/mProjectManager";
+	}
+	
+	// UUID 생성 메소드
+	public String createUUID(){
+		return UUID.randomUUID().toString();
 	}
 
 

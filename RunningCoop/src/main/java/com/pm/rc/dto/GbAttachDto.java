@@ -4,7 +4,8 @@ public class GbAttachDto {
 	
 	private int gatt_seq;
 	private String gatt_name;
-	private int gatt_size;
+	private String gatt_rname;
+	private String gatt_size;
 	private String gatt_path;
 	private String gatt_regDate;
 	private String br_uuid;
@@ -28,11 +29,19 @@ public class GbAttachDto {
 		this.gatt_name = gatt_name;
 	}
 
-	public int getGatt_size() {
+	public String getGatt_rname() {
+		return gatt_rname;
+	}
+
+	public void setGatt_rname(String gatt_rname) {
+		this.gatt_rname = gatt_rname;
+	}
+
+	public String getGatt_size() {
 		return gatt_size;
 	}
 
-	public void setGatt_size(int gatt_size) {
+	public void setGatt_size(String gatt_size) {
 		this.gatt_size = gatt_size;
 	}
 
@@ -71,9 +80,9 @@ public class GbAttachDto {
 	@Override
 	public String toString() {
 		return "GbAttachDto [gatt_seq=" + gatt_seq + ", gatt_name=" + gatt_name
-				+ ", gatt_size=" + gatt_size + ", gatt_path=" + gatt_path
-				+ ", gatt_regDate=" + gatt_regDate + ", br_uuid=" + br_uuid
-				+ ", wk_id=" + wk_id + "]";
+				+ ", gatt_rname=" + gatt_rname + ", gatt_size=" + gatt_size
+				+ ", gatt_path=" + gatt_path + ", gatt_regDate=" + gatt_regDate
+				+ ", br_uuid=" + br_uuid + ", wk_id=" + wk_id + "]";
 	}
 	
 }

@@ -87,6 +87,13 @@ public interface ProjectService {
 	public boolean iPrInsert(Map<String, String> map);
 	
 	/**
+	 * 프로젝트 매니저 조회
+	 * @param pr_id
+	 * @return
+	 */
+	public MemberDto prManagerSelect(String pr_id);
+	
+	/**
 	 * 프로젝트 기본정보 수정
 	 * @param ProjectDto
 	 * @return boolean

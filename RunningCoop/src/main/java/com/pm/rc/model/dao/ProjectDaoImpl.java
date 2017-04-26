@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pm.rc.dto.GbAttachDto;
+import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.ProjectDto;
 
 @Repository
@@ -103,6 +104,11 @@ public class ProjectDaoImpl implements ProjectDao {
 		} else {
 			return false;
 		}
+	}
+	
+	@Override
+	public MemberDto prManagerSelect(String pr_id){
+		return sqlSession.selectOne(NAMESPACE+"prManagerSelect", pr_id);
 	}
 
 	@Override

@@ -63,6 +63,12 @@
   		FROM RC_MEMBER M
 		WHERE M.MEM_ID IN (SELECT P.MEM_ID FROM RC_PROMEM P WHERE P.PR_ID = #{pr_id})
 	</select>
+	
+	<select id="prManagerSelect" parameterType="java.lang.String" resultType="MemberDto">
+		SELECT MEM_ID
+		FROM RC_PROMEM
+		WHERE PR_LEVEL = 'PM' AND PR_ID = #{pr_id}
+	</select>
 
 
 </mapper>
