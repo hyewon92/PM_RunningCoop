@@ -10,8 +10,27 @@
 				$("#wd_Field").children("p").remove().children("div").remove();
 				$(".work_Detail_View").css("display", "block");
 				showWorkDetail(msg)
+				changeProgress(val2);
 			}
 		});
+		/*Progress bar 생성*/
+		 var width = 0;
+		 function changeProgress(val){
+			 var progress = parseInt(val);
+			 var elem = $("#partProgress");
+			 alert(elem.html());
+			 var id = setInterval(frame, 10);
+			 
+			 function frame(){
+				 if(width >= progress){
+					 clearInterval(id);
+				 }else{
+					 width+=1;
+					 elem.css("width",width+"%");
+					 elem.html(width*1+"%");
+				 }
+			 }
+		 }
 	}
 	
 	/* 업무 상세 페이지 - 하위 업무 리스트 출력 */
@@ -20,7 +39,6 @@
 		 if(nodes == null){
 			$("#wd_Field").append("<p>하위 업무가 없습니다</p>");
 		} else {
-			$("#wd_Field").append("여기에 progres Bar놓을거야");
 			$("#wd_Field").append("<p>선택|하위업무아이디|하위업무내용|애로사항여부|마감일자|완료여부</p>");
 			  for(var i = 0; i < nodes.length; i++){
 				var wd_id = nodes[i].wd_id;
@@ -51,7 +69,7 @@
 				.append("<input type='button' value='삭제' onclick='wdDelete("+wd_id+")'/>");
 			}
 		}
-		
+		 
 		 /* 댓글 목록 출력 */
 		wcomListView()
 		/* 첨부파일 목록 출력 */

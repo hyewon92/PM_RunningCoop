@@ -37,6 +37,20 @@
 .project_manage {
 	display: none;
 }
+
+#allProgress{
+	width: 100%;
+	background-color: #ddd;
+}
+
+#partProgress{
+	width: 0px;
+	height: 30px;
+	background-color: #4CAF50;
+  	text-align: center;
+  	line-height: 30px;
+  	color: white;
+}
 </style>
 <script type="text/javascript">
 	<%String pr_level = (String) session.getAttribute("pr_level");%>
@@ -90,7 +104,7 @@
 						</c:when>
 						<c:otherwise>
 							<c:forEach var="doing" items="${ doing }">
-								<span onclick="viewWork('${ doing.get('WK_ID') }')"> <input
+								<span onclick="viewWork('${ doing.get('WK_ID')}', '${ doing.get('WK_PRORATE') }')"> <input
 									type="hidden" value="${ doing.get('WK_ID') }" /> ${ doing.get("WK_TITLE") }/(${ doing.get("MEM_NAME") })/${ doing.get("WK_PRORATE") }%
 								</span>
 								<input type="button" value="수정"
@@ -112,7 +126,7 @@
 						</c:when>
 						<c:otherwise>
 							<c:forEach var="done" items="${ done }">
-								<span onclick="viewWork('${ done.get('WK_ID'), done.get('WK_PRORATE}')"> <input
+								<span onclick="viewWork('${ done.get('WK_ID') }')"> <input
 									type="hidden" value="${ done.get('WK_ID') }" /> ${ done.get("WK_TITLE") }/(${ done.get("MEM_NAME") })/${ done.get("WK_PRORATE") }%
 								</span>
 								<br />
@@ -162,6 +176,9 @@
 			</div>
 			<fieldset id="wd_Field">
 				<legend>업무 상세화면</legend>
+				<div id = "allProgress">
+					<div id = "partProgress"></div>
+				</div>
 			</fieldset>
 			<div class="work_Comment_View">
 				<fieldset id="wk_Comment_List">
