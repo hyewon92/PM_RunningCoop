@@ -80,6 +80,7 @@
 	src="http://code.jquery.com/jquery-latest.js"></script>
 
 <script type="text/javascript">
+	//지정일 일정 조회
  	function dailyList(val1, val2, val3){
  		$(".listBox").children().remove();
 		$.ajax({
@@ -93,6 +94,7 @@
 		});
 	}
 	
+	//지정일 일정 출력
 	function showDailyList(schedule, val1, val2, val3){
 		if(schedule.length == 0){
 			$(".listBox").append("<p>해당 일에 등록된 일정이 없습니다.</p>");
@@ -115,6 +117,7 @@
 		}
 	}
 
+	//일정 상세정보 조회
 	function showDetail(val1, val2, val3, val4){
 		$.ajax({
 			type : "POST",
@@ -131,6 +134,7 @@
 		});
 	}
 	
+	//일정 상세정보 출력
 	function showSchDetail(schedule){
 		var sch_seq = schedule.dto.sch_seq;
 		var pr_id = schedule.dto.pr_id;
@@ -156,6 +160,7 @@
 		$(".listBox").css("display", "block");
 	}
 	
+	//일정 삭제
 	function goDelete(){
 		var sch_seq = $("#sch_seq").val();
 		if(confirm("정말로 삭제하시겠습니까?")){
@@ -163,6 +168,7 @@
 		}
 	}
 	
+	//일정 수정 폼 활성화
 	function goModify(){
 		alert($("#sch_startDate").text());
 		$("#sch_upSeq").val($("#sch_seq").val());
@@ -179,6 +185,7 @@
 		$(".listBox").css("display", "none");
 	}
 	
+	//일정 등록 폼 활성화
 	function openWriteForm(val1, val2, val3){
 		var array = [val1, val2, val3];
 		var day = array.join("-");
@@ -191,13 +198,19 @@
 	}
 	
 	$(function(){
+		//일정 등록
 		$(".scheduleBox").submit(function(){
 			var newStartTotal = $("#sch_newStartDate").val()+" "+$("#sch_newStartTime").val();
 			$("#newStartTotal").val(newStartTotal);
 			var newEndTotal = $("#sch_newEndDate").val()+" "+$("#sch_newEndTime").val();
 			$("#newEndTotal").val(newEndTotal);
+			if($("#newStartTotal")==""||$("#newEndTotal")==""){
+				alert("날짜를 입력해주세요");
+				return false;
+			}
 		});
 		
+		//일정 수정
  		$(".scheduleModiBox").submit(function(){
 			var upStartTotal = $("#sch_upStartDate").val()+" "+$("#sch_upStartTime").val();
 			$("#upStartTotal").val(upStartTotal);

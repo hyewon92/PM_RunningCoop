@@ -29,7 +29,8 @@
 			<mvc:exclude-mapping path="/ckJoin.do"/>
 			<mvc:exclude-mapping path="/ckIdentifyMem.do"/>
 			<mvc:exclude-mapping path="/joinMailSending.do"/>
-			<mvc:exclude-mapping path="/removeIdentify.do"/>
+			<mvc:exclude-mapping path="/ckIdentifyNum.do"/>
+			<mvc:exclude-mapping path="/account/joinAfter"/>
 			<bean class="com.pm.rc.interceptor.LoginCheckInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

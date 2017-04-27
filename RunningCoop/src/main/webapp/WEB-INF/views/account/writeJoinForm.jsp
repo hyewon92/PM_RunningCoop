@@ -84,7 +84,6 @@
 			async: false,
 			success: function(){
 				alert("해당 메일계정으로 인증번호를 전송했습니다.");
-				alert(<%session.getAttribute("identifyNum");%>);
 			},
 			error: function(){
 				alert("인증번호 전송 실패, 다시 시도해주세요.");
@@ -94,23 +93,27 @@
 		timeCount(240, sEvent, eEvent);
 	}
 	
+	var interval;
+	
+	//인증번호 입력 시간 카운트
 	function timeCount(time, sEvent, eEvent){
+
 		//카운트 시간 설정
 		var setTime = time;
-		
+				
 		//1초마다 실행
-		var interval = setInterval(function(){
+		interval = setInterval(function(){
 			timer();
-		}, 1000);
-		
+			}, 1000);
+				
 		function timer(){
 			setTime = setTime-1;
 			var minute = Math.floor(setTime/60);
 			var second = Math.round(setTime%60);
-			
+				
 			sEvent(minute, second);
-			
-			if(setTime==0){
+				
+			if(setTime==0){	//시간 내에 입력 안했을 때
 				clearInterval(interval);
 				eEvent();
 				$.ajax({
@@ -133,22 +136,46 @@
 		alert("시간이 종료됐습니다. 다시 시도해주세요.");
 	}
 	
+	//입력 후 시간 카운트 정지+세션(인증번호)삭제
+	function endIdentify(){
+		clearInterval(interval);
+		$.ajax({
+			type: "POST",
+			url: "./removeIdentify.do",
+			async: false
+		});
+	}
+	
 	//인증번호 입력확인
-	function identifyNum(val){
-		alert(val);
-		var num = $("#num").val();
-		if(num!=val){
-			alert("값이 일치하지 않습니다. 다시 번호를 발급받으세요.");
-			$("#num").val("");
+	function identifyNum(){
+		var val = $("#num").val();
+		$.ajax({
+			type: "POST",
+			url: "./ckIdentifyNum.do",
+			data: "input="+val,
+			async: false,
+			success: function(msg){
+				endIdentify();
+				resultIdentify(msg)
+			}
+		});
+	}
+	
+	//인증번호 입력 결과
+	function resultIdentify(map){
+		alert(map);
+		if(map.result){
+			alert("인증이 완료됐습니다.");
 		}else{
-			alert("확인됐습니다");
+			alert("인증이 실패했습니다. 다시 해주세요.");
+			$("#num").val("");
 		}
 	}
 	
 	//최종입력 제약조건
 	$(function(){
 		$(".accountBox").submit(function(event){
-			if($("#id").val()==""||$("#pw").val()==""||$("#pw2").val()==""||$("#mem_name")==""||$("mem_email")==""||$("#mem_phone")==""){
+			if($("#id").val()==""||$("#pw").val()==""||$("#pw2").val()==""||$("#mem_name")==""||$("mem_email")==""||$("#num")==""||$("#mem_phone")==""){
 				alert("모두 입력해주세요");
 				return false;
 			}
@@ -199,10 +226,6 @@
 </head>
 <body>
 
-<%
-	String identifyNum = (String)session.getAttribute("identifyNum");
-%>
-
 	<form class = "joinBox" action="./chkJoin.do" method="post">
 		<fieldset>
 			<legend>필수정보</legend>
@@ -219,7 +242,7 @@
 				<div id = "chkInfo">
 					<%String num = (String)session.getAttribute("identifyNum"); %>
 					인증번호 입력: <input type = "text" id = "num">
-					<input type = "button" id = "btnIdentify" value = "확인" onclick = "identifyNum('<%=num%>')">
+					<input type = "button" id = "btnIdentify" value = "확인" onclick = "identifyNum()">
 					<span id = "minute"></span>분
 					<span id = "second"></span>초 
 				</div>

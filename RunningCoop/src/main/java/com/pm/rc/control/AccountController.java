@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.model.service.AccountService;
@@ -123,8 +124,9 @@ public class AccountController {
 		}
 	}
 	
-	//보인인증 번호(세션) 삭제
+	//본인인증 번호(세션) 삭제
 	@RequestMapping(value = "/removeIdentify.do")
+	@ResponseBody
 	public void removeIdentify(HttpSession session){
 		logger.info("removeIdentify실행");
 		System.out.println("삭제 전 인증번호:"+session.getAttribute("identifyNum"));
@@ -132,14 +134,35 @@ public class AccountController {
 		System.out.println("삭제 후 인증번호:"+session.getAttribute("identifyNum"));
 	}
 	
+	//본인인증 번호 확인
+	@RequestMapping(value = "/ckIdentifyNum.do")
+	@ResponseBody
+	public Map<String, Boolean> ckIdentifyNum(HttpSession session,String input){
+		logger.info("ckIdentifyNum실행");
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		System.out.println("인증번호:"+session.getAttribute("identifyNum"));
+		System.out.println("입력값:"+input);
+		String identifyNum = (String)session.getAttribute("identifyNum");
+		if(input.equals(identifyNum)){
+			System.out.println("번호 일치, 성공");
+			map.put("result",true);
+		}else{
+			System.out.println("번호 불일치, 실패");
+			map.put("result",false);
+		}
+		return map;
+	}
+	
 	//회원가입처리
 	@RequestMapping(value = "/chkJoin.do", method = RequestMethod.POST)
-	public String ckJoin(MemberDto dto){
+	public String ckJoin(HttpSession session, MemberDto dto){
 		logger.info("ckJoin실행");
 		boolean isc = accountService.memInsert(dto);
 		if(isc == false){
 			return "account/error/error";
 		}else{
+			session.setAttribute("mem_id", dto.getMem_id());
+			session.setAttribute("mem_name", dto.getMem_name());
 			return "account/joinAfter";
 		}
 	}
