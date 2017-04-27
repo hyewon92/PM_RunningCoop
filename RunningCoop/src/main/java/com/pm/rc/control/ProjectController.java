@@ -106,6 +106,11 @@ public class ProjectController {
 	public Map<String, String> proDetail(HttpServletRequest request){
 		logger.info("proDetail실행");
 		String pr_id = request.getParameter("pr_id");
+		
+		logger.info("=================== 프로젝트 상세정보 보기 =======================");
+		logger.info("상세정보를 볼 프로젝트 id :"+pr_id);
+		logger.info("==========================================================");
+		
 		Map<String, String> map = new HashMap<String, String>();
 		map = service.prDetailSelect(pr_id);
 		return map;
@@ -686,8 +691,58 @@ public class ProjectController {
 	@RequestMapping(value="/goProManage.do", method=RequestMethod.GET)
 	public String goProject_Manager(Model model, HttpServletRequest request){
 		String pr_id = request.getParameter("pr_id");
+		
+		logger.info("=================== 프로젝트 상세정보 보기 =======================");
+		logger.info("상세정보를 볼 프로젝트 id :"+pr_id);
+		logger.info("==========================================================");
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map = service.prDetailSelect(pr_id);
+		
 		model.addAttribute("pr_id", pr_id);
+		model.addAttribute("detail", map);
+		
 		return "project/mProjectManage";
+	}
+	
+	// 프로젝트 정보 수정
+	@RequestMapping(value="/projectEdit.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String project_Edit(HttpServletRequest request){
+		String pr_id = request.getParameter("pr_id");
+		String pr_name = request.getParameter("pr_name");
+		String pr_endDate = request.getParameter("pr_endDate");
+		String pr_goal = request.getParameter("pr_goal");
+		String pr_searchYN = request.getParameter("pr_searchYN");
+		String pr_condition = request.getParameter("pr_condition");
+		
+		logger.info("=================== 프로젝트 상세정보 수정 =======================");
+		logger.info("수정할 프로젝트 id :"+pr_id);
+		logger.info("수정된 프로젝트 명 : "+pr_name);
+		logger.info("수정된 프로젝트 마감기한 : "+pr_endDate);
+		logger.info("수정된 프로젝트 목적 : "+pr_goal);
+		logger.info("수정된 프로젝트 공개여부 : "+pr_searchYN);
+		logger.info("수정된 프로젝트 상태 : "+pr_condition);
+		logger.info("==========================================================");
+		
+		ProjectDto dto = new ProjectDto();
+		dto.setPr_id(pr_id);
+		dto.setPr_name(pr_name);
+		dto.setPr_endDate(pr_endDate);
+		dto.setPr_goal(pr_goal);
+		dto.setPr_searchYN(pr_searchYN);
+		dto.setPr_condition(pr_condition);
+		
+		boolean isc = false;
+		isc = service.projectEdit(dto);
+		
+		if (isc) {
+			System.out.println("수정 성공");
+			return "success";
+		} else {
+			System.out.println("수정 실패");
+			return "fail";
+		} 
 	}
 	
 	// UUID 생성 메소드
