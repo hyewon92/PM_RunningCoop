@@ -55,6 +55,11 @@
 		$(".pr_detail_view").css("display", "block");
 	}
 	
+	function goSelectPro(){
+		$(".pr_detail_view").css("display", "none");
+		$(".pr_detail_view").eq(0).children("p").html("");
+	}
+	
 	function createPro(){
 		location.href="./createMPro.do";
 	}
@@ -86,6 +91,7 @@
 <input type="button" value="프로젝트 생성" onclick="createPro()"/>
 
 <div class="pr_detail_view">
+<input type="button" value="닫기" onclick="goSelectPro()"/>
 	<p id="pr_name"></p>
 	<p id="mem_name"></p>
 	<p id="pr_memcnt"></p>

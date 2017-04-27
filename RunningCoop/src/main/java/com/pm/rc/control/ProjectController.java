@@ -553,6 +553,7 @@ public class ProjectController {
 		List<GbAttachDto> list = null;
 		list = wService.gbAttachSelect(wk_id);
 		
+		
 		return list;
 	}
 	
@@ -686,7 +687,7 @@ public class ProjectController {
 	public String goProject_Manager(Model model, HttpServletRequest request){
 		String pr_id = request.getParameter("pr_id");
 		model.addAttribute("pr_id", pr_id);
-		return "project/mProjectManager";
+		return "project/mProjectManage";
 	}
 	
 	// UUID 생성 메소드
