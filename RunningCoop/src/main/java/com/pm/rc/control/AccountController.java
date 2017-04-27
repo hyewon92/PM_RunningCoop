@@ -44,6 +44,7 @@ public class AccountController {
 		map.put("mem_id", mem_id);
 		map.put("mem_pw", mem_pw);
 		MemberDto dto = accountService.loginPro(map);
+		//그룹 검색 쿼리 추가해야 함
 		if(dto==null){
 			return "account/error/error";
 		}else{
@@ -157,22 +158,31 @@ public class AccountController {
 	
 	//회원가입처리
 	@RequestMapping(value = "/chkJoin.do", method = RequestMethod.POST)
-	public String ckJoin(Model model, MemberDto dto){
+	public String ckJoin(HttpSession session, MemberDto dto){
 		logger.info("ckJoin실행");
 		boolean isc = accountService.memInsert(dto);
 		if(isc == false){
 			return "account/error/error";
 		}else{
-			model.addAttribute("mem_id", dto.getMem_id());
-			model.addAttribute("mem_pw", dto.getMem_pw());
+			session.setAttribute("mem_id", dto.getMem_id());
+			session.setAttribute("mem_pw", dto.getMem_pw());
+			session.setAttribute("mem_name", dto.getMem_name());
 			return "account/joinAfter";
 		}
 	}
 	
+	//회원가입 후 바로 메인화면 이동
+	@RequestMapping(value = "/firstLogin.do")
+	public String firstLogin(){
+		logger.info("firstLogin실행");
+		return "account/loginAfter";
+	}
+	
 	//탈퇴하기-GM으로 소속된 그룹 출력(GM권한 위임)
 	@RequestMapping(value = "/goLeave.do", method = RequestMethod.GET)
-	public String goLeave(Model model, String mem_id){
+	public String goLeave(HttpSession session, Model model){
 		logger.info("goLeave실행");
+		String mem_id = (String)session.getAttribute("mem_id");
 		List<Map<String, String>> gmSearchList = accountService.levelGmSelect(mem_id);
 		for(Map<String, String> map:gmSearchList){
 			System.out.println(map.get("GR_ID"));
@@ -190,6 +200,7 @@ public class AccountController {
 				//탈퇴처리
 				boolean isc = accountService.memDelete(mem_id);
 				if(isc == true){
+					session.invalidate();
 					return "account/bye";
 				}else{
 					return "account/error/error";

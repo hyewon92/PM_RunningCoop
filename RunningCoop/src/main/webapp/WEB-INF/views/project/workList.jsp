@@ -113,7 +113,7 @@
 						</c:when>
 						<c:otherwise>
 							<c:forEach var="done" items="${ done }">
-								<span onclick="viewWork('${ done.get('WK_ID') }')"> <input
+								<span onclick="viewWork('${ done.get('WK_ID'), done.get('WK_PRORATE}')"> <input
 									type="hidden" value="${ done.get('WK_ID') }" /> ${ done.get("WK_TITLE") }/(${ done.get("MEM_NAME") })/${ done.get("WK_PRORATE") }%
 								</span>
 								<br />

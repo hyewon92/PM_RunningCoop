@@ -10,32 +10,42 @@
 </head>
 <body>
 
-	<h1>GM으로 소속된 그룹 목록</h1>
-	<table>
-		<tr>
-			<th>그룹아이디</th>
-			<th>그룹명</th>
-			<th>권한</th>
-			<th>위임하기</th>
-		</tr>
-<%-- 		<c:choose>
-			<c:when test="${fn:length(gmSearchList)==0}">
-				<tr>
-					<td colspan="4">그룹이 없습니다</td>
-				</tr>
-			</c:when>
-			<c:otherwise> --%>
-				<c:forEach var="gmList" items="${gmSearchList}">
+	<div id = "header">
+   		<jsp:include page="../header.jsp" flush="false"/>
+	</div>
+
+	<div id = "container">
+		<h1>GM으로 소속된 그룹 목록</h1>
+		<table>
+			<tr>
+				<th>그룹아이디</th>
+				<th>그룹명</th>
+				<th>권한</th>
+				<th>위임하기</th>
+			</tr>
+	<%-- 		<c:choose>
+				<c:when test="${fn:length(gmSearchList)==0}">
 					<tr>
-						<td>${ gmList.get("GR_ID")}</td>
-						<td>${ gmList.get("GR_NAME")}</td>
-						<td>${ gmList.get("GR_LEVEL")}</td>
-						<td><input type = "button" value = "위임하기" onclick="location.href='./giveGm.do?gr_id=${gmList.get('GR_ID')}'"></td>
+						<td colspan="4">그룹이 없습니다</td>
 					</tr>
-				</c:forEach>
-<%-- 			</c:otherwise>
-		</c:choose> --%>
-	</table>
+				</c:when>
+				<c:otherwise> --%>
+					<c:forEach var="gmList" items="${gmSearchList}">
+						<tr>
+							<td>${ gmList.get("GR_ID")}</td>
+							<td>${ gmList.get("GR_NAME")}</td>
+							<td>${ gmList.get("GR_LEVEL")}</td>
+							<td><input type = "button" value = "위임하기" onclick="location.href='./giveGm.do?gr_id=${gmList.get('GR_ID')}'"></td>
+						</tr>
+					</c:forEach>
+	<%-- 			</c:otherwise>
+			</c:choose> --%>
+		</table>
+	</div>
+	
+	<div id = "footer">
+		<jsp:include page="../footer.jsp" flush="false"/>
+	</div>
 
 </body>
 </html>

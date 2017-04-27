@@ -35,13 +35,14 @@
 <!-- </script> -->
 <script type="text/javascript">
 	
+	var interval;
 	var checked = [false, false, false, false, false];
 	
 	//아이디 제약조건, 중복 확인
 	function id_chk(){
 		checked[0] = true;
 		var mem_id = $("#id").val();
-		var standardId = /^[a-z0-9]{8,12}/g;
+		var standardId = /^[a-z0-9]{8,12}$/g;
 		if(!standardId.test(mem_id)){
 			alert("아이디는 영소문자, 숫자를 포함하여 8~12자로 작성해야 합니다.");
 			$("#id").val("");
@@ -77,9 +78,8 @@
 	//비밀번호 제약조건, 재확인
 	function pw_chk(){
 		checked[1] = true;
-		var standardPw = /((?=.*\d)(?=.*[a-z]).{8,15})/gm;
+		var standardPw = /^((?=.*\d)(?=.*[a-z]).{8,15})$/gm;
 
-// 			/^[a-z0-9_-]{8,16}$/g;
 		if(!standardPw.test($("#pw").val())){
 			checked[1] = false;
 			alert("비밀번호는 영소문자, 숫자를 포함하여 8~16자로 작성해야 합니다.");
@@ -116,24 +116,26 @@
 		checked[3] = true;
 		var mem_name = $("#name").val();
 		var toMail = $("#email").val();
-		$.ajax({
-			type: "POST",
-			url: "./joinMailSending.do",
-			data: "mem_name="+mem_name+"&toMail="+toMail,
-			async: false,
-			success: function(){
-				alert("해당 메일계정으로 인증번호를 전송했습니다.");
-			},
-			error: function(){
-				checked[3] = false;
-				alert("인증번호 전송 실패, 다시 시도해주세요.");
-			}
-		});
-		$("#chkInfo").css("display","block");
-		timeCount(240, sEvent, eEvent);
+		if(mem_name == null || toMail == null){
+			alert("이름과 이메일을 모두 입력해주세요.");
+		}else{
+			$.ajax({
+				type: "POST",
+				url: "./joinMailSending.do",
+				data: "mem_name="+mem_name+"&toMail="+toMail,
+				async: false,
+				success: function(){
+					alert("해당 메일계정으로 인증번호를 전송했습니다.");
+				},
+				error: function(){
+					checked[3] = false;
+					alert("인증번호 전송 실패, 다시 시도해주세요.");
+				}
+			});
+			$("#chkInfo").css("display","block");
+			timeCount(240, sEvent, eEvent);
+		}
 	}
-	
-	var interval;
 	
 	//인증번호 입력 시간 카운트
 	function timeCount(time, sEvent, eEvent){
@@ -215,60 +217,37 @@
 	
 	//최종입력 제약조건
 	$(function(){
-		$(".joinBox").submit(function(event){
-			if($("#id").val()==""||$("#pw").val()==""||$("#pw2").val()==""||$("#mem_name")==""||$("mem_email")==""||$("#num")==""||$("#mem_phone")==""){
-				alert("모두 입력해주세요.");
-				return false;
-			}
-			for(var i = 0; i <checked.length; i++){
-				if(!checked[i]){
-					alert("모두 확인 조회를 해주세요.");
+			$(".joinBox").submit(function(event){
+				//연락처 유효성 검사
+				var phone1 = $("#phone1").val();
+				var phone2 = $("#phone2").val();
+				var phone3 = $("#phone3").val();
+				alert(phone1);
+				var standardPhone = /\d{3,4}$/;
+				if(!standardPhone.test(phone1)||!standardPhone.test(phone2)||!standardPhone.test(phone3)){
+					alert("숫자형식으로 3~4자씩 입력해주세요");
 					return false;
-					break;
 				}
+				else{
+					$("#phone").val(phone1+phone2+phone3);
+					alert($("#phone").val());
+				
+ 					//공백 확인
+					if($("#id").val()==""||$("#pw").val()==""||$("#pw2").val()==""||$("#mem_name")==""||$("mem_email")==""||$("#num")==""||$("#mem_phone")==""){
+						alert("모두 입력해주세요.");
+						return false;
+					}
+					//버튼 조회 확인
+					for(var i = 0; i <checked.length; i++){
+						if(!checked[i]){
+							alert("모두 확인 조회를 해주세요.");
+							return false;
+							break;
+						}
+					} 
 			}
 		});
 	});
-	
-	//팝업생성
-	function openChild(){
-		window.open("./showGrCreate.do", "GroupCreate", "width=640, height=450, resizable = no, scrollbars = no");
-	}
-	
-	//그룹명 자동생성 추천
-	 $(function(){
-         $("#gr_name").autocomplete({
-            source: function(request , response){
-               $.ajax({
-                  type:"POST",
-                  url: "./autoauto.do",
-                  dataType : "json",
-                  async : false,
-                  data:{ value : request.term},
-                  success: function(data) {
-                      response(
-                                     $.map(data, function(item) {
-                                         return {
-                                             label: item.gr_name,
-                                             value: item.gr_name
-                                         }
-                                     })
-                                 );
-                  }
-               });
-            },
-            minLength : 1,
-            select : function ( event , ui){
-            $("#gr_name").val(ui.item.label);
-            }
-         });
-   });
-	
-	//그룹명 검색
-	function searchGrName(){
-		var gr_name = $("#gr_name").val();
-		window.open("./allGrSelect.do?gr_name="+gr_name, "그룹검색", "width=780, height=550, resizable = no, scrollbars = yes");
-	}
 	
 </script>
 </head>
@@ -278,7 +257,7 @@
 		<fieldset>
 			<legend>필수정보</legend>
 			<div class = "essentialPart">
-				(*)아이디: <input type = "text" id = "id" name = "mem_id" title = "영소문자, 숫자 포함 8~12자">
+ 				(*)아이디: <input type = "text" id = "id" name = "mem_id" title = "영소문자, 숫자 포함 8~12자">
 				<input type = "button" id = "idChk" value = "중복확인" onclick = "id_chk()">
 				<span id = "resultIdChk"></span>
 				<br>
@@ -295,17 +274,14 @@
 					<input type = "button" id = "btnIdentify" value = "확인" onclick = "identifyNum()">
 					<span id = "minute"></span>분
 					<span id = "second"></span>초 
-				</div>
-				(*)연락처: <input type = "text" id = "phone" name = "mem_phone"><br>
+				</div> 
+				(*)연락처: 
+				<input type = "text" id = "phone1"> -
+				<input type = "text" id = "phone2"> -
+				<input type = "text" id = "phone3">
+				<input type = "hidden" id = "phone" name = "mem_phone"><br>
 			</div>
 		</fieldset>
-<!-- 		<fieldset>
-			<legend>선택정보</legend>
-			<div class="ui-widget">
-				<input type = "text" name = "gr_name" id = "gr_name" placeholder = "그룹명으로 검색"/>
-				<input type = "button" value = "그룹검색" onclick = "searchGrName()"/>
-			</div>
-		</fieldset> -->
 		<div class = "enter">
 			<input type = "submit" id = "join" value = "가입" >
 		</div>

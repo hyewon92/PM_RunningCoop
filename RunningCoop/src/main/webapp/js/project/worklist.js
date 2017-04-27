@@ -1,5 +1,5 @@
 /* 업무 상세 페이지 조회 메소드 */
-	function viewWork(val){
+	function viewWork(val, val2){
 		$("#wk_id").val(val);
 		$.ajax({
 			type : "POST",
@@ -20,6 +20,7 @@
 		 if(nodes == null){
 			$("#wd_Field").append("<p>하위 업무가 없습니다</p>");
 		} else {
+			$("#wd_Field").append("여기에 progres Bar놓을거야");
 			$("#wd_Field").append("<p>선택|하위업무아이디|하위업무내용|애로사항여부|마감일자|완료여부</p>");
 			  for(var i = 0; i < nodes.length; i++){
 				var wd_id = nodes[i].wd_id;

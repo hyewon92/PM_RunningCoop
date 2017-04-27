@@ -26,30 +26,44 @@
 			}
 		});
 	});
+	
+	function goLeave(){
+		if(confirm("정말 탈퇴하시겠습니까?")){
+			location.href = "./goLeave.do";
+		}
+	}
 </script>
 </head>
 <body>
-<div id = "header">
-	<jsp:include page="../header.jsp" flush="false"/>
-</div>
-<div id = "container">
-	<form class = "accountBox" action="./memInfoModify.do" method="post">
-		<div class = "essentialPart">
-			아이디: <input type = "text" id = "id" name = "mem_id" value = "${dto.getMem_id()}" readonly="readonly"><br>
-			패스워드: <input type = "password" id = "pw" name = "mem_pw" value = "${dto.getMem_pw() }"><br>
-			패스워드 재확인: <input type = "password" id = "pw2"><input type = "button" value = "확인" onclick = "pw_chk()"><br>
-			이름: <input type = "text" id = "name" name = "mem_name" value = "${dto.getMem_name() }"><br>
-			이메일: <input type = "text" id = "email" name = "mem_email" value = "${dto.getMem_email() }"><br>
-			연락처: <input type = "text" id = "phone" name = "mem_phone" value = "${dto.getMem_phone() }"><br>
-		</div>
 
-		<div class = "enter">
-			<input type = "submit" id = "modifyInfo" value = "수정">
+	<div id = "header">
+		<jsp:include page="../header.jsp" flush="false"/>
+	</div>
+	
+	<div id = "container">
+		<form class = "accountBox" action="./memInfoModify.do" method="post">
+			<div class = "essentialPart">
+				아이디: <input type = "text" id = "id" name = "mem_id" value = "${dto.getMem_id()}" readonly="readonly"><br>
+				패스워드: <input type = "password" id = "pw" name = "mem_pw" value = "${dto.getMem_pw() }"><br>
+				패스워드 재확인: <input type = "password" id = "pw2"><input type = "button" value = "확인" onclick = "pw_chk()"><br>
+				이름: <input type = "text" id = "name" name = "mem_name" value = "${dto.getMem_name() }"><br>
+				이메일: <input type = "text" id = "email" name = "mem_email" value = "${dto.getMem_email() }"><br>
+				연락처: <input type = "text" id = "phone" name = "mem_phone" value = "${dto.getMem_phone() }"><br>
+			</div>
+	
+			<div class = "enter">
+				<input type = "submit" id = "modifyInfo" value = "수정">
+			</div>
+		</form>
+		
+		<div class = "leaveService">
+			<input type = "button" value = "탈퇴하기" onclick = "goLeave()">
 		</div>
-	</form>
-</div>
-<div id = "footer">
-	<jsp:include page="../footer.jsp" flush="false"/>
-</div>
+	</div>
+	
+	<div id = "footer">
+		<jsp:include page="../footer.jsp" flush="false"/>
+	</div>
+	
 </body>
 </html>
