@@ -62,6 +62,7 @@
 </script>
 <style type="text/css">
 #groupMemAdd{
+width : 200px;
 cursor: pointer;}
 img{
 width: 20px;

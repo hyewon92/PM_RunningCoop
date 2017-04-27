@@ -1,6 +1,7 @@
 package com.pm.rc.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -15,7 +16,7 @@ public interface ManagerDao {
 	 * @return list 
 	 * @author 라한솔
 	 */
-	public List<GroupDto> grApplySelect ();
+	public List<GroupDto> grApplySelect (String gr_name);
 	
 	/**
 	 * 그룹생성승인요청 리스트 출력 (그룹 이름 검색)

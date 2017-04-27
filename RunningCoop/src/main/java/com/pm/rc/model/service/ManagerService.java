@@ -1,6 +1,7 @@
 package com.pm.rc.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
@@ -17,7 +18,7 @@ public interface ManagerService {
 	 * @return list 
 	 * @author 라한솔
 	 */
-	public List<GroupDto> grApplySelect ();
+	public List<GroupDto> grApplySelect (String gr_name);
 	
 	/**
 	 * 그룹생성승인요청 리스트 출력 (그룹 이름 검색)

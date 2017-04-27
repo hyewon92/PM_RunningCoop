@@ -9,7 +9,7 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 	function cheakAll(all){
-		var box = document.getElementsByName("chk");
+		var box = document.getElementsByName("gr_id");
 		
 		for(var i =0; i<box.length; i++){
 			box[i].checked = all;
@@ -17,6 +17,7 @@
 	}
 	function test01(){
 		$("#aa").submit(function(){
+			var box = document.getElementsByName("gr_id");
 			$(this).attr("action","grApplyYse.do");
 		});
 	}
@@ -54,7 +55,7 @@ cursor: pointer;
 		</tr>
 	<c:forEach var="apply" items="${Apply}">
 		<tr>
-			<td><input type="checkbox" name="gr_id" value="${apply.GR_ID}"></td>
+			<td><input type="checkbox"  name="gr_id" value="${apply.GR_ID}"></td>
 			<td><a onclick="gropuChildOpen(this)" id="groupChild">${apply.GR_NAME}</a></td>
 			<td>${apply.MEM_NAME}</td>
 			<td>${apply.GR_REGDATE}</td>
@@ -62,6 +63,13 @@ cursor: pointer;
 	</c:forEach>
 	</table>
 	</form>
+	
+	<form action="./grApplySch.do" method="post">
+<div>
+	<input type="text" name="gr_name" />
+	<input type="submit" value="그룹검색"/>
+</div>
+</form>
 
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.pm.rc.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,8 @@ public class ManagerServiceimpl implements ManagerService {
 	private ManagerDao managerdao;
 	
 	@Override
-	public List<GroupDto> grApplySelect() {
-		return managerdao.grApplySelect();
+	public List<GroupDto> grApplySelect(String gr_name) {
+		return managerdao.grApplySelect(gr_name);
 	}
 	
 	@Override

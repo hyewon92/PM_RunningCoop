@@ -233,22 +233,32 @@ public class GroupController {
 	@RequestMapping(value="/grApply.do")
 	public String groupApply(Model model){
 		logger.info("그룹생성신청리스트출력시작");
-		List<GroupDto> lists = managserService.grApplySelect();
+		List<GroupDto> lists = managserService.grApplySelect(null);
 		model.addAttribute("Apply",lists);
 		return "Group/grApply";
 	}
+	
+	@RequestMapping(value="/grApplySch.do")
+	public String groupApply(Model model ,String gr_name){
+		logger.info("그룹생성신청리스트출력시작");
+		List<GroupDto> lists = managserService.grApplySelect(gr_name);
+		model.addAttribute("Apply",lists);
+		return "Group/grApply";
+	}
+	
 	@RequestMapping(value="/grApplyYse.do" , method=RequestMethod.POST)
 	public String grApplyYse(String[] gr_id){
 		logger.info("그룹생성승인시작");
 		managserService.grAppModify(gr_id);
-		return "gooooodddd";
+		return "redirect:/grApply.do";
 	}
 	@RequestMapping(value="/grApplyNo.do" , method=RequestMethod.POST)
 	public String grApplyNo(String[] gr_id){
 		logger.info("그룹승인거절시작");
 		managserService.grDelete(gr_id);
 		
-		return "grApplyNooooooooooooo";
+		
+		return "redirect:/grApply.do";
 	}
 	
 	@RequestMapping(value="/grApplySelectGroup.do" , method=RequestMethod.POST)
@@ -293,6 +303,10 @@ public class GroupController {
 		boolean isc = false;
 		isc = service.grMemDelete(map);
 		return "redirect:/memModi.do?gr_id="+gr_id;
+	}
+	@RequestMapping(value="/groupGoGo.do")
+	public String groupGoGo(){
+		return "account/grGogo";
 	}
 
 	

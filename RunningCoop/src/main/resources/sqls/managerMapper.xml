@@ -2,12 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pm.rc.manager">
 
-	<select id="grApplySelect" resultType="java.util.Map">
+	<select id="grApplySelect" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT G.GR_ID, G.GR_NAME, M.MEM_NAME,TO_CHAR(G.GR_REGDATE, 'YYYYMMDD') GR_REGDATE
 		FROM RC_GROUP G, RC_MEMBER M
 		WHERE G.GR_APPYN = 'N'
 		AND M.MEM_ID = (SELECT GM.MEM_ID FROM RC_GROUPMEM GM WHERE GM.GR_ID =G.GR_ID AND GM.GR_LEVEL = 'GM')
 		AND G.GR_DELYN = 'N'
+		<if test="gr_name != null">
+			AND G.GR_NAME LIKE 	'%'||#{gr_name}||'%'
+		</if>
 	</select>
 	
 	<update id="grAppModify" parameterType="java.lang.String">

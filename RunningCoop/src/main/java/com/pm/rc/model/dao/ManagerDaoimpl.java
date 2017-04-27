@@ -1,6 +1,8 @@
 package com.pm.rc.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -23,9 +25,11 @@ public class ManagerDaoimpl implements ManagerDao {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public List<GroupDto> grApplySelect() {
+	public List<GroupDto> grApplySelect(String gr_name) {
 		logger.info("그룹생성신청daoimp 시작");
-		List<GroupDto> lists = sqlSession.selectList(NAMESPACE+"grApplySelect");
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("gr_name", gr_name);
+		List<GroupDto> lists = sqlSession.selectList(NAMESPACE+"grApplySelect",map);
 		return lists;
 	}
 	

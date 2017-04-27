@@ -15,26 +15,24 @@
 	<table>
 	<c:forEach var = "grdto" items="${lists }" >
 		<tr>
-			<td><a href="./grselect.do?gr_id=${grdto.gr_id }">${grdto.gr_id }</a> </td>
-			<td>${grdto.gr_name }</td>
+			<td><a href="./gProSelect.do">${grdto.gr_id }</a> </td>
+			<td>${grdto.gr_name}</td>
+			<td>${grdto.gr_memCnt}</td>
+			<td>${grdto.gr_goal}</td>
+			<td>${grdto.gr_regDate}</td>
+			<td><a href="./grselect.do?gr_id=${grdto.gr_id}">그룹관리</a></td>
+<%-- 			<td>${grdto.mem_name}</td> --%>
 		</tr>
 	</c:forEach>
 	</table>
 	
-	<select>
-	<c:forEach var="test1" items="${lists }">
-		<option label="${test1.gr_name }"></option>
-	</c:forEach>
-</select>
+<!-- 	<select> -->
+<%-- 	<c:forEach var="test1" items="${lists }"> --%>
+<%-- 		<option label="${test1.gr_name }"></option> --%>
+<%-- 	</c:forEach> --%>
+<!-- </select> -->
 
 <p><input type="button" onclick="location.href='./grApply.do'" value="그룹승인관리"></p>
-
-<form action="./grApplySelectGroup.do" method="post">
-<div>
-	<input type="text" name="gr_name" />
-	<input type="submit" value="그룹검색"/>
-</div>
-</form>
 	
 </body>
 </html>

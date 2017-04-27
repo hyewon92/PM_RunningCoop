@@ -4,6 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+	function grJoinChild (){
+		window.open("./groupGoGo.do", "GroupCreate", "width=640, height=450, resizable = no, scrollbars = no");
+	}
+	
+</script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -13,7 +19,7 @@
 		<input type = "hidden" name = "mem_pw" value = "${mem_pw}">
 		<input type = "submit" value = "바로 로그인"/>
 	</form>
-	<input type = "button" value = "그룹 가입 신청하기" onclick = "location.href = './allGrselect.do'">
+	<input type = "button" value = "그룹 가입 신청하기" onclick = "grJoinChild()">
 
 </body>
 </html>
