@@ -60,6 +60,10 @@
 </style>
 </head>
 <body>
+<div id = "header">
+	<jsp:include page="../header.jsp" flush="false"/>
+</div>
+<div id = "container">
 	<form id="boardWrite" action="./boardWrite.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="mem_id" value="${ mem_id }" />
 			<div>
@@ -137,6 +141,10 @@
 </script>
 <div><button onclick='saveContent()'>등록</button></div>
 <input type="button" value="목록으로" onclick="back()" />
+</div>
+<div id = "footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>
 
 </body>
 </html>

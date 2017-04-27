@@ -19,6 +19,10 @@ tr, th, td {
 </style>
 </head>
 <body>
+<div id = "header">
+	<jsp:include page="../header.jsp" flush="false"/>
+</div>
+<div id = "container">
 	<table>
 		<tr>
 			<th>번호</th>
@@ -52,5 +56,9 @@ tr, th, td {
 	<br>
 	<br>
 	<input type="button" id="write" value="게시글작성" onClick="writer()" />
+</div>
+<div id = "footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>
 </body>
 </html>

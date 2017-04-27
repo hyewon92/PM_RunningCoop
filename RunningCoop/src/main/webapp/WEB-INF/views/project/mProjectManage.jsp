@@ -7,6 +7,14 @@
 <title>개인 프로젝트 관리 페이지</title>
 </head>
 <body>
-<input type="hidden" value="${ pr_id }"/>
+<div id = "header">
+	<jsp:include page="../header.jsp" flush="false"/>
+</div>
+<div id = "container">
+	<input type="hidden" value="${ pr_id }"/>
+</div>
+<div id = "footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>
 </body>
 </html>

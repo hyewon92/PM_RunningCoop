@@ -7,6 +7,14 @@
 <title>게시글 비밀번호 오류 페이지</title>
 </head>
 <body>
-비밀번호가 틀렸어요~
+<div id = "header">
+	<jsp:include page="../header.jsp" flush="false"/>
+</div>
+<div id = "container">
+	비밀번호가 틀렸어요~
+</div>
+<div id = "footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>
 </body>
 </html>

@@ -318,7 +318,10 @@
 %>
 
 <body>
-
+<div id = "header">
+	<jsp:include page="../header.jsp" flush="false"/>
+</div>
+<div id = "container">
 	<h1>일정관리</h1>
 	<!-- 달력 출력 -->
 	<table id="calendar">
@@ -440,6 +443,9 @@
 			<input type="submit" value="등록">
 		</div>
 	</form>
-
+</div>
+<div id = "footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>
 </body>
 </html>

@@ -70,34 +70,41 @@
 </script>
 </head>
 <body>
-
-<c:choose>
-	<c:when test="${ fn:length(list) == 0 }">
-		<p> 진행 중인 프로젝트가 없습니다</p>
-	</c:when>
-	<c:otherwise>
-		<c:forEach var="list" items="${ list }">
-			<div class="pr_list">
-				<p>${ list.pr_id }</p>
-				<span class="pr_detail" onclick="detailPro('${ list.pr_id}')">정보보기</span>
-				<p onclick="goToProject('${ list.pr_id }')">${ list.pr_name }</p>
-				<p>${ list.pr_proRate }</p>
-				<p>${ list.pr_endDate }</p>
-			</div>
-		</c:forEach>
-	</c:otherwise>
-</c:choose>
-
-<input type="button" value="프로젝트 생성" onclick="createPro()"/>
-
-<div class="pr_detail_view">
-<input type="button" value="닫기" onclick="goSelectPro()"/>
-	<p id="pr_name"></p>
-	<p id="mem_name"></p>
-	<p id="pr_memcnt"></p>
-	<p id="pr_goal"></p>
-	<p id="pr_enddate"></p>
-	<p id="pr_etc"></p>
+<div id = "header">
+	<jsp:include page="../header.jsp" flush="false"/>
+</div>
+<div id = "container">
+	<c:choose>
+		<c:when test="${ fn:length(list) == 0 }">
+			<p> 진행 중인 프로젝트가 없습니다</p>
+		</c:when>
+		<c:otherwise>
+			<c:forEach var="list" items="${ list }">
+				<div class="pr_list">
+					<p>${ list.pr_id }</p>
+					<span class="pr_detail" onclick="detailPro('${ list.pr_id}')">정보보기</span>
+					<p onclick="goToProject('${ list.pr_id }')">${ list.pr_name }</p>
+					<p>${ list.pr_proRate }</p>
+					<p>${ list.pr_endDate }</p>
+				</div>
+			</c:forEach>
+		</c:otherwise>
+	</c:choose>
+	
+	<input type="button" value="프로젝트 생성" onclick="createPro()"/>
+	
+	<div class="pr_detail_view">
+	<input type="button" value="닫기" onclick="goSelectPro()"/>
+		<p id="pr_name"></p>
+		<p id="mem_name"></p>
+		<p id="pr_memcnt"></p>
+		<p id="pr_goal"></p>
+		<p id="pr_enddate"></p>
+		<p id="pr_etc"></p>
+	</div>
+</div>
+<div id = "footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
 </div>
 
 </body>

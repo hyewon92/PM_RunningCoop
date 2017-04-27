@@ -29,7 +29,10 @@
 </script>
 </head>
 <body>
-
+<div id = "header">
+	<jsp:include page="../header.jsp" flush="false"/>
+</div>
+<div id = "container">
 	<form class = "accountBox" action="./memInfoModify.do" method="post">
 		<div class = "essentialPart">
 			아이디: <input type = "text" id = "id" name = "mem_id" value = "${dto.getMem_id()}" readonly="readonly"><br>
@@ -44,6 +47,9 @@
 			<input type = "submit" id = "modifyInfo" value = "수정">
 		</div>
 	</form>
-
+</div>
+<div id = "footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>
 </body>
 </html>

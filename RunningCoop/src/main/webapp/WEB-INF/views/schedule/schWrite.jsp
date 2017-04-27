@@ -19,7 +19,10 @@
 	});
 </script>
 <body>
-
+<div id = "header">
+	<jsp:include page="../header.jsp" flush="flase"/>
+</div>
+<div id = "container">
 	<%
 		String mem_id = (String)session.getAttribute("mem_id");
 	%>
@@ -43,5 +46,9 @@
 			<input type = "submit" value = "등록">
 		</div>
 	</form>
+</div>
+<div id = "footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>
 </body>
 </html>

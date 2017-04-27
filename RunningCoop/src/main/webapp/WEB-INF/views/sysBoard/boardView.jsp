@@ -45,7 +45,11 @@
 </script>
 </head>
 <body>
-게시글 보기
+<div id = "header">
+	<jsp:include page="../header.jsp" flush="false"/>
+</div>
+<div id = "container">
+	게시글 보기
 <c:set var="view"  value="${ view }"/>
 <input type="hidden" id="session" value="user1<%-- ${ mem_id } --%>"/>
 <input type="hidden" id="mem_id" value="${ view.get('MEM_ID') }"/>
@@ -79,5 +83,9 @@
 <input type="button" value="게시글 수정" id="editBtn" onclick="Edit()" style="display: none"/>
 <input type="button" value="게시글 삭제" id="deleteBtn" onclick="Delete()" style="display: none"/>
 <input type="button" value="목록으로" onclick="back()"/>
+</div>
+<div id = "footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>
 </body>
 </html>

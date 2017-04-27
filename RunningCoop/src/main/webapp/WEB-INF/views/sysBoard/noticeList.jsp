@@ -23,6 +23,10 @@
 </script>
 </head>
 <body>
+<div id = "header">
+	<jsp:include page="../header.jsp" flush="false"/>
+</div>
+<div id = "container">
 	<table>
 		<tr>
 			<th>번호</th>
@@ -54,5 +58,9 @@
 	</form>
 	<br>
 	<br>
+</div>
+<div id = "footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>
 </body>
 </html>

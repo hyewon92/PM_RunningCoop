@@ -54,6 +54,10 @@ tr, th, td {
 
 </head>
 <body>
+<div id = "header">
+	<jsp:include page="../header.jsp" flush="false"/>
+</div>
+<div id = "container">
 	<c:set var="view" value="${ view }" />
 	<form id="boardEdit" action="./boardEdit.do" method="post" enctype="multipart/form-data">
 	
@@ -175,5 +179,9 @@ tr, th, td {
 		<button onclick='saveContent()'>등록</button>
 	</div>
 	<input type="button" value="목록으로" onclick="back()" />
+</div>
+<div id = "footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>
 </body>
 </html>

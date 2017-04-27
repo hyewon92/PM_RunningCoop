@@ -40,45 +40,53 @@
 </script>
 </head>
 <body>
-<table>
-		<tr>
-			<th>번호</th>
-			<th>제목</th>
-			<th>작성자</th>
-			<th>작성일</th>
-		</tr>
-		<c:choose>
-		<c:when test="${ fn:length(list) == 0 }">
+<div id = "header">
+	<jsp:include page="../header.jsp" flush="false"/>
+</div>
+<div id = "container">
+	<table>
 			<tr>
-				<td colspan="4">작성된 글이 없습니다</td>
+				<th>번호</th>
+				<th>제목</th>
+				<th>작성자</th>
+				<th>작성일</th>
 			</tr>
-		</c:when>
-		<c:otherwise>
-			<c:forEach var="list" items="${ list }" varStatus="vs">
+			<c:choose>
+			<c:when test="${ fn:length(list) == 0 }">
 				<tr>
-					<td>${vs.count}</td>
-					<td><span class = "sbr_title">
-						<input type="hidden" name = "uuid" value = "${ list.get('SBR_UUID') }"/>
-						<input type="hidden" name = "scryn" value="${ list.get('SBR_SCRYN') }"/>
-						${ list.get("SBR_TITLE") }</span></td>
-					<td>${ list.get("MEM_NAME") }</td>
-					<td>${ list.get("SBR_REGDATE") }</td>
+					<td colspan="4">작성된 글이 없습니다</td>
 				</tr>
-			</c:forEach>
-		</c:otherwise>
-	</c:choose>
-	</table>
-	<form action="./qnaSList.do" method="POST">
-		<input type="textbox" name="sbr_title" /> <input type="submit"
-			value="검색" />
-	</form>
-	<form id="scrView" action="./scrBoardView.do" method="POST">
-		<input type="hidden" name="sbr_uuid" value="">
-		<input type="hidden" name="sbr_pw" value="">
-	</form>
-	<br>
-	<br>
-
-	<input type="button" id="write" value="게시글작성" onClick="writer()" />
+			</c:when>
+			<c:otherwise>
+				<c:forEach var="list" items="${ list }" varStatus="vs">
+					<tr>
+						<td>${vs.count}</td>
+						<td><span class = "sbr_title">
+							<input type="hidden" name = "uuid" value = "${ list.get('SBR_UUID') }"/>
+							<input type="hidden" name = "scryn" value="${ list.get('SBR_SCRYN') }"/>
+							${ list.get("SBR_TITLE") }</span></td>
+						<td>${ list.get("MEM_NAME") }</td>
+						<td>${ list.get("SBR_REGDATE") }</td>
+					</tr>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
+		</table>
+		<form action="./qnaSList.do" method="POST">
+			<input type="textbox" name="sbr_title" /> <input type="submit"
+				value="검색" />
+		</form>
+		<form id="scrView" action="./scrBoardView.do" method="POST">
+			<input type="hidden" name="sbr_uuid" value="">
+			<input type="hidden" name="sbr_pw" value="">
+		</form>
+		<br>
+		<br>
+	
+		<input type="button" id="write" value="게시글작성" onClick="writer()" />
+</div>
+<div id = "footer">
+	<jsp:include page="../footer.jsp" flush="false" />
+</div>
 </body>
 </html>

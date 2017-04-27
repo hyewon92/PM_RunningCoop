@@ -45,38 +45,46 @@
 </script>
 </head>
 <body>
-게시글 보기
-<c:set var="view"  value="${ view }"/>
-<input type="hidden" id="session" value="user1<%-- ${ mem_id } --%>"/>
-<input type="hidden" id="mem_id" value="${ view.get('MEM_ID') }"/>
-<table>
-	<tr>
-		<th>작성자</th>
-		<td>${ view.get("MEM_NAME") }</td>
-	</tr>
-	<tr>
-		<th>작성일</th>
-		<td>${ view.get("SBR_REGDATE") }</td>
-	</tr>
-	<tr>
-		<th>제목</th>
-		<td>
-		<input type="hidden" value="${ view.get("SBR_UUID")}" id = "sbr_uuid"/>
-		${ view.get("SBR_TITLE") }</td>
-	</tr>
-	<tr>
-		<th>첨부파일</th>
-		<td>
-			<c:set var="attach" value="${ attach }"/>
-				<p><a href="./fileDown.do?sbr_uuid=${ view.get('SBR_UUID') }">${ attach.get("SATT_NAME") }</a>(${ attach.get("SATT_SIZE")/1024 }KB)</p>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">${ view.get("SBR_CONTENT") }</td>
-	</tr>
-</table>
-<input type="button" value="게시글 수정" id="editBtn" onclick="Edit()" style="display: none"/>
-<input type="button" value="게시글 삭제" id="deleteBtn" onclick="Delete()" style="display: none"/>
-<input type="button" value="목록으로" onclick="back()"/>
+<div id = "header">
+	<jsp:include page="../header.jsp" flush="false"/>
+</div>
+<div id = "container">
+	게시글 보기
+	<c:set var="view"  value="${ view }"/>
+	<input type="hidden" id="session" value="user1<%-- ${ mem_id } --%>"/>
+	<input type="hidden" id="mem_id" value="${ view.get('MEM_ID') }"/>
+	<table>
+		<tr>
+			<th>작성자</th>
+			<td>${ view.get("MEM_NAME") }</td>
+		</tr>
+		<tr>
+			<th>작성일</th>
+			<td>${ view.get("SBR_REGDATE") }</td>
+		</tr>
+		<tr>
+			<th>제목</th>
+			<td>
+			<input type="hidden" value="${ view.get("SBR_UUID")}" id = "sbr_uuid"/>
+			${ view.get("SBR_TITLE") }</td>
+		</tr>
+		<tr>
+			<th>첨부파일</th>
+			<td>
+				<c:set var="attach" value="${ attach }"/>
+					<p><a href="./fileDown.do?sbr_uuid=${ view.get('SBR_UUID') }">${ attach.get("SATT_NAME") }</a>(${ attach.get("SATT_SIZE")/1024 }KB)</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">${ view.get("SBR_CONTENT") }</td>
+		</tr>
+	</table>
+	<input type="button" value="게시글 수정" id="editBtn" onclick="Edit()" style="display: none"/>
+	<input type="button" value="게시글 삭제" id="deleteBtn" onclick="Delete()" style="display: none"/>
+	<input type="button" value="목록으로" onclick="back()"/>
+</div>
+<div id = "footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>
 </body>
 </html>

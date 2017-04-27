@@ -15,23 +15,29 @@
 </script>
 </head>
 <body>
-
-<c:choose>
-	<c:when test="${ fn:length(list) == 0 }">
-		<p> 진행 중인 프로젝트가 없습니다</p>
-	</c:when>
-	<c:otherwise>
-		<c:forEach var="list" items="${ list }">
-			<div>
-				<p>${ list.pr_id }</p>
-				<p>${ list.pr_name }</p>
-				<p>${ list.pr_proRate }</p>
-				<p>${ list.pr_endDate }</p>
-			</div>
-		</c:forEach>
-	</c:otherwise>
-</c:choose>
-
-<input type="button" value="프로젝트 생성" onclick="createPro()"/>
+<div id = "header">
+	<jsp:include page="../header.jsp" flush="false" />
+</div>
+<div id = "container">
+	<c:choose>
+		<c:when test="${ fn:length(list) == 0 }">
+			<p> 진행 중인 프로젝트가 없습니다</p>
+		</c:when>
+		<c:otherwise>
+			<c:forEach var="list" items="${ list }">
+				<div>
+					<p>${ list.pr_id }</p>
+					<p>${ list.pr_name }</p>
+					<p>${ list.pr_proRate }</p>
+					<p>${ list.pr_endDate }</p>
+				</div>
+			</c:forEach>
+		</c:otherwise>
+	</c:choose>
+	<input type="button" value="프로젝트 생성" onclick="createPro()"/>
+</div>
+<div id = "footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>
 </body>
 </html>
