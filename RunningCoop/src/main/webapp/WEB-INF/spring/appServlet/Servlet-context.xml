@@ -26,11 +26,12 @@
 			<mvc:exclude-mapping path="/goJoin.do"/>
 			<mvc:exclude-mapping path="/autoauto.do"/>
 			<mvc:exclude-mapping path="/allGrSelect.do"/>
-			<mvc:exclude-mapping path="/ckJoin.do"/>
+			<mvc:exclude-mapping path="/chkJoin.do"/>
 			<mvc:exclude-mapping path="/ckIdentifyMem.do"/>
 			<mvc:exclude-mapping path="/joinMailSending.do"/>
 			<mvc:exclude-mapping path="/ckIdentifyNum.do"/>
-			<mvc:exclude-mapping path="/account/joinAfter"/>
+			<mvc:exclude-mapping path="/WEB-INF/views/account/joinAfter.jsp"/>
+			<mvc:exclude-mapping path="/WEB-INF/views/account/error/error.jsp"/>
 			<bean class="com.pm.rc.interceptor.LoginCheckInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

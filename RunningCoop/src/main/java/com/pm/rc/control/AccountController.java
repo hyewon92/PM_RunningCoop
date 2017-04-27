@@ -112,16 +112,18 @@ public class AccountController {
 
 	//아이디 중복 조회
 	@RequestMapping(value = "/memIdSelect.do", method = RequestMethod.GET)
-	public String memIdSelect(String mem_id){
+	@ResponseBody
+	public Map<String, Boolean> memIdSelect(String mem_id){
 		logger.info("memIdSelect실행");
-		String result = null;
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
 		System.out.println("mem_id="+mem_id);
-		result = accountService.memIdSelect(mem_id);
-		if(result!=null){
-			return "account/error/errorId";
+		String isc = accountService.memIdSelect(mem_id);
+		if(isc!=null){
+			map.put("result", false);
 		}else{
-			return "account/idSelect";
+			map.put("result", true);
 		}
+		return map;
 	}
 	
 	//본인인증 번호(세션) 삭제
@@ -155,14 +157,14 @@ public class AccountController {
 	
 	//회원가입처리
 	@RequestMapping(value = "/chkJoin.do", method = RequestMethod.POST)
-	public String ckJoin(HttpSession session, MemberDto dto){
+	public String ckJoin(Model model, MemberDto dto){
 		logger.info("ckJoin실행");
 		boolean isc = accountService.memInsert(dto);
 		if(isc == false){
 			return "account/error/error";
 		}else{
-			session.setAttribute("mem_id", dto.getMem_id());
-			session.setAttribute("mem_name", dto.getMem_name());
+			model.addAttribute("mem_id", dto.getMem_id());
+			model.addAttribute("mem_pw", dto.getMem_pw());
 			return "account/joinAfter";
 		}
 	}
