@@ -15,7 +15,7 @@
 	<table>
 	<c:forEach var = "grdto" items="${lists }" >
 		<tr>
-			<td><a href="./gProSelect.do">${grdto.gr_id }</a> </td>
+			<td><a href="./gProSelect.do?gr_id=${grdto.gr_id }">${grdto.gr_id }</a> </td>
 			<td>${grdto.gr_name}</td>
 			<td>${grdto.gr_memCnt}</td>
 			<td>${grdto.gr_goal}</td>

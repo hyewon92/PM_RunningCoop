@@ -6,16 +6,20 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 	$(function(){
+		var resutl = "${result}";
+		if(resutl=="true"){
+			alert("그룹가입신청 완료");
+			close();
+			}
 		$(".createBox").submit(function(event){
 			if($("#grname").val()==""||$("#grgoal").val()==""){
 				
 				alert("모두 입력해주세요");
 				return false;
-			}else{
-			alert("그룹가입신청 완료");
 			}
 		});
 	});
+
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <% String mem_id = (String)session.getAttribute("mem_id"); %>

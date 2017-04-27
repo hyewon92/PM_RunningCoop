@@ -4,6 +4,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	var resutl = "${result}";
+	if(resutl=="true"){
+	alert("메일 전송 완료");
+	close();
+	}
+})
+</script>
 <title>Insert title here</title>
 </head>
 <body>

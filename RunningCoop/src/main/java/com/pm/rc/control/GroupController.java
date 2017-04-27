@@ -144,23 +144,25 @@ public class GroupController {
 @RequestMapping(value="/grListChild.do" , method=RequestMethod.GET)
 	public String test (HttpServletRequest req , Model model){
 		logger.info("그룹리스트 에서 ");
-		System.out.println(":444444444444444444444444444444444444444444444444444444");
 		model.addAttribute("grid", req.getParameter("gr_id"));
 		return "Group/grListChild";
 	}
 	
 	@RequestMapping(value="/grWaitInsert.do" , method=RequestMethod.POST)
-	public boolean grWaitInsert(String mem_id , String gr_id , String wait_content){
-		System.out.println(mem_id + "memiddddddddddddddddddddddddddd");
-		System.out.println(gr_id+"gridddddddddddddddddddddddddddddd");
-		System.out.println(wait_content+"waitcotttttttttttttttttttttttttttttttttt");
+	public String grWaitInsert(String mem_id , String gr_id , String wait_content, Model model){
 		logger.info("그룹가입신척 시작");
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("mem_id", mem_id);
 		map.put("gr_id", gr_id);
 		map.put("wait_content", wait_content);
 		boolean n = service.grWaitInsert(map);
-		return n;
+		model.addAttribute("result", n);
+		if(n=true){
+			return "Group/grListChild";
+		}else{
+			return "account/error/error";
+		}
+		
 	}
 	
 	@RequestMapping(value="/groupAccept.do" )
@@ -209,7 +211,7 @@ public class GroupController {
 	}
 	
 	@RequestMapping(value="/groupCreate.do" , method=RequestMethod.POST)
-	public String grCreate(Map<String, String> map , HttpServletRequest req){
+	public String grCreate(Map<String, String> map , HttpServletRequest req , Model model){
 		logger.info("그룹생성 시작");
 		Date date = new Date();
 	      SimpleDateFormat dateForm = new SimpleDateFormat("yyMMdd");
@@ -226,9 +228,15 @@ public class GroupController {
 	      map.put("gr_goal", req.getParameter("gr_goal"));
 	      map.put("mem_id", req.getParameter("mem_id"));
 	      
-	      service.grInsert(map);
+	      boolean n = service.grInsert(map);
+	   
+			model.addAttribute("result", n);
+			if(n=true){
+				return "Group/grCreate";
+			}else{
+				return "account/error/error";
+			}
 	      
-		return "good";
 	}
 	@RequestMapping(value="/grApply.do")
 	public String groupApply(Model model){
