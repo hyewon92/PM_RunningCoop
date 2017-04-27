@@ -115,6 +115,13 @@ public interface ProjectDao {
 	public boolean projectEdit(ProjectDto dto);
 	
 	/**
+	 * 프로젝트에 초대가능한 그룹멤버 조회
+	 * @param map
+	 * @return
+	 */
+	public List<MemberDto> prMemInsertSearch(Map<String, String> map);
+	
+	/**
 	 * 프로젝트 멤버 추가 절차 1 (프로젝트 멤버 데이터 삽입)
 	 * @param map
 	 * @return
@@ -126,7 +133,7 @@ public interface ProjectDao {
 	 * @param map
 	 * @return
 	 */
-	public boolean prMemInsert_2(Map<String, String> map);
+	public boolean prMemInsert_2(String pr_id);
 	
 	/**
 	 * 프로젝트 매니저 수정 절차 1 (프로젝트 매니저 권한 변경)
@@ -161,7 +168,7 @@ public interface ProjectDao {
 	 * @param map
 	 * @return
 	 */
-	public boolean prMemDelete_2(Map<String, String> map);
+	public boolean prMemDelete_2(String pr_id);
 	
 	/**
 	 * 프로젝트 진행률 수정 절차 1 (해당 프로젝트의 전체 업무리스트 조회)
@@ -253,5 +260,12 @@ public interface ProjectDao {
 	 * @return
 	 */
 	public boolean projectDelete_9(Map<String, String> map);
+	
+	/**
+	 * 프로젝트 내 권한 조회
+	 * @param map : 조회할 pr_id와 mem_id를 담은 map
+	 * @return
+	 */
+	public Map<String, String> myLevelSelect(Map<String, String> map);
 
 }

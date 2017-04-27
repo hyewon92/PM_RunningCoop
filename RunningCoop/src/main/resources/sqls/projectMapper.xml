@@ -47,6 +47,25 @@
 		VALUES
 		(#{pr_id}, #{mem_id}, 'PM')
 	</insert>
+	
+	<insert id="gProInsert" parameterType="java.util.Map">
+		INSERT INTO RC_PROJECT (PR_ID, PR_NAME, PR_STARTDATE, PR_ENDDATE, PR_GOAL, PR_ETC)
+		VALUES
+		(#{pr_id}, #{pr_name}, TO_DATE(#{pr_startdate}, 'YYYY-MM-DD'), TO_DATE(#{pr_enddate}, 'YYYY-MM-DD'),
+			#{pr_goal}, #{pr_etc})
+	</insert>
+	
+	<insert id="gPromemInsert" parameterType="java.util.Map">
+		INSERT INTO RC_PROMEM (PR_ID, MEM_ID, PR_LEVEL)
+		VALUES
+		(#{pr_id}, #{mem_id}, 'PM')
+	</insert>
+	
+	<insert id="gGroupProInsert" parameterType="java.util.Map">
+		INSERT INTO RC_GRPRO (GR_ID, PR_ID)
+		VALUES
+		(#{gr_id}, #{pr_id})
+	</insert>
 
 	<select id="prDetailSelect" parameterType="java.lang.String" resultType="java.util.Map">
 		SELECT P.PR_NAME, M.MEM_NAME, P.PR_MEMCNT, P.PR_GOAL,
@@ -65,11 +84,46 @@
 		WHERE M.MEM_ID IN (SELECT P.MEM_ID FROM RC_PROMEM P WHERE P.PR_ID = #{pr_id})
 	</select>
 	
+	<select id="myLevelSelect" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT PM.PR_LEVEL FROM RC_PROMEM PM
+		WHERE PM.PR_ID = #{pr_id} AND PM.MEM_ID = #{mem_id}
+	</select>
+	
 	<select id="prManagerSelect" parameterType="java.lang.String" resultType="MemberDto">
 		SELECT MEM_ID
 		FROM RC_PROMEM
 		WHERE PR_LEVEL = 'PM' AND PR_ID = #{pr_id}
 	</select>
+	
+	<update id="projectEdit" parameterType="ProjectDto">
+		UPDATE RC_PROJECT SET PR_NAME = #{pr_name}, PR_ENDDATE = #{pr_endDate}, 
+			PR_GOAL = #{pr_goal}, PR_SEARCHYN = #{pr_searchYN}, PR_CONDITION = #{pr_condition}
+		WHERE PR_ID = #{pr_id}
+	</update>
+	
+	<select id="prMemInsertSearch" parameterType="java.util.Map" resultType="MemberDto">
+		SELECT M.MEM_ID, M.MEM_NAME
+		FROM RC_MEMBER M
+		WHERE NOT M.MEM_ID IN 
+		(SELECT PM.MEM_ID FROM RC_PROMEM PM WHERE PM.PR_ID = #{pr_id})
+		AND M.MEM_ID IN (SELECT GM.MEM_ID FROM RC_GROUPMEM GM WHERE GM.GR_ID = #{gr_id})
+	</select>
+	
+	<insert id="prMemInsert" parameterType="java.util.Map">
+		INSERT INTO RC_PROMEM (PR_ID, MEM_ID)
+  		VALUES
+  		(#{pr_id}, #{mem_id})
+	</insert>
+	
+	<update id="prMemUpdate" parameterType="java.lang.String">
+		UPDATE RC_PROJECT SET PR_MEMCNT = (SELECT COUNT(*) FROM RC_PROMEM WHERE PR_ID = #{pr_id})
+  		WHERE PR_ID = #{pr_id}
+	</update>
+	
+	<delete id="prMemDelete" parameterType="java.util.Map">
+		DELETE FROM RC_PROMEM 
+  		WHERE MEM_ID = #{mem_id} AND PR_ID = #{pr_id} AND PR_LEVEL = 'PIM'
+	</delete>
 
 
 </mapper>

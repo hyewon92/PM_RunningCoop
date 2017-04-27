@@ -114,7 +114,7 @@ public interface ProjectService {
 	 * @param map
 	 * @return
 	 */
-	public Map<String, String> prMemInsertSearch(Map<String, String> map);
+	public List<MemberDto> prMemInsertSearch(Map<String, String> map);
 	
 	/**
 	 * 프로젝트 멤버 추가
@@ -122,7 +122,7 @@ public interface ProjectService {
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean prMemInsert(Map<String, String> map);
+	public boolean prMemInsert(Map<String, Object> map);
 	
 	/**
 	 * 프로젝트 멤버 삭제
@@ -130,7 +130,7 @@ public interface ProjectService {
 	 * @return boolean 
 	 * @author 김혜원
 	 * */
-	public boolean prMemDelete(Map<String, String> map);
+	public boolean prMemDelete(Map<String, Object> map);
 	
 	/**
 	 * 프로젝트 멤버 조회
@@ -155,5 +155,12 @@ public interface ProjectService {
 	 * @author 김혜원
 	 * */
 	public boolean prRateEdit(String pr_id);
+	
+	/**
+	 * 프로젝트 내 권한 조회
+	 * @param map : 조회할 pr_id와 mem_id를 담은 map
+	 * @return
+	 */
+	public Map<String, String> myLevelSelect(Map<String, String> map);
 	
 }

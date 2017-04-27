@@ -39,11 +39,10 @@
 }
 </style>
 <script type="text/javascript">
-	<%String mem_id = (String) session.getAttribute("mem_id");%>
+	<%String pr_level = (String) session.getAttribute("pr_level");%>
 	/* 관리자 여부에 따라 프로젝트 관리 버튼 출력 */
 	$(document).ready(function(){
-		var manager = $("#manager_id").val();
-		if( manager == '<%=mem_id%>'){
+		if( '<%=pr_level%>' == 'PM'){
 			$(".project_manage").css("display", "block");
 		}
 	})

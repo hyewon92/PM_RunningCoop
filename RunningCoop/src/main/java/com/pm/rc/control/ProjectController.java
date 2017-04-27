@@ -53,11 +53,20 @@ public class ProjectController {
 
 	// 메인화면에서 그룹 프로젝트 선택
 	@RequestMapping(value="/gProSelect.do", method=RequestMethod.GET)
-	public String grProjectList(Model model, HttpServletRequest request){
+	public String grProjectList(Model model, HttpServletRequest request, HttpSession session){
+		
+		session.removeAttribute("pr_level");
+		
+		String mem_id = (String)session.getAttribute("mem_id");
+		String gr_id = request.getParameter("gr_id");
+		
+		session.setAttribute("gr_id", gr_id);
+		
 		List<ProjectDto> list = null;
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("mem_id", "user1");
-		map.put("gr_id", "GR1704110001");
+		map.put("mem_id", mem_id);
+		map.put("gr_id", gr_id);
+		
 		list = service.groupProSelect(map);
 		model.addAttribute("list", list);
 		return "project/gProjectSelect";
@@ -66,29 +75,48 @@ public class ProjectController {
 	// 메인화면에서 개인 프로젝트 선택
 	@RequestMapping(value="/iProSelect.do", method=RequestMethod.GET)
 	public String myProjectList(Model model, HttpServletRequest request, HttpSession session){
+		
+		session.removeAttribute("pr_level");
+		
 		List<ProjectDto> list = null;
 		String mem_id = (String) session.getAttribute("mem_id");
+		
 		list = service.myProSelect(mem_id);
 		model.addAttribute("list", list);
+		
 		return "project/mProjectSelect";
 	}
 
-	// 개인 프로젝트 생성화면 연결
+	// 프로젝트 생성화면 연결
 	@RequestMapping(value="/createMPro.do", method=RequestMethod.GET)
-	public String myProCreateMove(){
-		return "project/mProCreate";
+	public String myProCreateMove(HttpSession session, Model model){
+		String gr_id = (String)session.getAttribute("gr_id");
+		
+		if(gr_id == null){
+			return "project/mProCreate";
+		} else {
+			model.addAttribute("gr_id", gr_id);
+			return "project/gProCreate";
+		}
 	}
 
 	// 개인 프로젝트 생성 프로세스
 	@RequestMapping(value="/mProCreate.do", method=RequestMethod.POST)
 	public String myProCreate(HttpSession session, HttpServletRequest request){
+		
 		Map<String, String> map = new HashMap<String, String>();
+		
 		map.put("mem_id", (String) session.getAttribute("mem_id"));
 		map.put("pr_name", request.getParameter("pr_name"));
 		map.put("pr_startdate", request.getParameter("pr_startdate"));
 		map.put("pr_enddate", request.getParameter("pr_enddate"));
 		map.put("pr_goal", request.getParameter("pr_goal"));
 		map.put("pr_etc", request.getParameter("pr_etc"));
+		
+		logger.info("=================== 개인 프로젝트 생성 =====================");
+		logger.info("프로젝트 생성자 아이디 : "+(String)session.getAttribute("mem_id"));
+		logger.info("=====================================================");
+		
 		boolean isc = false;
 		isc = service.iPrInsert(map);
 		if(isc){
@@ -96,6 +124,37 @@ public class ProjectController {
 			return "redirect:/iProSelect.do";
 		} else {
 			System.out.println("개인 프로젝트 등록 실패");
+			return "redirect:/createMPro.do";
+		}
+	}
+	
+	// 그룹 프로젝트 생성 프로세스
+	@RequestMapping(value="/gProCreate.do", method=RequestMethod.POST)
+	public String grProCreate(HttpSession session, HttpServletRequest request){
+		
+		Map<String, String> map = new HashMap<String, String>();
+		
+		map.put("gr_id", request.getParameter("gr_id"));
+		map.put("pr_name", request.getParameter("pr_name"));
+		map.put("pr_startdate", request.getParameter("pr_startdate"));
+		map.put("pr_enddate", request.getParameter("pr_enddate"));
+		map.put("pr_goal", request.getParameter("pr_goal"));
+		map.put("pr_etc", request.getParameter("pr_etc"));
+		map.put("mem_id", (String)session.getAttribute("mem_id"));
+		
+		logger.info("=================== 그룹 프로젝트 생성 =====================");
+		logger.info("소속 그룹 아이디 : "+request.getParameter("gr_id"));
+		logger.info("프로젝트 생성자 아이디 : "+(String)session.getAttribute("mem_id"));
+		logger.info("=====================================================");
+		
+		boolean isc = false;
+		isc = service.gPrInsert(map);
+		
+		if(isc){
+			System.out.println("그룹 프로젝트 생성 성공");
+			return "redirect:/gProSelect.do?gr_id="+request.getParameter("gr_id");
+		} else {
+			System.out.println("그룹 프로젝트 생성 실패");
 			return "redirect:/createMPro.do";
 		}
 	}
@@ -118,7 +177,7 @@ public class ProjectController {
 
 	// 프로젝트 진행화면 이동
 	@RequestMapping(value="/goProject.do", method=RequestMethod.GET)
-	public String goToProject(Model model, HttpServletRequest request){
+	public String goToProject(Model model, HttpServletRequest request, HttpSession session){
 		String pr_id = request.getParameter("pr_id");
 
 		logger.info("=================== 프로젝트 업무리스트 보기 =======================");
@@ -149,10 +208,16 @@ public class ProjectController {
 		
 		model.addAttribute("pr_id", pr_id);
 		
-		MemberDto manager = new MemberDto();
-		manager = service.prManagerSelect(pr_id);
+		String mem_id = (String)session.getAttribute("mem_id");
 		
-		model.addAttribute("manager", manager.getMem_id());
+		Map<String, String> value = new HashMap<String, String>();
+		value.put("pr_id", pr_id);
+		value.put("mem_id", mem_id);
+		
+		Map<String, String> pr_level = new HashMap<String, String>();
+		pr_level = service.myLevelSelect(value);
+		
+		session.setAttribute("pr_level", pr_level.get("PR_LEVEL"));
 
 		return "project/workList";
 	}
@@ -689,7 +754,7 @@ public class ProjectController {
 	
 	// 프로젝트 관리 페이지 이동
 	@RequestMapping(value="/goProManage.do", method=RequestMethod.GET)
-	public String goProject_Manager(Model model, HttpServletRequest request){
+	public String goProject_Manager(Model model, HttpServletRequest request, HttpSession session){
 		String pr_id = request.getParameter("pr_id");
 		
 		logger.info("=================== 프로젝트 상세정보 보기 =======================");
@@ -702,7 +767,13 @@ public class ProjectController {
 		model.addAttribute("pr_id", pr_id);
 		model.addAttribute("detail", map);
 		
-		return "project/mProjectManage";
+		String gr_id = (String)session.getAttribute("gr_id");
+		
+		if (gr_id == null){
+			return "project/mProjectManage";
+		} else {
+			return "project/gProjectManage";
+		}
 	}
 	
 	// 프로젝트 정보 수정
@@ -743,6 +814,108 @@ public class ProjectController {
 			System.out.println("수정 실패");
 			return "fail";
 		} 
+	}
+	
+	// 프로젝트 멤버 로드
+	@RequestMapping(value="/loadMember.do", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Map<String, String>> load_Member(HttpServletRequest request){
+		String pr_id = request.getParameter("pr_id");
+		
+		logger.info("=================== 프로젝트 멤버 조회 =======================");
+		logger.info("멤버 조회할 프로젝트 id :"+pr_id);
+		logger.info("========================================================");
+		
+		List<Map<String, String>> list = null;
+		list = service.prMemListSelect(pr_id);
+		
+		return list;
+	}
+	
+	// 그룹 프로젝트 - 초대 가능한 그룹 멤버 보기
+	@RequestMapping(value="/invite_memList.do", method=RequestMethod.POST)
+	@ResponseBody
+	public List<MemberDto> invitable_Mem_List(HttpServletRequest request, HttpSession session){
+		String pr_id = request.getParameter("pr_id");
+		String gr_id = (String)session.getAttribute("gr_id");
+		
+		logger.info("=================== 초대가능한 멤버 조회 =======================");
+		logger.info("멤버 조회할 프로젝트 id :"+pr_id);
+		logger.info("========================================================");
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("pr_id", pr_id);
+		map.put("gr_id", gr_id);
+		
+		List<MemberDto> list = null;
+		list = service.prMemInsertSearch(map);
+		
+		return list;
+	}
+	
+	// 그룹 프로젝트 - 멤버 초대하기
+	@RequestMapping(value="/invite_Member.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String invite_Member(HttpServletRequest request){
+		String pr_id = request.getParameter("pr_id");
+		String[] mem_id = request.getParameterValues("mem_id");
+		
+		logger.info("=================== 초대할 멤버 조회 =======================");
+		logger.info("멤버 초대할 프로젝트 id :"+pr_id);
+		for(int i = 0; i < mem_id.length; i++){
+			logger.info("초대할 멤버 id : "+mem_id[i]);
+		}
+		logger.info("========================================================");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pr_id", pr_id);
+		map.put("mem_list", mem_id);
+		
+		boolean isc = false;
+		isc = service.prMemInsert(map);
+		
+		if(isc){
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
+	// 그룹 프로젝트 - 멤버 강제 탈퇴 기능
+	@RequestMapping(value="/delete_Member.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String delete_Member(HttpServletRequest request){
+		String pr_id = request.getParameter("pr_id");
+		String[] mem_list = request.getParameterValues("mem_list");
+		
+		logger.info("=================== 강제탈퇴할 멤버 조회 =======================");
+		logger.info("멤버 강제탈퇴할 프로젝트 id :"+pr_id);
+		for(int i = 0; i < mem_list.length; i++){
+			logger.info("강제탈퇴할 멤버 id : "+mem_list[i]);
+		}
+		logger.info("========================================================");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pr_id", pr_id);
+		map.put("mem_list", mem_list);
+		
+		boolean isc = false;
+		isc = service.prMemDelete(map);
+		
+		if(isc){
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
+	// 그룹 프로젝트 - 담당자 위임
+	@RequestMapping(value="/commissionPM.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String commission_PM(HttpServletRequest request, HttpSession session){
+		String pr_id = request.getParameter("pr_id");
+		String mem_id = request.getParameter("mem_id");
+		return null;
 	}
 	
 	// UUID 생성 메소드

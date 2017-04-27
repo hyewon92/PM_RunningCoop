@@ -71,19 +71,20 @@ public class ProjectDaoImpl implements ProjectDao {
 
 	@Override
 	public boolean gPrInsert_1(Map<String, String> map) {
-		return false;
+		int num = sqlSession.insert(NAMESPACE+"gProInsert", map);
+		return num>0?true:false;
 	}
 
 	@Override
 	public boolean gPrInsert_2(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		int num = sqlSession.insert(NAMESPACE+"gPromemInsert", map);
+		return num>0?true:false;
 	}
 
 	@Override
 	public boolean gPrInsert_3(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		int num = sqlSession.insert(NAMESPACE+"gGroupProInsert", map);
+		return num>0?true:false;
 	}
 
 	@Override
@@ -113,20 +114,25 @@ public class ProjectDaoImpl implements ProjectDao {
 
 	@Override
 	public boolean projectEdit(ProjectDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+		int num = sqlSession.update(NAMESPACE+"projectEdit", dto);
+		return num>0?true:false;
+	}
+	
+	@Override
+	public List<MemberDto> prMemInsertSearch(Map<String, String> map) {
+		return sqlSession.selectList(NAMESPACE+"prMemInsertSearch", map);
 	}
 
 	@Override
 	public boolean prMemInsert_1(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		int num = sqlSession.insert(NAMESPACE+"prMemInsert", map);
+		return num>0?true:false;
 	}
 
 	@Override
-	public boolean prMemInsert_2(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean prMemInsert_2(String pr_id) {
+		int num = sqlSession.update(NAMESPACE+"prMemUpdate", pr_id);
+		return num>0?true:false;
 	}
 
 	@Override
@@ -148,14 +154,14 @@ public class ProjectDaoImpl implements ProjectDao {
 
 	@Override
 	public boolean prMemDelete_1(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		int num = sqlSession.delete(NAMESPACE+"prMemDelete", map);
+		return num > 0?true:false;
 	}
 
 	@Override
-	public boolean prMemDelete_2(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean prMemDelete_2(String pr_id) {
+		int num = sqlSession.update(NAMESPACE+"prMemUpdate", pr_id);
+		return num > 0?true:false;
 	}
 
 	@Override
@@ -234,6 +240,11 @@ public class ProjectDaoImpl implements ProjectDao {
 	public boolean projectDelete_9(Map<String, String> map) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public Map<String, String> myLevelSelect(Map<String, String> map) {
+		return sqlSession.selectOne(NAMESPACE+"myLevelSelect", map);
 	}
 
 }

@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>개인 프로젝트 관리 페이지</title>
+<title>그룹 프로젝트 관리 페이지</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <style type="text/css">
 	#con_body{
@@ -29,10 +29,14 @@
 	}
 </style>
 <script type="text/javascript">
+<%
+	String mem_id = (String)session.getAttribute("mem_id");
+%>
 	$(function(){
 		loadPage();
 	})
 	
+	// 프로젝트 정보 관리
 	function view_info_manage(){
 		$(".info_manage").css("display", "block");
 		$(".mem_manage").css("display", "none");
@@ -40,6 +44,7 @@
 		loadPage();
 	}
 	
+	// 프로젝트 멤버 관리
 	function view_mem_manage(){
 		$(".info_manage").css("display", "none");
 		$(".calendar_manage").css("display", "none");
@@ -47,12 +52,14 @@
 		loadMember();
 	}
 	
+	// 프로젝트 팀 일정 관리
 	function view_calendar_manage(){
 		$(".mem_manage").css("display", "none");
 		$(".info_manage").css("display", "none");
 		$(".calendar_manage").css("display", "block");
 	}
 	
+	// 페이지 로드 시 실행 함수
 	function loadPage(){
 		var chkyn = $("#searchYN").val();
 		if (chkyn == 'A'){
@@ -70,6 +77,7 @@
 		}
 	}
 	
+	// 프로젝트 정보 수정 기능
 	function projectEdit(){
 		var pr_id = $("#pr_id").val();
 		var pr_name = $("input[name=pr_name]:eq(0)").val();
@@ -93,8 +101,11 @@
 		})
 	}
 	
+	// 프로젝트 멤버 조회 기능
 	function loadMember(){
 		var pr_id = $("#pr_id").val();
+		
+		$(".mem_list").children("p").remove();
 		
 		$.ajax({
 			type : "POST",
@@ -106,11 +117,119 @@
 					$(".mem_list").append("<p>멤버가 없습니다</p>");
 				} else {
 					for(var i = 0; i < msg.length; i++){
-						$(".mem_list").append("<p><input type='checkbox' name='mem_id' value=\""+msg[i].MEM_ID+"\">"+msg[i].MEM_NAME+"</p>");
+						if(msg[i].MEM_ID == '<%=mem_id%>'){
+							$(".mem_list").append("<p>(PM)"+msg[i].MEM_NAME+"</p>");
+						} else {
+							$(".mem_list").append("<p><input type='checkbox' name='mem_list' value=\""+msg[i].MEM_ID+"\">"+msg[i].MEM_NAME+"</p>");
+						}
 					}
 				}
 			}
 		})
+	}
+	
+	// 초대가능한 그룹 멤버 조회 기능
+	function invite_memList(){
+		var pr_id = $("#pr_id").val();
+		
+		$.ajax({
+			type : "POST",
+			url : "./invite_memList.do",
+			data : "pr_id="+pr_id,
+			async : false,
+			success : function(msg){
+				if(msg.length == 0){
+					$("#invitable_Memlist").append("<p>초대 가능한 멤버가 없습니다.</p>");
+				} else {
+					for(var i = 0; i < msg.length; i++){
+						$("#invitable_Memlist").append("<p><input type='checkbox' name='mem_id' value='"+msg[i].mem_id+"'/>"+msg[i].mem_name+"</p>");
+					}
+					$("#invitable_Memlist").append("<input type='button' value='초대' onclick='inviteMem()'/>");
+				}
+			}
+		})
+	}
+	
+	// 멤버 초대 기능
+	function inviteMem(){
+		var pr_id = $("#pr_id").val();
+		var inputbox = $("input:checkbox[name=mem_id]:checked");
+		var mem_id = new Array(inputbox.length);
+		for (var i = 0; i < inputbox.length; i++){
+			mem_id[i] = inputbox.eq(i).val();
+		}
+		
+		jQuery.ajaxSettings.traditional = true;
+		
+		$.ajax({
+			type : "POST",
+			url : "./invite_Member.do",
+			data : {"mem_id": mem_id, "pr_id": pr_id},
+			async : false,
+			success : function(msg){
+				if(msg == "success"){
+					alert("멤버초대성공!");
+					loadMember();
+				} else {
+					alert("멤버초대실패!");
+					loadMember();
+				}
+			}
+		})
+	}
+	
+	// 멤버 강제 탈퇴 기능
+	function delete_mem(){
+		var pr_id = $("#pr_id").val();
+		var inputbox = $("input:checkbox[name=mem_list]:checked");
+		var mem_list = new Array(inputbox.length);
+		
+		for (var i = 0; i < inputbox.length; i++){
+			if(inputbox.eq(i).val)
+			mem_list[i] = inputbox.eq(i).val();
+		}
+		
+		jQuery.ajaxSettings.traditional = true;
+		
+		$.ajax({
+			type : "POST",
+			url : "./delete_Member.do",
+			data : {"mem_list": mem_list, "pr_id": pr_id},
+			async : false,
+			success : function(msg){
+				if(msg == "success"){
+					alert("멤버탈퇴성공!");
+					loadMember();
+				} else {
+					alert("멤버탈퇴실패!");
+					loadMember();
+				}
+			}
+		})
+	}
+	
+	// 담당자 위임 기능
+	function commission_mem(){
+		var pr_id = $("#pr_id").val();
+		var inputbox = $("input:checkbox[name=mem_list]:checked");
+		var mem_list = new Array(inputbox.length);
+		
+		if(inputbox.length != 1){
+			alert("1명만 선택하세요!");
+			inputbox.attr("checked", false);
+		} else {
+			var mem_id = mem_list[0];
+			
+			$.ajax({
+				type : "POST",
+				url : "./commissionPM.do",
+				data : {"pr_id": pr_id, "mem_id": mem_id},
+				async : false,
+				success : function(msg){
+					
+				}
+			})
+		}
 	}
 	
 </script>
@@ -156,10 +275,11 @@
 			</div>
 			<div class="mem_manage_con" id = "mem_control" >
 				<input type="button" value="멤버 초대" onclick="invite_memList()"/><br>
-				<input type="button" value="멤버 삭제"/><br>
-				<input type="button" value="담당자 위임"/><br>
+				<input type="button" value="멤버 삭제" onclick="delete_mem()"/><br>
+				<input type="button" value="담당자 위임" onclick="commission_mem()"/><br>
 				<input type="button" value="멤버 정보 보기"/>
 			</div>
+			<div id = "invitable_Memlist"></div>
 		</div>
 		<div class = "calendar_manage">
 			<div>
