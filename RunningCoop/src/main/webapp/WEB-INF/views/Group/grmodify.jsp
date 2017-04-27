@@ -6,6 +6,34 @@
 <!DOCTYPE html >
 <html>
 <head>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var searchyn = $("#grsearchyn").text();
+		var grjoinyn = $("#grjoinyn").text()
+		
+		if(searchyn=="Y"){
+			$("input:radio[id='grsearchy']").attr("checked",true);
+		}else{
+			$("input:radio[id='grsearchy2']").attr("checked",true);
+		}
+		if(grjoinyn=="Y"){
+			$("input:radio[id='grjoinyn']").attr("checked",true);
+		}else{
+			$("input:radio[id='grjoinyn2']").attr("checked",true);
+		}
+		
+		$(".grModify").submit(function(){
+			if($("#grGoal").val()==""){
+				alert("내용을 입력해주세요")
+				return false;
+			}else{
+				alert("정보수정 완료");
+			}
+		})
+	})
+
+</script>
 <style type="text/css">
 #memModi{
 cursor: pointer;}
@@ -14,10 +42,7 @@ cursor: pointer;}
 <title>Insert title here</title>
 </head>
 <body>
-<form action="./realGrmodify.do" method="post">
-
-
-
+<form class="grModify" action="./realGrmodify.do" method="post">
 	<table id="grdate">
 		<c:forEach var="grSelect" items="${grSelect }">
 				<td><input type="text" value="${grSelect.GR_ID}" name="gr_id" style="display: none;"> </td>
@@ -39,15 +64,15 @@ cursor: pointer;}
 			</tr>
 			<tr>
 				<td>${grSelect.GR_GOAL }</td>
-				<td><input type="text" value="" name="gr_goal"></td>
+				<td><input type="text" value="" name="gr_goal" id="grGoal"></td>
 			</tr>
 			<tr>
-				<td>${grSelect.GR_SEARCHYN }</td>
-				<td><span><input type="radio" name="gr_searchyn" value="Y">예</span><input type="radio" name="gr_searchyn" value="N">아니오</td>
+				<td id="grsearchyn">${grSelect.GR_SEARCHYN }</td>
+				<td><span><input type="radio" name="gr_searchyn" id="grsearchy" value="Y">예</span><input type="radio" name="gr_searchyn" id="grsearchy2" value="N">아니오</td>
 			</tr>
 			<tr>
-				<td>${grSelect.GR_JOINYN }</td>
-				<td><span><input type="radio" name="gr_joinyn" value="Y">예</span><input type="radio" name="gr_joinyn" value="N">아니오</td>
+				<td id="grjoinyn">${grSelect.GR_JOINYN }</td>
+				<td><span><input type="radio" name="gr_joinyn" value="Y" id="grjoinyn">예</span><input type="radio" name="gr_joinyn" id="grjoinyn2" value="N">아니오</td>
 			</tr>
 			<tr>
 				<td>${grSelect.GR_REGDATE }</td>

@@ -4,6 +4,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var resutl = "${rst}";
+		if(resutl=="ture"){
+		alert("메일 전송 완료");
+		close();
+		}
+	})
+</script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -11,6 +21,7 @@
 	<table>
 		<tr>보낸이</tr>
 		<tr><td><input type="text" name="toSend"></td></tr>
+		<tr><td><input type="submit" value="메일보내기"></td></tr>
 	</table>
 	</form>
 

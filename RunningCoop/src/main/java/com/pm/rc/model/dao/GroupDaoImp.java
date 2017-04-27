@@ -76,12 +76,6 @@ public class GroupDaoImp implements GroupDao{
 	}
 
 	@Override
-	public boolean grDelete(String gr_id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public List<MemberDto> sysMemSelect(String mem_id) {
 		// TODO Auto-generated method stub
 		return null;
@@ -125,9 +119,9 @@ public class GroupDaoImp implements GroupDao{
 	}
 
 	@Override
-	public boolean grMemDelete2(String gr_id) {
+	public boolean grMemDelete2(Map<String, String> map) {
 		logger.info("그룹인원삭제2 작동중"); 
-		int n = sqlSession.update(NAMESPACE+"grMemDelete2" , gr_id);
+		int n = sqlSession.update(NAMESPACE+"grMemDelete2" , map);
 		return n>0? true:false;
 	}
 
@@ -152,6 +146,85 @@ public class GroupDaoImp implements GroupDao{
 	@Override
 	public List<GroupDto> selectPaging(PagingDto paging) {
 		return sqlSession.selectList(NAMESPACE+"createPaging" , paging);
+	}
+	
+	//그룹삭제 시작
+	@Override
+	public boolean groupDelete1(String gr_id) {
+		int n = sqlSession.update(NAMESPACE+"grProSueDelete" , gr_id);
+		return n>0? true:false;
+	}
+
+	@Override
+	public boolean groupDelete2(String gr_id) {
+		int n = sqlSession.delete(NAMESPACE+"grProAttDelete",gr_id);
+		return n>0? true:false;
+	}
+
+	@Override
+	public boolean groupDelete3(String gr_id) {
+		int n =sqlSession.update(NAMESPACE+"grProWorkDetailDelete",gr_id);
+		return n>0? true:false;
+	}
+
+	@Override
+	public boolean groupDelete4(String gr_id) {
+		int n =sqlSession.update(NAMESPACE+"grProWorkCommDelete", gr_id);
+		return n>0? true:false;
+	}
+
+	@Override
+	public boolean groupDelete5(String gr_id) {
+		int n = sqlSession.update(NAMESPACE+"grProWorkListDelete",gr_id);
+		return n>0? true:false;
+	}
+
+	@Override
+	public boolean groupDelete6(String gr_id) {
+		int n = sqlSession.delete(NAMESPACE+"grProMemDelete",gr_id);
+		return n>0? true:false;
+	}
+
+	@Override
+	public boolean groupDelete7(String gr_id) {
+		int n = sqlSession.update(NAMESPACE+"grProAllDelete",gr_id);
+		return n>0? true:false;
+	}
+
+	@Override
+	public boolean groupDelete8(String gr_id) {
+		int n = sqlSession.delete(NAMESPACE+"grBoardAttDelete",gr_id);
+		return n>0? true:false;
+	}
+
+	@Override
+	public boolean groupDelete9(String gr_id) {
+		int n = sqlSession.update(NAMESPACE+"grBoardCommDelete",gr_id);
+		return n>0? true:false;
+	}
+
+	@Override
+	public boolean groupDelete10(String gr_id) {
+		int n = sqlSession.update(NAMESPACE+"grBoardDelete",gr_id);
+		return n>0? true:false;
+	}
+
+	@Override
+	public boolean groupDelete11(String gr_id) {
+		int n = sqlSession.delete(NAMESPACE+"grJoinListDelete",gr_id);
+		return n>0? true:false;
+	}
+	
+	@Override
+	public boolean groupDelete12(String gr_id) {
+		int n = sqlSession.delete(NAMESPACE+"grMemDelete",gr_id);
+		return n>0? true:false;
+	}
+
+	@Override
+	public boolean groupDelete13(String gr_id) {
+		int n = sqlSession.update(NAMESPACE+"grMemCountDelete", gr_id);
+		return n>0? true:false;
 	}
 
 }

@@ -8,7 +8,9 @@
 	$(function(){
 		$(".createBox").submit(function(event){
 			if($("#grname").val()==""||$("#grgoal").val()==""){
+				
 				alert("모두 입력해주세요");
+				return false;
 			}else{
 			alert("그룹가입신청 완료");
 			}

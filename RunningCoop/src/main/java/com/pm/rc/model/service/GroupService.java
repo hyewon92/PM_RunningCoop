@@ -69,14 +69,6 @@ public interface GroupService {
 	public boolean grWaitInsert(Map<String, String> map);
 		
 	/**
-	 * 그룹 삭제(해체)
-	 * @param gr_id 그룹아이디
-	 * @return boolean
-	 * @author 김혜원
-	 * */
-	public boolean grDelete(String gr_id);
-	
-	/**
 	 * 시스템 회원 조회(아이디로 검색)->초대로
 	 * @param mem_id 회원아이디
 	 * @return List&lt;MemberDto&gt;
@@ -112,14 +104,6 @@ public interface GroupService {
 	 * @author 김혜원
 	 * */
 	public boolean grMemDelete(Map<String, String> map);
-	
-	/**
-	 * 그룹멤버다중삭제
-	 * @param map value:mem_id(회원아이디) , gr_id(그룹아이디)
-	 * @return boolean
-	 * @author 라한솔
-	 */
-	public boolean grMemMultDelete(Map<String, String> map);
 	
 	/**
 	 * 그룹멤버조회
@@ -208,5 +192,13 @@ public interface GroupService {
 	 * @author 김혜원
 	 * */
 	public boolean grMgrModify(Map<String, String> map);
+	
+	/**
+	 * 그룹 삭제 할경우 프로젝트정보 ,그룹정보 삭제
+	 * @param String gr_id
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean groupDelete(String gr_id);
 	
 }

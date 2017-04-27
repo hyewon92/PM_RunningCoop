@@ -12,9 +12,7 @@
 		for(var i=0; i<box.length; i++){
 			box[i].checked = chk;
 		}
-		
 	}
-
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>

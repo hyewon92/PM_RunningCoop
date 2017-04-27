@@ -19,8 +19,7 @@
 		SELECT G.GR_ID , G.GR_NAME FROM RC_GROUP G
 		WHERE G.GR_ID IN
 		(SELECT GR_ID FROM RC_GROUPMEM WHERE MEM_ID = #{mem_id})
-		AND G.GR_DELYN
-		= 'N'
+		AND G.GR_DELYN = 'N' AND G.GR_APPYN = 'Y'
 	</select>
 
 	<select id="grDetailSelect" parameterType="java.util.Map"
@@ -74,7 +73,7 @@
 		GR_LEVEL = 'GIM'
 	</delete>
 
-	<update id="grMemDelete2" parameterType="java.lang.String">
+	<update id="grMemDelete2" parameterType="java.util.Map">
 		UPDATE RC_GROUP SET
 		GR_MEMCNT =
 		(SELECT COUNT (*) FROM RC_GROUPMEM WHERE GR_ID = #{gr_id})
@@ -149,9 +148,67 @@
 		FROM RC_GROUP G, RC_MEMBER M
 		WHERE M.MEM_ID IN (SELECT GM.MEM_ID FROM RC_GROUPMEM GM WHERE GM.GR_ID = G.GR_ID AND GM.GR_LEVEL = 'GM') AND G.GR_NAME LIKE '%'||#{gr_name}||'%'
 	</select>
+	
+<!-- 	그룹삭제 시작 -->
 
-
-
-
-
+<!-- 1 프로젝트관련  1_1. 팀 일정 삭제 -->
+	<update id="grProSueDelete" parameterType="java.lang.String">
+	UPDATE RC_SCHEDULE SET SCH_DELYN = 'Y' WHERE PR_ID IN (SELECT PR_ID FROM RC_GRPRO WHERE GR_ID = #{gr_id})
+	</update>
+<!--  1-2 프로젝트 첨부파일 삭제 -->
+	<delete id="grProAttDelete" parameterType="java.lang.String">
+	DELETE FROM RC_GNPATTACH
+	WHERE WK_ID IN (SELECT WK_ID FROM RC_WORKLIST WHERE PR_ID IN (SELECT PR_ID FROM RC_GRPRO WHERE GR_ID = #{gr_id}))	
+	</delete>
+<!--  1-3 프로젝트 하위 업무 삭제 -->
+	<update id="grProWorkDetailDelete" parameterType="java.lang.String">
+	UPDATE RC_WORKDETAIL SET WD_DELYN = 'Y'  where wk_id in 
+	(SELECT WK_ID FROM RC_WORKLIST WHERE PR_ID IN (SELECT PR_ID FROM RC_GRPRO WHERE GR_ID = #{gr_id}))
+	</update>
+<!--  1-4 프로젝트 업무 코멘트 삭제 -->
+	<update id="grProWorkCommDelete" parameterType="java.lang.String">
+	UPDATE RC_WORKCOMMENT SET WCOM_DELYN = 'Y' where wk_id in
+	(SELECT WK_ID FROM RC_WORKLIST WHERE PR_ID IN (SELECT PR_ID FROM RC_GRPRO WHERE GR_ID = #{gr_id}))
+	</update>
+<!--  1-5 프로젝트 업무 삭제 -->
+	<update id="grProWorkListDelete" parameterType="java.lang.String">
+	UPDATE RC_WORKLIST SET WK_DELYN = 'Y'
+	WHERE PR_ID IN(SELECT PR_ID FROM RC_GRPRO WHERE GR_ID = #{gr_id})
+	</update>
+<!--  1-6 프로젝트 멤버 삭제 -->
+	<delete id="grProMemDelete" parameterType="java.lang.String">
+	DELETE FROM RC_PROMEM WHERE PR_ID IN (SELECT PR_ID FROM RC_GRPRO WHERE GR_ID = #{gr_id})
+	</delete>
+<!--  1-7 프로젝트 인원 업데이트 비활성화 -->
+	<update id="grProAllDelete" parameterType="java.lang.String">
+	UPDATE RC_PROJECT SET PR_MEMCNT = 0, PR_DELYN = 'Y'
+	WHERE PR_ID IN (SELECT PR_ID FROM RC_GRPRO WHERE GR_ID = #{gr_id})
+	</update>
+<!-- 2. 게시판관련  2-1 그룹 게시판 첨부파일 삭제 -->
+	<delete id="grBoardAttDelete" parameterType="java.lang.String">
+	DELETE FROM RC_GNPATTACH
+	WHERE BR_UUID IN (SELECT BR_UUID FROM RC_GRBOARD WHERE GR_ID = #{gr_id})
+	</delete>
+<!--  2-2 그룹 게시판 코멘트 삭제 -->
+	<delete id="grBoardCommDelete" parameterType="java.lang.String">
+  	UPDATE RC_GRBOARD SET BR_COMYN= 'Y'
+  	WHERE BR_UUID IN (SELECT BR_UUID FROM RC_GRBOARD WHERE GR_ID = #{gr_id})
+	</delete>
+<!--  2-3 그룹 게시글 삭제 -->
+	<update id="grBoardDelete" parameterType="java.lang.String">
+	UPDATE RC_GRBOARD SET BR_DELYN = 'Y'
+	WHERE BR_UUID IN (SELECT BR_UUID FROM RC_GRBOARD WHERE GR_ID = #{gr_id})
+	</update>
+<!-- 2-4 그룹 가입신청 리스트 삭제 -->
+	<delete id="grJoinListDelete" parameterType="java.lang.String">
+	DELETE FROM RC_GRWAIT WHERE GR_ID = #{gr_id}
+	</delete>
+<!-- 2-5 그룹 멤버 삭제 -->
+	<delete id="grMemDelete" parameterType="java.lang.String">
+  	DELETE FROM RC_GROUPMEM WHERE GR_ID = #{gr_id} AND GR_LEVEL = 'GIM'
+	</delete>
+<!-- 2-6 그룹 인원 업데이트 및 비활성화 -->
+	<update id="grMemCountDelete" parameterType="java.lang.String">
+	UPDATE RC_GROUP SET GR_MEMCNT = 0 , GR_DELYN = 'Y' WHERE GR_ID = #{gr_id}
+	</update>
 </mapper>

@@ -38,18 +38,33 @@
 	
 	function groupBye(){
 		var rst = confirm("그룹을 해체하시겠습니까?");
+		var gr_id = "${grid}";
+		
+		alert(gr_id);
 		
 		if(rst){
-			location.href = "./groupDelete.do?"
+			location.href = "./groupDelete.do?gr_id="+gr_id;
 		}
 	}
 	function groupMemAdd(){
 // 		window.open("./grListChild.do?gr_id="+grid, "childForm", "width=570, height=350, resizable = no, scrollbars = no");
 		window.open("./groupSend.do", "sendForm", "width=570, height=350, resizable = no, scrollbars = no");
 	}
+	
+	function memDelete(grmemid){
+		var memID = $(grmemid).parent().siblings().eq(0).text();
+		var grID = $(grmemid).parent().prev().text();
+		
+		location.href = "./groupMemDelete.do?gr_id="+grID+"&memID="+memID;
+		alert(memID);
+		alert(grID);
+	}
 </script>
 <style type="text/css">
 #groupMemAdd{
+cursor: pointer;}
+img{
+width: 20px;
 cursor: pointer;}
 </style>
 <% String mem_id = (String)session.getAttribute("mem_id"); %>
@@ -58,22 +73,20 @@ cursor: pointer;}
 </head>
 <body>
 	<h1>그룹 멤버 리스트</h1>
-	<form action="./MemMultDelete" method="post">
 <table>
 	<tr>
 	<td>아이디</td>
 	<td>이  름</td>
 	</tr>
-	<c:forEach var="memls" items="${memList }">
+	<c:forEach var="memls" items="${memList}">
 		<tr>
-			<td><input type="checkbox" value="${memls.mem_id }" name="memid">${memls.mem_id } </td>
-			<td>${memls.mem_name }</td>
-			<td style="display: none;"><input type="text" name="gr_id" value="${ grid }"></td>
+			<td>${memls.mem_id}</td>
+			<td>${memls.mem_name}</td>
+			<td style="display: none;">${grid}</td>
+			<td><img onclick="memDelete(this)" alt="cancle" src="./images/cancel.png"> </td>			
 		</tr>
 	</c:forEach>
 </table>	
-	</form>
-			<input type="submit" value="azx">
 	<h1 id="groupMemAdd" onclick="groupMemAdd()">그룹초대</h1>		
 	<h1>가입 신청 리스트</h1>
 <table>

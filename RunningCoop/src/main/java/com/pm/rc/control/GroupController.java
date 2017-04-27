@@ -148,12 +148,6 @@ public class GroupController {
 		model.addAttribute("grid", req.getParameter("gr_id"));
 		return "Group/grListChild";
 	}
-//	@RequestMapping(value="/MemMultDelete.do" , method=RequestMethod.POST)
-//	public String grMemMultDelete (String[] memid , String[] gr_id){
-//		logger.info(Arrays.toString(memid));
-//		service.grMemMultDelete(memid);
-//		return null;
-//	}
 	
 	@RequestMapping(value="/grWaitInsert.do" , method=RequestMethod.POST)
 	public boolean grWaitInsert(String mem_id , String gr_id , String wait_content){
@@ -278,6 +272,27 @@ public class GroupController {
 		System.out.println(map.get("gr_name"));
 		List<GroupDto> lists = service.allGrSelect(map);
 		return lists;
+	}
+	
+	@RequestMapping(value="/groupDelete.do" , method=RequestMethod.GET)
+	public String groupDelete(String gr_id){
+		logger.info("그룹삭제 시작합니다");
+		boolean isc = false;
+		isc = service.groupDelete(gr_id);
+		
+		return "이재성차원식장성훈";
+	}
+	@RequestMapping(value="/groupMemDelete.do" , method=RequestMethod.GET)
+	public String groupMemDelete(String gr_id , String memID){
+		logger.info("그룹멤버 삭제하기 시작합니다 ");
+		System.out.println("memID 뜨나나나나ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ" + memID);
+		System.out.println("grID 뜨나나나나ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ" + gr_id);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("gr_id", gr_id);
+		map.put("mem_id", memID);
+		boolean isc = false;
+		isc = service.grMemDelete(map);
+		return "redirect:/memModi.do?gr_id="+gr_id;
 	}
 
 	

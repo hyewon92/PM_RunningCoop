@@ -115,10 +115,27 @@ public class MailController {
 	public String groupSend (){
 		return "Group/groupMailSend";
 	}
-	@RequestMapping(value="/goGroupMail.do")
-	public String gogoMail(){
+	@RequestMapping(value="/goGroupMail.do" )
+	public String goGroupMail(String toSend , Model model){
+		//회원(수신자)정보
+				String toMail = toSend;
+				String title = "<RunningCoop>으로 초대합니다";
+				String content = "그룹 ID 로 초대합니다";
+				try{
+					MimeMessage message = mailSender.createMimeMessage();
+					MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+					messageHelper.setFrom(setFrom);
+					messageHelper.setTo(toMail);
+					messageHelper.setSubject(title);
+					messageHelper.setText(content);
+					mailSender.send(message);
+				}catch(Exception e){
+					System.out.println(e);
+				}
+				String result = "ture";
+				model.addAttribute("rst",result);
 		
-		return null;
+	 	return "Group/groupMailSend";
 	}
 	
 	

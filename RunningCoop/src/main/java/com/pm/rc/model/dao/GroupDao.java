@@ -79,14 +79,6 @@ public interface GroupDao {
 	public boolean grWaitInsert(Map<String, String> map);
 	
 	/**
-	 * 그룹 삭제(해체)
-	 * @param gr_id 그룹아이디
-	 * @return boolean
-	 * @author 김혜원
-	 * */
-	public boolean grDelete(String gr_id);
-	
-	/**
 	 * 시스템 회원 조회(아이디로 검색)->초대로
 	 * @return List&lt;MemberDto&gt;
 	 * @param mem_id 회원아이디
@@ -143,7 +135,7 @@ public interface GroupDao {
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean grMemDelete2(String gr_id);
+	public boolean grMemDelete2(Map<String, String> map);
 	
 	/**
 	 * 그룹멤버조회(멤버리스트 출력)
@@ -161,4 +153,108 @@ public interface GroupDao {
 	 * */
 	public boolean grMgrModify(Map<String, String> map);
 	
+	/**
+	 * 그룹 삭제 프로젝트 관련 1-1 (팀일정삭제)
+	 * @param gr_id
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean groupDelete1(String gr_id);
+	
+	/**
+	 * 그룹 삭제 프로젝트 관련 1-2 프로젝트 첨부파일 삭제
+	 * @param gr_id
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean groupDelete2(String gr_id);
+	
+	/**
+	 * 그룹삭제 프로젝트 관련 1-3 프로젝트 하위 업무 삭제
+	 * @param gr_id
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean groupDelete3(String gr_id);
+	
+	/**
+	 * 그룹삭제 프로젝트 관련 1-4 프로젝트 업무 코멘트 삭제
+	 * @param gr_id
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean groupDelete4(String gr_id);
+	
+	/**
+	 * 그룹삭제 프로젝트 관련 1-5 프로젝트 업무 삭제
+	 * @param gr_id
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean groupDelete5(String gr_id);
+	
+	/**
+	 * 그룹삭제 프로젝트 관련 1-6 프로젝트 멤버 삭제
+	 * @param gr_id
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean groupDelete6(String gr_id);
+	
+	/**
+	 * 그룹삭제 프로젝트 관련 1-7 프로젝트 인원 수정 및 그룹 비활성화
+	 * @param gr_id
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean groupDelete7(String gr_id);
+	
+	/**
+	 * 그룹삭제 게시판 관련 2-1 그룹 게시판 첨부파일 삭제
+	 * @param gr_id
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean groupDelete8(String gr_id);
+	
+	/**
+	 * 그룹삭제 게시판 관련 2-2 그룹게시판 코멘트 삭제
+	 * @param gr_id
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean groupDelete9(String gr_id);
+	
+	/**
+	 * 그룹삭제 게시판 관련 2-3 그룹게시판 게시글 삭제
+	 * @param gr_id
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean groupDelete10(String gr_id);
+	
+	/**
+	 * 그룹삭제 게시판 관련 2-4 그룹 가입신청 리스트 삭제
+	 * @param gr_id
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean groupDelete11(String gr_id);
+	
+	/**
+	 * 그룹삭제 게시판 관련 2-5 그룹멤버 삭제
+	 * @param gr_id
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean groupDelete12(String gr_id);
+	
+	/**
+	 * 그룹삭제 게시판 관련 2-6 그룹 인원 업데이트 및 비활상화
+	 * @param gr_id
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean groupDelete13(String gr_id);
 }
+

@@ -58,13 +58,6 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	@Transactional
-	public boolean grDelete(String gr_id) {
-//		boolean rst = groupdao.
-		return false;
-	}
-
-	@Override
 	public List<MemberDto> sysMemSelect(String mem_id) {
 		// TODO Auto-generated method stub
 		return null;
@@ -93,27 +86,17 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
+	@Transactional
 	public boolean grMemDelete(Map<String, String> map) {
-		
-		return groupdao.grMemDelete1(map);
+		boolean isc = false;
+		isc = groupdao.grMemDelete1(map);
+		isc = groupdao.grMemDelete2(map);
+		return isc;
 	}
 
 	@Override
 	public List<MemberDto> grMemSelect(String gr_id) {
 		return groupdao.grMemSelect(gr_id);
-	}
-	
-	@Override
-	@Transactional
-	public boolean grMemMultDelete(Map<String, String> map) {
-		boolean isc = false;
-		for(int i = 0 ; i < map.size(); i++){
-			isc =groupdao.grMemDelete1(map);
-			if(isc == false){
-				break;
-			}
-		}
-		return isc;
 	}
 
 	@Override
@@ -192,6 +175,26 @@ public class GroupServiceImp implements GroupService{
 	public int selectTotalPaging(String gr_name) {
 		// TODO Auto-generated method stub
 		return groupdao.selectTotalPaging(gr_name);
+	}
+
+	@Override
+	@Transactional
+	public boolean groupDelete(String gr_id) {
+		boolean isc = false;
+		isc = groupdao.groupDelete1(gr_id);
+		isc = groupdao.groupDelete2(gr_id);
+		isc = groupdao.groupDelete3(gr_id);
+		isc = groupdao.groupDelete4(gr_id);
+		isc = groupdao.groupDelete5(gr_id);
+		isc = groupdao.groupDelete6(gr_id);
+		isc = groupdao.groupDelete7(gr_id);
+		isc = groupdao.groupDelete8(gr_id);
+		isc = groupdao.groupDelete9(gr_id);
+		isc = groupdao.groupDelete10(gr_id);
+		isc = groupdao.groupDelete11(gr_id);
+		isc = groupdao.groupDelete12(gr_id);
+		isc = groupdao.groupDelete13(gr_id);
+		return isc;
 	}
 
 
