@@ -44,6 +44,7 @@
 		var pr_goal = nodes.PR_GOAL;
 		var pr_enddate = nodes.PR_ENDDATE;
 		var pr_etc = nodes.PR_ETC;
+		var pr_prorate = nodes.PR_PRORATE;
 		
 		$("#pr_name").text(pr_name);
 		$("#mem_name").text(mem_name);
@@ -51,6 +52,7 @@
 		$("#pr_goal").text(pr_goal);
 		$("#pr_enddate").text(pr_enddate);
 		$("#pr_etc").text(pr_etc);
+		$("#pr_proRate").text(pr_prorate);
 		
 		$(".pr_detail_view").css("display", "block");
 	}
@@ -67,6 +69,24 @@
 	function goToProject(val){
 		location.href = "./goProject.do?pr_id="+val;
 	}
+	
+	function leaveProject(val){
+		$.ajax({
+			type : "POST",
+			url : "./leaveProject.do",
+			data : "pr_id="+val,
+			async : false,
+			success : function(msg){
+				if(msg == "success"){
+					alert("프로젝트 탈퇴 성공!");
+					location.reload();
+				} else {
+					alert("프로젝트 탈퇴 실패!");
+					location.reload();
+				}
+			}
+		})
+	}
 </script>
 </head>
 <body>
@@ -81,6 +101,7 @@
 		<c:otherwise>
 			<c:forEach var="list" items="${ list }">
 				<div class="pr_list">
+					<input type="button" value="프로젝트 탈퇴" onclick="leaveProject('${list.pr_id}')"/>
 					<p>${ list.pr_id }</p>
 					<span class="pr_detail" onclick="detailPro('${ list.pr_id}')">정보보기</span>
 					<p onclick="goToProject('${ list.pr_id }')">${ list.pr_name }</p>
@@ -97,6 +118,7 @@
 	<input type="button" value="닫기" onclick="goSelectPro()"/>
 		<p id="pr_name"></p>
 		<p id="mem_name"></p>
+		<p id="pr_proRate"></p>
 		<p id="pr_memcnt"></p>
 		<p id="pr_goal"></p>
 		<p id="pr_enddate"></p>

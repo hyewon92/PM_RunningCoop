@@ -67,7 +67,7 @@
 		SELECT P.PR_NAME, M.MEM_NAME, P.PR_MEMCNT, P.PR_GOAL,
 		TO_CHAR(P.PR_STARTDATE, 'YYYY-MM-DD') PR_STARTDATE,
 		TO_CHAR(P.PR_ENDDATE, 'YYYY-MM-DD') PR_ENDDATE, P.PR_ETC,
-		P.PR_SEARCHYN, P.PR_CONDITION
+		P.PR_SEARCHYN, P.PR_CONDITION, P.PR_PRORATE
 		FROM RC_PROJECT P, RC_MEMBER M
 		WHERE P.PR_ID = #{pr_id}
 		AND M.MEM_ID =
@@ -144,6 +144,118 @@
 		WHERE P.PR_ID IN (SELECT GP.PR_ID FROM RC_GRPRO GP WHERE GP.GR_ID = #{gr_id})
 			AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id})
 	</select>
-
+	
+	<select id="projectDelete_1" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT WK_ID FROM RC_WORKLIST
+		WHERE PR_ID = #{pr_id} AND WK_DELYN = 'N'
+	</select>
+	
+	<select id="projectDelete_2" parameterType="java.lang.String" resultType="GbAttachDto">
+		SELECT GATT_PATH, GATT_RNAME FROM RC_GNPATTACH
+		WHERE WK_ID = #{wk_id}
+	</select>
+	
+	<delete id="projectDelete_3" parameterType="java.lang.String">
+		DELETE FROM RC_GNPATTACH
+		WHERE WK_ID = #{wk_id}
+	</delete>
+	
+	<update id="projectDelete_4" parameterType="java.lang.String">
+		UPDATE RC_WORKCOMMENT SET WCOM_DELYN = 'Y'
+		WHERE WK_ID = #{wk_id}
+	</update>
+	
+	<update id="projectDelete_5" parameterType="java.lang.String">
+		UPDATE RC_WORKDETAIL SET WD_DELYN = 'Y'
+		WHERE WK_ID = #{wk_id}
+	</update>
+	
+	<update id="projectDelete_6" parameterType="java.lang.String">
+		UPDATE RC_WORKLIST SET WK_DELYN = 'Y'
+		WHERE PR_ID = #{pr_id}
+	</update>
+	
+	<delete id="projectDelete_7" parameterType="java.lang.String">
+		DELETE FROM RC_PROMEM
+		WHERE PR_ID = #{pr_id}
+	</delete>
+	
+	<delete id="projectDelete_8" parameterType="java.lang.String">
+		DELETE FROM RC_GRPRO
+		WHERE PR_ID = #{pr_id}
+	</delete>
+	
+	<update id="projectDelete_9" parameterType="java.lang.String">
+		UPDATE RC_PROJECT SET PR_MEMCNT = (SELECT COUNT(*) FROM RC_PROMEM WHERE PR_ID = #{pr_id})
+		WHERE PR_ID = #{pr_id}
+	</update>
+	
+	<update id="projectDelete_10" parameterType="java.lang.String">
+		UPDATE RC_PROJECT SET PR_DELYN = 'Y'
+		WHERE PR_ID = #{pr_id}
+	</update>
+	
+	<select id="prRateEdit_1" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT WK_PRORATE FROM RC_WORKLIST
+		WHERE PR_ID = #{pr_id}
+	</select>
+	
+	<update id="prRateEdit_2" parameterType="java.util.Map">
+		UPDATE RC_PROJECT SET PR_PRORATE = #{pr_proRate}
+		WHERE PR_ID = #{pr_id}
+	</update>
+	
+	<update id="editGProCondition_1" parameterType="java.util.Map">
+		<![CDATA[
+			UPDATE RC_PROJECT SET PR_CONDITION = 'I'
+			WHERE PR_ID IN 
+				(SELECT P.PR_ID FROM RC_PROJECT P
+					WHERE P.PR_ID IN (SELECT GP.PR_ID FROM RC_GRPRO GP WHERE GP.GR_ID = #{gr_id}
+					AND GP.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id}))
+				AND P.PR_DELYN = 'N')
+			AND (SELECT TO_DATE(TO_CHAR(PR_STARTDATE, 'YYYYMMDD'), 'YYYYMMDD') - TO_DATE(TO_CHAR(SYSDATE, 'YYYYMMDD'), 'YYYYMMDD')
+			FROM DUAL) < 0
+		]]>
+		
+	</update>
+	
+	<update id="editGProCondition_2" parameterType="java.util.Map">
+		<![CDATA[
+			UPDATE RC_PROJECT SET PR_CONDITION = 'C'
+			WHERE PR_ID IN 
+				(SELECT P.PR_ID FROM RC_PROJECT P
+					WHERE P.PR_ID IN (SELECT GP.PR_ID FROM RC_GRPRO GP WHERE GP.GR_ID = #{gr_id}
+					AND GP.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id}))
+				AND P.PR_DELYN = 'N')
+			AND (SELECT TO_DATE(TO_CHAR(PR_ENDDATE, 'YYYYMMDD'), 'YYYYMMDD') - TO_DATE(TO_CHAR(SYSDATE, 'YYYYMMDD'), 'YYYYMMDD')
+			FROM DUAL) < 0
+		]]>
+	</update>
+	
+	<update id="editIProCondition_1" parameterType="java.lang.String">
+		<![CDATA[
+			UPDATE RC_PROJECT SET PR_CONDITION = 'I'
+			WHERE PR_ID IN 
+				(SELECT P.PR_ID FROM RC_PROJECT P
+					WHERE NOT P.PR_ID IN (SELECT GP.PR_ID FROM RC_GRPRO GP)
+					AND P.PR_ID IN (SELECT PR_ID FROM RC_PROMEM WHERE MEM_ID = #{mem_id})
+				AND P.PR_DELYN = 'N')
+			AND (SELECT TO_DATE(TO_CHAR(PR_STARTDATE, 'YYYYMMDD'), 'YYYYMMDD') - TO_DATE(TO_CHAR(SYSDATE, 'YYYYMMDD'), 'YYYYMMDD')
+			FROM DUAL) < 0
+		]]>
+	</update>
+	
+	<update id="editIProCondition_2" parameterType="java.lang.String">
+		<![CDATA[
+			UPDATE RC_PROJECT SET PR_CONDITION = 'C'
+			WHERE PR_ID IN 
+				(SELECT P.PR_ID FROM RC_PROJECT P
+					WHERE NOT P.PR_ID IN (SELECT GP.PR_ID FROM RC_GRPRO GP)
+					AND P.PR_ID IN (SELECT PR_ID FROM RC_PROMEM WHERE MEM_ID = #{mem_id})
+				AND P.PR_DELYN = 'N')
+			AND (SELECT TO_DATE(TO_CHAR(PR_ENDDATE, 'YYYYMMDD'), 'YYYYMMDD') - TO_DATE(TO_CHAR(SYSDATE, 'YYYYMMDD'), 'YYYYMMDD')
+			FROM DUAL) < 0
+		]]>
+	</update>
 
 </mapper>

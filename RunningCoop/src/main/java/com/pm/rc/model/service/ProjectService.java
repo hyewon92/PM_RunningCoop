@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.ProjectDto;
-import com.pm.rc.dto.WorkListDto;
 
 public interface ProjectService {
 
@@ -107,7 +106,7 @@ public interface ProjectService {
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean projectDelete(Map<String, String> map);
+	public boolean projectDelete(String pr_id);
 	
 	/**
 	 * 프로젝트 초대 가능 멤버 조회 (그룹 내 프로젝트에 참여하지 않는 멤버)
@@ -176,5 +175,24 @@ public interface ProjectService {
 	 * @return
 	 */
 	public List<Map<String, String>> memInfoSelect_2(Map<String, String> map);
+	
+	/**
+	 * 프로젝트 탈퇴
+	 * @param map : pr_id, mem_id 포함
+	 * @return
+	 */
+	public boolean leaveProject(Map<String, String> map);
+	
+	/**
+	 * 그룹 프로젝트 상태 조정 기능
+	 * @return
+	 */
+	public void editGProCondition(Map<String, String> map);
+	
+	/**
+	 * 개인 프로젝트 상태 조정 기능
+	 * @return
+	 */
+	public void editIProCondition(String mem_id);
 	
 }

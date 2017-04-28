@@ -1,13 +1,9 @@
 package com.pm.rc.control;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -22,15 +18,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.pm.rc.dto.GbAttachDto;
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.ProjectDto;
@@ -472,6 +465,8 @@ public class ProjectController {
 			System.out.println("업무 등록 실패");
 		}
 		
+		service.prRateEdit(pr_id);
+		
 		return "redirect:/goProject.do?pr_id="+pr_id;
 	}
 	
@@ -494,6 +489,9 @@ public class ProjectController {
 		} else {
 			System.out.println("업무 삭제 실패");
 		}
+		
+		service.prRateEdit(pr_id);
+		
 		return "redirect:/goProject.do?pr_id="+pr_id;
 	}
 	
@@ -982,11 +980,57 @@ public class ProjectController {
 		return prolist;
 	}
 	
+	// 프로젝트 해체 기능
+	@RequestMapping(value="/project_Delete.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String project_Delete(HttpServletRequest request, HttpSession session){
+		String pr_id = request.getParameter("pr_id");
+		
+		logger.info("====================== 프로젝트 해체 =========================");
+		logger.info("해체할 프로젝트 아이디 : "+pr_id);
+		logger.info("=========================================================");
+		
+		boolean isc = false;
+		isc = service.projectDelete(pr_id);
+		
+		if(isc){
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
+	// 프로젝트 탈퇴 기능
+	@RequestMapping(value="/leaveProject.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String leave_Project(HttpServletRequest request, HttpSession session){
+		String pr_id = request.getParameter("pr_id");
+		String mem_id = (String)session.getAttribute("mem_id");
+		
+		logger.info("====================== 프로젝트 탈퇴 =========================");
+		logger.info("프로젝트 탈퇴할 멤버 아이디 : "+mem_id);
+		logger.info("탈퇴할 프로젝트 아이디 : "+pr_id);
+		logger.info("=========================================================");
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("mem_id", mem_id);
+		map.put("pr_id", pr_id);
+		
+		boolean isc = false;
+		isc = service.leaveProject(map);
+		
+		if(isc){
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
+	
+	
 	// UUID 생성 메소드
 	public String createUUID(){
 		return UUID.randomUUID().toString();
 	}
-
-
 
 }

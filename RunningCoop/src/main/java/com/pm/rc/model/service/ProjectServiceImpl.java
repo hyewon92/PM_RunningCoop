@@ -1,6 +1,8 @@
 package com.pm.rc.model.service;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +11,9 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.pm.rc.dto.GbAttachDto;
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.ProjectDto;
 import com.pm.rc.model.dao.ProjectDao;
@@ -22,11 +26,13 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public List<ProjectDto> groupProSelect(Map<String, String> map) {
+		editGProCondition(map);
 		return dao.groupProSelect(map);
 	}
 
 	@Override
 	public List<ProjectDto> myProSelect(String mem_id) {
+		editIProCondition(mem_id);
 		return dao.myProSelect(mem_id);
 	}
 
@@ -61,6 +67,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public Map<String, String> prDetailSelect(String pr_id) {
+		prRateEdit(pr_id);
 		return dao.prDetailSelect(pr_id);
 	}
 
@@ -139,9 +146,51 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public boolean projectDelete(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+	@Transactional
+	public boolean projectDelete(String pr_id) {
+		List<String> wklist = dao.projectDelete_1(pr_id);
+		
+		boolean isc = false;
+		
+		
+		if(wklist.size() != 0){ // 업무가 생성된 경우
+			
+			for (int i = 0; i < wklist.size(); i++){
+				String wk_id = wklist.get(i);
+				
+				List<GbAttachDto> attList = dao.projectDelete_2(wk_id); // 해당 업무에 포함된 첨부파일 리스트
+				
+				// 실제 첨부파일 삭제하는 for문
+				if (attList.size() != 0){
+					for(int j = 0; j < attList.size(); j++){
+						File file = new File(attList.get(j).getGatt_path()+attList.get(j).getGatt_rname());
+						file.delete();
+					}
+					isc = dao.projectDelete_3(wk_id); // DB에서 첨부파일 정보 삭제
+				}
+				
+				isc = dao.projectDelete_4(wk_id); // DB에서 코멘트 정보 삭제
+				
+				isc = dao.projectDelete_5(wk_id); // DB에서 하위 업무 정보 삭제
+			}
+			
+			isc = dao.projectDelete_6(pr_id); // DB에서 업무 정보 삭제
+			isc = dao.projectDelete_7(pr_id); // DB에서 프로젝트 멤버 정보 삭제
+			isc = dao.projectDelete_8(pr_id); // DB에서 그룹 프로젝트 관계 삭제
+			isc = dao.projectDelete_9(pr_id); // DB에서 프로젝트 멤버 수 조정
+			isc = dao.projectDelete_10(pr_id); // DB에서 프로젝트 비활성화
+			
+			return isc;
+			
+		} else { // 업무가 생성되지 않은 경우
+			
+			isc = dao.projectDelete_7(pr_id); // DB에서 프로젝트 멤버 정보 삭제
+			isc = dao.projectDelete_8(pr_id); // DB에서 그룹 프로젝트 관계 삭제
+			isc = dao.projectDelete_9(pr_id); // DB에서 프로젝트 멤버 수 조정
+			isc = dao.projectDelete_10(pr_id); // DB에서 프로젝트 비활성화
+			
+			return isc;
+		}
 	}
 
 	@Override
@@ -227,12 +276,30 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public boolean prRateEdit(String pr_id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	public String createUUID(){
-		return UUID.randomUUID().toString();
+		List<String> rateList = dao.prRateEdit_1(pr_id);
+		int scale = rateList.size();
+		System.out.println(scale);
+		
+		int value = 0;
+		
+		for(int i = 0; i < rateList.size(); i++){
+			int val = Integer.parseInt(rateList.get(i));
+			value += val;
+		}
+		
+		System.out.println(value);
+		
+		String proRate = ""+Math.round((double)value/(double)scale);
+		System.out.println(proRate);
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("pr_id", pr_id);
+		map.put("pr_proRate", proRate);
+		
+		boolean isc = false;
+		isc = dao.prRateEdit_2(map);
+		
+		return isc;
 	}
 
 	@Override
@@ -250,6 +317,35 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public List<Map<String, String>> memInfoSelect_2(Map<String, String> map) {
 		return dao.memInfoSelect_2(map);
+	}
+
+	@Override
+	public boolean leaveProject(Map<String, String> map) {
+		String pr_id = map.get("pr_id");
+		boolean isc = false;
+		isc = dao.prMemDelete_1(map);
+		isc = dao.prMemDelete_2(pr_id);
+		return isc;
+	}
+
+	@Override
+	public void editGProCondition(Map<String, String> map) {
+			// 진행중으로 변경
+		dao.editGProCondition_1(map);
+			// 진행완료로 변경
+		dao.editGProCondition_2(map);
+	}
+
+	@Override
+	public void editIProCondition(String mem_id) {
+		//진행중으로 변경
+		dao.editIProCondition_1(mem_id);
+		//진행완료로 변경
+		dao.editIProCondition_2(mem_id);
+	}
+	
+	public String createUUID(){
+		return UUID.randomUUID().toString();
 	}
 
 }

@@ -166,80 +166,13 @@ public class ProjectDaoImpl implements ProjectDao {
 
 	@Override
 	public List<String> prRateEdit_1(String pr_id) {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectList(NAMESPACE+"prRateEdit_1", pr_id);
 	}
 
 	@Override
-	public int prRateEdit_2(String wk_id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int prRateEdit_3(String wk_id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean prRateEdit_4(String pr_id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public List<String> projectDelete_1(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Map<String, GbAttachDto>> projectDelete_2(String wk_id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean projectDelete_3(String wk_id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean projectDelete_4(String wk_id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean projectDelete_5(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean projectDelete_6(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean projectDelete_7(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean projectDelete_8(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean projectDelete_9(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean prRateEdit_2(Map<String, String> map) {
+		int num = sqlSession.update(NAMESPACE+"prRateEdit_2", map);
+		return num>0?true:false;
 	}
 
 	@Override
@@ -255,6 +188,84 @@ public class ProjectDaoImpl implements ProjectDao {
 	@Override
 	public List<Map<String, String>> memInfoSelect_2(Map<String, String> map) {
 		return sqlSession.selectList(NAMESPACE+"memInfoSelect_2", map);
+	}
+
+	@Override
+	public List<String> projectDelete_1(String pr_id) {
+		return sqlSession.selectList(NAMESPACE+"projectDelete_1", pr_id);
+	}
+
+	@Override
+	public List<GbAttachDto> projectDelete_2(String wk_id) {
+		return sqlSession.selectList(NAMESPACE+"projectDelete_2", wk_id);
+	}
+
+	@Override
+	public boolean projectDelete_3(String wk_id) {
+		int num = sqlSession.delete(NAMESPACE+"projectDelete_3", wk_id);
+		return num>0?true:false;
+	}
+
+	@Override
+	public boolean projectDelete_4(String wk_id) {
+		int num = sqlSession.update(NAMESPACE+"projectDelete_4", wk_id);
+		return num>0?true:false;
+	}
+	
+	@Override
+	public boolean projectDelete_5(String wk_id) {
+		int num = sqlSession.update(NAMESPACE+"projectDelete_5", wk_id);
+		return num>0?true:false;
+	}
+
+	@Override
+	public boolean projectDelete_6(String pr_id) {
+		int num = sqlSession.update(NAMESPACE+"projectDelete_6", pr_id);
+		return num>0?true:false;
+	}
+
+	@Override
+	public boolean projectDelete_7(String pr_id) {
+		int num = sqlSession.delete(NAMESPACE+"projectDelete_7", pr_id);
+		return num>0?true:false;
+	}
+
+	@Override
+	public boolean projectDelete_8(String pr_id) {
+		int num = sqlSession.delete(NAMESPACE+"projectDelete_8", pr_id);
+		return num>0?true:false;
+	}
+
+	@Override
+	public boolean projectDelete_9(String pr_id) {
+		int num = sqlSession.update(NAMESPACE+"projectDelete_9", pr_id);
+		return num>0?true:false;
+	}
+
+	@Override
+	public boolean projectDelete_10(String pr_id) {
+		int num = sqlSession.update(NAMESPACE+"projectDelete_10", pr_id);
+		return num>0?true:false;
+	}
+
+	@Override
+	public void editGProCondition_1(Map<String, String> map) {
+		sqlSession.update(NAMESPACE+"editGProCondition_1", map);
+	}
+
+	@Override
+	public void editGProCondition_2(Map<String, String> map) {
+		sqlSession.update(NAMESPACE+"editGProCondition_2", map);
+	}
+
+	@Override
+	public void editIProCondition_1(String mem_id) {
+		sqlSession.update(NAMESPACE+"editIProCondition_1", mem_id);
+	}
+
+	@Override
+	public void editIProCondition_2(String mem_id) {
+		sqlSession.update(NAMESPACE+"editIProCondition_2", mem_id);
 	}
 
 }
