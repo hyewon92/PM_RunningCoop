@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,24 +54,19 @@ public class GroupController {
 	@Autowired
 	private JavaMailSender mailSend;
 	
-	//5. mapping 메소드
-	@RequestMapping(value = "/first.do", method = RequestMethod.GET)
-	public String test01(String name , Model model, HttpServletRequest request){
-		logger.info("first.jsp 실행");
-		
-		return "Group/first";
-	}
+	// 그룹선택 초기 화면 
 	@RequestMapping(value= "/myGrSelect.do" , method=RequestMethod.GET)
-	public String myGrSelect(Model model, HttpServletRequest request){
+	public String myGrSelect(Model model, HttpServletRequest request ,HttpSession session){
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("mem_id", request.getParameter("mem_id"));
 		System.out.println("여기는되나");
 		logger.info("그룹선택 작동됨");
 		List<GroupDto> lists = service.myGrSelect(map);
 		model.addAttribute("lists" , lists);
+		session.removeAttribute("gr_id");
 		return "Group/test";
-		
 	}
+	//그룹선택하여 정보 확인 및 그룹관리 화면
 	@RequestMapping(value="/grselect.do" ,  method=RequestMethod.GET)
 	public String grDetailSelect(Model model, HttpServletRequest request){
 		Map<String,String> map = new HashMap<String, String>();
@@ -80,7 +76,7 @@ public class GroupController {
 		model.addAttribute("grSelect" , lists);
 		return "Group/test2";
 	}
-	
+	//그룹관리 화면
 	@RequestMapping(value="/grmodify.do" , method=RequestMethod.GET)
 	public String 	grmodifyMove(Model model, HttpServletRequest requestl){
 		Map<String,String> map = new HashMap<String, String>();
@@ -90,6 +86,7 @@ public class GroupController {
 		model.addAttribute("grSelect" , lists);
 		return "Group/grmodify";
 	}
+	//그룹 정보 수정 하는 곳
 	@RequestMapping(value="/realGrmodify.do", method= RequestMethod.POST)
 	public String grmodify (Model model, HttpServletRequest request){
 		String retrGrid = request.getParameter("gr_id");
@@ -105,6 +102,7 @@ public class GroupController {
 		return "redirect:/grmodify.do?gr_id="+retrGrid;
 	}
 	
+	// 그룹으로 검색하여 페이징처리 그리고 그룹 검색하는 곳
 	@RequestMapping(value="/allGrSelect.do", method={RequestMethod.POST ,RequestMethod.GET})
 	public String allGrSelect (Model model , HttpServletRequest request) {
 		PagingDto paging = new PagingDto(request.getParameter("index"),
@@ -113,7 +111,6 @@ public class GroupController {
 									     request.getParameter("gr_name"));
 		
 		List<GroupDto> lists = service.selectPaging(paging);
-//		lists.get(0).getMemberdto().getMem_name()
 		paging.setTotal(service.selectTotalPaging(request.getParameter("gr_name")));
 		logger.info("그룹검색하기 그룹이름이름으로");
 		String grid = request.getParameter("gr_name");
@@ -121,11 +118,9 @@ public class GroupController {
 		model.addAttribute("paging",paging);
 		model.addAttribute("gr_name",grid);
 		lists.forEach(System.err::println);
-//		Map<String, String> map = new HashMap<String, String>();
-//		map.put("gr_name" , request.getParameter("gr_name"));
-		//List<GroupDto> lists = service.allGrSelect(map);
 		return "Group/grList";
 	}
+	// 멤버 관리 화면
 	@RequestMapping(value="/memModi.do" , method=RequestMethod.GET)
 	public String grMemSelect(String gr_id , Model model) {
 		System.out.println("------------------"+gr_id);
@@ -141,6 +136,7 @@ public class GroupController {
 		return "Group/memModify";
 	}	
 
+	// 그룹 가입신청화면으로 연결
 @RequestMapping(value="/grListChild.do" , method=RequestMethod.GET)
 	public String test (HttpServletRequest req , Model model){
 		logger.info("그룹리스트 에서 ");
@@ -148,6 +144,7 @@ public class GroupController {
 		return "Group/grListChild";
 	}
 	
+	// 그룹 가입신청 시작
 	@RequestMapping(value="/grWaitInsert.do" , method=RequestMethod.POST)
 	public String grWaitInsert(String mem_id , String gr_id , String wait_content, Model model){
 		logger.info("그룹가입신척 시작");
@@ -164,7 +161,7 @@ public class GroupController {
 		}
 		
 	}
-	
+	// 그룹가입신척 수락하는곳
 	@RequestMapping(value="/groupAccept.do" )
 	public String grWaitAccept (HttpServletRequest req){
 		String grid = req.getParameter("gr_id");
@@ -176,6 +173,8 @@ public class GroupController {
 		
 		return "redirect:/memModi.do?gr_id="+grid;
 	}
+	
+	// 그룹가입신청 거절
 	@RequestMapping(value="/grouprefusal.do")
 	public String groupAccept (HttpServletRequest req){
 		String gr_id = req.getParameter("gr_id");
@@ -188,6 +187,7 @@ public class GroupController {
 		return "redirect:/memModi.do?gr_id="+gr_id;
 	}
 	
+	// 그룹 게시판 목록 출력함
 	@RequestMapping(value="/gbListSelect.do")
 	public String gbListSelect(String gr_id , Model model){
 		logger.info("그룹게시판 목록출력");
@@ -197,6 +197,7 @@ public class GroupController {
 		return "Group/grboradList";
 	}
 	
+	// 그룹 게시글 다중삭제
 	@RequestMapping(value="/bordeMultDelet.do" ,method=RequestMethod.GET)
 	public String grbdMultDelet(String[] cnkUuid ){
 		logger.info("그룹게시판 다중삭제");
@@ -204,12 +205,14 @@ public class GroupController {
 		
 		return "redirect:/gbListSelect.do?gr_id="+GroupId;
 	}
+	
+	//그룹 생성으로 연결합니다
 	@RequestMapping(value="/showGrCreate.do")
 	public String groupCreateChilde(){
-		
 		return "Group/grCreate";
 	}
 	
+	// 그룹 생성시작
 	@RequestMapping(value="/groupCreate.do" , method=RequestMethod.POST)
 	public String grCreate(Map<String, String> map , HttpServletRequest req , Model model){
 		logger.info("그룹생성 시작");
@@ -238,6 +241,8 @@ public class GroupController {
 			}
 	      
 	}
+	
+	//그룹 생성 신청 리스트 출력함
 	@RequestMapping(value="/grApply.do")
 	public String groupApply(Model model){
 		logger.info("그룹생성신청리스트출력시작");
@@ -246,6 +251,7 @@ public class GroupController {
 		return "Group/grApply";
 	}
 	
+	//그룹승인 리스트 검색하여 출력
 	@RequestMapping(value="/grApplySch.do")
 	public String groupApply(Model model ,String gr_name){
 		logger.info("그룹생성신청리스트출력시작");
@@ -254,26 +260,22 @@ public class GroupController {
 		return "Group/grApply";
 	}
 	
+	//그룹승인
 	@RequestMapping(value="/grApplyYse.do" , method=RequestMethod.POST)
 	public String grApplyYse(String[] gr_id){
 		logger.info("그룹생성승인시작");
 		managserService.grAppModify(gr_id);
 		return "redirect:/grApply.do";
 	}
+	//그룹거절
 	@RequestMapping(value="/grApplyNo.do" , method=RequestMethod.POST)
 	public String grApplyNo(String[] gr_id){
 		logger.info("그룹승인거절시작");
 		managserService.grDelete(gr_id);
-		
-		
 		return "redirect:/grApply.do";
 	}
 	
-	@RequestMapping(value="/grApplySelectGroup.do" , method=RequestMethod.POST)
-	public String grApplySelectGroup(String gr_name){
-		managserService.grApplySelectGr(gr_name);
-		return "grApplySelectGroupppppppppppp";
-	}
+	// 그룹 간략정보 확인하기
 	@RequestMapping(value="/groupInfoChild.do" )
 	public String groupInfoChild(String gr_id , Model model){
 		List<GroupDto> lists = managserService.grApplySelectGroup(gr_id);
@@ -281,6 +283,7 @@ public class GroupController {
 		
 		return "Group/applyChild";
 	}
+	//오토컴플리트 처리
 	@RequestMapping(value="/autoauto.do" , method=RequestMethod.POST)
 	@ResponseBody
 	public List<GroupDto> autoTest (String value){
@@ -292,14 +295,19 @@ public class GroupController {
 		return lists;
 	}
 	
+	// 그룹삭제 
 	@RequestMapping(value="/groupDelete.do" , method=RequestMethod.GET)
-	public String groupDelete(String gr_id){
+	public String groupDelete(String gr_id,HttpSession session){
 		logger.info("그룹삭제 시작합니다");
 		boolean isc = false;
 		isc = service.groupDelete(gr_id);
-		
-		return "이재성차원식장성훈";
+			if(isc=true){
+				return "account/loginAfter";
+			}else{
+				return "account/error/error";
+			}
 	}
+	//그룹멤버 삭제
 	@RequestMapping(value="/groupMemDelete.do" , method=RequestMethod.GET)
 	public String groupMemDelete(String gr_id , String memID){
 		logger.info("그룹멤버 삭제하기 시작합니다 ");
@@ -312,12 +320,16 @@ public class GroupController {
 		isc = service.grMemDelete(map);
 		return "redirect:/memModi.do?gr_id="+gr_id;
 	}
+	// 회원가입 후에 그룹가입신청 연결
 	@RequestMapping(value="/groupGoGo.do")
 	public String groupGoGo(){
 		return "account/grGogo";
 	}
-
-	
-	
+	@RequestMapping(value="/socketOpen.do" , method=RequestMethod.GET)
+	public String socketOpen(){
+		logger.info("socketOpen 소켓 화면 이동");
+		return "socket";
+		
+	}
 
 }

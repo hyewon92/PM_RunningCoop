@@ -10,15 +10,9 @@
 <script type="text/javascript">
 var openwin;
 	function openChild(val){
-		
 		var grid = $(val).prev().text();
-		alert(grid);
-		
 		window.name = "grList";
-		
 		openwin = window.open("./grListChild.do?gr_id="+grid, "childForm", "width=570, height=350, resizable = no, scrollbars = no");
-		 
-// 		openwin.document.getElementById("gr_id").value= grid;
 
 	}
 </script>

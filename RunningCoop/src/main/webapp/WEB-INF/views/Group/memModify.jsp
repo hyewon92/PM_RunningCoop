@@ -9,24 +9,12 @@
 <head>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
-// 	function chek(){
-// 		var chb = $("input:checkbox[name=memid]:checked");
-		
-// 		for(var t = 0; t <chb.length; t++){
-// 			location.href="./grMemMultDelete.do?";
-// 			alert(chb.eq(t).val());
-// 		}
-// 	}
-	
 	function accept1(memid){
 		alert("${ grid }");
 		var gr_id ="${ grid }";
-// 		var mem_id = $(memid).parent().siblings().eq(2).find("#memid").text();
 		var mem_id = $(memid).parent().prev().text();
-		alert(mem_id);
 		
 		location.href="./groupAccept.do?mem_id="+mem_id+"&gr_id="+gr_id;
-				
 	}
 	function refusal1(memid){
 		var gr_id ="${ grid }";
@@ -40,14 +28,12 @@
 		var rst = confirm("그룹을 해체하시겠습니까?");
 		var gr_id = "${grid}";
 		
-		alert(gr_id);
-		
 		if(rst){
 			location.href = "./groupDelete.do?gr_id="+gr_id;
+			alert("그룹이 삭제 되었습니다.");
 		}
 	}
 	function groupMemAdd(){
-// 		window.open("./grListChild.do?gr_id="+grid, "childForm", "width=570, height=350, resizable = no, scrollbars = no");
 		window.open("./groupSend.do", "sendForm", "width=570, height=350, resizable = no, scrollbars = no");
 	}
 	

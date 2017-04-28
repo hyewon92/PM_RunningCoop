@@ -28,20 +28,11 @@
 	WHERE GR_ID = #{gr_id}
 	</delete>
 	
-	<select id="grApplySelectGr" parameterType="java.lang.String" resultType="java.util.Map">
-	SELECT G.GR_ID, G.GR_NAME, M.MEM_NAME, TO_CHAR(G.GR_REGDATE, 'YYYYMMDD') GR_REGDATE
-	FROM RC_GROUP G, RC_MEMBER M
-	WHERE G.GR_APPYN = 'N' 
-    AND M.MEM_ID = (SELECT GM.MEM_ID FROM RC_GROUPMEM GM WHERE GM.GR_ID = G.GR_ID AND GM.GR_LEVEL = 'GM')
-  	AND G.GR_DELYN = 'N' AND G.GR_NAME LIKE 	'%'||#{gr_name}||'%'
-	</select>
-	
 	<select id="grApplySelectGroup" parameterType="java.lang.String" resultType="java.util.Map">
 	SELECT  G.GR_NAME, M.MEM_NAME, G.GR_GOAL, TO_CHAR(G.GR_REGDATE, 'YYYY/MM/DD') GR_REGDATE
 	FROM RC_GROUP G, RC_MEMBER M
   	WHERE G.GR_ID = #{gr_id} AND M.MEM_ID = 
     (SELECT GM.MEM_ID FROM RC_GROUPMEM GM WHERE GM.GR_ID = G.GR_ID AND GM.GR_LEVEL = 'GM')
 	</select>
-		
 	
 </mapper>

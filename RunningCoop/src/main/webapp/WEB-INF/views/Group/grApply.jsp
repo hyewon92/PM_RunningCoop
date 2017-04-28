@@ -17,8 +17,9 @@
 	}
 	function test01(){
 		$("#aa").submit(function(){
-			var box = document.getElementsByName("gr_id");
-			$(this).attr("action","grApplyYse.do");
+			var box = document.getElementsByName("gr_id").checked;
+			alert(box);
+// 			$(this).attr("action","grApplyYse.do");
 		});
 	}
 	function test02(){

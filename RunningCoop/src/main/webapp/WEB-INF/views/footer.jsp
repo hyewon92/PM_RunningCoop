@@ -57,7 +57,6 @@
    String userId = (String)session.getAttribute("mem_id");
 %>
 <input type = "button" value = "그룹선택(관리)" onclick = "location.href='./myGrSelect.do?mem_id=<%=userId%>'">
-<input type = "button" value = "그룹생성" onclick = "openChild()">
 <input type = "button" value = "문의게시판" onclick = "location.href = './qnaList.do'"> 
 <input type = "button" value = "공지게시판" onclick = "location.href = './noticeList.do'">
 <input type = "button" value = "프로젝트" onclick = "location.href = './iProSelect.do'">

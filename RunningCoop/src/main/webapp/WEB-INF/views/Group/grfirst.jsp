@@ -21,6 +21,5 @@ first페이지
 	<input type="submit" value="그룹검색"/>
 </div>
 </form>
-
 </body>
 </html>
