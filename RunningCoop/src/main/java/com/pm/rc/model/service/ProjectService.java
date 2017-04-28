@@ -25,7 +25,7 @@ public interface ProjectService {
 	public List<ProjectDto> myProSelect(String mem_id);
 	
 	/**
-	 * 내가 완료한 프로젝트
+	 * 내가 완료한 프로젝트 건수
 	 * @param mem_id 회원아이디
 	 * @return List&lt;ProjectDto&gt;
 	 * @author 김혜원
@@ -33,7 +33,21 @@ public interface ProjectService {
 	public Map<String, String> myDidPrSelect(String mem_id);
 	
 	/**
-	 * 내가 진행중인 프로젝트
+	 * 내가 완료한 그룹 프로젝트 리스트
+	 * @param mem_id
+	 * @return
+	 */
+	public List<Map<String, String>> myDidGPrListSelect(String mem_id);
+	
+	/**
+	 * 내가 완료한 개인 프로젝트 리스트
+	 * @param mem_id
+	 * @return
+	 */
+	public List<Map<String, String>> myDidIPrListSelect(String mem_id);
+	
+	/**
+	 * 내가 진행중인 프로젝트 건수
 	 * @param mem_id 회원아이디
 	 * @return List&lt;ProjectDto&gt;
 	 * @author 김혜원
@@ -41,7 +55,21 @@ public interface ProjectService {
 	public Map<String, String> myDoingPrSelect(String mem_id);
 	
 	/**
-	 * 내가 해야 할 프로젝트
+	 * 내가 진행중인 그룹 프로젝트 리스트
+	 * @param mem_id
+	 * @return
+	 */
+	public List<Map<String, String>> myDoingGPrListSelect(String mem_id);
+	
+	/**
+	 * 내가 진행중인 개인 프로젝트 리스트
+	 * @param mem_id
+	 * @return
+	 */
+	public List<Map<String, String>> myDoingIPrListSelect(String mem_id);
+	
+	/**
+	 * 내가 해야 할 프로젝트 건수
 	 * @param mem_id 회원아이디
 	 * @return List&lt;ProjectDto&gt;
 	 * @author 김혜원
@@ -49,20 +77,42 @@ public interface ProjectService {
 	public Map<String, String> myTodoPrSelect(String mem_id);
 	
 	/**
+	 * 내가 해야 할 그룹 프로젝트 리스트
+	 * @param mem_id
+	 * @return
+	 */
+	public List<Map<String, String>> myTodoGPrListSelect(String mem_id);
+	
+	/**
+	 * 내가 해야 할 개인 프로젝트 리스트
+	 * @param mem_id
+	 * @return
+	 */
+	public List<Map<String, String>> myTodoIPrListSelect(String mem_id);
+	
+	/**
 	 * 시스템 전체  프로젝트 조회(검색)
 	 * @param pr_name 프로젝트명
 	 * @return List&lt;ProjectDto&gt;
 	 * @author 김혜원
 	 * */
-	public Map<String, String> allPrSearchSelect(String pr_name);
+	public List<Map<String, String>> allPrSearchSelect(Map<String, String> map);
 	
 	/**
-	 * 프로젝트명으로 검색 (내 프로젝트 목록에서 검색)
+	 * 프로젝트명으로 검색 (내 프로젝트 목록에서 그룹 프로젝트 검색)
 	 * @param map mem_id, pr_name을 받아서 검색
 	 * @return List&lt;ProjectDto&gt;
 	 * @author 김혜원
 	 * */
-	public Map<String, String> myPrSearchSelect(Map<String, String> map);
+	public List<Map<String, String>> myGPrSearchSelect(Map<String, String> map);
+	
+	/**
+	 * 프로젝트명으로 검색 (내 프로젝트 목록에서 개인 프로젝트 검색)
+	 * @param map mem_id, pr_name을 받아서 검색
+	 * @return List&lt;ProjectDto&gt;
+	 * @author 김혜원
+	 * */
+	public List<Map<String, String>> myIPrSearchSelect(Map<String, String> map);
 
 	/**
 	 * 프로젝트 상세정보 조회
