@@ -9,12 +9,8 @@
 		(SELECT TO_DATE(TO_CHAR(P.PR_ENDDATE, 'YYYYMMDD'), 'YYYYMMDD') - TO_DATE(TO_CHAR(SYSDATE, 'YYYYMMDD'), 'YYYYMMDD')
 			FROM DUAL) PR_ENDDATE
 		FROM RC_PROJECT P
-		WHERE P.PR_ID =
-		(SELECT GP.PR_ID FROM
-		RC_GRPRO GP WHERE GP.GR_ID = #{gr_id}
-		AND GP.PR_ID IN (SELECT PM.PR_ID
-		FROM RC_PROMEM PM WHERE PM.MEM_ID =
-		#{mem_id}))
+		WHERE P.PR_ID IN (SELECT GP.PR_ID FROM RC_GRPRO GP WHERE GP.GR_ID = #{gr_id}
+		AND GP.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id}))
 		AND P.PR_DELYN = 'N'
 	]]>
 	</select>
@@ -124,6 +120,30 @@
 		DELETE FROM RC_PROMEM 
   		WHERE MEM_ID = #{mem_id} AND PR_ID = #{pr_id} AND PR_LEVEL = 'PIM'
 	</delete>
+	
+	<update id="prMgrEdit_1" parameterType="java.util.Map">
+		UPDATE RC_PROMEM SET PR_LEVEL = 'PIM'
+		WHERE MEM_ID = (SELECT MEM_ID FROM RC_PROMEM WHERE PR_ID = #{pr_id} AND PR_LEVEL = 'PM')
+ 			AND PR_ID = #{pr_id}
+	</update>
+	
+	<update id="prMgrEdit_2" parameterType="java.util.Map">
+		UPDATE RC_PROMEM SET PR_LEVEL = 'PM'
+		WHERE MEM_ID = #{new_id} AND PR_ID = #{pr_id}
+	</update>
+	
+	<select id="memInfoSelect_1" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT M.MEM_ID, M.MEM_NAME, M.MEM_EMAIL, M.MEM_PHONE
+		FROM RC_MEMBER M
+		WHERE M.MEM_ID = #{mem_id}
+	</select>
+	
+	<select id="memInfoSelect_2" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT P.PR_ID, P.PR_NAME, P.PR_CONDITION
+		FROM RC_PROJECT P
+		WHERE P.PR_ID IN (SELECT GP.PR_ID FROM RC_GRPRO GP WHERE GP.GR_ID = #{gr_id})
+			AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id})
+	</select>
 
 
 </mapper>

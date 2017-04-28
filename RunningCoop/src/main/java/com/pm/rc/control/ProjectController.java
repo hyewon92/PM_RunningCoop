@@ -214,10 +214,9 @@ public class ProjectController {
 		value.put("pr_id", pr_id);
 		value.put("mem_id", mem_id);
 		
-		Map<String, String> pr_level = new HashMap<String, String>();
-		pr_level = service.myLevelSelect(value);
+		String pr_level = service.myLevelSelect(value);
 		
-		session.setAttribute("pr_level", pr_level.get("PR_LEVEL"));
+		session.setAttribute("pr_level", pr_level);
 
 		return "project/workList";
 	}
@@ -914,8 +913,73 @@ public class ProjectController {
 	@ResponseBody
 	public String commission_PM(HttpServletRequest request, HttpSession session){
 		String pr_id = request.getParameter("pr_id");
+		String new_id = request.getParameter("mem_id");
+		String mem_id = (String)session.getAttribute("mem_id");
+		
+		logger.info("=================== 프로젝트 담당자 위임 =======================");
+		logger.info("담당자 위임할 프로젝트 아이디 :"+pr_id);
+		logger.info("담당자 위임할 회원 아이디 : "+mem_id);
+		logger.info("=========================================================");
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("new_id", new_id);
+		map.put("pr_id", pr_id);
+		map.put("mem_id", mem_id);
+		
+		boolean isc = false;
+		isc = service.prMgrModify(map);
+		
+		if(isc){
+			session.removeAttribute("pr_level");
+			String pr_level = service.myLevelSelect(map);
+			session.setAttribute("pr_level", pr_level);
+			
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
+	// 그룹 내 멤버 정보 조회 : 멤버정보 조회
+	@RequestMapping(value="/view_MemberInfo_1.do", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, String> view_MemberInfo(HttpServletRequest request, HttpSession session){
 		String mem_id = request.getParameter("mem_id");
-		return null;
+		
+		logger.info("=================== 그룹 내 회원정보 조회 =======================");
+		logger.info("해당 회원의 아이디 :"+mem_id);
+		logger.info("=========================================================");
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("mem_id", mem_id);
+		
+		Map<String, String> info = new HashMap<String, String>();
+		
+		info = service.memInfoSelect_1(map);
+		
+		return info;
+	}
+	
+	// 그룹 내 멤버 정보 조회 : 프로젝트 정보 조회
+	@RequestMapping(value="/view_MemberInfo_2.do", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Map<String, String>> view_MemberInfo_2(HttpServletRequest request, HttpSession session){
+		String gr_id = (String)session.getAttribute("gr_id");
+		String mem_id = request.getParameter("mem_id");
+		
+		logger.info("===================== 참여 프로젝트 조회 =======================");
+		logger.info("해당 회원의 아이디 :"+mem_id);
+		logger.info("회원의 소속 그룹 아이디 : "+gr_id);
+		logger.info("=========================================================");
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("mem_id", mem_id);
+		map.put("gr_id", gr_id);
+		
+		List<Map<String, String>> prolist = null;
+		prolist = service.memInfoSelect_2(map);
+		
+		return prolist;
 	}
 	
 	// UUID 생성 메소드
