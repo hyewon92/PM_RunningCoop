@@ -171,46 +171,32 @@ public interface ProjectDao {
 	public boolean prMemDelete_2(String pr_id);
 	
 	/**
-	 * 프로젝트 진행률 수정 절차 1 (해당 프로젝트의 전체 업무리스트 조회)
+	 * 프로젝트 진행률 수정 절차 1 (해당 프로젝트의 전체 업무리스트의 진행률)
 	 * @param pr_id
 	 * @return (해당하는 프로젝트의 wk_id 리스트를 반환)
 	 */
 	public List<String> prRateEdit_1(String pr_id);
 	
 	/**
-	 * 프로젝트 진행률 수정 절차 2 (해당 업무의 총 하위 업무리스트 조회) 업무 수만큼 반복
+	 * 프로젝트 진행률 수정 절차 2 (업무 진행률 업데이트)
 	 * @param wk_id
 	 * @return
 	 */
-	public int prRateEdit_2(String wk_id);
-	
-	/**
-	 * 프로젝트 진행률 수정 절차 3 (완료된 하위 업무리스트 조회) 업무 수만큼 반복
-	 * @param wk_id
-	 * @return
-	 */
-	public int prRateEdit_3(String wk_id);
-	
-	/**
-	 * 구해진 프로젝트 진행률을 해당 프로젝트에 업데이트
-	 * @param pr_id
-	 * @return
-	 */
-	public boolean prRateEdit_4(String pr_id);
+	public boolean prRateEdit_2(Map<String, String> map);
 	
 	/**
 	 * 삭제할 프로젝트의 업무리스트 조회
 	 * @param map (pr_id를 담아 전송)
 	 * @return 해당하는 프로젝트의 wk_id리스트 반환
 	 */
-	public List<String> projectDelete_1(Map<String, String> map);
+	public List<String> projectDelete_1(String pr_id);
 	
 	/**
 	 * 해당하는 업무리스트에 포함된 첨부파일 리스트 조회 (조회결과로 실제 파일 삭제 service에서)
 	 * @param wk_id
 	 * @return
 	 */
-	public List<Map<String, GbAttachDto>> projectDelete_2(String wk_id);
+	public List<GbAttachDto> projectDelete_2(String wk_id);
 	
 	/**
 	 * 첨부파일 삭제
@@ -220,46 +206,53 @@ public interface ProjectDao {
 	public boolean projectDelete_3(String wk_id);
 	
 	/**
-	 * 하위업무 삭제
+	 * 업무 코멘트 삭제
 	 * @param wk_id
 	 * @return
 	 */
 	public boolean projectDelete_4(String wk_id);
 	
 	/**
+	 * 하위업무 삭제
+	 * @param wk_id
+	 * @return
+	 */
+	public boolean projectDelete_5(String wk_id);
+	
+	/**
 	 * 프로젝트의 업무 삭제
 	 * @param map
 	 * @return
 	 */
-	public boolean projectDelete_5(Map<String, String> map);
+	public boolean projectDelete_6(String pr_id);
 	
 	/**
 	 * 프로젝트 멤버 삭제
 	 * @param map
 	 * @return
 	 */
-	public boolean projectDelete_6(Map<String, String> map);
+	public boolean projectDelete_7(String pr_id);
 	
 	/**
 	 * 프로젝트 그룹 관계 삭제
 	 * @param map
 	 * @return
 	 */
-	public boolean projectDelete_7(Map<String, String> map);
+	public boolean projectDelete_8(String pr_id);
 	
 	/**
 	 * 프로젝트 멤버 카운트 조정
 	 * @param map
 	 * @return
 	 */
-	public boolean projectDelete_8(Map<String, String> map);
+	public boolean projectDelete_9(String pr_id);
 	
 	/**
 	 * 프로젝트 비활성화
 	 * @param map
 	 * @return
 	 */
-	public boolean projectDelete_9(Map<String, String> map);
+	public boolean projectDelete_10(String pr_id);
 	
 	/**
 	 * 프로젝트 내 권한 조회
@@ -281,5 +274,29 @@ public interface ProjectDao {
 	 * @return
 	 */
 	public List<Map<String, String>> memInfoSelect_2(Map<String, String> map);
+	
+	/**
+	 * 그룹 프로젝트 상태 조정 기능 : 진행중
+	 * @return
+	 */
+	public void editGProCondition_1(Map<String, String> map);
+	
+	/**
+	 * 그룹 프로젝트 상태 조정 기능 : 진행완료
+	 * @return
+	 */
+	public void editGProCondition_2(Map<String, String> map);
+	
+	/**
+	 * 그룹 프로젝트 상태 조정 기능 : 진행중
+	 * @return
+	 */
+	public void editIProCondition_1(String mem_id);
+	
+	/**
+	 * 그룹 프로젝트 상태 조정 기능 : 진행완료
+	 * @return
+	 */
+	public void editIProCondition_2(String mem_id);
 
 }

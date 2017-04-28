@@ -22,9 +22,14 @@ public class WorkListServiceImpl implements WorkListService {
 
 	@Autowired
 	private WorkListDao dao;
+	
+	@Autowired
+	private ProjectService proService;
 
 	@Override
 	public List<Map<String, String>> wkListSelect(Map<String, String> map) {
+		String pr_id = map.get("pr_id");
+		proService.prRateEdit(pr_id);
 		List<Map<String, String>> list = null;
 
 		if(map.get("wk_condition").equals("todo")){
