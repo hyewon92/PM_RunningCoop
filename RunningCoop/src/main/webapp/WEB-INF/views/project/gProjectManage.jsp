@@ -294,6 +294,28 @@
 		}
 	}
 	
+	<% String gr_id = (String)session.getAttribute("gr_id"); %>
+	// 프로젝트 해체 기능
+	function project_delete(){
+		var pr_id = $("#pr_id").val();
+		
+		$.ajax({
+			type : "POST",
+			url : "./project_Delete.do",
+			data : "pr_id="+pr_id,
+			async : false,
+			success : function(msg){
+				if(msg == "success"){
+					alert("프로젝트 삭제 성공");
+					location.href= "./gProSelect.do?gr_id="+"<%=gr_id%>";
+				} else {
+					alert("프로젝트 삭제 실패");
+					location.reload();
+				}
+			}
+		})
+	}
+	
 	
 	
 </script>
@@ -311,7 +333,7 @@
 		<input type="button" value="프로젝트 정보관리" onclick="view_info_manage()"/>
 		<input type="button" value="멤버 관리" onclick="view_mem_manage()"/>
 		<input type="button" value="팀 일정 관리" onclick="view_calendar_manage()"/>
-		<input type="button" value="프로젝트 삭제"/>
+		<input type="button" value="프로젝트 삭제" onclick="project_delete()"/>
 	</div>
 	<div id = "con_body">
 		<div class = "info_manage">
