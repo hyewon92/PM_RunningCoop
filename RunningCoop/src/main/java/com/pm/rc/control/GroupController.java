@@ -325,11 +325,18 @@ public class GroupController {
 	public String groupGoGo(){
 		return "account/grGogo";
 	}
+	
+	// WebSocket 채팅 ㄱㄱ
 	@RequestMapping(value="/socketOpen.do" , method=RequestMethod.GET)
 	public String socketOpen(){
 		logger.info("socketOpen 소켓 화면 이동");
 		return "socket";
-		
+	}
+	
+	@RequestMapping(value="/socketOpen2.do" , method=RequestMethod.GET)
+	public String socketOpen2(){
+		logger.info("socketOpen 소켓 화면 이동 2");
+		return "socket2";
 	}
 
 }

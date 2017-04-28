@@ -39,10 +39,10 @@
                                          }
                                      })
                                  );
-                  }
+            	      }
                });
             },
-            minLength : 1,
+            minLength : 2,
             select : function ( event , ui){
             $("#gr_name").val(ui.item.label);
             }
