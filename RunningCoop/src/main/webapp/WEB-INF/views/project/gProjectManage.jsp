@@ -120,7 +120,7 @@
 						if(msg[i].MEM_ID == '<%=mem_id%>'){
 							$(".mem_list").append("<p>(PM)"+msg[i].MEM_NAME+"</p>");
 						} else {
-							$(".mem_list").append("<p><input type='checkbox' name='mem_list' value=\""+msg[i].MEM_ID+"\">"+msg[i].MEM_NAME+"</p>");
+							$(".mem_list").append("<p><input type='checkbox' name='mem_id' value=\""+msg[i].MEM_ID+"\">"+msg[i].MEM_NAME+"</p>");
 						}
 					}
 				}
@@ -145,6 +145,7 @@
 						$("#invitable_Memlist").append("<p><input type='checkbox' name='mem_id' value='"+msg[i].mem_id+"'/>"+msg[i].mem_name+"</p>");
 					}
 					$("#invitable_Memlist").append("<input type='button' value='초대' onclick='inviteMem()'/>");
+					$("#invitable_Memlist").append("<input type='button' value='정보보기' onclick='view_meminfo()'/>");
 				}
 			}
 		})
@@ -181,7 +182,7 @@
 	// 멤버 강제 탈퇴 기능
 	function delete_mem(){
 		var pr_id = $("#pr_id").val();
-		var inputbox = $("input:checkbox[name=mem_list]:checked");
+		var inputbox = $("input:checkbox[name=mem_id]:checked");
 		var mem_list = new Array(inputbox.length);
 		
 		for (var i = 0; i < inputbox.length; i++){
@@ -211,26 +212,89 @@
 	// 담당자 위임 기능
 	function commission_mem(){
 		var pr_id = $("#pr_id").val();
-		var inputbox = $("input:checkbox[name=mem_list]:checked");
-		var mem_list = new Array(inputbox.length);
+		var inputbox = $("input:checkbox[name=mem_id]:checked");
 		
 		if(inputbox.length != 1){
 			alert("1명만 선택하세요!");
 			inputbox.attr("checked", false);
 		} else {
-			var mem_id = mem_list[0];
-			
-			$.ajax({
+			var mem_id = inputbox.eq(0).val();
+			 $.ajax({
 				type : "POST",
 				url : "./commissionPM.do",
 				data : {"pr_id": pr_id, "mem_id": mem_id},
 				async : false,
 				success : function(msg){
-					
+					if(msg == "fail"){
+						inputbox.attr("checked", false);
+						alert("담당자 위임에 실패했습니다. 다시 시도해주세요!");
+					} else {
+						location.href="./goProject.do?pr_id="+pr_id;
+					}
 				}
 			})
 		}
 	}
+	
+	// 멤버 정보 보기 기능
+	function view_meminfo(){
+		var inputbox = $("input:checkbox[name=mem_id]:checked");
+		
+		if(inputbox.length != 1){
+			alert("1명만 선택하세요!");
+			inputbox.attr("checked", false);
+		} else {
+			var mem_id = inputbox.eq(0).val();
+			
+			/* 회원의 기본정보 불러오기 */
+			$.ajax({
+				type : "POST",
+				url : "./view_MemberInfo_1.do",
+				data : "mem_id="+mem_id,
+				async : false,
+				success : function(msg){
+					$("#member_Information").children().remove();
+					$("#member_Information").append("<p> 회원 아이디 : "+msg.MEM_ID+"</p>");
+					$("#member_Information").append("<p> 회원 이름 : "+msg.MEM_NAME+"</p>");
+					$("#member_Information").append("<p> 회원 이메일 : "+msg.MEM_EMAIL+"</p>");
+					$("#member_Information").append("<p> 회원 전화번호 : "+msg.MEM_PHONE+"</p>");
+					inputbox.attr("checked", false);
+				}
+			})
+			
+			$.ajax({
+				type : "POST",
+				url : "./view_MemberInfo_2.do",
+				data : "mem_id="+mem_id,
+				async : false,
+				success : function(msg){
+					$("#member_Information").append("<h4>참여 프로젝트 : </h4>")
+					if (msg.length == 0){
+						$("#member_Information").append("<p> 참여한 프로젝트가 없습니다. </p>")
+					} else {
+						for(var i = 0; i < msg.length; i++){
+							
+							var pr_name = msg[i].PR_NAME;
+							var pr_id = msg[i].PR_ID;
+							var pr_condition = msg[i].PR_CONDITION;
+							
+							if(pr_condition == 'T'){
+								pr_condition = '진행예정';
+							} else if (pr_condition == 'I'){
+								pr_condition = '진행중';
+							} else if (pr_condition == 'C'){
+								pr_condition = '진행완료';
+							}
+							
+							$("#member_Information").append("<p><a>"+pr_name+"</a>("+pr_condition+")")
+						}
+					}
+				}
+			})
+		}
+	}
+	
+	
 	
 </script>
 </head>
@@ -277,9 +341,10 @@
 				<input type="button" value="멤버 초대" onclick="invite_memList()"/><br>
 				<input type="button" value="멤버 삭제" onclick="delete_mem()"/><br>
 				<input type="button" value="담당자 위임" onclick="commission_mem()"/><br>
-				<input type="button" value="멤버 정보 보기"/>
+				<input type="button" value="멤버 정보 보기" onclick="view_meminfo()"/>
 			</div>
 			<div id = "invitable_Memlist"></div>
+			<div id = "member_Information"></div>
 		</div>
 		<div class = "calendar_manage">
 			<div>

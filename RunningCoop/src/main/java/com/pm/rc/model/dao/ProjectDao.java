@@ -267,5 +267,19 @@ public interface ProjectDao {
 	 * @return
 	 */
 	public Map<String, String> myLevelSelect(Map<String, String> map);
+	
+	/**
+	 * 프로젝트 및 그룹 내 멤버 정보 조회
+	 * @param map
+	 * @return
+	 */
+	public Map<String, String> memInfoSelect_1(Map<String, String> map);
+	
+	/**
+	 * 프로젝트 및 그룹 내 멤버 정보 조회 : 그룹 내 참여한 프로젝트 조회
+	 * @param map
+	 * @return
+	 */
+	public List<Map<String, String>> memInfoSelect_2(Map<String, String> map);
 
 }

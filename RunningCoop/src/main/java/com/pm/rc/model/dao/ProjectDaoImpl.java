@@ -137,14 +137,14 @@ public class ProjectDaoImpl implements ProjectDao {
 
 	@Override
 	public boolean prMgrEdit_1(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		int num = sqlSession.update(NAMESPACE+"prMgrEdit_1", map);
+		return num > 0?true:false;
 	}
 
 	@Override
 	public boolean prMgrEdit_2(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		int num = sqlSession.update(NAMESPACE+"prMgrEdit_2", map);
+		return num > 0?true:false;
 	}
 
 	@Override
@@ -245,6 +245,16 @@ public class ProjectDaoImpl implements ProjectDao {
 	@Override
 	public Map<String, String> myLevelSelect(Map<String, String> map) {
 		return sqlSession.selectOne(NAMESPACE+"myLevelSelect", map);
+	}
+
+	@Override
+	public Map<String, String> memInfoSelect_1(Map<String, String> map) {
+		return sqlSession.selectOne(NAMESPACE+"memInfoSelect_1", map);
+	}
+
+	@Override
+	public List<Map<String, String>> memInfoSelect_2(Map<String, String> map) {
+		return sqlSession.selectList(NAMESPACE+"memInfoSelect_2", map);
 	}
 
 }

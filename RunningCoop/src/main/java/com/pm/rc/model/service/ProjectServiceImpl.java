@@ -213,8 +213,16 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public boolean prMgrModify(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean isc1 = false;
+		isc1 = dao.prMgrEdit_1(map);
+		boolean isc2 = false;
+		isc2 = dao.prMgrEdit_2(map);
+		
+		if( isc1 == true && isc2 == true){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
@@ -228,8 +236,20 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public Map<String, String> myLevelSelect(Map<String, String> map) {
-		return dao.myLevelSelect(map);
+	public String myLevelSelect(Map<String, String> map) {
+		Map<String, String> level = dao.myLevelSelect(map);
+		String pr_level = level.get("PR_LEVEL");
+		return pr_level;
+	}
+
+	@Override
+	public Map<String, String> memInfoSelect_1(Map<String, String> map) {
+		return dao.memInfoSelect_1(map);
+	}
+
+	@Override
+	public List<Map<String, String>> memInfoSelect_2(Map<String, String> map) {
+		return dao.memInfoSelect_2(map);
 	}
 
 }
