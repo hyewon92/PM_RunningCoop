@@ -68,13 +68,13 @@
 		<input type="hidden" name="mem_id" value="${ mem_id }" />
 			<div>
 				<span> 제목 </span>
-				<input type="textbox" name="sbr_title" />
+				<input type="text" name="sbr_title" />
 			</div>
 			<div>
 						<input type="checkbox" id="sbr_scryn" name="sbr_scryn" /><span>비밀글</span>
-						<input type="textbox" id="sbr_pw" name="sbr_pw" style="display: none" />
+						<input type="text" id="sbr_pw" name="sbr_pw" style="display: none" />
 			</div>			
-						<jsp:include page="daumOpenEditor.jsp" flush="false"></jsp:include>
+						<jsp:include page="../daumOpenEditor.jsp" flush="false"></jsp:include>
 			<fieldset id="file_attach_list">
 				<legend>첨부파일</legend>
 				<input type="file" id="file" name="sbr_name"/>

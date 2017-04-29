@@ -64,11 +64,11 @@ tr, th, td {
 		<div>
 		<input type="hidden" name="sbr_uuid" value="${ view.get('SBR_UUID') }"/>
 			<span>제목</span>
-			<input type="textbox" name="sbr_title" value="${ view.get('SBR_TITLE') }" />
+			<input type="text" name="sbr_title" value="${ view.get('SBR_TITLE') }" />
 		</div>
 		<div>
 						<input type="checkbox" id="sbr_scryn" name="sbr_scryn" /><span>비밀글</span>
-						<input type="textbox" id="sbr_pw" name="sbr_pw" style="display: none" />
+						<input type="text" id="sbr_pw" name="sbr_pw" style="display: none" />
 			</div>
 		<div>
 			<fieldset>
@@ -84,7 +84,7 @@ tr, th, td {
 			</fieldset>
 		</div>
 		
-		<jsp:include page="daumOpenEditor.jsp"></jsp:include>
+		<jsp:include page="../daumOpenEditor.jsp"></jsp:include>
 		
 		
 		<script>

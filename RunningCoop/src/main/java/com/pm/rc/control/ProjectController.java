@@ -71,6 +71,7 @@ public class ProjectController {
 	public String myProjectList(Model model, HttpServletRequest request, HttpSession session){
 
 		session.removeAttribute("pr_level");
+		session.removeAttribute("gr_id");
 
 		List<ProjectDto> list = null;
 		String mem_id = (String) session.getAttribute("mem_id");

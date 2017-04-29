@@ -94,6 +94,7 @@
 	<jsp:include page="../header.jsp" flush="false" />
 </div>
 <div id = "container">
+<input type="button" value="개인프로젝트로 가기" onclick="location.href='./iProSelect.do'"/>
 	<c:choose>
 		<c:when test="${ fn:length(list) == 0 }">
 			<p> 진행 중인 프로젝트가 없습니다</p>

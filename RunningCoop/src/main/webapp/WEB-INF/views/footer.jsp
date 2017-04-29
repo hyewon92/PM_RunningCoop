@@ -126,12 +126,22 @@
 			}
 		})
 	}
+  	
+  	<% String gr_id = (String)session.getAttribute("gr_id");%>
+  	function goProSelect(){
+  		var gr_id = "<%=gr_id%>";
+  		if(gr_id != "null"){
+  			location.href = "./gProSelect.do?gr_id="+gr_id;
+  		} else if (gr_id == "null"){
+  			location.href = "./iProSelect.do";
+  		}
+  	}
 </script>
 </head>
 <body>
 
 	<input type="button" value="프로젝트선택"
-		onclick="location.href = './iProSelect.do'">
+		onclick="goProSelect()">
 	<p id="doingPro"></p>
 	<p id="todoPro"></p>
 	<p id="donePro"></p>
