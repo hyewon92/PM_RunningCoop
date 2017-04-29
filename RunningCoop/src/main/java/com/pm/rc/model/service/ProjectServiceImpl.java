@@ -38,31 +38,62 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public Map<String, String> myDidPrSelect(String mem_id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.myDidPrSelect(mem_id);
 	}
 
 	@Override
 	public Map<String, String> myDoingPrSelect(String mem_id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.myDoingPrSelect(mem_id);
 	}
 
 	@Override
 	public Map<String, String> myTodoPrSelect(String mem_id) {
-		return null;
+		return dao.myToDoPrSelect(mem_id);
+	}
+	
+	@Override
+	public List<Map<String, String>> myDidGPrListSelect(String mem_id) {
+		return dao.myDidGPrListSelect(mem_id);
 	}
 
 	@Override
-	public Map<String, String> allPrSearchSelect(String pr_name) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Map<String, String>> myDidIPrListSelect(String mem_id) {
+		return dao.myDidIPrListSelect(mem_id);
 	}
 
 	@Override
-	public Map<String, String> myPrSearchSelect(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Map<String, String>> myDoingGPrListSelect(String mem_id) {
+		return dao.myDoingGPrListSelect(mem_id);
+	}
+
+	@Override
+	public List<Map<String, String>> myDoingIPrListSelect(String mem_id) {
+		return dao.myDoingIPrListSelect(mem_id);
+	}
+
+	@Override
+	public List<Map<String, String>> myTodoGPrListSelect(String mem_id) {
+		return dao.myTodoGPrListSelect(mem_id);
+	}
+
+	@Override
+	public List<Map<String, String>> myTodoIPrListSelect(String mem_id) {
+		return dao.myTodoIPrListSelect(mem_id);
+	}
+
+	@Override
+	public List<Map<String, String>> allPrSearchSelect(Map<String, String> map) {
+		return dao.allPrSearchSelect(map);
+	}
+	
+	@Override
+	public List<Map<String, String>> myGPrSearchSelect(Map<String, String> map) {
+		return dao.myGPrSearchSelect(map);
+	}
+
+	@Override
+	public List<Map<String, String>> myIPrSearchSelect(Map<String, String> map) {
+		return dao.myIPrSearchSelect(map);
 	}
 
 	@Override
@@ -347,5 +378,7 @@ public class ProjectServiceImpl implements ProjectService {
 	public String createUUID(){
 		return UUID.randomUUID().toString();
 	}
+
+	
 
 }
