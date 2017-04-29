@@ -20,7 +20,7 @@
 
 	<!-- 로그인 -->
 	<select id="loginPro" parameterType="java.util.Map" resultType="MemberDto">
-		SELECT MEM_ID, MEM_PW, MEM_NAME
+		SELECT MEM_ID, MEM_PW, MEM_NAME, MEM_LEVEL 
 		FROM RC_MEMBER
 		WHERE MEM_ID = #{mem_id}
 		AND MEM_PW = #{mem_pw} AND MEM_DELYN = 'N'

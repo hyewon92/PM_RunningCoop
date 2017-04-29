@@ -35,23 +35,10 @@
 	
 	function view_info_manage(){
 		$(".info_manage").css("display", "block");
-		$(".mem_manage").css("display", "none");
-		$(".calendar_manage").css("display", "none");
 		loadPage();
 	}
 	
-	function view_mem_manage(){
-		$(".info_manage").css("display", "none");
-		$(".calendar_manage").css("display", "none");
-		$(".mem_manage").css("display", "block");
-		loadMember();
-	}
 	
-	function view_calendar_manage(){
-		$(".mem_manage").css("display", "none");
-		$(".info_manage").css("display", "none");
-		$(".calendar_manage").css("display", "block");
-	}
 	
 	function loadPage(){
 		var chkyn = $("#searchYN").val();
@@ -93,21 +80,22 @@
 		})
 	}
 	
-	function loadMember(){
+	// 프로젝트 해체 기능
+	function project_delete(){
 		var pr_id = $("#pr_id").val();
 		
 		$.ajax({
 			type : "POST",
-			url : "./loadMember.do",
+			url : "./project_Delete.do",
 			data : "pr_id="+pr_id,
 			async : false,
 			success : function(msg){
-				if(msg.length == 0){
-					$(".mem_list").append("<p>멤버가 없습니다</p>");
+				if(msg == "success"){
+					alert("프로젝트 삭제 성공");
+					location.href= "./iProSelect.do";
 				} else {
-					for(var i = 0; i < msg.length; i++){
-						$(".mem_list").append("<p><input type='checkbox' name='mem_id' value=\""+msg[i].MEM_ID+"\">"+msg[i].MEM_NAME+"</p>");
-					}
+					alert("프로젝트 삭제 실패");
+					location.reload();
 				}
 			}
 		})
@@ -126,9 +114,7 @@
 	</div>
 	<div id = "con_side">
 		<input type="button" value="프로젝트 정보관리" onclick="view_info_manage()"/>
-		<input type="button" value="멤버 관리" onclick="view_mem_manage()"/>
-		<input type="button" value="팀 일정 관리" onclick="view_calendar_manage()"/>
-		<input type="button" value="프로젝트 삭제"/>
+		<input type="button" value="프로젝트 삭제" onclick="project_delete()"/>
 	</div>
 	<div id = "con_body">
 		<div class = "info_manage">
@@ -148,26 +134,6 @@
 				<option value="C">진행 완료</option>
 			</select><br/><br/>
 			<input type="button" value="수정" onclick="projectEdit()"/>
-		</div>
-		<div class = "mem_manage">
-			<div class = "mem_manage_con" id = "mem_list">
-				프로젝트 멤버 리스트<br/><br/>
-				<div class="mem_list"></div>
-			</div>
-			<div class="mem_manage_con" id = "mem_control" >
-				<input type="button" value="멤버 초대" onclick="invite_memList()"/><br>
-				<input type="button" value="멤버 삭제"/><br>
-				<input type="button" value="담당자 위임"/><br>
-				<input type="button" value="멤버 정보 보기"/>
-			</div>
-		</div>
-		<div class = "calendar_manage">
-			<div>
-				달력
-			</div>
-			<div>
-				세부일정 조회/추가
-			</div>
 		</div>
 	</div>
 </div>

@@ -36,6 +36,10 @@
 	<input type = "button" value = "회원가입" onclick = "goJoin()">
 	<input type = "button" value = "탈퇴하기" onclick = "goLeave()">
 	</div>
+	
+	<div>
+		<input type="button" value="관리자 로그인" onclick="location.href='./systemManagerLogin.do'"/>
+	</div>
 
 </body>
 </html>

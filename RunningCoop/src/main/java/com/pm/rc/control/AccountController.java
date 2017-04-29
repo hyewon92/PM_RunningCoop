@@ -35,7 +35,7 @@ public class AccountController {
 		logger.info("main실행");
 		return "account/main";
 	}
-	
+
 	//로그인 체크
 	@RequestMapping(value = "/ckLogin.do", method = RequestMethod.POST)
 	public String ckLogin(HttpServletRequest req, HttpSession session){
@@ -45,24 +45,53 @@ public class AccountController {
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("mem_id", mem_id);
 		map.put("mem_pw", mem_pw);
-		MemberDto dto = accountService.loginPro(map);
-		//그룹 검색 쿼리 추가해야 함
-		if(dto==null){
+		MemberDto dto = new MemberDto();
+		dto = accountService.loginPro(map);
+		
+		System.out.println(dto.getMem_id());
+		System.out.println(dto.getMem_name());
+		System.out.println(dto.getMem_level());
+		
+		if(dto != null){
+			if(dto.getMem_level().equals("Y")){
+				session.setAttribute("mem_id", dto.getMem_id());
+				session.setAttribute("mem_name", dto.getMem_name());
+				session.setAttribute("mem_level", dto.getMem_level());
+				return "sysManage/grApply";
+			} else {
+				session.setAttribute("mem_id", dto.getMem_id());
+				session.setAttribute("mem_name", dto.getMem_name());
+				return "account/loginAfter";
+			}
+		} else {
 			return "account/error/error";
-		}else{
-			session.setAttribute("mem_id", dto.getMem_id());
-			session.setAttribute("mem_name", dto.getMem_name());
-			return "account/loginAfter";
 		}
 	}
-	
+
+
+		/*//그룹 검색 쿼리 추가해야 함
+		if(dto == null){
+			return "account/error/error";
+		}else{
+			if(dto.getMem_level().equals("Y")){
+				session.setAttribute("mem_id", dto.getMem_id());
+				session.setAttribute("mem_name", dto.getMem_name());
+				session.setAttribute("mem_level", dto.getMem_level());
+				return "sysManage/grApply";
+			} else {
+				session.setAttribute("mem_id", dto.getMem_id());
+				session.setAttribute("mem_name", dto.getMem_name());
+				return "account/loginAfter";
+			}
+		}*/
+
 	//아이디 찾기(화면이동)
 	@RequestMapping(value = "/searchAccount.do")
 	public String searchAccount(){
 		logger.info("searchAccount 실행");
 		return "account/searchId";
 	}
-	
+
 	//아이디찾기
 	@RequestMapping(value = "/searchId.do", method = RequestMethod.POST)
 	public String searchId(Model model, HttpServletRequest req){
@@ -81,14 +110,14 @@ public class AccountController {
 			return "account/resultId";
 		}
 	}
-	
+
 	//비밀번호찾기(화면 이동)
 	@RequestMapping(value = "/searchPw.do")
 	public String searchPw(){
 		logger.info("searchPw 실행");
 		return "account/searchPw";
 	}
-	
+
 	//비밀번호찾기
 	@RequestMapping(value = "/resultPw.do", method = RequestMethod.POST)
 	public String resultPw(HttpServletRequest req){
@@ -97,7 +126,7 @@ public class AccountController {
 		String toMail = req.getParameter("mem_email");
 		return "redirect:/pwMailSending.do?title="+title+"&toMail="+toMail;
 	}
-	
+
 	//로그아웃
 	@RequestMapping(value = "/ckLogout.do", method = RequestMethod.GET)
 	public String ckLogout(HttpSession session){
@@ -105,7 +134,7 @@ public class AccountController {
 		session.invalidate();
 		return "account/main";
 	}
-	
+
 	//회원가입 페이지 접속
 	@RequestMapping(value = "/goJoin.do", method = RequestMethod.GET)
 	public String goJoin(){
@@ -128,7 +157,7 @@ public class AccountController {
 		}
 		return map;
 	}
-	
+
 	//본인인증 번호(세션) 삭제
 	@RequestMapping(value = "/removeIdentify.do")
 	@ResponseBody
@@ -138,7 +167,7 @@ public class AccountController {
 		session.removeAttribute("identifyNum");
 		System.out.println("삭제 후 인증번호:"+session.getAttribute("identifyNum"));
 	}
-	
+
 	//본인인증 번호 확인
 	@RequestMapping(value = "/ckIdentifyNum.do")
 	@ResponseBody
@@ -157,7 +186,7 @@ public class AccountController {
 		}
 		return map;
 	}
-	
+
 	//회원가입처리
 	@RequestMapping(value = "/chkJoin.do", method = RequestMethod.POST)
 	public String ckJoin(HttpSession session, MemberDto dto){
@@ -172,21 +201,21 @@ public class AccountController {
 			return "account/joinAfter";
 		}
 	}
-	
+
 	//회원가입 후 바로 메인화면 이동
 	@RequestMapping(value = "/firstLogin.do")
 	public String firstLogin(){
 		logger.info("firstLogin실행");
 		return "account/loginAfter";
 	}
-	
+
 	//탈퇴하기(페이지이동)
 	@RequestMapping(value = "/goLeave.do", method = RequestMethod.GET)
 	public String goLeave(HttpSession session, Model model){
 		logger.info("goLeave실행");
-//		String mem_id = (String)session.getAttribute("mem_id");
+		//		String mem_id = (String)session.getAttribute("mem_id");
 		return "account/goLeave";
-/*		//pm목록 보는 서비스(PM권한 위임)
+		/*		//pm목록 보는 서비스(PM권한 위임)
 		List<Map<String, String>> pmSearchList = accountService.levelPmSelect(mem_id);
 		//gm목록 보는 서비스(PM권한 위임)
 		List<Map<String, String>> gmSearchList = accountService.levelGmSelect(mem_id);
@@ -209,7 +238,7 @@ public class AccountController {
 			}
 		}*/
 	}
-	
+
 	//탈퇴 전 pm리스트 출력
 	@RequestMapping(value = "/viewListPm.do")
 	public String viewListPm(HttpSession session, Model model){
@@ -220,7 +249,7 @@ public class AccountController {
 		model.addAttribute("pmSearchList", pmSearchList);
 		return "account/listPmProject";
 	}
-	
+
 	//탈퇴 전 gm리스트 출력
 	@RequestMapping(value = "/viewListGm.do")
 	public String viewListGm(HttpSession session, Model model){
@@ -231,15 +260,15 @@ public class AccountController {
 		model.addAttribute("gmSearchList", gmSearchList);
 		return "account/listGmGroup";
 	}
-	
+
 	//탈퇴처리
 	@RequestMapping(value = "/leaveService.do")
 	public String leaveService(HttpSession session, HttpServletResponse resp){
 		logger.info("leaveService실행");
-		
+
 		resp.setContentType("text/html;charset:UTF-8");
 		resp.setHeader("Cache-Control", "no-cache");	
-		
+
 		//탈퇴전 gm,pm 재확인
 		String mem_id = (String)session.getAttribute("mem_id");
 		List<Map<String, String>> pmSearchList = accountService.levelPmSelect(mem_id);
@@ -262,10 +291,10 @@ public class AccountController {
 			}
 		}
 	}
-	
+
 	//서비스 탈퇴
-	
-/*	//GM위임하기
+
+	/*	//GM위임하기
 	@RequestMapping(value = "/giveGm.do", method = RequestMethod.POST)
 	public String giveGm(Model model, String gr_id){
 		logger.info("giveGm실행");
@@ -273,7 +302,7 @@ public class AccountController {
 		model.addAttribute("gr_id",gr_id);
 		return "account/grMemList";
 	}
-	*/
+	 */
 	//개인정보 수정(폼으로 이동)
 	@RequestMapping(value = "/writeModifyForm.do", method = RequestMethod.GET)
 	public String writeModify(Model model, String mem_id){
@@ -283,7 +312,7 @@ public class AccountController {
 		model.addAttribute("dto", dto);
 		return "account/writeModifyForm";
 	}
-	
+
 	//개인정보 수정
 	@RequestMapping(value = "/memInfoModify.do", method = RequestMethod.POST)
 	public String memInfoModify(MemberDto dto){

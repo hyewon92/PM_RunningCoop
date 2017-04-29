@@ -351,13 +351,13 @@ RUNM 뽑는 쿼리-->
 	</select>
 	
 	<select id="myTodoIPrListSelect" parameterType="java.lang.String" resultType="java.util.Map">
-		SELECT P.PR_ID, P.PR_NAME, M.MEM_NAME
+		SELECT P.PR_ID, P.PR_NAME, M.MEM_NAME, P.PR_CONDITION
 		FROM RC_PROJECT P, RC_MEMBER M
 		WHERE NOT P.PR_ID IN (SELECT GP.PR_ID FROM RC_GRPRO GP)
 		AND M.MEM_ID = (SELECT PM.MEM_ID FROM RC_PROMEM PM WHERE PM.PR_LEVEL = 'PM' AND PM.PR_ID = P.PR_ID)
-		AND P.PR_ID IN (SELECT PR_ID FROM RC_PROMEM WHERE MEM_ID = #{mem_id})
 		AND P.PR_DELYN = 'N'
 		AND P.PR_CONDITION = 'T'
+		AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id})
 	</select>
 	
 	<select id="allPrSearchSelect" parameterType="java.util.Map" resultType="java.util.Map">

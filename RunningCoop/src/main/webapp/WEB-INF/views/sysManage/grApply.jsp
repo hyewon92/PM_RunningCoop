@@ -41,6 +41,10 @@ cursor: pointer;
 <title>Insert title here</title>
 </head>
 <body>
+<div id = "header">
+	<jsp:include page="../sysHeader.jsp" flush="false"/>
+</div>
+<div id = "container">
 	<form id="aa" action="" method="post">
 	<table>
 	<tr>
@@ -69,6 +73,6 @@ cursor: pointer;
 	<input type="submit" value="그룹검색"/>
 </div>
 </form>
-
+</div>
 </body>
 </html>

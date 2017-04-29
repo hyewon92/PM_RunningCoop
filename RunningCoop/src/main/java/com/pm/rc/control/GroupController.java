@@ -242,47 +242,7 @@ public class GroupController {
 	      
 	}
 	
-	//그룹 생성 신청 리스트 출력함
-	@RequestMapping(value="/grApply.do")
-	public String groupApply(Model model){
-		logger.info("그룹생성신청리스트출력시작");
-		List<GroupDto> lists = managserService.grApplySelect(null);
-		model.addAttribute("Apply",lists);
-		return "Group/grApply";
-	}
 	
-	//그룹승인 리스트 검색하여 출력
-	@RequestMapping(value="/grApplySch.do")
-	public String groupApply(Model model ,String gr_name){
-		logger.info("그룹생성신청리스트출력시작");
-		List<GroupDto> lists = managserService.grApplySelect(gr_name);
-		model.addAttribute("Apply",lists);
-		return "Group/grApply";
-	}
-	
-	//그룹승인
-	@RequestMapping(value="/grApplyYse.do" , method=RequestMethod.POST)
-	public String grApplyYse(String[] gr_id){
-		logger.info("그룹생성승인시작");
-		managserService.grAppModify(gr_id);
-		return "redirect:/grApply.do";
-	}
-	//그룹거절
-	@RequestMapping(value="/grApplyNo.do" , method=RequestMethod.POST)
-	public String grApplyNo(String[] gr_id){
-		logger.info("그룹승인거절시작");
-		managserService.grDelete(gr_id);
-		return "redirect:/grApply.do";
-	}
-	
-	// 그룹 간략정보 확인하기
-	@RequestMapping(value="/groupInfoChild.do" )
-	public String groupInfoChild(String gr_id , Model model){
-		List<GroupDto> lists = managserService.grApplySelectGroup(gr_id);
-		model.addAttribute("info" , lists);
-		
-		return "Group/applyChild";
-	}
 	//오토컴플리트 처리
 	@RequestMapping(value="/autoauto.do" , method=RequestMethod.POST)
 	@ResponseBody

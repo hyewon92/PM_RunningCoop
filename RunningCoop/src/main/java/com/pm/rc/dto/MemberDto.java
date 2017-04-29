@@ -75,7 +75,7 @@ public class MemberDto {
 	}
 
 	public void setMem_level(String mem_level) {
-		this.mem_delYN = mem_level;
+		this.mem_level = mem_level;
 	}
 
 	public GroupWaitDto getGroupwaitdto() {
