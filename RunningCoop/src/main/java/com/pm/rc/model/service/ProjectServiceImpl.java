@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pm.rc.dto.GbAttachDto;
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.ProjectDto;
+import com.pm.rc.dto.ProjectPagingDto;
 import com.pm.rc.model.dao.ProjectDao;
 
 @Service
@@ -62,8 +63,8 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public List<Map<String, String>> myDoingGPrListSelect(String mem_id) {
-		return dao.myDoingGPrListSelect(mem_id);
+	public List<Map<String, String>> myDoingGPrListSelect(ProjectPagingDto prPaging) {
+		return dao.myDoingGPrListSelect(prPaging);
 	}
 
 	@Override
@@ -377,6 +378,11 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	public String createUUID(){
 		return UUID.randomUUID().toString();
+	}
+
+	@Override
+	public int myDoingGpTotalcount(String mem_id) {
+		return dao.myDoingGpTotalcount(mem_id);
 	}
 
 	

@@ -9,6 +9,7 @@
 <%
 	String userName = (String) session.getAttribute("mem_name");
 	String userId = (String) session.getAttribute("mem_id");
+	String gr_id = (String)session.getAttribute("gr_id");
 %>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -127,7 +128,7 @@
 		})
 	}
   	
-  	<% String gr_id = (String)session.getAttribute("gr_id");%>
+  	
   	function goProSelect(){
   		var gr_id = "<%=gr_id%>";
   		if(gr_id != "null"){
@@ -151,6 +152,7 @@
 		onclick="location.href = './qnaList.do'"><br/>
 	<input type="button" value="공지게시판"
 		onclick="location.href = './noticeList.do'"><br/>
+	<input type="button" onclick="location.href='./grselect.do?gr_id=<%=gr_id%>'" value="그룹관리"><br/> 
 	<form action="./allGrSelect.do" method="post">
 		<div class="ui-widget">
 			<input type="text" name="gr_name" id="gr_name" /> <input

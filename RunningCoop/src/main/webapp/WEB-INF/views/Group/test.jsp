@@ -39,7 +39,6 @@ function openChild(){
 		<tr><td>${grdto.gr_memCnt}</td></tr>
 		<tr><td>${grdto.gr_goal}</td></tr>
 		<tr><td>${grdto.gr_regDate}</td></tr>
-		<tr><td><a href="./grselect.do?gr_id=${grdto.gr_id}">그룹관리</a></td></tr>
 <%-- 			<td>${grdto.mem_name}</td> --%>
 	</table>
 	</c:forEach>

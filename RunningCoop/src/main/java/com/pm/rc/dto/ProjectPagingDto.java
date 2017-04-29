@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 // 1. PagingDto
-public class PagingDto {
+public class ProjectPagingDto {
 	
 	Logger logger = LoggerFactory.getLogger(ProjectPagingDto.class);
 
@@ -15,14 +15,9 @@ public class PagingDto {
 	private int pageStartNum;	// 출력할 페이지 시작 번호
 	private int listCnt;		// 출력할 리스트 갯수
 	private int total;			// 리스트 총 갯수
-	private String gr_name; 	// 검색값 
+	private String mem_id; 	// 검색값 
 
-	public String getGr_name() {
-		return gr_name;
-	}
-	public void setGr_name(String gr_name) {
-		this.gr_name = gr_name;
-	}
+	
 
 	{
 		logger.info("========================================================페이징DTO 초기화블럭 실행 시간 : "+(new Date())+"========================================================");
@@ -31,9 +26,9 @@ public class PagingDto {
 		pageStartNum = 1;
 		listCnt = 5;
 	}
-	
-//	public PagingDto(String string, String string2, String string3, String string4) {}
-	public PagingDto(String index, String pageStartNum, String listCnt , String gr_name) {
+
+	//	public PagingDto(String string, String string2, String string3, String string4) {}
+	public ProjectPagingDto(String index, String pageStartNum, String listCnt , String mem_id) {
 		logger.info("========================================================페이징DTO 생성자 호출 시간 : "+(new Date())+"========================================================");
 		if(index != null){
 			this.index = Integer.parseInt(index);
@@ -44,8 +39,8 @@ public class PagingDto {
 		if(listCnt != null){
 			this.listCnt = Integer.parseInt(listCnt);
 		}
-		if(gr_name != null){
-			this.gr_name = gr_name;
+		if(mem_id != null){
+			this.mem_id = mem_id;
 		}
 	}
 	
@@ -110,11 +105,21 @@ public class PagingDto {
 	public void setTotal(int total) {
 		this.total = total;
 	}
+
+	public String getMem_id() {
+		return mem_id;
+	}
+	
+	public void setMem_id(String mem_id) {
+		this.mem_id = mem_id;
+	}
+
 	@Override
 	public String toString() {
-		return "PagingDto [pageCnt=" + pageCnt + ", index=" + index
-				+ ", pageStartNum=" + pageStartNum + ", listCnt=" + listCnt
-				+ ", total=" + total + ", gr_name=" + gr_name + "]";
+		return "ProjectPagingDto [logger=" + logger + ", pageCnt=" + pageCnt
+				+ ", index=" + index + ", pageStartNum=" + pageStartNum
+				+ ", listCnt=" + listCnt + ", total=" + total + ", mem_id="
+				+ mem_id + "]";
 	}
 	
 }

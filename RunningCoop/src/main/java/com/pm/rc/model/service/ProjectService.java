@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.ProjectDto;
+import com.pm.rc.dto.ProjectPagingDto;
 
 public interface ProjectService {
 
@@ -59,7 +60,9 @@ public interface ProjectService {
 	 * @param mem_id
 	 * @return
 	 */
-	public List<Map<String, String>> myDoingGPrListSelect(String mem_id);
+	public List<Map<String, String>> myDoingGPrListSelect(ProjectPagingDto prPaging);
+	public int myDoingGpTotalcount(String mem_id);
+	
 	
 	/**
 	 * 내가 진행중인 개인 프로젝트 리스트

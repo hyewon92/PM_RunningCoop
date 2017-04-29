@@ -7,6 +7,7 @@
 <html>
 <head>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="./js/paging.js"></script>
 <script type="text/javascript">
 var openwin;
 	function openChild(val){
@@ -42,8 +43,6 @@ cursor: pointer;
 			</select>
 			</span>
 		</div>
-	G.GR_ID, G.GR_NAME, M.MEM_NAME FROM RC_GROUP G, RC_MEMBER M
-	
 	<form action="./allGrSelect.do" method="post" id='frmPaging'>
 			<table class="table table-bordered">
 				<tr>

@@ -27,7 +27,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.pm.rc.dto.GbAttachDto;
 import com.pm.rc.dto.MemberDto;
+import com.pm.rc.dto.PagingDto;
 import com.pm.rc.dto.ProjectDto;
+import com.pm.rc.dto.ProjectPagingDto;
 import com.pm.rc.dto.WorkCommentDto;
 import com.pm.rc.dto.WorkDetailDto;
 import com.pm.rc.dto.WorkListDto;
@@ -1078,8 +1080,13 @@ public class ProjectController {
 	
 	// 진행중인 프로젝트 목록 출력
 	@RequestMapping(value="/goDoingSelect.do", method=RequestMethod.GET)
-	public String goDoingSelect(HttpSession session, Model model){
+	public String goDoingSelect(HttpSession session, Model model , HttpServletRequest req){
 		String mem_id = (String)session.getAttribute("mem_id");
+		ProjectPagingDto prPaging = new ProjectPagingDto(req.getParameter("index"),
+														 req.getParameter("pageStartNum"),
+														 req.getParameter("listCnt"),
+														 mem_id);
+				
 		
 		logger.info("====================== 진행 중인 프로젝트 목록 조회 =========================");
 		logger.info("프로젝트 조회할 멤버 아이디 : "+mem_id);
@@ -1088,10 +1095,12 @@ public class ProjectController {
 		List<Map<String, String>> GPrlist = new ArrayList<Map<String, String>>();
 		List<Map<String, String>> IPrlist = new ArrayList<Map<String, String>>();
 		
-		GPrlist = service.myDoingGPrListSelect(mem_id);
+		GPrlist = service.myDoingGPrListSelect(prPaging);
+		prPaging.setTotal(service.myDoingGpTotalcount(mem_id));
 		IPrlist = service.myDoingIPrListSelect(mem_id);
 		
 		model.addAttribute("gPrList", GPrlist);
+		model.addAttribute("prPaging",prPaging);
 		model.addAttribute("iPrList", IPrlist);
 		
 		return "project/doingProList";

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.pm.rc.dto.GbAttachDto;
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.ProjectDto;
+import com.pm.rc.dto.ProjectPagingDto;
 
 @Repository
 public class ProjectDaoImpl implements ProjectDao {
@@ -60,8 +61,8 @@ public class ProjectDaoImpl implements ProjectDao {
 	}
 
 	@Override
-	public List<Map<String, String>> myDoingGPrListSelect(String mem_id) {
-		return sqlSession.selectList(NAMESPACE+"myDoingGPrListSelect", mem_id);
+	public List<Map<String, String>> myDoingGPrListSelect(ProjectPagingDto prPaging) {
+		return sqlSession.selectList(NAMESPACE+"myDoingGPrListSelect", prPaging);
 	}
 
 	@Override
@@ -298,10 +299,9 @@ public class ProjectDaoImpl implements ProjectDao {
 		sqlSession.update(NAMESPACE+"editIProCondition_2", mem_id);
 	}
 
-	
-
-	
-
-	
+	@Override
+	public int myDoingGpTotalcount(String mem_id) {
+		return sqlSession.selectOne(NAMESPACE+"countTotalpaging",mem_id);
+	}
 
 }
