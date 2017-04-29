@@ -1,10 +1,12 @@
 package com.pm.rc.control;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -178,24 +180,23 @@ public class AccountController {
 		return "account/loginAfter";
 	}
 	
-	//탈퇴하기-GM으로 소속된 그룹 출력(GM권한 위임)
+	//탈퇴하기(페이지이동)
 	@RequestMapping(value = "/goLeave.do", method = RequestMethod.GET)
 	public String goLeave(HttpSession session, Model model){
 		logger.info("goLeave실행");
-		String mem_id = (String)session.getAttribute("mem_id");
+//		String mem_id = (String)session.getAttribute("mem_id");
+		return "account/goLeave";
+/*		//pm목록 보는 서비스(PM권한 위임)
+		List<Map<String, String>> pmSearchList = accountService.levelPmSelect(mem_id);
+		//gm목록 보는 서비스(PM권한 위임)
 		List<Map<String, String>> gmSearchList = accountService.levelGmSelect(mem_id);
-		for(Map<String, String> map:gmSearchList){
-			System.out.println(map.get("GR_ID"));
-		}
-		if(gmSearchList.size()!=0){
-			model.addAttribute("gmSearchList", gmSearchList);
-			return "account/listGmGroup";
+		if(pmSearchList.size()!=0){
+			model.addAttribute("pmSearchList", pmSearchList);
+			return "account/listPmGroup";
 		}else{
-			//pm목록 보는 서비스(PM권한 위임)
-			List<Map<String, String>> pmSearchList = accountService.levelPmSelect(mem_id);
-			if(pmSearchList.size()!=0){
-				model.addAttribute("pmSearchList", pmSearchList);
-				return "account/listPmProject";
+			if(gmSearchList.size()!=0){
+				model.addAttribute("gmSearchList", gmSearchList);
+				return "account/listGmProject";
 			}else{
 				//탈퇴처리
 				boolean isc = accountService.memDelete(mem_id);
@@ -206,10 +207,65 @@ public class AccountController {
 					return "account/error/error";
 				}
 			}
+		}*/
+	}
+	
+	//탈퇴 전 pm리스트 출력
+	@RequestMapping(value = "/viewListPm.do")
+	public String viewListPm(HttpSession session, Model model){
+		logger.info("viewListPm실행");
+		String mem_id = (String)session.getAttribute("mem_id");
+		//pm목록 보는 서비스(PM권한 위임)
+		List<Map<String, String>> pmSearchList = accountService.levelPmSelect(mem_id);
+		model.addAttribute("pmSearchList", pmSearchList);
+		return "account/listPmProject";
+	}
+	
+	//탈퇴 전 gm리스트 출력
+	@RequestMapping(value = "/viewListGm.do")
+	public String viewListGm(HttpSession session, Model model){
+		logger.info("viewListGm실행");
+		String mem_id = (String)session.getAttribute("mem_id");
+		//pm목록 보는 서비스(PM권한 위임)
+		List<Map<String, String>> gmSearchList = accountService.levelGmSelect(mem_id);
+		model.addAttribute("gmSearchList", gmSearchList);
+		return "account/listGmGroup";
+	}
+	
+	//탈퇴처리
+	@RequestMapping(value = "/leaveService.do")
+	public String leaveService(HttpSession session, HttpServletResponse resp){
+		logger.info("leaveService실행");
+		
+		resp.setContentType("text/html;charset:UTF-8");
+		resp.setHeader("Cache-Control", "no-cache");	
+		
+		//탈퇴전 gm,pm 재확인
+		String mem_id = (String)session.getAttribute("mem_id");
+		List<Map<String, String>> pmSearchList = accountService.levelPmSelect(mem_id);
+		List<Map<String, String>> gmSearchList = accountService.levelGmSelect(mem_id);
+		if(pmSearchList.size()!=0||gmSearchList.size()!=0){
+			try {
+				resp.getWriter().print("<script>alert('PM/GM으로 소속된 프로젝트가 있습니다. 확인해주세요')</script>");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return "account/goLeave";
+		}else{
+			//탈퇴처리
+			boolean isc = accountService.memDelete(mem_id);
+			if(isc == true){
+				session.invalidate();
+				return "account/bye";
+			}else{
+				return "account/error/error";
+			}
 		}
 	}
 	
-	//GM위임하기
+	//서비스 탈퇴
+	
+/*	//GM위임하기
 	@RequestMapping(value = "/giveGm.do", method = RequestMethod.POST)
 	public String giveGm(Model model, String gr_id){
 		logger.info("giveGm실행");
@@ -217,7 +273,7 @@ public class AccountController {
 		model.addAttribute("gr_id",gr_id);
 		return "account/grMemList";
 	}
-	
+	*/
 	//개인정보 수정(폼으로 이동)
 	@RequestMapping(value = "/writeModifyForm.do", method = RequestMethod.GET)
 	public String writeModify(Model model, String mem_id){

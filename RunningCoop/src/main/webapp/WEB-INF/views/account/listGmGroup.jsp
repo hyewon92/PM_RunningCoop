@@ -23,13 +23,13 @@
 				<th>권한</th>
 				<th>위임하기</th>
 			</tr>
-	<%-- 		<c:choose>
+	 		<c:choose>
 				<c:when test="${fn:length(gmSearchList)==0}">
 					<tr>
-						<td colspan="4">그룹이 없습니다</td>
+						<td colspan="4">해당 그룹이 없습니다</td>
 					</tr>
 				</c:when>
-				<c:otherwise> --%>
+				<c:otherwise> 
 					<c:forEach var="gmList" items="${gmSearchList}">
 						<tr>
 							<td>${ gmList.get("GR_ID")}</td>
@@ -38,8 +38,8 @@
 							<td><input type = "button" value = "위임하기" onclick="location.href='./giveGm.do?gr_id=${gmList.get('GR_ID')}'"></td>
 						</tr>
 					</c:forEach>
-	<%-- 			</c:otherwise>
-			</c:choose> --%>
+	 			</c:otherwise>
+			</c:choose> 
 		</table>
 	</div>
 	

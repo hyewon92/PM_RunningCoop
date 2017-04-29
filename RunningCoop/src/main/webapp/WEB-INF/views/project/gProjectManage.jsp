@@ -52,8 +52,23 @@
 		loadMember();
 	}
 	
-	// 프로젝트 팀 일정 관리
+	// 프로젝트 팀 일정 관리(컨트롤러 실행)
 	function view_calendar_manage(){
+		var pr_id = $("#pr_id").val();
+		$.ajax({
+			type: "GET",
+			url: "./viewTeamSchedule.do",
+			data: "pr_id="+pr_id,
+			async: false,
+			success: function(msg){
+				showTeamCalendar(msg)
+			}
+		});
+	}
+	
+	//프로젝트 팀 일정 관리
+	function showTeamCalendar(msg){
+		
 		$(".mem_manage").css("display", "none");
 		$(".info_manage").css("display", "none");
 		$(".calendar_manage").css("display", "block");
@@ -370,7 +385,7 @@
 		</div>
 		<div class = "calendar_manage">
 			<div>
-				달력
+				<%-- <jsp:include page="../schedule/teamCalendar.jsp" flush="false"/> --%>
 			</div>
 			<div>
 				세부일정 조회/추가

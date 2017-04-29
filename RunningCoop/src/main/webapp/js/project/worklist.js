@@ -18,7 +18,6 @@
 		 function changeProgress(val){
 			 var progress = parseInt(val);
 			 var elem = $("#partProgress");
-			 alert(elem.html());
 			 var id = setInterval(frame, 10);
 			 
 			 function frame(){

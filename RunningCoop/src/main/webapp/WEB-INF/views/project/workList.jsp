@@ -82,8 +82,8 @@
 						</c:when>
 						<c:otherwise>
 							<c:forEach var="todo" items="${ todo }">
-								<span onclick="viewWork('${ todo.get('WK_ID') }')"> <input
-									type="hidden" value="${ todo.get('WK_ID') }" /> ${ todo.get('WK_TITLE') }/(${ todo.get('MEM_NAME') })/${ todo.get('WK_PRORATE') }%
+								<span onclick="viewWork('${ todo.get('WK_ID') }', 0)"> 
+								<input type="hidden" value="${ todo.get('WK_ID') }" /> ${ todo.get('WK_TITLE') }/(${ todo.get('MEM_NAME') })/${ todo.get('WK_PRORATE') }%
 								</span>
 								<input type="button" value="수정"
 									onclick="workEdit('${ todo.get('WK_ID') }', '${ todo.get('WK_TITLE') }', '${ todo.get('WK_ENDDATE') }', '${ todo.get('MEM_ID') }')" />
@@ -126,8 +126,8 @@
 						</c:when>
 						<c:otherwise>
 							<c:forEach var="done" items="${ done }">
-								<span onclick="viewWork('${ done.get('WK_ID') }')"> <input
-									type="hidden" value="${ done.get('WK_ID') }" /> ${ done.get("WK_TITLE") }/(${ done.get("MEM_NAME") })/${ done.get("WK_PRORATE") }%
+								<span onclick="viewWork('${ done.get('WK_ID') }', '${ done.get('WK_PRORATE') }')"> 
+								<input type="hidden" value="${ done.get('WK_ID') }" /> ${ done.get("WK_TITLE") }/(${ done.get("MEM_NAME") })/${ done.get("WK_PRORATE") }%
 								</span>
 								<br />
 							</c:forEach>
