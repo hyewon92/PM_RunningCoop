@@ -124,7 +124,7 @@
 			$("#newStartTotal").val(newStartTotal);
 			var newEndTotal = $("#sch_newEndDate").val()+" "+$("#sch_newEndTime").val();
 			$("#newEndTotal").val(newEndTotal);
-			if($("#newStartTotal")==""||$("#newEndTotal")==""){
+			if($("#newStartTotal").val()==""||$("#newEndTotal").val()==""||$("#newStartTotal").val()>$("#newEndTotal").val()){
 				return false;
 			}
 		});
@@ -135,7 +135,7 @@
 			$("#upStartTotal").val(upStartTotal);
 			var upEndTotal = $("#sch_upEndDate").val()+" "+$("#sch_upEndTime").val();
 			$("#upEndTotal").val(upEndTotal);
-			if($("#upStartTotal")==""||$("#upEndTotal")==""){
+			if($("#upStartTotal").val()==""||$("#upEndTotal").val()==""||$("#upStartTotal").val()>$("#upEndTotal").val()){
 				return false;
 			}
 		}); 
