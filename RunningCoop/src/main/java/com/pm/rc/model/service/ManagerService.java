@@ -64,7 +64,7 @@ public interface ManagerService {
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean noticeInsert(SystemBoardDto dto);
+	public boolean noticeInsert(Map<String, String> map);
 	
 	/**
 	 * 공지사항 수정
@@ -72,7 +72,7 @@ public interface ManagerService {
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean noticeModify(SystemBoardDto dto);
+	public boolean noticeModify(Map<String, String> map);
 	
 	/**
 	 * 공지사항 삭제

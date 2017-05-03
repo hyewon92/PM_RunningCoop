@@ -68,13 +68,18 @@ public class ManagerServiceimpl implements ManagerService {
 	}
 
 	@Override
-	public boolean noticeInsert(SystemBoardDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+	@Transactional
+	public boolean noticeInsert(Map<String, String> map) {
+		boolean isc = false;
+		if(map.get("satt_name")!=null){
+			isc = managerdao.noticeInsert_1(map);
+		}
+		isc = managerdao.noticeInsert_2(map);
+		return isc;
 	}
 
 	@Override
-	public boolean noticeModify(SystemBoardDto dto) {
+	public boolean noticeModify(Map<String, String> map) {
 		// TODO Auto-generated method stub
 		return false;
 	}
