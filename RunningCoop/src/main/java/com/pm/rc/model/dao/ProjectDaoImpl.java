@@ -51,8 +51,13 @@ public class ProjectDaoImpl implements ProjectDao {
 	}
 	
 	@Override
-	public List<Map<String, String>> myDidGPrListSelect(String mem_id) {
-		return sqlSession.selectList(NAMESPACE+"myDidGPrListSelect", mem_id);
+	public List<Map<String, String>> myDidGPrListSelect(ProjectPagingDto prPaging) {
+		return sqlSession.selectList(NAMESPACE+"myDidGPrListSelect", prPaging);
+	}
+	
+	@Override
+	public int createMyDidGprListTotalCount(String mem_id) {
+		return sqlSession.selectOne(NAMESPACE+"createMyDidGprListTotalCount",mem_id);
 	}
 
 	@Override
@@ -64,6 +69,11 @@ public class ProjectDaoImpl implements ProjectDao {
 	public List<Map<String, String>> myDoingGPrListSelect(ProjectPagingDto prPaging) {
 		return sqlSession.selectList(NAMESPACE+"myDoingGPrListSelect", prPaging);
 	}
+	
+	@Override
+	public int myDoingGpTotalcount(String mem_id) {
+		return sqlSession.selectOne(NAMESPACE+"countTotalpaging",mem_id);
+	}
 
 	@Override
 	public List<Map<String, String>> myDoingIPrListSelect(String mem_id) {
@@ -71,13 +81,18 @@ public class ProjectDaoImpl implements ProjectDao {
 	}
 
 	@Override
-	public List<Map<String, String>> myTodoGPrListSelect(String mem_id) {
-		return sqlSession.selectList(NAMESPACE+"myTodoGPrListSelect", mem_id);
+	public List<Map<String, String>> myTodoGPrListSelect(ProjectPagingDto prPaging) {
+		return sqlSession.selectList(NAMESPACE+"myTodoGPrListSelect", prPaging);
 	}
 
 	@Override
+	public int myTodoGPlistTotalCount(String mem_id) {
+		return sqlSession.selectOne(NAMESPACE+"createMytodoGPlistTotalCount",mem_id);
+	}
+	
+	@Override
 	public List<Map<String, String>> myTodoIPrListSelect(String mem_id) {
-		return sqlSession.selectList(NAMESPACE+"myTodoGPrListSelect", mem_id);
+		return sqlSession.selectList(NAMESPACE+"myTodoIPrListSelect", mem_id);
 	}
 	
 	@Override
@@ -298,10 +313,5 @@ public class ProjectDaoImpl implements ProjectDao {
 	public void editIProCondition_2(String mem_id) {
 		sqlSession.update(NAMESPACE+"editIProCondition_2", mem_id);
 	}
-
-	@Override
-	public int myDoingGpTotalcount(String mem_id) {
-		return sqlSession.selectOne(NAMESPACE+"countTotalpaging",mem_id);
-	}
-
+	
 }
