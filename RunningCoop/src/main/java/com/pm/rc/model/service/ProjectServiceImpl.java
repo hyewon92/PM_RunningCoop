@@ -53,8 +53,13 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 	
 	@Override
-	public List<Map<String, String>> myDidGPrListSelect(String mem_id) {
-		return dao.myDidGPrListSelect(mem_id);
+	public List<Map<String, String>> myDidGPrListSelect(ProjectPagingDto prPaging) {
+		return dao.myDidGPrListSelect(prPaging);
+	}
+	
+	@Override
+	public int createMyDidGprListTotalCount(String mem_id) {
+		return dao.createMyDidGprListTotalCount(mem_id);
 	}
 
 	@Override
@@ -66,6 +71,11 @@ public class ProjectServiceImpl implements ProjectService {
 	public List<Map<String, String>> myDoingGPrListSelect(ProjectPagingDto prPaging) {
 		return dao.myDoingGPrListSelect(prPaging);
 	}
+	
+	@Override
+	public int myDoingGpTotalcount(String mem_id) {
+		return dao.myDoingGpTotalcount(mem_id);
+	}
 
 	@Override
 	public List<Map<String, String>> myDoingIPrListSelect(String mem_id) {
@@ -73,8 +83,13 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public List<Map<String, String>> myTodoGPrListSelect(String mem_id) {
-		return dao.myTodoGPrListSelect(mem_id);
+	public List<Map<String, String>> myTodoGPrListSelect(ProjectPagingDto prPaging) {
+		return dao.myTodoGPrListSelect(prPaging);
+	}
+	
+	@Override
+	public int myTodoGPlistTotalCount(String mem_id) {
+		return dao.myTodoGPlistTotalCount(mem_id);
 	}
 
 	@Override
@@ -379,12 +394,5 @@ public class ProjectServiceImpl implements ProjectService {
 	public String createUUID(){
 		return UUID.randomUUID().toString();
 	}
-
-	@Override
-	public int myDoingGpTotalcount(String mem_id) {
-		return dao.myDoingGpTotalcount(mem_id);
-	}
-
-	
 
 }

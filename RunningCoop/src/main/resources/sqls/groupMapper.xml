@@ -208,4 +208,14 @@
 	<update id="grMemCountDelete" parameterType="java.lang.String">
 	UPDATE RC_GROUP SET GR_MEMCNT = 0 , GR_DELYN = 'Y' WHERE GR_ID = #{gr_id}
 	</update>
+	
+<!-- 	그룹관리자 신규관리자로 업데이트	 -->
+	<update id="newGrMgChange" parameterType="java.util.Map">
+	UPDATE RC_GROUPMEM SET GR_LEVEL = 'GM' WHERE MEM_ID = #{mem_id} 
+	</update>
+	
+<!-- 	그룹관리자 예전관리자 업데이트 -->
+	<update id="oldGrMaChange" parameterType="java.util.Map">
+	UPDATE RC_GROUPMEM SET GR_LEVEL = 'GIM' WHERE MEM_ID = #{mem_id2}
+	</update>
 </mapper>

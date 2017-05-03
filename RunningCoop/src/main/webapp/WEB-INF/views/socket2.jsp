@@ -8,11 +8,6 @@
 	<script type="text/javascript" 
 			src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript">
-	var ips = "";
-	$.get("http://ipaddress.urgulbook.com/",function(res){
-	    ips = res.IP;
-	},"jsonp");
-	
 		var ws = null ;
 		var url = null ;
 		var nick = null ; 

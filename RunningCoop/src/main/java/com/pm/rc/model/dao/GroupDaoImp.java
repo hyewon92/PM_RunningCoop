@@ -227,4 +227,16 @@ public class GroupDaoImp implements GroupDao{
 		return n>0? true:false;
 	}
 
+	@Override
+	public boolean newGrMgChange(Map<String, String> map) {
+		int n = sqlSession.update(NAMESPACE+"newGrMgChange",map);
+		return n>0? true:false;
+	}
+
+	@Override
+	public boolean oldGrMaChange(Map<String, String> map) {
+		int n = sqlSession.update(NAMESPACE+"oldGrMaChange",map);
+		return n>0? true:false;
+	}
+
 }

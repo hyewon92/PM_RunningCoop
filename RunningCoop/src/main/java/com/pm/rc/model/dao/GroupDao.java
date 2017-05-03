@@ -256,5 +256,17 @@ public interface GroupDao {
 	 * @author 라한솔
 	 */
 	public boolean groupDelete13(String gr_id);
+	
+	/**
+	 * 그룹관리자변경
+	 * @param mem_id , mem_id2
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean newGrMgChange(Map<String, String> map);
+	
+	
+	public boolean oldGrMaChange(Map<String, String> map);
+	
 }
 

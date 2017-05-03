@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html >
 <html>
+<% String mem_id = (String)session.getAttribute("mem_id"); %>
 <head>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
@@ -32,6 +33,11 @@
 			}
 		})
 	})
+	function groupManagerCh(){
+		var mem = "<%=mem_id%>";
+		alert(mem);
+		window.open("./createGrManagerCh.do?mem_id=<%=mem_id%>", "GroupManagerCh", "width=570, height=350, resizable = no, scrollbars = no");
+	}
 
 </script>
 <style type="text/css">
@@ -56,7 +62,7 @@ cursor: pointer;}
 			</tr>
 			<tr>
 				<td>${grSelect.MEM_NAME }</td>
-				<td></td>
+				<td><input type="button" value="관리자위임" onclick="groupManagerCh()"></td>
 			</tr>
 			<tr>
 				<td>${grSelect.GR_MEMCNT }</td>

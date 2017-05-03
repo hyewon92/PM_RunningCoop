@@ -210,6 +210,20 @@ public class GroupServiceImp implements GroupService{
 		return isc;
 	}
 
+	@Override
+	@Transactional
+	public boolean grManagerChange(Map<String, String> map) {
+		boolean isc = false;
+		String mem_id  = map.get("mem_id");
+		String mem_id2 = map.get("mem_id2");
+		System.out.println(mem_id+"ffff"+mem_id2+"affasd");
+		
+		isc = groupdao.newGrMgChange(map);
+		isc = groupdao.oldGrMaChange(map);
+		
+		return isc;
+	}
+
 
 
 }
