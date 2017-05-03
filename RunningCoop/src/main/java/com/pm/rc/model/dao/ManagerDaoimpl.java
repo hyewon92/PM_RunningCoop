@@ -78,9 +78,15 @@ public class ManagerDaoimpl implements ManagerDao {
 	}
 
 	@Override
-	public boolean noticeInsert(SystemBoardDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean noticeInsert_1(Map<String, String> map) {
+		int num = sqlSession.insert(NAMESPACE+"noticeInsert_1", map);
+		return num>0?true:false;
+	}
+	
+	@Override
+	public boolean noticeInsert_2(Map<String, String> map){
+		int num = sqlSession.insert(NAMESPACE+"noticeInsert_2", map);
+		return num>0?true:false;
 	}
 
 	@Override

@@ -64,10 +64,8 @@
 	<select id="openViewSelect" parameterType="java.lang.String"
 		resultType="java.util.Map">
 		SELECT SB.SBR_UUID, SB.MEM_ID, M.MEM_NAME, TO_CHAR(SB.SBR_REGDATE,
-		'YYYY/MM/DD') SBR_REGDATE,
-		SB.SBR_TITLE, SB.SBR_CONTENT
-		FROM RC_SYSBOARD
-		SB, RC_MEMBER M
+		'YYYY/MM/DD') SBR_REGDATE, SB.SBR_TITLE, SB.SBR_CONTENT, SB.SBR_REFER
+		FROM RC_SYSBOARD SB, RC_MEMBER M
 		WHERE M.MEM_ID = SB.MEM_ID AND SB.SBR_SCRYN = 'N' AND
 		SBR_UUID = #{sbr_uuid}
 	</select>
@@ -75,8 +73,7 @@
 	<!-- 비밀 게시글 보기 -->
 	<select id="scrViewSelect" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT SB.SBR_UUID, SB.MEM_ID, M.MEM_NAME, TO_CHAR(SB.SBR_REGDATE,
-		'YYYY/MM/DD') SBR_REGDATE,
-		SB.SBR_TITLE, SB.SBR_CONTENT
+		'YYYY/MM/DD') SBR_REGDATE, SB.SBR_TITLE, SB.SBR_CONTENT, SB.SBR_REFER
 		FROM RC_MEMBER M, RC_SYSBOARD SB
 		WHERE M.MEM_ID = SB.MEM_ID AND SB.SBR_SCRYN = 'Y' AND SB.SBR_UUID = #{sbr_uuid} AND SB.SBR_PW = #{sbr_pw}
 	</select>

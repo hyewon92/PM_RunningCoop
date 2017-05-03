@@ -42,7 +42,6 @@ public class UserSysBoardServiceImpl implements UserSysBoardService {
 	public Map<String, String> sysBoardViewSelect(Map<String, String> map) {
 		String pw = map.get("sbr_pw");
 		Map<String, String> view = new HashMap<String, String>();
-		Map<String, SbAttachDto> attach = new HashMap<String, SbAttachDto>();
 		if(pw == null){
 			view = sysBoardDao.openViewSelect(map);
 		} else if (pw != null){

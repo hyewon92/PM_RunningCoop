@@ -35,4 +35,16 @@
     (SELECT GM.MEM_ID FROM RC_GROUPMEM GM WHERE GM.GR_ID = G.GR_ID AND GM.GR_LEVEL = 'GM')
 	</select>
 	
+	<insert id="noticeInsert_1" parameterType="java.util.Map">
+		INSERT INTO RC_SYSATTACH (SATT_SEQ, SBR_UUID, SATT_NAME, SATT_SIZE, SATT_RNAME, SATT_PATH)
+		VALUES
+		(SYSATTACH_SEQ.NEXTVAL, #{sbr_uuid}, #{satt_name}, #{satt_size}, #{satt_rname}, #{satt_path})
+	</insert>
+	
+	<insert id="noticeInsert_2" parameterType="java.util.Map">
+		INSERT INTO RC_SYSBOARD (SBR_UUID, SBR_TITLE, SBR_CONTENT, MEM_ID, SBR_NOTICEYN, SBR_REFER)
+		VALUES
+		(#{sbr_uuid}, #{sbr_title}, #{sbr_content}, #{mem_id}, 'Y', (SELECT NVL(MAX(SBR_REFER)+1, 1) FROM RC_SYSBOARD))
+	</insert>
+	
 </mapper>

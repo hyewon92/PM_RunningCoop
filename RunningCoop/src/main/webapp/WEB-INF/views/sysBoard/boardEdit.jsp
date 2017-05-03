@@ -104,7 +104,7 @@ tr, th, td {
 				}
 			};
 
-			EditorCreator.convert(document.getElementsByName("sbr_content")[0],
+			EditorCreator.convert(document.getElementById("content"),
 					'daumOpenEditor/pages/template/daumOpenEditor.jsp',
 					function() {
 						var content = '${ view.get("SBR_CONTENT") }';

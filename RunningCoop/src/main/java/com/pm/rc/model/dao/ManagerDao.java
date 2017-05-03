@@ -66,11 +66,18 @@ public interface ManagerDao {
 	public boolean grAppModify(String gr_id);	
 	
 	/**
-	 * 공지사항 등록
+	 * 공지사항 등록 : 첨부파일 등록
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean noticeInsert(SystemBoardDto dto);
+	public boolean noticeInsert_1(Map<String, String> map);
+	
+	/**
+	 * 공지사항 등록 : 게시글 등록
+	 * @param map
+	 * @return
+	 */
+	public boolean noticeInsert_2(Map<String, String> map);
 	
 	/**
 	 * 공지사항 수정
