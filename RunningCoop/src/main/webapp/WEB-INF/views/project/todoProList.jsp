@@ -90,15 +90,15 @@
 		<td colspan = "5">개인프로젝트</td>
 	</tr>
 	<c:choose>
-		<c:when test="${ fn:length(iPrList) == 0 }">
+		<c:when test="${ fn:length(iProList) == 0 }">
 			<tr>
-				<td colspan="5">조회가능한 그룹 프로젝트가 없습니다</td>
+				<td colspan="5">조회가능한 개인 프로젝트가 없습니다</td>
 			</tr>
 		</c:when>
 		<c:otherwise>
-			<c:forEach var="ilist" items="${ iPrList }">
+			<c:forEach var="ilist" items="${ iProList }" varStatus="vs">
 				<tr>
-					<td></td>
+					<td>${ vs.count }</td>
 					<td>개인</td>
 					<td><span class = "pr_name" onclick="view_Detail('${ ilist.PR_ID}')">${ ilist.PR_NAME }</span></td>
 					<td>${ ilist.MEM_NAME }</td>

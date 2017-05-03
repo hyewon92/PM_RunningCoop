@@ -77,7 +77,7 @@ public class ProjectDaoImpl implements ProjectDao {
 
 	@Override
 	public List<Map<String, String>> myTodoIPrListSelect(String mem_id) {
-		return sqlSession.selectList(NAMESPACE+"myTodoGPrListSelect", mem_id);
+		return sqlSession.selectList(NAMESPACE+"myTodoIPrListSelect", mem_id);
 	}
 	
 	@Override

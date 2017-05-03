@@ -51,7 +51,7 @@
 <div id = "container">
 	게시글 보기
 <c:set var="view"  value="${ view }"/>
-<input type="hidden" id="session" value="user1<%-- ${ mem_id } --%>"/>
+<input type="hidden" id="session" value="${ mem_id }"/>
 <input type="hidden" id="mem_id" value="${ view.get('MEM_ID') }"/>
 <table>
 	<tr>
