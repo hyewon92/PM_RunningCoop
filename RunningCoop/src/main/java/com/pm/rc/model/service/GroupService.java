@@ -201,4 +201,11 @@ public interface GroupService {
 	 */
 	public boolean groupDelete(String gr_id);
 	
+	/**
+	 * 그룹 관리자 위임 
+	 * @param String mem_id , mem_id2
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean grManagerChange(Map<String, String> map);
 }

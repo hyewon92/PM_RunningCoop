@@ -298,5 +298,34 @@ public class GroupController {
 		logger.info("socketOpen 소켓 화면 이동 2");
 		return "socket2";
 	}
-
+	@RequestMapping(value="/createGrManagerCh.do",method=RequestMethod.GET)
+	public String createGrManagerCh(String mem_id, Model model, HttpSession session){
+		model.addAttribute("mem_id",mem_id);
+		String gr_id = (String)session.getAttribute("gr_id");
+		List<MemberDto> lists = service.grMemSelect(gr_id);
+		model.addAttribute("memlists" , lists);
+		
+		return "Group/grManagerCh";
+	}
+	
+	@RequestMapping(value="/grMgChange.do", method=RequestMethod.GET)
+	public String grMgChange(HttpServletRequest req, HttpSession session){
+		Map<String, String> map = new HashMap<String, String>();
+		String gr_id = (String)session.getAttribute("gr_id");
+		String m1 = req.getParameter("mem_id");
+		String m2 = req.getParameter("mem_id2");
+		System.out.println("m1======"+m1+"m2======"+m2);
+		
+		map.put("mem_id", req.getParameter("mem_id"));
+		map.put("mem_id2", req.getParameter("mem_id2"));
+		
+		boolean isc = service.grManagerChange(map);
+		
+		if(isc==true){
+			return "redirect:/grmodify.do?gr_id="+gr_id;
+		}else{
+			return "no";
+		}
+		
+	}
 }

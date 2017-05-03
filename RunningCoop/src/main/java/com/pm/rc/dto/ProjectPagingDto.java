@@ -15,7 +15,8 @@ public class ProjectPagingDto {
 	private int pageStartNum;	// 출력할 페이지 시작 번호
 	private int listCnt;		// 출력할 리스트 갯수
 	private int total;			// 리스트 총 갯수
-	private String mem_id; 	// 검색값 
+	private String mem_id; 	// 그룹,개인 프로젝트 검색할때 사용
+	private String pr_name; // 프로젝트 검색할때 사용
 
 	
 
@@ -28,7 +29,7 @@ public class ProjectPagingDto {
 	}
 
 	//	public PagingDto(String string, String string2, String string3, String string4) {}
-	public ProjectPagingDto(String index, String pageStartNum, String listCnt , String mem_id) {
+	public ProjectPagingDto(String index, String pageStartNum, String listCnt , String mem_id, String pr_name) {
 		logger.info("========================================================페이징DTO 생성자 호출 시간 : "+(new Date())+"========================================================");
 		if(index != null){
 			this.index = Integer.parseInt(index);
@@ -41,6 +42,9 @@ public class ProjectPagingDto {
 		}
 		if(mem_id != null){
 			this.mem_id = mem_id;
+		}
+		if(pr_name != null){
+			this.pr_name = pr_name;
 		}
 	}
 	
@@ -114,12 +118,20 @@ public class ProjectPagingDto {
 		this.mem_id = mem_id;
 	}
 
+	public String getPr_name() {
+		return pr_name;
+	}
+
+	public void setPr_name(String pr_name) {
+		this.pr_name = pr_name;
+	}
+
 	@Override
 	public String toString() {
 		return "ProjectPagingDto [logger=" + logger + ", pageCnt=" + pageCnt
 				+ ", index=" + index + ", pageStartNum=" + pageStartNum
 				+ ", listCnt=" + listCnt + ", total=" + total + ", mem_id="
-				+ mem_id + "]";
+				+ mem_id + ", pr_name=" + pr_name + "]";
 	}
 	
 }

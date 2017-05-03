@@ -17,6 +17,7 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -1082,10 +1083,11 @@ public class ProjectController {
 	@RequestMapping(value="/goDoingSelect.do", method=RequestMethod.GET)
 	public String goDoingSelect(HttpSession session, Model model , HttpServletRequest req){
 		String mem_id = (String)session.getAttribute("mem_id");
+		String pr_name = "";
 		ProjectPagingDto prPaging = new ProjectPagingDto(req.getParameter("index"),
 														 req.getParameter("pageStartNum"),
 														 req.getParameter("listCnt"),
-														 mem_id);
+														 mem_id,pr_name);
 				
 		
 		logger.info("====================== 진행 중인 프로젝트 목록 조회 =========================");
@@ -1108,8 +1110,13 @@ public class ProjectController {
 	
 	// 진행예정인 프로젝트 목록 출력
 	@RequestMapping(value="/goTodoSelect.do", method=RequestMethod.GET)
-	public String goTodoSelect(HttpSession session, Model model){
+	public String goTodoSelect(HttpSession session, Model model, HttpServletRequest req){
 		String mem_id = (String)session.getAttribute("mem_id");
+		String pr_name = "";
+		ProjectPagingDto prPaging = new ProjectPagingDto(req.getParameter("index"),
+														 req.getParameter("pageStartNum"),
+														 req.getParameter("listCnt"),
+														 mem_id, pr_name);
 		
 		logger.info("====================== 진행 예정인 프로젝트 목록 조회 =========================");
 		logger.info("프로젝트 조회할 멤버 아이디 : "+mem_id);
@@ -1118,10 +1125,12 @@ public class ProjectController {
 		List<Map<String, String>> GPrlist = new ArrayList<Map<String, String>>();
 		List<Map<String, String>> IPrlist = new ArrayList<Map<String, String>>();
 		
-		GPrlist = service.myTodoGPrListSelect(mem_id);
+		GPrlist = service.myTodoGPrListSelect(prPaging);
+		prPaging.setTotal(service.myTodoGPlistTotalCount(mem_id));
 		IPrlist = service.myTodoIPrListSelect(mem_id);
 		
 		model.addAttribute("gPrList", GPrlist);
+		model.addAttribute("prPaging",prPaging);
 		model.addAttribute("iProList", IPrlist);
 		
 		return "project/todoProList";
@@ -1129,8 +1138,13 @@ public class ProjectController {
 	
 	// 진행완료인 프로젝트 목록 출력
 	@RequestMapping(value="/goDoneSelect.do", method=RequestMethod.GET)
-	public String goDoneSelect(HttpSession session, Model model){
+	public String goDoneSelect(HttpSession session, Model model, HttpServletRequest req){
 		String mem_id = (String)session.getAttribute("mem_id");
+		String pr_name = "";
+		ProjectPagingDto prPaging = new ProjectPagingDto(req.getParameter("index"),
+														 req.getParameter("pageStartNum"),
+														 req.getParameter("listCnt"),
+														 mem_id, pr_name);
 		
 		logger.info("====================== 진행 완료인 프로젝트 목록 조회 =========================");
 		logger.info("프로젝트 조회할 멤버 아이디 : "+mem_id);
@@ -1139,10 +1153,12 @@ public class ProjectController {
 		List<Map<String, String>> GPrlist = new ArrayList<Map<String, String>>();
 		List<Map<String, String>> IPrlist = new ArrayList<Map<String, String>>();
 		
-		GPrlist = service.myDidGPrListSelect(mem_id);
+		GPrlist = service.myDidGPrListSelect(prPaging);
+		prPaging.setTotal(service.createMyDidGprListTotalCount(mem_id));
 		IPrlist = service.myDidIPrListSelect(mem_id);
 		
 		model.addAttribute("gPrList", GPrlist);
+		model.addAttribute("prPaging",prPaging);
 		model.addAttribute("iProList", IPrlist);
 		
 		return "project/doneProList";
@@ -1165,8 +1181,13 @@ public class ProjectController {
 		
 	// 전체 프로젝트 검색
 	@RequestMapping(value="/allPrSelect.do", method=RequestMethod.POST)
-	public String allPrSelect(HttpServletRequest request, Model model){
+	public String allPrSelect(HttpServletRequest request, Model model, HttpServletRequest req){
 		String pr_name = request.getParameter("pr_name");
+		String mem_id = "";
+		ProjectPagingDto prPaging = new ProjectPagingDto(req.getParameter("index"),
+														 req.getParameter("pageStartNum"),
+														 req.getParameter("listCnt"),
+														 mem_id, pr_name);
 		
 		logger.info("================== 전체 프로젝트 검색 목록 조회 ===================");
 		logger.info("조회할 프로젝트 명 : "+pr_name);

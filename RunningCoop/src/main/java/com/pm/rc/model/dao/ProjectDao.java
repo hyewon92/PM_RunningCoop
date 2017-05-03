@@ -36,7 +36,8 @@ public interface ProjectDao {
 	 * @param mem_id
 	 * @return
 	 */
-	public List<Map<String, String>> myDidGPrListSelect(String mem_id);
+	public List<Map<String, String>> myDidGPrListSelect(ProjectPagingDto prPaging);
+	public int createMyDidGprListTotalCount (String mem_id);
 	
 	/**
 	 * 내가 완료한 개인 프로젝트 리스트
@@ -79,7 +80,8 @@ public interface ProjectDao {
 	 * @param mem_id
 	 * @return
 	 */
-	public List<Map<String, String>> myTodoGPrListSelect(String mem_id);
+	public List<Map<String, String>> myTodoGPrListSelect(ProjectPagingDto prPaging);
+	public int myTodoGPlistTotalCount(String mem_id);
 	
 	/**
 	 * 내가 해야 할 개인 프로젝트 리스트

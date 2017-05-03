@@ -161,7 +161,6 @@
 		<p id="pr_enddate"></p>
 		<p id="pr_etc"></p>
 	</div>
-</div>
 <div id = "footer">
 	<jsp:include page="../footer.jsp" flush="false"/>
 </div>
