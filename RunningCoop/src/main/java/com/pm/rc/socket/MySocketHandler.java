@@ -22,11 +22,8 @@ public class MySocketHandler extends TextWebSocketHandler {
    private ArrayList<WebSocketSession> list ; 
    private Map<WebSocketSession,String> map = new HashMap<WebSocketSession,String>();
    
-   private ArrayList<String> memList;
-   
    public MySocketHandler() {
       list = new ArrayList<WebSocketSession>();
-      memList = new ArrayList<String>();
    }
    
 /*   public Session addSession(Session s, WebSocketSession session, HttpSession sysSession){
@@ -47,7 +44,7 @@ public class MySocketHandler extends TextWebSocketHandler {
       System.out.println("client session cnt : "+list.size()); 
       System.out.println("session connected : "+session.getId());
       map.put(session, "");
-      
+/*      
       Map<String, Object> mySession = session.getHandshakeAttributes();
       String myGrSession = (String)mySession.get("gr_id");
       String myIdSession = (String)mySession.get("mem_id");
@@ -56,14 +53,15 @@ public class MySocketHandler extends TextWebSocketHandler {
     	  Map<String, Object> memSession = session.getHandshakeAttributes();
     	  String gr_id = (String)memSession.get("gr_id");
           String mem_id = (String)memSession.get("mem_id");
-          if(!myIdSession.equals(mem_id)&&myGrSession.equals(gr_id)){
+          if(myGrSession.equals(gr_id)){
         	  memList.add(mem_id);
           }
       }
       JSONObject obj = new JSONObject();
       obj.put("memList", memList);
-      session.sendMessage(new TextMessage(obj.toString()));
+      session.sendMessage(new TextMessage(obj.toString()));*/
    }
+   
    @Override
    public void handleTextMessage(WebSocketSession session,TextMessage message)
    throws Exception {
@@ -73,12 +71,15 @@ public class MySocketHandler extends TextWebSocketHandler {
       Map<String, Object> mySession = session.getHandshakeAttributes();
       String myGrSession = (String)mySession.get("gr_id");
       
+      ArrayList<String> memList = new ArrayList<String>();;
+      
       if( msg != null && !msg.equals("") ) {
          if(msg.indexOf("#$nick_") > -1 ) {
             map.put(session, msg.replace("#$nick_", ""));
             for(WebSocketSession s : list) {
             	Map<String, Object> sessionMap = s.getHandshakeAttributes();
             	String otherGrSession = (String)sessionMap.get("gr_id");
+            	String otherMemSession = (String)sessionMap.get("mem_id");
             	System.out.println("myGrSession="+myGrSession);
             	System.out.println("otherGrSession"+otherGrSession);
                if( s!=session && myGrSession.equals(otherGrSession)) {
@@ -86,7 +87,13 @@ public class MySocketHandler extends TextWebSocketHandler {
                   new TextMessage("<font color='red' size='2px'>"+map.get(session)+" 님이 입장했습니다.</font>")
                   );
                }
+               if(myGrSession.equals(otherGrSession)){
+            	   memList.add(otherMemSession);
+               }
             }
+            JSONObject obj = new JSONObject();
+            obj.put("memList", memList);
+            session.sendMessage(new TextMessage(obj.toString()));
          }else {
             for(WebSocketSession s : list) {
             	Map<String, Object> sessionMap = s.getHandshakeAttributes();
@@ -112,7 +119,7 @@ public class MySocketHandler extends TextWebSocketHandler {
       for(WebSocketSession a : list) {
     	  Map<String, Object> sessionMap = a.getHandshakeAttributes();
     	  String otherGrSession = (String)sessionMap.get("gr_id");
-    	  if(mySession.equals(otherGrSession)){
+    	  if(myGrSession.equals(otherGrSession)){
     		  a.sendMessage(new TextMessage("<font color='blue' size='2px'>"+map.get(session)+"님이 퇴장했습니다 ("+now+")</font>"));
     	  }
       }
