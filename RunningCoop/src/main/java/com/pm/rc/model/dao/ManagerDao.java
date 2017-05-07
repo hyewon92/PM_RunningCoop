@@ -80,37 +80,35 @@ public interface ManagerDao {
 	public boolean noticeInsert_2(Map<String, String> map);
 	
 	/**
-	 * 공지사항 수정
+	 * 공지사항 수정 - 첨부파일 수정
+	 * @param map
+	 * @return boolean
+	 * @author 김혜원
+	 * */
+	public boolean noticeModify_1(Map<String, String> map);
+	
+	/**
+	 * 공지사항 수정 - 게시글 수정
+	 * @param map
+	 * @return
+	 */
+	public boolean noticeModify_2(Map<String, String> map);
+	
+	
+	/**
+	 * 문의 답글 등록 - 첨부파일 등록
 	 * @param dto SystemBoardDto객체
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean noticeModify(SystemBoardDto dto);
+	public boolean qnaReplyInsert_1(Map<String, String> map);
 	
 	/**
-	 * 공지사항 삭제
-	 * @param sbr_uuid 시스템게시글 번호
-	 * @return boolean
-	 * @author 김혜원
-	 * */
-	public boolean noticeDelete(String sbr_uuid);
-	
-
-	/**
-	 * 문의 게시글 조회
-	 * @return List&lt;SystemBoardDto&gt;
-	 * @author 김혜원
-	 * */
-	public List<SystemBoardDto> qnaListSelect();
-	
-	
-	/**
-	 * 문의 답글 등록
-	 * @param dto SystemBoardDto객체
-	 * @return boolean
-	 * @author 김혜원
-	 * */
-	public boolean qnaReplyInsert(SystemBoardDto dto);
+	 * 문의 답글 등록 - 게시글 등록
+	 * @param map
+	 * @return
+	 */
+	public boolean qnaReplyInsert_2(Map<String, String> map);
 	
 	/**
 	 * 문의 답글 수정

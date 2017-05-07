@@ -61,11 +61,12 @@
 					<td>관리자 도구 모음</td>
 					<td rowspan="7">
 						<h3>공지 게시판 게시글 작성 페이지</h3>
-						<form id="noticeWrite" action="./noticeWrite.do" method="post"
+						<form id="qnaRepleWrite" action="./qnaRepleWrite.do" method="post"
 							enctype="multipart/form-data">
 							<input type="hidden" name="mem_id" value="<%=mem_id %>" />
+							<input type="hidden" name="sbr_refer" value="${ sbr_refer }"/>
 							<div>
-								<span> 제목 </span><input type="text" name="sbr_title" />
+								<span> 제목 </span> <input type="text" name="sbr_title" />
 							</div>
 							<jsp:include page="../daumOpenEditor.jsp" flush="false"></jsp:include>
 							<fieldset id="file_attach_list">

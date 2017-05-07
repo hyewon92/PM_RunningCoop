@@ -90,27 +90,27 @@ public class ManagerDaoimpl implements ManagerDao {
 	}
 
 	@Override
-	public boolean noticeModify(SystemBoardDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean noticeModify_1(Map<String, String> map) {
+		int num = sqlSession.update(NAMESPACE+"noticeModify_1", map);
+		return num>0?true:false;
+	}
+	
+	@Override
+	public boolean noticeModify_2(Map<String, String> map){
+		int num = sqlSession.update(NAMESPACE+"noticeModify_2", map);
+		return num>0?true:false;
 	}
 
 	@Override
-	public boolean noticeDelete(String sbr_uuid) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean qnaReplyInsert_1(Map<String, String> map) {
+		int num = sqlSession.insert(NAMESPACE+"qnaReplyInsert_1", map);
+		return num>0?true:false;
 	}
-
+	
 	@Override
-	public List<SystemBoardDto> qnaListSelect() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean qnaReplyInsert(SystemBoardDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean qnaReplyInsert_2(Map<String, String> map){
+		int num = sqlSession.insert(NAMESPACE+"qnaReplyInsert_2", map);
+		return num>0?true:false;
 	}
 
 	@Override

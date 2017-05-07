@@ -20,6 +20,7 @@ table {
 
 tr, th, td {
 	border: 1px solid black;
+	display : 
 }
 </style>
 
@@ -30,10 +31,20 @@ tr, th, td {
 	
 	/* 비밀글 체크 시 비밀번호 입력가능한 인풋박스 출력 script */
 	$(document).ready(function() {
+		var scryn = $("#scryn").val();
+		if(scryn == 'Y'){
+			$("#sbr_scryn").attr("checked", true);
+		}
+		
+		var chkyn = $("#sbr_scryn").is(":checked");
+		if(chkyn == true){
+			$("#sbr_pw").css("display", "inline");
+		}
+		
 		$("#sbr_scryn").click(function() {
 			var chkyn = $(this).is(":checked");
 			if (chkyn == true) {
-				$("#sbr_pw").css("display", "block");
+				$("#sbr_pw").css("display", "inline");
 			} else if (chkyn == false) {
 				$("#sbr_pw").css("display", "none");
 			}
@@ -67,9 +78,13 @@ tr, th, td {
 			<input type="text" name="sbr_title" value="${ view.get('SBR_TITLE') }" />
 		</div>
 		<div>
-						<input type="checkbox" id="sbr_scryn" name="sbr_scryn" /><span>비밀글</span>
-						<input type="text" id="sbr_pw" name="sbr_pw" style="display: none" />
-			</div>
+			<input type="hidden" id="scryn" value="${ view.get('SBR_SCRYN') }"/>
+			<input type="checkbox" id="sbr_scryn" name="sbr_scryn" /><span>비밀글</span>
+			<input type="text" id="sbr_pw" name="sbr_pw" value="${ view.get('SBR_PW') }" style="display: none" />
+		</div>
+		<div>
+			<textarea id="content" name="sbr_content"></textarea>
+		</div>
 		<div>
 			<fieldset>
 				<legend>첨부파일</legend>
@@ -83,10 +98,6 @@ tr, th, td {
 					</p> 
 			</fieldset>
 		</div>
-		
-		<jsp:include page="../daumOpenEditor.jsp"></jsp:include>
-		
-		
 		<script>
 			var config = {
 				initializedId : "",
@@ -140,38 +151,12 @@ tr, th, td {
 
 		function setForm(editor) {
 			var i, input;
-			var form = editor.getForm();
-			var content = editor.getContent();
+	        var form = editor.getForm();
+	        var content = editor.getContent();
 
-			// 본문 내용을 필드를 생성하여 값을 할당하는 부분
-			var textarea = document.createElement('textarea');
-			textarea.name = 'sbr_content';
-			textarea.value = content;
-			form.createField(textarea);
+	        var field = document.getElementById("content");
+	        field.value = content;
 
-			var images = editor.getAttachments('image');
-			for (i = 0; i < images.length; i++) {
-				// existStage는 현재 본문에 존재하는지 여부
-				if (images[i].existStage) {
-					// data는 팝업에서 execAttach 등을 통해 넘긴 데이터
-					alert('attachment information - image[' + i + '] \r\n'
-							+ JSON.stringify(images[i].data));
-					input = document.createElement('input');
-					input.type = 'hidden';
-					input.name = 'attach_image';
-					input.value = images[i].data.imageurl; // 예에서는 이미지경로만 받아서 사용
-					form.createField(input);
-				}
-			}
-
-			var files = editor.getAttachments('file');
-			for (i = 0; i < files.length; i++) {
-				input = document.createElement('input');
-				input.type = 'hidden';
-				input.name = 'attach_file';
-				input.value = files[i].data.attachurl;
-				form.createField(input);
-			}
 			return true;
 		}
 	</script>

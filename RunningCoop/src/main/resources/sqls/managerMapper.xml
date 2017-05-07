@@ -47,4 +47,28 @@
 		(#{sbr_uuid}, #{sbr_title}, #{sbr_content}, #{mem_id}, 'Y', (SELECT NVL(MAX(SBR_REFER)+1, 1) FROM RC_SYSBOARD))
 	</insert>
 	
+	<update id="noticeModify_1" parameterType="java.util.Map">
+		UPDATE RC_SYSATTACH SET SATT_NAME = #{satt_name}, SATT_SIZE = #{satt_size}, SATT_PATH = #{satt_path}, SATT_RNAME = #{satt_rname}
+		WHERE SBR_UUID = #{sbr_uuid}
+	</update>
+	
+	<update id="noticeModify_2" parameterType="java.util.Map">
+		UPDATE RC_SYSBOARD SET SBR_TITLE = #{sbr_title}, SBR_CONTENT = #{sbr_content}
+		WHERE SBR_UUID = #{sbr_uuid}
+	</update>
+	
+	<insert id="qnaReplyInsert_1" parameterType="java.util.Map">
+		INSERT INTO RC_SYSATTACH (SATT_SEQ, SBR_UUID, SATT_NAME, SATT_SIZE, SATT_RNAME, SATT_PATH)
+		VALUES
+		(SYSATTACH_SEQ.NEXTVAL, #{sbr_uuid}, #{satt_name}, #{satt_size}, #{satt_rname}, #{satt_path})
+	</insert>
+	
+	<insert id="qnaReplyInsert_2" parameterType="java.util.Map">
+		INSERT INTO RC_SYSBOARD (SBR_UUID, SBR_TITLE, SBR_CONTENT, MEM_ID, SBR_NOTICEYN, SBR_REFER, SBR_STEP)
+		VALUES
+		(#{sbr_uuid}, #{sbr_title}, #{sbr_content}, #{mem_id}, 'Y', (SELECT NVL(MAX(SBR_REFER)+1, 1) FROM RC_SYSBOARD))
+	</insert>
+	
+	
+	
 </mapper>

@@ -30,7 +30,7 @@ public class sysManagerController {
 
 	@Autowired
 	private ManagerService service;
-	
+
 	@Autowired
 	private UserSysBoardService sservice;
 
@@ -85,106 +85,106 @@ public class sysManagerController {
 
 		return "Group/applyChild";
 	}
-	
+
 	// 공지 게시판 관리 페이지 이동
 	@RequestMapping(value="/sysNoticeMgr.do", method=RequestMethod.GET)
 	public String sysBoardManager(Model model){
-		
+
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-		
+
 		list = sservice.noticeListSelect();
-		
+
 		model.addAttribute("list", list);
-		
+
 		return "sysManage/sysNoticeMgr";
 	}
-	
+
 	// 공지 게시글 작성페이지 이동
 	@RequestMapping(value="/noticeWriteForm.do", method=RequestMethod.GET)
 	public String NoticeWriteForm(){
-		
+
 		logger.info("==================== 공지 게시글 작성 폼으로 이동 =====================");
-		
+
 		return "sysManage/sysNoticeWrite";
 	}
-	
+
 	// 공지 게시글 작성
 	@RequestMapping(value="/noticeWrite.do", method=RequestMethod.POST)
 	public String NoticeWriete(MultipartHttpServletRequest multipartRequest){
 		String sbr_title = multipartRequest.getParameter("sbr_title");
 		String sbr_content = multipartRequest.getParameter("sbr_content");
 		String mem_id = multipartRequest.getParameter("mem_id");
-		
+
 		//UUID 생성 메소드
 		String uuid = createUUID();
 		int indexnum = uuid.lastIndexOf("-");
 		String sbr_uuid = uuid.substring(indexnum+1);
-		
+
 		logger.info("===================== 공지 게시글 작성 =======================");
 		logger.info("작성할 게시글 uuid : "+sbr_uuid);
 		logger.info("게시글 제목 : "+sbr_title);
 		logger.info("관리자 아이디 : "+mem_id);
 		logger.info("게시글 내용 : "+sbr_content);
 		logger.info("========================================================");
-		
+
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("sbr_uuid", sbr_uuid);
-		
+
 		MultipartFile file = multipartRequest.getFile("satt_name");
-		
+
 		if (file != null){
 			String savePath = "C:\\RC_fileSave\\";
-			
+
 			String fuuid = createUUID();
 			int indexNum = fuuid.lastIndexOf("-");
-			
+
 			String oldFileName = file.getOriginalFilename();
 			String satt_size = ""+file.getSize();
-			
+
 			String newFileName = fuuid.substring(indexNum+1) + oldFileName;
-			
+
 			// 첨부파일 실제경로 저장
 			try {
 				file.transferTo(new File(savePath + newFileName));
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			logger.info("=============== 공지게시판 첨부파일 추가 ===================");
 			logger.info("첨부파일 명 : "+oldFileName);
 			logger.info("첨부파일 크기 : "+satt_size);
 			logger.info("첨부파일 경로 : "+savePath);
 			logger.info("첨부파일 실제이름 : "+newFileName);
 			logger.info("====================================================");
-			
+
 			map.put("satt_name", oldFileName);
 			map.put("satt_rname", newFileName);
 			map.put("satt_size", satt_size);
 			map.put("satt_path", savePath);
-			
+
 		}
-		
+
 		map.put("sbr_title", sbr_title);
 		map.put("sbr_content", sbr_content);
 		map.put("mem_id", mem_id);
-		
+
 		boolean isc = false;
 		isc = service.noticeInsert(map);
-		
+
 		if(isc){
 			System.out.println("공지게시판 게시글 등록 완료");
 		} else {
 			System.out.println("공지게시판 게시글 등록 실패");
 		}
-		
+
 		return "redirect:/sysNoticeMgr.do";
 	}
-	
+
 	// 공지 게시글 수정 폼 이동
 	@RequestMapping(value="/sysBoardEditMove.do", method=RequestMethod.GET)
 	public String noticeEditForm(HttpServletRequest request, Model model){
 		String sbr_uuid = request.getParameter("sbr_uuid");
-		
+
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("sbr_uuid", sbr_uuid);
 
@@ -196,11 +196,11 @@ public class sysManagerController {
 
 		model.addAttribute("view", view);
 		model.addAttribute("attach", attach);
-		
+
 		return "sysManage/sysBoardEdit";
 	}
-	
-	
+
+
 	// 공지 게시글 수정
 	@RequestMapping(value="/sysboardEdit.do", method=RequestMethod.POST)
 	public String noticeEdit(MultipartHttpServletRequest multipartRequest){
@@ -218,7 +218,7 @@ public class sysManagerController {
 		map.put("sbr_uuid", sbr_uuid);
 
 		MultipartFile file = multipartRequest.getFile("satt_name");
-		
+
 		logger.info(file.getOriginalFilename());
 
 		if (!file.getOriginalFilename().equals("")){
@@ -273,40 +273,206 @@ public class sysManagerController {
 		} else {
 			System.out.println("공지게시판 게시글 수정 실패");
 		}
-		
+
 		return "redirect:/viewNotice.do?sbr_uuid="+sbr_uuid;
 	}
-	
+
 	// 공지 게시글 보기
 	@RequestMapping(value="/viewNotice.do", method=RequestMethod.GET)
 	public String viewNotice(HttpServletRequest request, Model model){
-		
+
 		String sbr_uuid = request.getParameter("sbr_uuid");
-		
+
 		logger.info("================== 공지 게시글 보기 ==================");
 		logger.info("조회할 게시글 번호 : "+sbr_uuid);
 		logger.info("================================================");
-		
+
 		Map<String, String> uuid = new HashMap<String, String>();
 		uuid.put("sbr_uuid", sbr_uuid);
-		
+
 		Map<String, String> view = new HashMap<String, String>();
 		view = sservice.sysBoardViewSelect(uuid);
 		Map<String, String> attach = new HashMap<String, String>();
 		attach = sservice.sysAttachSelect(uuid);
-		
+
 		model.addAttribute("view", view);
+
+		if(attach != null){
+			model.addAttribute("attach", attach);
+		}
+
+		return "sysManage/sysBoardView";
+	}
+
+	// 공지 게시글 삭제
+	@RequestMapping(value="/sysboardDelete.do", method=RequestMethod.GET)
+	public String noticeDelete(HttpServletRequest request){
+		String sbr_uuid = request.getParameter("sbr_uuid");
+		Map<String, String> uuid = new HashMap<String, String>();
+		uuid.put("sbr_uuid", sbr_uuid);
+
+		Map<String, String> attach = null;
+		attach = sservice.sysAttachSelect(uuid);
+
+		if(attach != null){
+			String savePath = ""+attach.get("SATT_PATH");
+			String fileName = ""+attach.get("SATT_RNAME");
+
+			File file = new File(savePath+fileName);
+
+			file.delete();
+		}
+
+		boolean isc = false;
+		isc = sservice.qnaBoardDelete(sbr_uuid);
+
+		if(isc == true){
+			System.out.println("문의 게시글 삭제 성공");
+		} else {
+			System.out.println("문의 게시글 삭제 실패");
+		}
+
+		return "redirect:/sysNoticeMgr.do";
+	}
+
+	// 문의 게시판 관리 페이지 이동
+	@RequestMapping(value="/sysQnaMgr.do", method=RequestMethod.GET)
+	public String sysQnaManager(HttpServletRequest request, Model model){
 		
+		logger.info("====================== 문의 게시판 관리 페이지 이동 ========================");
+
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+
+		list = sservice.qnaListSelect();
+
+		model.addAttribute("list", list);
+
+		return "sysManage/sysQnaMgr";
+	}
+	
+	// 문의 게시판 게시글 조회
+	@RequestMapping(value="/viewQna.do", method=RequestMethod.GET)
+	public String sysQnaView(HttpServletRequest request, Model model){
+		
+		String sbr_uuid = request.getParameter("sbr_uuid");
+		
+		logger.info("================== 문의 게시글 보기 ==================");
+		logger.info("조회할 게시글 번호 : "+sbr_uuid);
+		logger.info("================================================");
+
+		Map<String, String> uuid = new HashMap<String, String>();
+		uuid.put("sbr_uuid", sbr_uuid);
+
+		Map<String, String> view = new HashMap<String, String>();
+		view = sservice.sysBoardViewSelect(uuid);
+		Map<String, String> attach = new HashMap<String, String>();
+		attach = sservice.sysAttachSelect(uuid);
+
+		model.addAttribute("view", view);
+
 		if(attach != null){
 			model.addAttribute("attach", attach);
 		}
 		
-		return "sysManage/sysBoardView";
+		return "sysManage/sysQnaView";
 	}
 	
-	// UUID 생성 메소드
-		public String createUUID(){
-			return UUID.randomUUID().toString();
+	// 답글 작성 폼으로 연결하기
+	@RequestMapping(value="/writeReply.do", method=RequestMethod.GET)
+	public String moveWriteRepleForm(HttpServletRequest request, Model model){
+		
+		String sbr_refer = request.getParameter("sbr_refer");
+		
+		logger.info("================== 문의 게시판 답글 작성 폼 ==================");
+		logger.info("답글 작성할 게시글 refer : "+sbr_refer);
+		logger.info("=====================================================");
+		
+		model.addAttribute("sbr_refer", sbr_refer);
+		
+		return "sysManage/sysRepleWrite";
+	}
+	
+	// 문의 게시판 답글 작성 처리
+	@RequestMapping(value="/qnaRepleWrite.do", method=RequestMethod.POST)
+	public String WriteQnaReple(MultipartHttpServletRequest multiRequest){
+		
+		String sbr_refer = multiRequest.getParameter("sbr_refer");
+		String sbr_title = multiRequest.getParameter("sbr_title");
+		String mem_id = multiRequest.getParameter("mem_id");
+		String sbr_content = multiRequest.getParameter("sbr_content");
+		
+		//UUID 생성 메소드
+		String uuid = createUUID();
+		int indexnum = uuid.lastIndexOf("-");
+		String sbr_uuid = uuid.substring(indexnum+1);
+		
+		logger.info("===================== 문의 게시판 답글 작성 =======================");
+		logger.info("작성할 게시글 uuid : "+sbr_uuid);
+		logger.info("답글 작성할 게시글 refer : "+sbr_refer);
+		logger.info("게시글 제목 : "+sbr_title);
+		logger.info("관리자 아이디 : "+mem_id);
+		logger.info("게시글 내용 : "+sbr_content);
+		logger.info("===========================================================");
+		
+		Map<String, String> map = new HashMap<String, String>();
+		
+		MultipartFile file = multiRequest.getFile("satt_name");
+
+		if (file != null){
+			String savePath = "C:\\RC_fileSave\\";
+
+			String fuuid = createUUID();
+			int indexNum = fuuid.lastIndexOf("-");
+
+			String oldFileName = file.getOriginalFilename();
+			String satt_size = ""+file.getSize();
+
+			String newFileName = fuuid.substring(indexNum+1) + oldFileName;
+
+			// 첨부파일 실제경로 저장
+			try {
+				file.transferTo(new File(savePath + newFileName));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+
+			logger.info("=============== 공지게시판 첨부파일 추가 ===================");
+			logger.info("첨부파일 명 : "+oldFileName);
+			logger.info("첨부파일 크기 : "+satt_size);
+			logger.info("첨부파일 경로 : "+savePath);
+			logger.info("첨부파일 실제이름 : "+newFileName);
+			logger.info("====================================================");
+
+			map.put("satt_name", oldFileName);
+			map.put("satt_rname", newFileName);
+			map.put("satt_size", satt_size);
+			map.put("satt_path", savePath);
+
 		}
+		
+		map.put("sbr_uuid", sbr_uuid);
+		map.put("sbr_title", sbr_title);
+		map.put("sbr_refer", sbr_refer);
+		map.put("sbr_content", sbr_content);
+		map.put("mem_id", mem_id);
+		
+		boolean isc = false;
+		
+		isc = service.qnaReplyInsert(map);
+		
+		if(isc){
+			System.out.println("문의 게시판 답글 작성 성공");
+		} else {
+			System.out.println("문의 게시판 답글 작성 실패");
+		}
+		
+		return "redirect:/sysQnaMgr.do";
+	}
+
+
+	// UUID 생성 메소드
+	public String createUUID(){
+		return UUID.randomUUID().toString();
+	}
 
 }

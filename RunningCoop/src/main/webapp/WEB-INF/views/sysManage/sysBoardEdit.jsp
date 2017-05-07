@@ -53,9 +53,7 @@ tr, th, td {
 									type="text" name="sbr_title" value="${ view.get('SBR_TITLE') }" />
 							</div>
 							<div>
-								<input type="checkbox" id="sbr_scryn" name="sbr_scryn" /><span>비밀글</span>
-								<input type="text" id="sbr_pw" name="sbr_pw"
-									style="display: none" />
+								<textarea name="sbr_content" id="content"></textarea>
 							</div>
 							<div>
 								<fieldset>
@@ -69,11 +67,10 @@ tr, th, td {
 									</p>
 								</fieldset>
 							</div>
-							<input type="hidden" id="sbr_content" value="${ view.get('SBR_CONTENT') }" />
 						</form>
 						<div>
 							<button onclick='saveContent()'>등록</button>
-						</div> <input type="button" value="목록으로" onclick="back()" />
+						</div> <input type="button" value="이전으로" onclick="back()" />
 					</td>
 				</tr>
 				<tr>
@@ -102,7 +99,7 @@ tr, th, td {
 			var config = {
 				initializedId : "",
 				wrapper : "tx_trex_container",
-				form : 'noticeEdit',
+				form : "noticeEdit",
 				txIconPath : "daumOpenEditor/images/icon/editor/",
 				txDecoPath : "daumOpenEditor/images/deco/contents/",
 				events : {
@@ -115,7 +112,7 @@ tr, th, td {
 				}
 			};
 
-			EditorCreator.convert(document.getElementById("sbr_content"),
+			EditorCreator.convert(document.getElementById("content"),
 					'daumOpenEditor/pages/template/daumOpenEditor.jsp',
 					function() {
 						var content = '${ view.get("SBR_CONTENT") }';
@@ -145,13 +142,11 @@ tr, th, td {
 
 			function setForm(editor) {
 				var i, input;
-				var form = editor.getForm();
-				var content = editor.getContent();
+		        var form = editor.getForm();
+		        var content = editor.getContent();
 
-				var textarea = document.createElement('textarea');
-				textarea.name = 'sbr_content';
-				textarea.value = content;
-				form.createField(textarea);
+		        var field = document.getElementById("content");
+		        field.value = content;
 
 				return true;
 			}

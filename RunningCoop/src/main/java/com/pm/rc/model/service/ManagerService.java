@@ -75,29 +75,12 @@ public interface ManagerService {
 	public boolean noticeModify(Map<String, String> map);
 	
 	/**
-	 * 공지사항 삭제
-	 * @param sbr_uuid 시스템게시글 번호
-	 * @return boolean
-	 * @author 김혜원
-	 * */
-	public boolean noticeDelete(String sbr_uuid);
-	
-
-	/**
-	 * 문의 게시글 조회
-	 * @return List&lt;SystemBoardDto&gt;
-	 * @author 김혜원
-	 * */
-	public List<SystemBoardDto> qnaListSelect();
-	
-	
-	/**
 	 * 문의 답글 등록
 	 * @param dto SystemBoardDto객체
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean qnaReplyInsert(SystemBoardDto dto);
+	public boolean qnaReplyInsert(Map<String, String> map);
 	
 	/**
 	 * 문의 답글 수정

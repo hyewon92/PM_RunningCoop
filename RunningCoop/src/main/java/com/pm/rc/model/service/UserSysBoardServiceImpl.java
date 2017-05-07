@@ -82,7 +82,9 @@ public class UserSysBoardServiceImpl implements UserSysBoardService {
 		boolean updateBoard = sysBoardDao.sysBoardUpdate(map);
 		boolean updateFile = false;
 		
-		if(map.get("satt_name")!=null){
+		String satt_name = map.get("satt_name");
+		
+		if(satt_name!=null){
 			updateFile = sysBoardDao.FileUpdate(map);
 		} else {
 			updateFile = true;
