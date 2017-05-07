@@ -1174,7 +1174,7 @@ public class ProjectController {
 			
 			List<Map<String, String>> lists = new ArrayList<Map<String, String>>();
 			
-			lists = service.allPrSearchSelect(map);
+			lists = service.allPrSearchSelect((ProjectPagingDto) map);
 			
 			return lists;
 		}
@@ -1193,14 +1193,14 @@ public class ProjectController {
 		logger.info("조회할 프로젝트 명 : "+pr_name);
 		logger.info("=========================================================");
 		
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("pr_name", pr_name);
 		
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		
-		list = service.allPrSearchSelect(map);
+		list = service.allPrSearchSelect(prPaging);
+		prPaging.setTotal(service.allPrSearchTotalCount(prPaging));
 		
 		model.addAttribute("list", list);
+		model.addAttribute("prPaging", prPaging);
 		
 		return "project/prSearchList";
 	}

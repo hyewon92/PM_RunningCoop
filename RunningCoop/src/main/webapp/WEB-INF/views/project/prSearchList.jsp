@@ -8,7 +8,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>프로젝트 검색 목록</title>
+<%@include file="/WEB-INF/views/Group/bootstrap.jsp"%>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="./js/paging.js"></script>
 <style type="text/css">
 	.pr_detail_view{
 		border : 1px dotted green;
@@ -62,7 +64,19 @@ function goSelectPro(){
 </div>
 <div id = "container">
 <h3>프로젝트 검색 목록</h3>
-<table>
+	<div id='select'>
+			<span> <select class='btn btn-primary' id='listCount' name='listCount'
+				onchange='listCnt();'>
+					<option>선택</option>
+					<option value='5' >5</option>
+					<option value='10'>10</option>
+					<option value='15'>15</option>
+					<option value='20'>20</option>
+			</select>
+			</span>
+		</div>
+	<form action="./allPrSelect.do" method="post" id='frmPaging'>
+<table class="table table-bordered">
 	<tr>
 		<th>번호</th>
 		<th>소속</th>
@@ -87,6 +101,29 @@ function goSelectPro(){
 		</c:otherwise>
 	</c:choose>
 </table>
+<!-- 5. paging view -->
+			<!--출력할 페이지번호, 출력할 페이지 시작 번호, 출력할 리스트 갯수 -->
+			<input type='hidden' name='index' id='index' value='${paging.index}'>
+			<input type='hidden' name='pageStartNum' id='pageStartNum' value='${paging.pageStartNum}'>
+			<input type='hidden' name='listCnt' id='listCnt' value='${paging.listCnt}'>		
+		<div class="center">
+				<ul class="pagination">
+					<!--맨 첫페이지 이동 -->
+					<li><a href='#' onclick='pagePre(${paging.pageCnt+1},${paging.pageCnt});'>&laquo;</a></li>
+					<!--이전 페이지 이동 -->
+					<li><a href='#' onclick='pagePre(${paging.pageStartNum},${paging.pageCnt});'>&lsaquo;</a></li>
+					<!--페이지번호 -->
+					<c:forEach var='i' begin="${paging.pageStartNum}" end="${paging.pageLastNum}" step="1">
+						<li><a href='#' onclick='pageIndex(${i});'>${i}</a></li>
+					</c:forEach>
+					<!--다음 페이지 이동 -->
+					<li><a href='#' onclick='pageNext(${paging.pageStartNum},${paging.total},${paging.listCnt},${paging.pageCnt});'>&rsaquo;</a></li>
+					<!--마지막 페이지 이동 -->
+					<li><a href='#' onclick='pageLast(${paging.pageStartNum},${paging.total},${paging.listCnt},${paging.pageCnt});'>&raquo;</a></li>
+				</ul>
+			</div>
+		</form>
+	</div>
 <div class="pr_detail_view">
 	<input type="button" value="닫기" onclick="goSelectPro()"/>
 		<p id="pr_name"></p>
@@ -96,7 +133,6 @@ function goSelectPro(){
 		<p id="pr_enddate"></p>
 		<p id="pr_etc"></p>
 	</div>
-</div>
 <div id = "footer">
 	<jsp:include page="../footer.jsp" flush="false"/>
 </div>

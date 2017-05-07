@@ -106,8 +106,13 @@ public class ProjectDaoImpl implements ProjectDao {
 	}
 
 	@Override
-	public List<Map<String, String>> allPrSearchSelect(Map<String, String> map) {
-		return sqlSession.selectList(NAMESPACE+"allPrSearchSelect", map);
+	public List<Map<String, String>> allPrSearchSelect(ProjectPagingDto prPaging) {
+		return sqlSession.selectList(NAMESPACE+"allPrSearchSelect", prPaging);
+	}
+	
+	@Override
+	public int allPrSearchTotalCount(ProjectPagingDto prPaging) {
+		return sqlSession.selectOne(NAMESPACE+"allPrSearchTotalCount", prPaging);
 	}
 
 	@Override
@@ -313,5 +318,6 @@ public class ProjectDaoImpl implements ProjectDao {
 	public void editIProCondition_2(String mem_id) {
 		sqlSession.update(NAMESPACE+"editIProCondition_2", mem_id);
 	}
+
 	
 }

@@ -98,8 +98,13 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public List<Map<String, String>> allPrSearchSelect(Map<String, String> map) {
-		return dao.allPrSearchSelect(map);
+	public List<Map<String, String>> allPrSearchSelect(ProjectPagingDto prPaging) {
+		return dao.allPrSearchSelect(prPaging);
+	}
+	
+	@Override
+	public int allPrSearchTotalCount(ProjectPagingDto prPaging) {
+		return dao.allPrSearchTotalCount(prPaging);
 	}
 	
 	@Override
