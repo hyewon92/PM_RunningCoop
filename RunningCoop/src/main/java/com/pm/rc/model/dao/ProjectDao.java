@@ -96,8 +96,9 @@ public interface ProjectDao {
 	 * @return List&lt;ProjectDto&gt;
 	 * @author 김혜원
 	 * */
-	public List<Map<String, String>> allPrSearchSelect(Map<String, String> map);
-	
+	public List<Map<String, String>> allPrSearchSelect(ProjectPagingDto prPaging);
+	public int allPrSearchTotalCount (ProjectPagingDto prPaging);
+
 	/**
 	 * 프로젝트명으로 검색 (내 프로젝트 목록에서 그룹 프로젝트 검색)
 	 * @param map mem_id, pr_name을 받아서 검색
