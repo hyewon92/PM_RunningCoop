@@ -137,6 +137,15 @@
   			location.href = "./iProSelect.do";
   		}
   	}
+  	
+  	function goSocket(session){
+  		var gr_id = session;
+  		if(gr_id == null){
+  			alert("그룹 선택 후 이용바랍니다");
+  		}else{
+  			location.href = "./socketOpen.do";
+  		}
+  	}
 </script>
 </head>
 <body>
@@ -167,7 +176,8 @@
 	</form>
 	
 	<div class = "chat">
-		<a href="./socketOpen.do">소켓 채팅</a>
+		<% String grSession = (String)session.getAttribute("gr_id"); %>
+		<input type = "button" value = "그룹채팅" onclick = "goSocket('<%=grSession%>')">
 	</div>
 </body>
 </html>

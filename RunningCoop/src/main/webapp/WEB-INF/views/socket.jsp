@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <style type="text/css">
 	#receive_msg{
+		padding: 20px;
 		height: 500px;
 		overflow: scroll;
 	}
@@ -47,7 +48,7 @@
             	}
             }
             ws.onclose = function(event) {
-               alert("서버와의 연결이 종료되었습니다."); 
+               alert("채팅방이 삭제됩니다."); 
             }
       
          });
@@ -90,7 +91,7 @@
       <div id="receive_msg" style="border:1px"> 
       <input type="text" 
              id="nickName" 
-             style="width:200px;height:25px" value = <%=session.getAttribute("mem_id") %>
+             style="width:200px;height:25px" readonly="readonly" value = <%=session.getAttribute("mem_id") %>
             onKeypress="if(event.keyCode==13) $('#join_room').click();" />
       &nbsp;
       <input type="button" value="대화방 입장" id="join_room">      

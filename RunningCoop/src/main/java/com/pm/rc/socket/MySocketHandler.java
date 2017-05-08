@@ -47,7 +47,8 @@ public class MySocketHandler extends TextWebSocketHandler {
    public void handleTextMessage(WebSocketSession session,TextMessage message)
    throws Exception {
 	  logger.info("handleTextMessage()실행");
-      String msg = message.getPayload(); 
+      String msg = message.getPayload();
+      String txt = "";
       
       Map<String, Object> mySession = session.getHandshakeAttributes();	//WebsocketSession의 session값을 httpSesssion값으로 변경
       String myGrSession = (String)mySession.get("gr_id");	//접속자의 그룹 아이디
@@ -76,12 +77,20 @@ public class MySocketHandler extends TextWebSocketHandler {
             	s2.sendMessage(new TextMessage(obj.toString()));
             }
          }else {
+        	 String msg2 = msg.substring(0, msg.indexOf(":")).trim();
             for(WebSocketSession s : list) {
             	Map<String, Object> sessionMap = s.getHandshakeAttributes();
             	String otherGrSession = (String)sessionMap.get("gr_id");
+            	String myMemSession = (String)sessionMap.get("mem_id");
             	if(myGrSession.equals(otherGrSession)){
-            		String m = "<font color='blue' size='2px'>"+msg+"</font>" ;
-            		s.sendMessage(new TextMessage(m));
+            		if(msg2.equals(myMemSession)){
+            			msg = msg.replace(msg.substring(0, msg.indexOf(":")).trim(),"나");
+            			txt = "<font color='pink' size='2px' style = 'float : right;'>"+msg+"</font>" ;
+            		}else{
+            			System.out.println("멤버에게");
+            			txt = "<font color='black' size='2px' style = 'float : left;'>"+msg+"</font>" ;
+            		}
+            		s.sendMessage(new TextMessage(txt));
             	}
             }
          }
@@ -95,7 +104,7 @@ public class MySocketHandler extends TextWebSocketHandler {
       Map<String, Object> mySession = session.getHandshakeAttributes();
       String myGrSession = (String)mySession.get("gr_id");
       list.remove(session);
-      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:MI:SS");
+      SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH24:MI:SS");
       String now = sdf.format(new Date());
       for(WebSocketSession a : list) {
     	  Map<String, Object> sessionMap = a.getHandshakeAttributes();
