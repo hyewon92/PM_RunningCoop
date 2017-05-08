@@ -1080,7 +1080,7 @@ public class ProjectController {
 	}
 	
 	// 진행중인 프로젝트 목록 출력
-	@RequestMapping(value="/goDoingSelect.do", method=RequestMethod.GET)
+	@RequestMapping(value="/goDoingSelect.do", method={RequestMethod.GET,RequestMethod.POST})
 	public String goDoingSelect(HttpSession session, Model model , HttpServletRequest req){
 		String mem_id = (String)session.getAttribute("mem_id");
 		String pr_name = "";
@@ -1102,14 +1102,14 @@ public class ProjectController {
 		IPrlist = service.myDoingIPrListSelect(mem_id);
 		
 		model.addAttribute("gPrList", GPrlist);
-		model.addAttribute("prPaging",prPaging);
+		model.addAttribute("paging",prPaging);	
 		model.addAttribute("iPrList", IPrlist);
 		
 		return "project/doingProList";
 	}
 	
 	// 진행예정인 프로젝트 목록 출력
-	@RequestMapping(value="/goTodoSelect.do", method=RequestMethod.GET)
+	@RequestMapping(value="/goTodoSelect.do", method={RequestMethod.GET,RequestMethod.POST})
 	public String goTodoSelect(HttpSession session, Model model, HttpServletRequest req){
 		String mem_id = (String)session.getAttribute("mem_id");
 		String pr_name = "";
@@ -1130,14 +1130,14 @@ public class ProjectController {
 		IPrlist = service.myTodoIPrListSelect(mem_id);
 		
 		model.addAttribute("gPrList", GPrlist);
-		model.addAttribute("prPaging",prPaging);
+		model.addAttribute("paging",prPaging);
 		model.addAttribute("iProList", IPrlist);
 		
 		return "project/todoProList";
 	}
 	
 	// 진행완료인 프로젝트 목록 출력
-	@RequestMapping(value="/goDoneSelect.do", method=RequestMethod.GET)
+	@RequestMapping(value="/goDoneSelect.do", method={RequestMethod.GET,RequestMethod.POST})
 	public String goDoneSelect(HttpSession session, Model model, HttpServletRequest req){
 		String mem_id = (String)session.getAttribute("mem_id");
 		String pr_name = "";
@@ -1158,7 +1158,7 @@ public class ProjectController {
 		IPrlist = service.myDidIPrListSelect(mem_id);
 		
 		model.addAttribute("gPrList", GPrlist);
-		model.addAttribute("prPaging",prPaging);
+		model.addAttribute("paging",prPaging);
 		model.addAttribute("iProList", IPrlist);
 		
 		return "project/doneProList";
@@ -1180,7 +1180,7 @@ public class ProjectController {
 		}
 		
 	// 전체 프로젝트 검색
-	@RequestMapping(value="/allPrSelect.do", method=RequestMethod.POST)
+	@RequestMapping(value="/allPrSelect.do", method={RequestMethod.GET,RequestMethod.POST})
 	public String allPrSelect(HttpServletRequest request, Model model, HttpServletRequest req){
 		String pr_name = request.getParameter("pr_name");
 		String mem_id = "";
@@ -1200,7 +1200,7 @@ public class ProjectController {
 		prPaging.setTotal(service.allPrSearchTotalCount(prPaging));
 		
 		model.addAttribute("list", list);
-		model.addAttribute("prPaging", prPaging);
+		model.addAttribute("paging", prPaging);
 		
 		return "project/prSearchList";
 	}

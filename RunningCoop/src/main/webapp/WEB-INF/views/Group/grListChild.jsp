@@ -9,7 +9,6 @@
 $(function(){
 	var resutl = "${result}";
 	if(resutl=="true"){
-	alert("메일 전송 완료");
 	close();
 	}
 })

@@ -17,6 +17,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/*.do"/>
+			<mvc:exclude-mapping path="/loginAfter.do"/>
 			<mvc:exclude-mapping path="/main.do"/> 
 			<mvc:exclude-mapping path="/memIdSelect.do"/>
 			<mvc:exclude-mapping path="/ckLogin.do"/>
@@ -36,6 +37,7 @@
 			<mvc:exclude-mapping path="/WEB-INF/views/account/error/error.jsp"/>
 			<mvc:exclude-mapping path="/groupGoGo.do"/>
 			<mvc:exclude-mapping path="/systemManagerLogin.do"/>
+			<mvc:exclude-mapping path="/socketOpen.do"/>
 			<bean class="com.pm.rc.interceptor.LoginCheckInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

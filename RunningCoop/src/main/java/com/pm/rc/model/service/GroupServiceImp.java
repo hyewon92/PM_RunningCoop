@@ -224,6 +224,11 @@ public class GroupServiceImp implements GroupService{
 		return isc;
 	}
 
+	@Override
+	public int groupCheck(Map<String, String> map) {
+		return groupdao.groupCheck(map);
+	}
+
 
 
 }

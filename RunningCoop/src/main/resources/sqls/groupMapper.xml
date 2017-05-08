@@ -56,12 +56,12 @@
 	</select>
 
 	<select id="grMemSelect" parameterType="java.lang.String" resultType="MemberDto">
-		SELECT M.MEM_ID, M.MEM_NAME FROM RC_MEMBER M
-		WHERE M.MEM_ID
-		IN (SELECT GM.MEM_ID FROM RC_GROUPMEM GM WHERE GR_ID =
-		#{gr_id})
-		AND
-		M.MEM_DELYN = 'N'
+		SELECT M.MEM_ID, M.MEM_NAME, GM.GR_LEVEL
+		FROM RC_MEMBER M, RC_GROUPMEM GM
+		WHERE M.MEM_ID = GM.MEM_ID
+		AND GM.GR_LEVEL = 'GIM'
+		AND M.MEM_DELYN = 'N'
+		AND GM.GR_ID = #{gr_id}
 	</select>
 
 	<delete id="grMemDelete1" parameterType="java.util.Map">
@@ -218,4 +218,12 @@
 	<update id="oldGrMaChange" parameterType="java.util.Map">
 	UPDATE RC_GROUPMEM SET GR_LEVEL = 'GIM' WHERE MEM_ID = #{mem_id2}
 	</update>
+	
+<!-- 	그룹가입신청 시 중복가입 확인 -->
+	<select id="grCheck" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT count(MEM_ID) 
+		FROM RC_GROUPMEM 
+		WHERE MEM_ID = #{mem_id}
+		AND GR_ID = #{gr_id} 
+	</select>
 </mapper>

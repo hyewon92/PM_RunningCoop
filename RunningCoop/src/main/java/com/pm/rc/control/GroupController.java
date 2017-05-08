@@ -271,8 +271,8 @@ public class GroupController {
 	@RequestMapping(value="/groupMemDelete.do" , method=RequestMethod.GET)
 	public String groupMemDelete(String gr_id , String memID){
 		logger.info("그룹멤버 삭제하기 시작합니다 ");
-		System.out.println("memID 뜨나나나나ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ" + memID);
-		System.out.println("grID 뜨나나나나ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ" + gr_id);
+		System.out.println("memID " + memID);
+		System.out.println("grID " + gr_id);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("gr_id", gr_id);
 		map.put("mem_id", memID);
@@ -308,6 +308,7 @@ public class GroupController {
 		return "Group/grManagerCh";
 	}
 	
+	//그룹 관리자 위임
 	@RequestMapping(value="/grMgChange.do", method=RequestMethod.GET)
 	public String grMgChange(HttpServletRequest req, HttpSession session){
 		Map<String, String> map = new HashMap<String, String>();
@@ -326,6 +327,17 @@ public class GroupController {
 		}else{
 			return "no";
 		}
-		
+	}
+	
+	// 그룹 중복가입 처리
+	@RequestMapping(value="/grCheck.do" , method=RequestMethod.POST)
+	@ResponseBody
+	public int grCheck(HttpServletRequest req, Model model){
+		logger.info("grCheck 시작");
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("mem_id", req.getParameter("mem_id"));
+		map.put("gr_id", req.getParameter("gr_id"));
+		int n = service.groupCheck(map);
+		return n;
 	}
 }

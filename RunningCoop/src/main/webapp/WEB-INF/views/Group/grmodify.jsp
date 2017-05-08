@@ -48,6 +48,9 @@ cursor: pointer;}
 <title>Insert title here</title>
 </head>
 <body>
+<div id = "header">
+	<jsp:include page="../header.jsp" flush="false"/>
+</div>
 <form class="grModify" action="./realGrmodify.do" method="post">
 	<table id="grdate">
 		<c:forEach var="grSelect" items="${grSelect }">
@@ -100,5 +103,8 @@ cursor: pointer;}
 		</c:forEach>
 	</table>
 	</form>
+<div id = "footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>
 </body>
 </html>

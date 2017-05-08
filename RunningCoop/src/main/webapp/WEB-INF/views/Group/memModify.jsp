@@ -41,9 +41,10 @@
 		var memID = $(grmemid).parent().siblings().eq(0).text();
 		var grID = $(grmemid).parent().prev().text();
 		
+		var rst = confirm("멤버를 추방하시겠습니까?");
+		if(rst){
 		location.href = "./groupMemDelete.do?gr_id="+grID+"&memID="+memID;
-		alert(memID);
-		alert(grID);
+		}
 	}
 </script>
 <style type="text/css">
@@ -59,6 +60,10 @@ cursor: pointer;}
 <title>Insert title here</title>
 </head>
 <body>
+<div id = "header">
+	<jsp:include page="../header.jsp" flush="false"/>
+</div>
+
 	<h1>그룹 멤버 리스트</h1>
 <table>
 	<tr>
@@ -88,5 +93,10 @@ cursor: pointer;}
 </table>	
 	<h1>그룹 해체</h1>
 	<input type="button" value="그룹 해체" onclick="groupBye()">
+	
+<div id = "footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>
+
 </body>
 </html>

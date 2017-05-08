@@ -6,21 +6,33 @@
 <!DOCTYPE html >
 <html>
 <head>
+<% String mem_id2 = (String)session.getAttribute("mem_id"); %>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="./js/paging.js"></script>
 <script type="text/javascript">
 var openwin;
 	function openChild(val){
 		var grid = $(val).prev().text();
-		window.name = "grList";
-		openwin = window.open("./grListChild.do?gr_id="+grid, "childForm", "width=570, height=350, resizable = no, scrollbars = no");
-
+		var userid = "<%=mem_id2%>";
+			$.ajax({
+			type : "POST",
+			url	 : "./grCheck.do",
+			data : "gr_id="+grid+"&mem_id="+userid,
+			async: false,
+			success : function(data){
+				if(data==1){
+					alert("이미 가입된 그룹 입니다.");
+				}else{
+					window.name = "grList";
+				    openwin = window.open("./grListChild.do?gr_id="+grid, "childForm", "width=570, height=350, resizable = no, scrollbars = no");
+				}
+			}
+		});
 	}
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <%@include file="/WEB-INF/views/Group/bootstrap.jsp"%>
-
 <script src="./js/paging.js"></script>
 <style type="text/css">
 #grname{
@@ -29,9 +41,10 @@ cursor: pointer;
 </style>
 </head>
 <body>
-
+<div id = "header">
+	<jsp:include page="../header.jsp" flush="false"/>
+</div>
 <div class="container">
-	
 		<div id='select'>
 			<span> <select class='btn btn-primary' id='listCount' name='listCount'
 				onchange='listCnt();'>
@@ -84,9 +97,7 @@ cursor: pointer;
 					
 				</ul>
 			</div>
-			
 		</form>
-		
 	</div>	
 <!-- 	<table> -->
 <%-- 	<c:forEach var="grList" items="${allGrlists }"> --%>
@@ -98,6 +109,17 @@ cursor: pointer;
 <%-- 	</c:forEach> --%>
 <!-- 	</table> -->
 	
+	<div>
+
+		<select>
+	<c:forEach var="dtos" items="${lists}">
+				<option>${dtos.gr_id}</option>	
+				</c:forEach>
+		</select>
+	</div>
+<div id = "footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>
 
 </body>
 </html>

@@ -18,6 +18,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div id = "header">
+	<jsp:include page="../header.jsp" flush="false"/>
+</div>
+
 <form action="./bordeMultDelet.do" method="get">
 	<table>
 		<tr>
@@ -41,5 +45,9 @@
 	</c:forEach>
 	</table>
 </form>
+
+<div id = "footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>
 </body>
 </html>

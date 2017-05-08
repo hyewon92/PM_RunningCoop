@@ -208,4 +208,12 @@ public interface GroupService {
 	 * @author 라한솔
 	 */
 	public boolean grManagerChange(Map<String, String> map);
+	
+	/**
+	 * 그룹가입시 중복체크
+	 * @param gr_id ,mem_id
+	 * @return list
+	 * @author 라한솔
+	 */
+	public int groupCheck (Map<String, String> map);
 }
