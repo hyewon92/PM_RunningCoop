@@ -37,7 +37,6 @@ public class AccountController {
 	}
 
 	//로그인 체크
-	@SuppressWarnings("unused")
 	@RequestMapping(value = "/ckLogin.do", method = RequestMethod.POST)
 	public String ckLogin(HttpServletRequest req, HttpSession session){
 		logger.info("ckLogin실행");
@@ -48,24 +47,19 @@ public class AccountController {
 		map.put("mem_pw", mem_pw);
 		MemberDto dto = new MemberDto();
 		dto = accountService.loginPro(map);
-		
-		System.out.println(dto.getMem_id());
-		System.out.println(dto.getMem_name());
-		System.out.println(dto.getMem_level());
-		
-		if(dto != null){
+		if(dto == null){
+			return "account/error/error";
+		}else{
 			if(dto.getMem_level().equals("Y")){
 				session.setAttribute("mem_id", dto.getMem_id());
 				session.setAttribute("mem_name", dto.getMem_name());
 				session.setAttribute("mem_level", dto.getMem_level());
 				return "sysManage/grApply";
-			} else {
+			} else{
 				session.setAttribute("mem_id", dto.getMem_id());
 				session.setAttribute("mem_name", dto.getMem_name());
 				return "account/loginAfter";
 			}
-		}else{
-			return "account/error/error";
 		}
 	}
 
@@ -324,6 +318,12 @@ public class AccountController {
 		}else{
 			return "account/error/error";
 		}
+	}
+	
+	// 홈버튼 홈으로 이동
+	@RequestMapping(value="/goHome.do")
+	public String goHome(){
+		return "account/loginAfter";
 	}
 
 }
