@@ -80,26 +80,24 @@ public class ManagerServiceimpl implements ManagerService {
 
 	@Override
 	public boolean noticeModify(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean isc = false;
+		String satt_name = map.get("satt_name");
+		if(satt_name != null){
+			isc = managerdao.noticeModify_1(map);
+		}
+		isc = managerdao.noticeModify_2(map);
+		return isc;
 	}
 
 	@Override
-	public boolean noticeDelete(String sbr_uuid) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public List<SystemBoardDto> qnaListSelect() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean qnaReplyInsert(SystemBoardDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean qnaReplyInsert(Map<String, String> map) {
+		boolean isc = false;
+		String satt_name = (String)map.get("satt_name");
+		if(satt_name != null){
+			isc = managerdao.qnaReplyInsert_1(map);
+		}
+		isc = managerdao.qnaReplyInsert_2(map);
+		return isc;
 	}
 
 	@Override

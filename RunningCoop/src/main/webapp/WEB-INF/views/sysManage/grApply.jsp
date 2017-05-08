@@ -105,7 +105,7 @@
 					<td><a href="./sysNoticeMgr.do">공지 게시판 관리</a></td>
 				</tr>
 				<tr>
-					<td>문의 게시판 관리</td>
+					<td><a href="./sysQnaMgr.do">문의 게시판 관리</a></td>
 				</tr>
 				<tr>
 					<td>공백</td>

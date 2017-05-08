@@ -81,7 +81,7 @@
 	<!-- 수정용 게시글 화면 -->
 	<select id="editViewSelect" parameterType="java.lang.String" resultType="java.util.Map">
 		SELECT SB.SBR_UUID, SB.MEM_ID, M.MEM_NAME, TO_CHAR(SB.SBR_REGDATE, 'YYYY/MM/DD') SBR_REGDATE,
-		SB.SBR_TITLE, SB.SBR_CONTENT
+		SB.SBR_TITLE, SB.SBR_CONTENT, SB.SBR_SCRYN, SB.SBR_PW
 		FROM RC_MEMBER M, RC_SYSBOARD SB
 		WHERE M.MEM_ID = SB.MEM_ID AND SB.SBR_UUID = #{sbr_uuid}
 	</select>

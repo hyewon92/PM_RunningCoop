@@ -87,7 +87,8 @@ tr, th, td {
 							<tr>
 								<td colspan="2">${ view.get("SBR_CONTENT") }</td>
 							</tr>
-						</table> 
+						</table>
+						<input type="button" value="답글 작성" onclick="location.href='./writeReply.do?sbr_refer=${ view.get('SBR_REFER') }'"/>
 						<input type="button" value="게시글 수정" id="editBtn" onclick="Edit()" style="display: none" /> 
 						<input type="button" value="게시글 삭제" id="deleteBtn" onclick="Delete()" style="display: none" /> 
 						<input type="button" value="목록으로" onclick="back()" />
@@ -103,7 +104,7 @@ tr, th, td {
 					<td><a href="./sysNoticeMgr.do">공지 게시판 관리</a></td>
 				</tr>
 				<tr>
-					<td>문의 게시판 관리</td>
+					<td><a href="./sysQnaMgr.do">문의 게시판 관리</a></td>
 				</tr>
 				<tr>
 					<td>공백</td>

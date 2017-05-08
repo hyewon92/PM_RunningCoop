@@ -294,6 +294,8 @@ public class SysBoardController {
 
 		logger.info("=============== 문의 게시판 : 게시글 수정 =========================");
 		logger.info("수정할 게시글 아이디 : "+sbr_uuid);
+		logger.info("수정할 게시글 제목 : "+sbr_title);
+		logger.info("수정할 게시글 내용 : "+sbr_content);
 		logger.info("===========================================================");
 
 		Map<String, String> map = new HashMap<String, String>();
@@ -301,7 +303,7 @@ public class SysBoardController {
 
 		MultipartFile file = multipartRequest.getFile("satt_name");
 
-		if (file != null){
+		if (!file.getOriginalFilename().equals("")){
 			String savePath = "C:\\RC_fileSave\\";
 
 			// 기존 파일 삭제
@@ -343,37 +345,31 @@ public class SysBoardController {
 
 		map.put("sbr_title", sbr_title);
 		map.put("sbr_content", sbr_content);
-
+		
+		// 비밀글 여부
 		String scrpw = multipartRequest.getParameter("sbr_pw");
-
+		String sbr_scryn = "Y";
+		
+		map.put("sbr_scryn", sbr_scryn);
+		map.put("sbr_pw", scrpw);
+		
+		// 서비스 실행
 		boolean isc = false;
 
-		// scrpw에 값이 들어오면 비밀글로 등록, 값이 없으면 공개글로 등록
-		if(scrpw != null && scrpw.length() > 0){
-			String sbr_scryn = "Y";
-			map.put("sbr_scryn", sbr_scryn);
-			map.put("sbr_pw", scrpw);
-			isc = service.qnaBoardEdit(map);
-		} else if (scrpw == null || scrpw.length() == 0){
-			String sbr_scryn = "N";
-			map.put("sbr_scryn", sbr_scryn);
-			map.put("sbr_pw", scrpw);
-			isc = service.qnaBoardEdit(map);
-		}
-
+		isc = service.qnaBoardEdit(map);
+		
 		if(isc == true){
 			System.out.println("문의게시판 게시글 수정 성공");
 		} else {
 			System.out.println("문의게시판 게시글 수정 실패");
 		}
 
-		return "redirect:/qnaList.do";
+		return "redirect:/viewNotice.do?sbr_uuid="+sbr_uuid;
 	}
 
 	// 게시글 삭제
 	@RequestMapping(value="/boardDelete.do", method = RequestMethod.GET)
 	public String BoardDelete(HttpServletRequest request){
-		boolean isc = false;
 
 		String sbr_uuid = request.getParameter("sbr_uuid");
 		Map<String, String> uuid = new HashMap<String, String>();
@@ -381,21 +377,26 @@ public class SysBoardController {
 
 		Map<String, String> attach = null;
 		attach = service.sysAttachSelect(uuid);
-
-		String savePath = ""+attach.get("SATT_PATH");
-		String fileName = ""+attach.get("SATT_RNAME");
-
-		File file = new File(savePath+fileName);
-
-		file.delete();
-
-		isc = service.qnaBoardDelete(sbr_uuid);
-
-		if (isc){
-			return "redirect:/qnaList.do";
-		} else {
-			return "redirect:/qnaList.do";
+		
+		if(attach != null){
+			String savePath = ""+attach.get("SATT_PATH");
+			String fileName = ""+attach.get("SATT_RNAME");
+			
+			File file = new File(savePath+fileName);
+			
+			file.delete();
 		}
+
+		boolean isc = false;
+		isc = service.qnaBoardDelete(sbr_uuid);
+		
+		if(isc == true){
+			System.out.println("문의 게시글 삭제 성공");
+		} else {
+			System.out.println("문의 게시글 삭제 실패");
+		}
+
+		return "redirect:/qnaList.do";
 	}
 
 	@RequestMapping(value="/fileDown.do", method=RequestMethod.GET)

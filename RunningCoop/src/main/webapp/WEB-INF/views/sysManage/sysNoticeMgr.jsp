@@ -8,6 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>시스템 공지 게시판 관리 페이지</title>
+</script>
 </head>
 <body>
 	<div id="header">
@@ -49,7 +50,7 @@
 											<td>${ list.MEM_NAME }</td>
 											<td>${ list.SBR_REGDATE }</td>
 											<td><input type="button" value="삭제"
-												onclick="deleteList()" /></td>
+												onclick="location.href='./sysboardDelete.do?sbr_uuid=${ list.SBR_UUID }'" /></td>
 										</tr>
 									</c:forEach>
 								</c:otherwise>
@@ -71,7 +72,7 @@
 					<td><a href="./sysNoticeMgr.do">공지 게시판 관리</a></td>
 				</tr>
 				<tr>
-					<td>문의 게시판 관리</td>
+					<td><a href="./sysQnaMgr.do">문의 게시판 관리</a></td>
 				</tr>
 				<tr>
 					<td>공백</td>
