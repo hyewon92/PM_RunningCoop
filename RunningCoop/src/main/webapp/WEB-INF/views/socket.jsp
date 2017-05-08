@@ -5,9 +5,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-   <script type="text/javascript" 
-         src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-   <script type="text/javascript">
+<style type="text/css">
+	#receive_msg{
+		height: 500px;
+		overflow: scroll;
+	}
+</style>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
       var ws = null ;
       var url = null ;
       var nick = null ; 
@@ -27,7 +33,7 @@
             $("#chat_div").show();
             $("#chat").focus();
             
-            ws = new WebSocket("ws://172.30.1.12:8095/RunningCoop/wsChat.do");
+            ws = new WebSocket("ws://192.168.4.127:8095/RunningCoop/wsChat.do");
             ws.onopen = function() {
                ws.send("#$nick_"+nick);
                
@@ -68,9 +74,10 @@
       } 
       
       function printMemList(memList){
+    	  $("#memBox").children("p").remove();
     	  var list = JSON.parse(memList);
     	  for(var i = 0; i < list.memList.length; i++){
-    		  $("#memBox").append(list.memList[i]+"<br/>");
+    		  $("#memBox").append("<p>"+list.memList[i]+"</p>");
     	  }
       }
       
@@ -95,6 +102,7 @@
    
    <div id="chat_div" style="display:none">
    <div id="memBox">
+   	<b>접속자 리스트</b><br/>
    </div>
    <input type="text" id="chat" style="width:460px" 
           onKeypress="if(event.keyCode==13) $('#chat_btn').click();" />

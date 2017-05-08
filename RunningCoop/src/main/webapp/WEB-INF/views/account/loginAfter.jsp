@@ -25,8 +25,6 @@
 <div id = "footer">
 	<jsp:include page="../footer.jsp" flush="false"/>
 </div>
-<a href="./socketOpen.do">소켓 채팅</a>
-<a href="./socketOpen2.do">소켓 채팅</a>
 
 </body>
 </html>

@@ -165,5 +165,9 @@
 			<input type="submit" value="프로젝트 검색"/>
 		</div>
 	</form>
+	
+	<div class = "chat">
+		<a href="./socketOpen.do">소켓 채팅</a>
+	</div>
 </body>
 </html>
