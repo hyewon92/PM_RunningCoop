@@ -8,8 +8,10 @@
 <style type="text/css">
 	#receive_msg{
 		padding: 20px;
+		width: 500px;
 		height: 500px;
-		overflow: scroll;
+		overflow: auto;
+		overflow-y: hidden;
 	}
 </style>
 
@@ -20,8 +22,6 @@
       var nick = null ; 
       
       $(document).ready(function() {
-         
-         $("#nickName").focus();
          
          $("#join_room").bind("click",function() {
             if($("#nickName").val() == '') {
@@ -34,18 +34,25 @@
             $("#chat_div").show();
             $("#chat").focus();
             
-            ws = new WebSocket("ws://192.168.4.127:8095/RunningCoop/wsChat.do");
+            ws = new WebSocket("ws://192.168.0.150:8095/RunningCoop/wsChat.do");
             ws.onopen = function() {
                ws.send("#$nick_"+nick);
                
             };
             ws.onmessage = function(event) {
             	var msg = event.data;
-            	if(msg.startsWith("<font color=")){
+            	if(msg.startsWith("<font color=")){	//입장,퇴장
 	               $("#receive_msg").append(msg+"<br/>");
+            	}else if(msg.startsWith("[나]")){	//대화내용
+            		$("#receive_msg").append($("<div>").text(msg).css("text-align", "right"));
             	}else{
-	            	printMemList(msg);
+            		$("#receive_msg").append($("<div>").text(msg).css("text-align", "left"));
             	}
+            	
+            	$("#receive_msg").scrollTop($("#receive_msg")[0].scrollHeight);
+     /*        	else{	//접속자 리스트
+	            	printMemList(msg);	
+            	} */
             }
             ws.onclose = function(event) {
                alert("채팅방이 삭제됩니다."); 
@@ -58,6 +65,7 @@
                alert("내용을 입력하세요");
                return ;
             }else {
+            	location.href = '#last';
                ws.send(nick+" : "+$("#chat").val());
                $("#chat").val('');
                $("#chat").focus();
@@ -74,21 +82,26 @@
          ws = null ;
       } 
       
-      function printMemList(memList){
+      function viewList(list){
+    	  alert(list.length);
+      }
+      
+/*       function printMemList(memList){
     	  $("#memBox").children("p").remove();
     	  var list = JSON.parse(memList);
     	  for(var i = 0; i < list.memList.length; i++){
     		  $("#memBox").append("<p>"+list.memList[i]+"</p>");
     	  }
       }
-      
-   </script>
+       */
+</script>
 </head>
 <body>
    <table border="1">
    <tr>
       <td width="500px" height="500px" align="center">
-      <div id="receive_msg" style="border:1px"> 
+      <div id="receive_msg" style="border:1px">
+      <div id = "last"></div> 
       <input type="text" 
              id="nickName" 
              style="width:200px;height:25px" readonly="readonly" value = <%=session.getAttribute("mem_id") %>
@@ -103,7 +116,11 @@
    
    <div id="chat_div" style="display:none">
    <div id="memBox">
-   	<b>접속자 리스트</b><br/>
+   <% 
+   	String grId = (String)session.getAttribute("gr_id"); 
+   	String memList = (String)session.getAttribute("socket"+grId);
+   %>
+   	<input type = "button" value = "접속자 리스트 보기" onclick = "viewList(<%=memList%>)">
    </div>
    <input type="text" id="chat" style="width:460px" 
           onKeypress="if(event.keyCode==13) $('#chat_btn').click();" />

@@ -77,6 +77,7 @@
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript" src="js/schedule/teamSchedule.js"></script>
+
 </head>
 
 <%!

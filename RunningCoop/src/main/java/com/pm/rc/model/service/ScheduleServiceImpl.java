@@ -15,6 +15,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 	
 	@Autowired
 	private ScheduleDao scheduleDao;
+	
+	@Override
+	public List<ScheduleDto> teamDailySchSelect(Map<String, String> map) {
+		return scheduleDao.teamDailySchSelect(map);
+	}
 
 	@Override
 	public List<ScheduleDto> teamSchSelect(String pr_id) {
@@ -37,8 +42,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 	
 	@Override
-	public List<ScheduleDto> DailySchSelect(Map<String, String> map) {
-		return scheduleDao.DailySchSelect(map);
+	public List<ScheduleDto> dailySchSelect(Map<String, String> map) {
+		return scheduleDao.dailySchSelect(map);
 	}
 	
 	@Override
