@@ -8,7 +8,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>진행 중인 프로젝트 목록 조회 페이지</title>
+
+<link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+
 <style type="text/css">
 	.pr_detail_view {
 		display : none;
