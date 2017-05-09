@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
@@ -201,7 +201,6 @@
 		var mem_list = new Array(inputbox.length);
 		
 		for (var i = 0; i < inputbox.length; i++){
-			if(inputbox.eq(i).val)
 			mem_list[i] = inputbox.eq(i).val();
 		}
 		
@@ -386,6 +385,8 @@
 		<div class = "calendar_manage">
 			<div>
 				<%-- <jsp:include page="../schedule/teamCalendar.jsp" flush="false"/> --%>
+				<iframe width="100%" height="100%" src="./viewTeamSchedule.do">
+				</iframe>
 			</div>
 			<div>
 				세부일정 조회/추가
