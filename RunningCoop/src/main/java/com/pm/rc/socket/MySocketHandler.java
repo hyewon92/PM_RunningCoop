@@ -36,11 +36,6 @@ public class MySocketHandler extends TextWebSocketHandler {
       list = new ArrayList<WebSocketSession>();
    }
    
-/*   public HttpSession openSession(HandshakeRequest request){
-	   HttpSession sysSession = (HttpSession)request.getHttpSession();
-	   return sysSession;
-   }*/
-   
    @Override
    public void afterConnectionEstablished(WebSocketSession session) 
    throws Exception {

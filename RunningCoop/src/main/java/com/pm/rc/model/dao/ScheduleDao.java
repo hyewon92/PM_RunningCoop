@@ -13,6 +13,14 @@ import com.pm.rc.dto.ScheduleDto;
 public interface ScheduleDao {
 	
 	/**
+	 * 지정일 팀일정 리스트 조회
+	 * @param map value: pr_id(회원아이디), date(지정일);
+	 * @return List&lt;String&gt;
+	 * @author 김혜원
+	 * */
+	public List<ScheduleDto> teamDailySchSelect(Map<String, String> map);
+	
+	/**
 	 * 팀 일정 조회
 	 * @param pr_id 프로젝트 아이디
 	 * @return List&lt;ScheduleDto&gt;
@@ -34,7 +42,7 @@ public interface ScheduleDao {
 	 * @return List&lt;String&gt;
 	 * @author 김혜원
 	 * */
-	public List<ScheduleDto> DailySchSelect(Map<String, String> map);
+	public List<ScheduleDto> dailySchSelect(Map<String, String> map);
 	
 	/**
 	 * 팀 일정 상세정보 조회

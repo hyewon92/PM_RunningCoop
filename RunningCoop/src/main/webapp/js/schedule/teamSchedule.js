@@ -8,7 +8,7 @@
 			$(".listBox").children().remove();
 		$.ajax({
 			type : "POST",
-			url : "./dailySchSelect.do",
+			url : "./temaDailySchSelect.do",
 			data: "date="+val1+"-"+val2+"-"+val3,
 			async: false,
 			success: function(msg){

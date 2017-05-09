@@ -50,7 +50,7 @@ public class ScheduleController {
 		map.put("mem_id", mem_id);
 		map.put("date", date);
 		List<ScheduleDto> list = new ArrayList<ScheduleDto>();
-		list = scheduleService.DailySchSelect(map);
+		list = scheduleService.dailySchSelect(map);
 		return list;
 	}
 	
@@ -135,9 +135,19 @@ public class ScheduleController {
 		return "schedule/teamCalendar";
 	}	
 	
-/*	//지정일 팀일정 목록 조회
+	//지정일 팀일정 목록 조회
 	@RequestMapping(value = "")
-	public String dailyTeamSchSelect*/
+	@ResponseBody
+	public List<ScheduleDto> dailyTeamSchSelect(HttpServletRequest req, String date){
+		logger.info("DailySchSelect실행");
+		Map<String, String> map = new HashMap<String, String>();
+		String pr_id = req.getParameter("pr_id");
+		map.put("pr_id", pr_id);
+		map.put("date", date);
+		List<ScheduleDto> list = new ArrayList<ScheduleDto>();
+		list = scheduleService.teamDailySchSelect(map);
+		return list;
+	}
 	
 	//팀일정 상세정보 조회
 	@RequestMapping(value = "/detailTeamSchedule.do", method = RequestMethod.POST)
