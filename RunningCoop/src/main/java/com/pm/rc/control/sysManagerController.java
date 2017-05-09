@@ -3,6 +3,7 @@ package com.pm.rc.control;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,10 +19,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.pm.rc.dto.GroupDto;
+import com.pm.rc.dto.MemberDto;
 import com.pm.rc.model.service.ManagerService;
 import com.pm.rc.model.service.UserSysBoardService;
 
@@ -96,6 +99,27 @@ public class sysManagerController {
 
 		model.addAttribute("list", list);
 
+		return "sysManage/sysNoticeMgr";
+	}
+	
+	// 공지 게시판 게시글 검색
+	@RequestMapping(value="/sysNoticeSearch.do", method=RequestMethod.POST)
+	public String sysNoticeSearch(HttpServletRequest request, Model model){
+		
+		String sbr_title = request.getParameter("sbr_title");
+		
+		logger.info("=================== 공지 게시판 게시글 검색 =====================");
+		logger.info("검색할 게시글 제목 : "+sbr_title);
+		logger.info("=========================================================");
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("sbr_title", sbr_title);
+		
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		list = sservice.noticeSearchSelect(map);
+		
+		model.addAttribute("list", list);
+		
 		return "sysManage/sysNoticeMgr";
 	}
 
@@ -304,10 +328,12 @@ public class sysManagerController {
 		return "sysManage/sysBoardView";
 	}
 
-	// 공지 게시글 삭제
+	// 게시글 삭제
 	@RequestMapping(value="/sysboardDelete.do", method=RequestMethod.GET)
 	public String noticeDelete(HttpServletRequest request){
 		String sbr_uuid = request.getParameter("sbr_uuid");
+		String noticeyn = request.getParameter("noticeyn");
+		
 		Map<String, String> uuid = new HashMap<String, String>();
 		uuid.put("sbr_uuid", sbr_uuid);
 
@@ -331,8 +357,13 @@ public class sysManagerController {
 		} else {
 			System.out.println("문의 게시글 삭제 실패");
 		}
+		
+		if(noticeyn.equals("Y")){
+			return "redirect:/sysNoticeMgr.do";
+		} else {
+			return "redirect:/sysQnaMgr.do";
+		}
 
-		return "redirect:/sysNoticeMgr.do";
 	}
 
 	// 문의 게시판 관리 페이지 이동
@@ -347,6 +378,27 @@ public class sysManagerController {
 
 		model.addAttribute("list", list);
 
+		return "sysManage/sysQnaMgr";
+	}
+	
+	// 문의 게시판 게시글 검색 리스트 조회
+	@RequestMapping(value="/sysQnaSearch.do", method=RequestMethod.POST)
+	public String sysQnaSearch(HttpServletRequest request, Model model){
+		
+		String sbr_title = request.getParameter("sbr_title");
+		
+		logger.info("==================== 문의 게시판 게시글 제목 검색 ======================");
+		logger.info("검색할 게시글 제목 : "+sbr_title);
+		logger.info("==============================================================");
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("sbr_title", sbr_title);
+		
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		list = sservice.qnaSearchSelect(map);
+		
+		model.addAttribute("list", list);
+		
 		return "sysManage/sysQnaMgr";
 	}
 	
@@ -381,13 +433,13 @@ public class sysManagerController {
 	@RequestMapping(value="/writeReply.do", method=RequestMethod.GET)
 	public String moveWriteRepleForm(HttpServletRequest request, Model model){
 		
-		String sbr_refer = request.getParameter("sbr_refer");
+		String sbr_uuid = request.getParameter("sbr_uuid");
 		
 		logger.info("================== 문의 게시판 답글 작성 폼 ==================");
-		logger.info("답글 작성할 게시글 refer : "+sbr_refer);
+		logger.info("답글 작성할 게시글 uuid : "+sbr_uuid);
 		logger.info("=====================================================");
 		
-		model.addAttribute("sbr_refer", sbr_refer);
+		model.addAttribute("sbr_uuid", sbr_uuid);
 		
 		return "sysManage/sysRepleWrite";
 	}
@@ -396,7 +448,7 @@ public class sysManagerController {
 	@RequestMapping(value="/qnaRepleWrite.do", method=RequestMethod.POST)
 	public String WriteQnaReple(MultipartHttpServletRequest multiRequest){
 		
-		String sbr_refer = multiRequest.getParameter("sbr_refer");
+		String Rsbr_uuid = multiRequest.getParameter("Rsbr_uuid");
 		String sbr_title = multiRequest.getParameter("sbr_title");
 		String mem_id = multiRequest.getParameter("mem_id");
 		String sbr_content = multiRequest.getParameter("sbr_content");
@@ -408,7 +460,7 @@ public class sysManagerController {
 		
 		logger.info("===================== 문의 게시판 답글 작성 =======================");
 		logger.info("작성할 게시글 uuid : "+sbr_uuid);
-		logger.info("답글 작성할 게시글 refer : "+sbr_refer);
+		logger.info("답글 작성할 게시글 uuid : "+Rsbr_uuid);
 		logger.info("게시글 제목 : "+sbr_title);
 		logger.info("관리자 아이디 : "+mem_id);
 		logger.info("게시글 내용 : "+sbr_content);
@@ -452,7 +504,7 @@ public class sysManagerController {
 		
 		map.put("sbr_uuid", sbr_uuid);
 		map.put("sbr_title", sbr_title);
-		map.put("sbr_refer", sbr_refer);
+		map.put("Rsbr_uuid", Rsbr_uuid);
 		map.put("sbr_content", sbr_content);
 		map.put("mem_id", mem_id);
 		
@@ -468,7 +520,101 @@ public class sysManagerController {
 		
 		return "redirect:/sysQnaMgr.do";
 	}
+	
+	// 게시글 선택 삭제
+	@RequestMapping(value="/select_PostDelete.do", method=RequestMethod.POST)
+	@ResponseBody
+	public void select_PostDelete(HttpServletRequest request){
+		
+		String[] numList = (String[])request.getParameterValues("numList");
+		
+		logger.info("=================== 게시글 선택 삭제 ========================");
+		logger.info(Arrays.toString(numList));
+		logger.info("=======================================================");
+		
+		
+		for(int i = 0; i < numList.length; i++){
+			
+			String sbr_uuid = numList[i];
+			
+			System.out.println(sbr_uuid);
+			
+			Map<String, String> uuid = new HashMap<String, String>();
+			uuid.put("sbr_uuid", sbr_uuid);
 
+			Map<String, String> attach = null;
+			attach = sservice.sysAttachSelect(uuid);
+
+			if(attach != null){
+				String savePath = ""+attach.get("SATT_PATH");
+				String fileName = ""+attach.get("SATT_RNAME");
+
+				File file = new File(savePath+fileName);
+
+				file.delete();
+			}
+
+			boolean isc = false;
+			
+			isc = sservice.qnaBoardDelete(sbr_uuid);
+
+			if(isc == true){
+				System.out.println("게시글 삭제 성공");
+			} else {
+				System.out.println("게시글 삭제 실패");
+			}
+		}
+		
+	}
+	
+	// 회원 관리 페이지 이동
+	@RequestMapping(value="/sysMemMgr.do", method=RequestMethod.GET)
+	public String sysMemberMgr(Model model){
+		
+		logger.info("========================= 회원 관리 페이지 이동 =======================");
+		
+		List<MemberDto> list = new ArrayList<MemberDto>();
+		
+		list = service.allMemberSelect();
+		
+		model.addAttribute("list", list);
+		
+		return "sysManage/sysMemMgr";
+	}
+	
+	// 회원 검색
+	@RequestMapping(value="/sysMemSearch.do", method=RequestMethod.POST)
+	public String sysMemberSearch(HttpServletRequest request, Model model){
+		
+		String mem_name = request.getParameter("mem_name");
+		
+		logger.info("===================== 회원 검색 ========================");
+		logger.info("검색할 내용 : "+mem_name);
+		logger.info("====================================================");
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("mem_id", mem_name);
+		
+		List<MemberDto> list = new ArrayList<MemberDto>();
+		
+		list = service.allMemberSelectSearch(map);
+		
+		model.addAttribute("list", list);
+		
+		return "sysManage/sysMemMgr";
+	}
+	
+	// 관리자 로그아웃
+	@RequestMapping(value="/adminLogout.do", method=RequestMethod.GET)
+	public String adminLogout(HttpSession session){
+		
+		logger.info("===================== 관리자 로그아웃 ============================");
+		
+		session.removeAttribute("mem_id");
+		session.removeAttribute("mem_name");
+		
+		return "redirect:/main.do";
+	}
 
 	// UUID 생성 메소드
 	public String createUUID(){

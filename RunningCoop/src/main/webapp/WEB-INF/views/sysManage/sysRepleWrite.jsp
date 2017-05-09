@@ -64,7 +64,7 @@
 						<form id="qnaRepleWrite" action="./qnaRepleWrite.do" method="post"
 							enctype="multipart/form-data">
 							<input type="hidden" name="mem_id" value="<%=mem_id %>" />
-							<input type="hidden" name="sbr_refer" value="${ sbr_refer }"/>
+							<input type="hidden" name="Rsbr_uuid" value="${ sbr_uuid }"/>
 							<div>
 								<span> 제목 </span> <input type="text" name="sbr_title" />
 							</div>
@@ -85,7 +85,7 @@
 					<td><a href="./grApply.do">그룹 승인 관리</a></td>
 				</tr>
 				<tr>
-					<td>회원 관리</td>
+					<td><a href="./sysMemMgr.do">회원 관리</a></td>
 				</tr>
 				<tr>
 					<td><a href="./sysNoticeMgr.do">공지 게시판 관리</a></td>
@@ -97,7 +97,7 @@
 					<td>공백</td>
 				</tr>
 				<tr>
-					<td>로그아웃</td>
+					<td><a href="./adminLogout.do">로그아웃</a></td>
 				</tr>
 			</table>
 		</div>
@@ -110,7 +110,7 @@
 		txProject: 'sample', /* 수정필요없음. 프로젝트가 여러개일 경우만 수정한다. */
 		initializedId: "", /* 대부분의 경우에 빈문자열 */
 		wrapper: "tx_trex_container", /* 에디터를 둘러싸고 있는 레이어 이름(에디터 컨테이너) */
-		form: 'noticeWrite', /* 등록하기 위한 Form 이름 */
+		form: 'qnaRepleWrite', /* 등록하기 위한 Form 이름 */
 		txIconPath: "daumOpenEditor/images/icon/editor/", /*에디터에 사용되는 이미지 디렉터리, 필요에 따라 수정한다. */
 		txDecoPath: "daumOpenEditor/images/deco/contents/", /*본문에 사용되는 이미지 디렉터리, 서비스에서 사용할 때는 완성된 컨텐츠로 배포되기 위해 절대경로로 수정한다. */
 		canvas: {

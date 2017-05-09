@@ -64,10 +64,28 @@
 	</insert>
 	
 	<insert id="qnaReplyInsert_2" parameterType="java.util.Map">
-		INSERT INTO RC_SYSBOARD (SBR_UUID, SBR_TITLE, SBR_CONTENT, MEM_ID, SBR_NOTICEYN, SBR_REFER, SBR_STEP)
+		INSERT INTO RC_SYSBOARD (SBR_UUID, SBR_TITLE, SBR_CONTENT, MEM_ID, SBR_NOTICEYN, SBR_REFER, SBR_STEP, SBR_DEPTH)
 		VALUES
-		(#{sbr_uuid}, #{sbr_title}, #{sbr_content}, #{mem_id}, 'Y', (SELECT NVL(MAX(SBR_REFER)+1, 1) FROM RC_SYSBOARD))
+		(#{sbr_uuid}, '└'||#{sbr_title}, #{sbr_content}, #{mem_id}, 'N', 
+		(SELECT SBR_REFER FROM RC_SYSBOARD WHERE SBR_UUID = #{Rsbr_uuid}),
+		(SELECT MAX(SBR_STEP)+1 FROM RC_SYSBOARD WHERE SBR_REFER = (SELECT SBR_REFER FROM RC_SYSBOARD WHERE SBR_UUID = #{Rsbr_uuid})),
+		(SELECT SBR_DEPTH+1 FROM RC_SYSBOARD WHERE SBR_UUID = #{Rsbr_uuid}))
 	</insert>
+	
+	<select id="allMemberSelect" resultType="MemberDto">
+		SELECT MEM_ID, MEM_NAME, MEM_EMAIL, MEM_PHONE, TO_CHAR(MEM_REGDATE, 'YYYY/MM/DD') MEM_REGDATE
+		FROM RC_MEMBER
+		WHERE MEM_DELYN = 'N' AND MEM_LEVEL = 'N'
+		ORDER BY MEM_REGDATE
+	</select>
+	
+	<select id="allMemberSelectSearch" parameterType="java.util.Map" resultType="MemberDto">
+		SELECT MEM_ID, MEM_NAME, MEM_EMAIL, MEM_PHONE, TO_CHAR(MEM_REGDATE, 'YYYY/MM/DD') MEM_REGDATE
+		FROM RC_MEMBER
+		WHERE MEM_DELYN = 'N' AND MEM_LEVEL = 'N'
+		AND MEM_ID LIKE '%${mem_id}%' OR MEM_NAME LIKE '%${mem_id}%'
+		ORDER BY MEM_REGDATE
+	</select>
 	
 	
 	

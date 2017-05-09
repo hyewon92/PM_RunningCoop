@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
-import com.pm.rc.dto.SystemBoardDto;
 
 /**
  * 시스템 관리자 기능 인터페이스(회원관리는 AccountService로)
@@ -49,7 +48,7 @@ public interface ManagerService {
 	 * @return list
 	 * @author 라한솔
 	 */
-	public List<MemberDto> allMemberSelectSearch(String mem_id);
+	public List<MemberDto> allMemberSelectSearch(Map<String, String> map);
 	
 	/**
 	 * 그룹 생성 승인
@@ -81,22 +80,6 @@ public interface ManagerService {
 	 * @author 김혜원
 	 * */
 	public boolean qnaReplyInsert(Map<String, String> map);
-	
-	/**
-	 * 문의 답글 수정
-	 * @param dto SystemBoardDto객체
-	 * @return boolean
-	 * @author 김혜원
-	 * */
-	public boolean qnaReplyModify(SystemBoardDto dto);
-	
-	/**
-	 * 문의 답글 삭제
-	 * @param sbr_uuid 시스템게시글번호
-	 * @return boolean
-	 * @author 김혜원
-	 * */
-	public boolean qnaReplyDelete(String sbr_uuid);
 	
 	/**
 	 * 그룹승인화면에서 그룹선택시 간략정보 출력

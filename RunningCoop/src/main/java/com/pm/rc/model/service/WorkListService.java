@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.pm.rc.dto.GbAttachDto;
-import com.pm.rc.dto.GroupBoardDto;
 import com.pm.rc.dto.WorkCommentDto;
 import com.pm.rc.dto.WorkDetailDto;
 import com.pm.rc.dto.WorkListDto;
