@@ -22,6 +22,7 @@
 	}
 	
 	.calendar_manage{
+		height : 600px;
 		display : none;
 	}
 	
@@ -379,11 +380,8 @@
 		<div class = "calendar_manage">
 			<div>
 				<%-- <jsp:include page="../schedule/teamCalendar.jsp" flush="false"/> --%>
-				<iframe width="100%" height="100%"  src="./viewTeamSchedule.do?pr_id=${ pr_id }">
+				<iframe width = "100%" height = "595px"  src = "./viewTeamSchedule.do?pr_id=${ pr_id }">
 				</iframe>
-			</div>
-			<div>
-				세부일정 조회/추가
 			</div>
 		</div>
 	</div>

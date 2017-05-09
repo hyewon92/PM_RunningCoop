@@ -50,12 +50,16 @@
 		FROM RC_SCHEDULE S, RC_PROJECT P 
 		WHERE S.PR_ID = P.PR_ID(+) 
 		AND (TO_CHAR(S.SCH_STARTDATE,'YYYY-MM-DD') <= #{date} AND TO_CHAR(S.SCH_ENDDATE,'YYYY-MM-DD') >= #{date} 
-		AND S.MEM_ID = #{mem_id})
+		AND S.MEM_ID = #{mem_id}
+		AND S.SCH_DELYN = 'N')
 		UNION
 		SELECT S.SCH_SEQ, S.SCH_TITLE, S.PR_ID, P.PR_NAME 
 		FROM RC_SCHEDULE S, RC_PROJECT P 
-		WHERE S.PR_ID = P.PR_ID AND (TO_CHAR(S.SCH_STARTDATE,'YYYY-MM-DD') <= #{date} AND TO_CHAR(S.SCH_ENDDATE,'YYYY-MM-DD') >= #{date} 
-		AND S.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id}))]]>
+		WHERE S.PR_ID = P.PR_ID 
+		AND (TO_CHAR(S.SCH_STARTDATE,'YYYY-MM-DD') <= #{date} 
+		AND TO_CHAR(S.SCH_ENDDATE,'YYYY-MM-DD') >= #{date} 
+		AND S.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id})
+		AND S.SCH_DELYN = 'N')]]>
 	</select>	
 	
 	<!-- 일정 상세내용 조회 -->
@@ -78,6 +82,17 @@
 		SELECT S.SCH_SEQ, TO_CHAR(S.SCH_STARTDATE,'YYYYMMDDHHMI') SCH_STARTDATE, TO_CHAR(S.SCH_ENDDATE,'YYYYMMDDHHMI') SCH_ENDDATE, S.SCH_TITLE,  P.PR_ID, P.PR_NAME, S.SCH_PROSYN 
   		FROM RC_SCHEDULE S, RC_PROJECT P
 		WHERE (P.PR_ID = S.PR_ID AND P.PR_ID =#{pr_id} AND S.SCH_PROSYN = 'Y') AND S.SCH_DELYN='N'
+	</select>
+	
+	<!-- 지정일 팀 일정 리스트 -->
+	<select id="dailyTeamSchSelect" parameterType="java.lang.String" resultMap="SchProDto">
+		<![CDATA[SELECT S.SCH_SEQ, S.SCH_TITLE, S.PR_ID, P.PR_NAME 
+		FROM RC_SCHEDULE S, RC_PROJECT P 
+		WHERE S.PR_ID = P.PR_ID 
+		AND (TO_CHAR(S.SCH_STARTDATE,'YYYY-MM-DD') <= #{date} 
+		AND TO_CHAR(S.SCH_ENDDATE,'YYYY-MM-DD') >= #{date} 
+		AND S.PR_ID = #{pr_id}
+		AND S.SCH_DELYN = 'N')]]>
 	</select>
 	
 	<!-- 팀 일정 상세내용 조회 -->

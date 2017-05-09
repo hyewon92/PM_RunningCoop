@@ -135,6 +135,10 @@ public class ScheduleController {
 		return "schedule/teamCalendar";
 	}	
 	
+/*	//지정일 팀일정 목록 조회
+	@RequestMapping(value = "")
+	public String dailyTeamSchSelect*/
+	
 	//팀일정 상세정보 조회
 	@RequestMapping(value = "/detailTeamSchedule.do", method = RequestMethod.POST)
 	@ResponseBody
