@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
-import com.pm.rc.dto.SystemBoardDto;
 import com.pm.rc.model.dao.ManagerDao;
 
 @Service
@@ -47,14 +46,12 @@ public class ManagerServiceimpl implements ManagerService {
 
 	@Override
 	public List<MemberDto> allMemberSelect() {
-		// TODO Auto-generated method stub
-		return null;
+		return managerdao.allMemberSelect();
 	}
 
 	@Override
-	public List<MemberDto> allMemberSelectSearch(String mem_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MemberDto> allMemberSelectSearch(Map<String, String> map) {
+		return managerdao.allMemberSelectSearch(map);
 	}
 
 	@Override
@@ -99,19 +96,5 @@ public class ManagerServiceimpl implements ManagerService {
 		isc = managerdao.qnaReplyInsert_2(map);
 		return isc;
 	}
-
-	@Override
-	public boolean qnaReplyModify(SystemBoardDto dto) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean qnaReplyDelete(String sbr_uuid) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
 
 }

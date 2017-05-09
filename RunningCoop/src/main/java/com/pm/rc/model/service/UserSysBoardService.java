@@ -3,9 +3,6 @@ package com.pm.rc.model.service;
 import java.util.List;
 import java.util.Map;
 
-import com.pm.rc.dto.SbAttachDto;
-import com.pm.rc.dto.SystemBoardDto;
-
 /**
  * 회원 입장에서 시스템게시판(문의게시판, 공지게시판)관련 기능 인터페이스
  * @author 김혜원

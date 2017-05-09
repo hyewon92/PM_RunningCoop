@@ -97,19 +97,19 @@ tr, th, td {
 					<td><a href="./grApply.do">그룹 승인 관리</a></td>
 				</tr>
 				<tr>
-					<td>회원 관리</td>
+					<td><a href="./sysMemMgr.do">회원 관리</a></td>
 				</tr>
 				<tr>
 					<td><a href="./sysNoticeMgr.do">공지 게시판 관리</a></td>
 				</tr>
 				<tr>
-					<td>문의 게시판 관리</td>
+					<td><a href="./sysQnaMgr.do">문의 게시판 관리</a></td>
 				</tr>
 				<tr>
 					<td>공백</td>
 				</tr>
 				<tr>
-					<td>로그아웃</td>
+					<td><a href="./adminLogout.do">로그아웃</a></td>
 				</tr>
 			</table>
 		</div>

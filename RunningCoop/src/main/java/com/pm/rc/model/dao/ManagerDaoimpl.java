@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
-import com.pm.rc.dto.SystemBoardDto;
 
 @Repository
 public class ManagerDaoimpl implements ManagerDao {
@@ -61,14 +60,12 @@ public class ManagerDaoimpl implements ManagerDao {
 
 	@Override
 	public List<MemberDto> allMemberSelect() {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectList(NAMESPACE+"allMemberSelect");
 	}
 
 	@Override
-	public List<MemberDto> allMemberSelectSearch(String mem_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MemberDto> allMemberSelectSearch(Map<String, String> map) {
+		return sqlSession.selectList(NAMESPACE+"allMemberSelectSearch", map);
 	}
 
 	@Override
@@ -112,19 +109,5 @@ public class ManagerDaoimpl implements ManagerDao {
 		int num = sqlSession.insert(NAMESPACE+"qnaReplyInsert_2", map);
 		return num>0?true:false;
 	}
-
-	@Override
-	public boolean qnaReplyModify(SystemBoardDto dto) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean qnaReplyDelete(String sbr_uuid) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
 
 }

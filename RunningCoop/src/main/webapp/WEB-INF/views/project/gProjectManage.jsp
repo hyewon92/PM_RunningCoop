@@ -201,7 +201,6 @@
 		var mem_list = new Array(inputbox.length);
 		
 		for (var i = 0; i < inputbox.length; i++){
-			if(inputbox.eq(i).val)
 			mem_list[i] = inputbox.eq(i).val();
 		}
 		

@@ -3,13 +3,10 @@ package com.pm.rc.model.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pm.rc.dto.SbAttachDto;
-import com.pm.rc.dto.SystemBoardDto;
 import com.pm.rc.model.dao.SysBoardDao;
 
 @Service

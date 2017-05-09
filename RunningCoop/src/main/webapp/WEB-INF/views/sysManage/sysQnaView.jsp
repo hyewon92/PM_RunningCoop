@@ -88,7 +88,7 @@ tr, th, td {
 								<td colspan="2">${ view.get("SBR_CONTENT") }</td>
 							</tr>
 						</table>
-						<input type="button" value="답글 작성" onclick="location.href='./writeReply.do?sbr_refer=${ view.get('SBR_REFER') }'"/>
+						<input type="button" value="답글 작성" onclick="location.href='./writeReply.do?sbr_uuid=${ view.get('SBR_UUID') }'"/>
 						<input type="button" value="게시글 수정" id="editBtn" onclick="Edit()" style="display: none" /> 
 						<input type="button" value="게시글 삭제" id="deleteBtn" onclick="Delete()" style="display: none" /> 
 						<input type="button" value="목록으로" onclick="back()" />
@@ -98,7 +98,7 @@ tr, th, td {
 					<td><a href="./grApply.do">그룹 승인 관리</a></td>
 				</tr>
 				<tr>
-					<td>회원 관리</td>
+					<td><a href="./sysMemMgr.do">회원 관리</a></td>
 				</tr>
 				<tr>
 					<td><a href="./sysNoticeMgr.do">공지 게시판 관리</a></td>
@@ -110,7 +110,7 @@ tr, th, td {
 					<td>공백</td>
 				</tr>
 				<tr>
-					<td>로그아웃</td>
+					<td><a href="./adminLogout.do">로그아웃</a></td>
 				</tr>
 			</table>
 		</div>
