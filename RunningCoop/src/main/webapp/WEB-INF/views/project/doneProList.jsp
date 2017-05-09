@@ -7,9 +7,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>진행 중인 프로젝트 목록 조회 페이지</title>
+<title>진행 완료 프로젝트 목록 조회 페이지</title>
 
-<link rel="stylesheet" href="css/main.css" type="test/css"/>
+<link rel="stylesheet" href="css/main.css" type="text/css"/>
 <%@include file="/WEB-INF/views/Group/bootstrap.jsp"%>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="./js/paging.js"></script>
@@ -61,7 +61,7 @@
 	<jsp:include page="../header.jsp" flush="false"/>
 </div>
 <div id = "container">
-<h3>진행 중인 프로젝트 목록</h3>
+<h3>진행 완료 프로젝트 목록</h3>
 	<div id='select'>
 			<span> <select class='btn btn-primary' id='listCount' name='listCount'
 				onchange='listCnt();'>
@@ -73,7 +73,7 @@
 			</select>
 			</span>
 		</div>
-		<form action="./goDoingSelect.do" method="post" id='frmPaging'>
+		<form action="./goDoneSelect.do" method="post" id='frmPaging'>
 <table class="table table-bordered">
 	<tr>
 		<th>번호</th>
