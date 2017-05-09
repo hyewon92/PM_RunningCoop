@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pm.rc.dto.GroupDto;
+import com.pm.rc.dto.ManagePagingDto;
 import com.pm.rc.dto.MemberDto;
 
 @Repository
@@ -59,8 +60,13 @@ public class ManagerDaoimpl implements ManagerDao {
 	}
 
 	@Override
-	public List<MemberDto> allMemberSelect() {
-		return sqlSession.selectList(NAMESPACE+"allMemberSelect");
+	public List<MemberDto> allMemberSelect(ManagePagingDto maPaging) {
+		return sqlSession.selectList(NAMESPACE+"allMemberSelect",maPaging);
+	}
+	
+	@Override
+	public int allMemberSelectCount() {
+		return sqlSession.selectOne(NAMESPACE+"allMemberSelectCount");
 	}
 
 	@Override

@@ -5,8 +5,6 @@ function frmPaging() {
 // 이전 페이지 index
 function pagePre(index, pageCnt) {
 	if (0 < index - pageCnt) {
-		alert(index+"여기도"+pageCnt);
-		alert("여기까지");
 		index -= pageCnt;
 		document.getElementById("pageStartNum").value = index;
 		document.getElementById("index").value = index - 1;
@@ -15,8 +13,6 @@ function pagePre(index, pageCnt) {
 }
 // 다음 페이지 index
 function pageNext(index, total, listCnt, pageCnt) {
-	alert(index+"이거랑"+total+"요거랑"+listCnt+"요것도"+pageCnt);
-	alert("여기까지");
 	var totalPageCnt = Math.ceil(total / listCnt);
 	var max = Math.ceil(totalPageCnt / pageCnt);
 	if (max * pageCnt > index + pageCnt) {

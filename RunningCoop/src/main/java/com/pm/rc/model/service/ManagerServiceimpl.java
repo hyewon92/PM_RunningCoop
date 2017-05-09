@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pm.rc.dto.GroupDto;
+import com.pm.rc.dto.ManagePagingDto;
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.model.dao.ManagerDao;
 
@@ -45,8 +46,13 @@ public class ManagerServiceimpl implements ManagerService {
 	}
 
 	@Override
-	public List<MemberDto> allMemberSelect() {
-		return managerdao.allMemberSelect();
+	public List<MemberDto> allMemberSelect(ManagePagingDto maPaging) {
+		return managerdao.allMemberSelect(maPaging);
+	}
+	
+	@Override
+	public int allMemberSelectCount() {
+		return managerdao.allMemberSelectCount();
 	}
 
 	@Override

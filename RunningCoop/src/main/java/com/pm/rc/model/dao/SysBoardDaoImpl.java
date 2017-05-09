@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.pm.rc.dto.ManagePagingDto;
 import com.pm.rc.dto.SbAttachDto;
 import com.pm.rc.dto.SystemBoardDto;
 
@@ -18,12 +19,24 @@ public class SysBoardDaoImpl implements SysBoardDao {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-
+	
 	@Override
 	public List<Map<String, String>> noticeListSelect() {
 		List<Map<String, String>> list;
 		list = sqlSession.selectList(NAMESPACE+"noticeListSelect");
 		return list;
+	}
+
+	@Override
+	public List<Map<String, String>> noticeListSelectPaing(ManagePagingDto maPaging) {
+		List<Map<String, String>> list;
+		list = sqlSession.selectList(NAMESPACE+"noticeListSelectPaging",maPaging);
+		return list;
+	}
+	
+	@Override
+	public int noticeListSelectCount() {
+		return sqlSession.selectOne(NAMESPACE+"noticeListSelectCount");
 	}
 
 	@Override
@@ -38,6 +51,18 @@ public class SysBoardDaoImpl implements SysBoardDao {
 		List<Map<String, String>> list;
 		list = sqlSession.selectList(NAMESPACE+"qnaListSelect");
 		return list;
+	}
+	
+	@Override
+	public List<Map<String, String>> qnaListSelectPaing(ManagePagingDto maPaing) {
+		List<Map<String, String>> list;
+		list = sqlSession.selectList(NAMESPACE+"qnaListSelectPaing", maPaing);
+		return list;
+	}
+	
+	@Override
+	public int qnaListSelectPaingCount() {
+		return sqlSession.selectOne(NAMESPACE+"qnaListSelectPaingCount");
 	}
 
 	@Override
@@ -169,6 +194,4 @@ public class SysBoardDaoImpl implements SysBoardDao {
 		}
 		return isc;
 	}
-
-
 }

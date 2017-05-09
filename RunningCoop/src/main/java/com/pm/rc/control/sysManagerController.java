@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.pm.rc.dto.GroupDto;
+import com.pm.rc.dto.ManagePagingDto;
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.model.service.ManagerService;
 import com.pm.rc.model.service.UserSysBoardService;
@@ -90,14 +91,16 @@ public class sysManagerController {
 	}
 
 	// 공지 게시판 관리 페이지 이동
-	@RequestMapping(value="/sysNoticeMgr.do", method=RequestMethod.GET)
-	public String sysBoardManager(Model model){
-
+	@RequestMapping(value="/sysNoticeMgr.do", method={RequestMethod.GET,RequestMethod.POST})
+	public String sysBoardManager(Model model, HttpServletRequest req){
+		ManagePagingDto maPaging = new ManagePagingDto(req.getParameter("index"), req.getParameter("pageStartNum"), req.getParameter("listCnt"));
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 
-		list = sservice.noticeListSelect();
+		list = sservice.noticeListSelectPaing(maPaging);
+		maPaging.setTotal(sservice.noticeListSelectCount());
 
 		model.addAttribute("list", list);
+		model.addAttribute("paging",maPaging);
 
 		return "sysManage/sysNoticeMgr";
 	}
@@ -367,16 +370,21 @@ public class sysManagerController {
 	}
 
 	// 문의 게시판 관리 페이지 이동
-	@RequestMapping(value="/sysQnaMgr.do", method=RequestMethod.GET)
-	public String sysQnaManager(HttpServletRequest request, Model model){
+	@RequestMapping(value="/sysQnaMgr.do", method={RequestMethod.GET,RequestMethod.POST})
+	public String sysQnaManager(HttpServletRequest req, Model model){
+		ManagePagingDto maPaing = new ManagePagingDto(req.getParameter("index"), 
+													  req.getParameter("pageStartNum"), req.getParameter("listCnt"));
+		
 		
 		logger.info("====================== 문의 게시판 관리 페이지 이동 ========================");
 
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 
-		list = sservice.qnaListSelect();
+		list = sservice.qnaListSelectPaing(maPaing);
+		maPaing.setTotal(sservice.qnaListSelectPaingCount());
 
 		model.addAttribute("list", list);
+		model.addAttribute("paging", maPaing);
 
 		return "sysManage/sysQnaMgr";
 	}
@@ -568,16 +576,21 @@ public class sysManagerController {
 	}
 	
 	// 회원 관리 페이지 이동
-	@RequestMapping(value="/sysMemMgr.do", method=RequestMethod.GET)
-	public String sysMemberMgr(Model model){
+	@RequestMapping(value="/sysMemMgr.do", method={RequestMethod.GET,RequestMethod.POST})
+	public String sysMemberMgr(Model model , HttpServletRequest req){
+		ManagePagingDto maPaging = new ManagePagingDto(req.getParameter("index"),
+													   req.getParameter("pageStartNum"),
+													   req.getParameter("listCnt"));
 		
 		logger.info("========================= 회원 관리 페이지 이동 =======================");
 		
 		List<MemberDto> list = new ArrayList<MemberDto>();
 		
-		list = service.allMemberSelect();
+		list = service.allMemberSelect(maPaging);
+		maPaging.setTotal(service.allMemberSelectCount());
 		
 		model.addAttribute("list", list);
+		model.addAttribute("paging", maPaging);
 		
 		return "sysManage/sysMemMgr";
 	}

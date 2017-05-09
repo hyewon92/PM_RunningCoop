@@ -3,6 +3,8 @@ package com.pm.rc.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.pm.rc.dto.ManagePagingDto;
+
 /**
  * 회원 입장에서 시스템게시판(문의게시판, 공지게시판)관련 기능 인터페이스
  * @author 김혜원
@@ -10,11 +12,13 @@ import java.util.Map;
 public interface UserSysBoardService {
 	
 	/**
-	 * 공지 게시글 목록 출력
+	 * 공지 게시글 목록 출력, 페이징처리
 	 * @return List&lt;SystemBoardDto&gt;
 	 * @author 김혜원
 	 * */
 	public List<Map<String, String>> noticeListSelect();
+	public List<Map<String, String>> noticeListSelectPaing(ManagePagingDto maPaging);
+	public int noticeListSelectCount();
 	
 	/**
 	 * 공지 게시글 검색 목록 출력
@@ -29,7 +33,8 @@ public interface UserSysBoardService {
 	 * @return 문의 게시글의 목록을 
 	 * */
 	public List<Map<String, String>> qnaListSelect();
-	
+	public List<Map<String, String>> qnaListSelectPaing(ManagePagingDto maPaing);
+	public int qnaListSelectPaingCount();
 	/**
 	 * 문의 게시글 검색
 	 * @param map : sbr_title을 key로 주고 게시글의 

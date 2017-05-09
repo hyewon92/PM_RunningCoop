@@ -3,6 +3,7 @@ package com.pm.rc.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.pm.rc.dto.ManagePagingDto;
 import com.pm.rc.dto.SbAttachDto;
 import com.pm.rc.dto.SystemBoardDto;
 
@@ -14,10 +15,12 @@ import com.pm.rc.dto.SystemBoardDto;
 public interface SysBoardDao {
 	
 	/**
-	 * 공지게시판 게시글 목록 출력
+	 * 공지게시판 게시글 목록 출력 , 페이징처리 한거
 	 * @return 게시글의 목록을 list에 담아 반환
 	 */
 	public List<Map<String, String>> noticeListSelect();
+	public List<Map<String, String>> noticeListSelectPaing(ManagePagingDto maPaging);
+	public int noticeListSelectCount ();
 	
 	
 	/**
@@ -32,6 +35,8 @@ public interface SysBoardDao {
 	 * @return 게시글의 목록을 list에 담아 반환
 	 */
 	public List<Map<String, String>> qnaListSelect();
+	public List<Map<String, String>> qnaListSelectPaing(ManagePagingDto maPaing);
+	public int qnaListSelectPaingCount();
 	
 	/**
 	 * 문의게시판 게시글 검색 목록 출력

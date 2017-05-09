@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pm.rc.dto.GroupDto;
+import com.pm.rc.dto.ManagePagingDto;
 import com.pm.rc.dto.MemberDto;
 
 /**
@@ -40,7 +41,8 @@ public interface ManagerService {
 	 * @return list
 	 * @author 라한솔
 	 */
-	public List<MemberDto> allMemberSelect();
+	public List<MemberDto> allMemberSelect(ManagePagingDto maPaging);
+	public int allMemberSelectCount ();
 	
 	/**
 	 * 회원 목록 출력 (아이디 검색)

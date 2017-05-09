@@ -242,7 +242,6 @@ public class GroupDaoImp implements GroupDao{
 	@Override
 	public int groupCheck(Map<String, String> map) {
 		int n = sqlSession.selectOne(NAMESPACE+"grCheck",map);
-		System.out.println(n+"nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
 		return n;
 		}
 

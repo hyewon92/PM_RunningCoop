@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pm.rc.dto.ManagePagingDto;
 import com.pm.rc.model.dao.SysBoardDao;
 
 @Service
@@ -14,10 +15,20 @@ public class UserSysBoardServiceImpl implements UserSysBoardService {
 
 	@Autowired
 	private SysBoardDao sysBoardDao;
-
+	
 	@Override
 	public List<Map<String, String>> noticeListSelect() {
 		return sysBoardDao.noticeListSelect();
+	}
+
+	@Override
+	public List<Map<String, String>> noticeListSelectPaing(ManagePagingDto maPaging) {
+		return sysBoardDao.noticeListSelectPaing(maPaging);
+	}
+	
+	@Override
+	public int noticeListSelectCount() {
+		return sysBoardDao.noticeListSelectCount();
 	}
 
 	@Override
@@ -28,6 +39,16 @@ public class UserSysBoardServiceImpl implements UserSysBoardService {
 	@Override
 	public List<Map<String, String>> qnaListSelect() {
 		return sysBoardDao.qnaListSelect();
+	}
+	
+	@Override
+	public List<Map<String, String>> qnaListSelectPaing(ManagePagingDto maPaing) {
+		return sysBoardDao.qnaListSelectPaing(maPaing);
+	}
+	
+	@Override
+	public int qnaListSelectPaingCount() {
+		return sysBoardDao.qnaListSelectPaingCount();
 	}
 
 	@Override
@@ -113,8 +134,4 @@ public class UserSysBoardServiceImpl implements UserSysBoardService {
 	public Map<String, String> sysAttachSelect(Map<String, String> map) {
 		return sysBoardDao.sysAttachSelect(map);
 	}
-
-
-
-
 }

@@ -72,12 +72,27 @@
 		(SELECT SBR_DEPTH+1 FROM RC_SYSBOARD WHERE SBR_UUID = #{Rsbr_uuid}))
 	</insert>
 	
-	<select id="allMemberSelect" resultType="MemberDto">
-		SELECT MEM_ID, MEM_NAME, MEM_EMAIL, MEM_PHONE, TO_CHAR(MEM_REGDATE, 'YYYY/MM/DD') MEM_REGDATE
-		FROM RC_MEMBER
-		WHERE MEM_DELYN = 'N' AND MEM_LEVEL = 'N'
-		ORDER BY MEM_REGDATE
+<!-- 	회원목록 페이징 처리  -->
+	<select id="allMemberSelect" resultType="MemberDto" parameterType="ManagePagingDto">
+	SELECT *
+		FROM ( SELECT ROWNUM RNUM, P.*
+		      FROM (
+					SELECT MEM_ID, MEM_NAME, MEM_EMAIL, MEM_PHONE, TO_CHAR(MEM_REGDATE, 'YYYY/MM/DD') MEM_REGDATE
+					FROM RC_MEMBER
+					WHERE MEM_DELYN = 'N' AND MEM_LEVEL = 'N'
+					ORDER BY MEM_REGDATE
+		      ) P
+		    )	
+		WHERE RNUM BETWEEN #{start} AND #{last}	
 	</select>
+	
+	<select id="allMemberSelectCount" resultType="java.lang.Integer">
+	SELECT NVL(COUNT(*),0)
+	FROM RC_MEMBER
+	WHERE MEM_DELYN = 'N' AND MEM_LEVEL = 'N'
+	</select>
+	
+<!-- 	페이징처리 끝 -->
 	
 	<select id="allMemberSelectSearch" parameterType="java.util.Map" resultType="MemberDto">
 		SELECT MEM_ID, MEM_NAME, MEM_EMAIL, MEM_PHONE, TO_CHAR(MEM_REGDATE, 'YYYY/MM/DD') MEM_REGDATE
