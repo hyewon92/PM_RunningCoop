@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="css/main.css" type="text/css">
 <script type="text/javascript">
 	function goListPm(){
 		window.open("./viewListPm.do","PM목록","width = 500, height = 700, resizable = no, scrollbars = no");

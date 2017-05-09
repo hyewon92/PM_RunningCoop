@@ -5,21 +5,27 @@
 <!DOCTYPE html >
 <html>
 <head>
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script type="text/javascript">
-</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="css/main.css" type="text/css">
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
-first페이지
-<a href="./myGrSelect.do?mem_id=user1"> 그룹 선택 하기</a>
-
-<form action="./allGrSelect.do" method="post">
-<div>
-	<input type="text" name="gr_name" />
-	<input type="submit" value="그룹검색"/>
+<div id="header">
+	<jsp:include page="../header.jsp" flush="false"/>
 </div>
-</form>
+<div id="container">
+	<a href="./myGrSelect.do?mem_id=user1"> 그룹 선택 하기</a>
+	
+	<form action="./allGrSelect.do" method="post">
+	<div>
+		<input type="text" name="gr_name" />
+		<input type="submit" value="그룹검색"/>
+	</div>
+	</form>
+</div>
+<div id="footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>
 </body>
 </html>

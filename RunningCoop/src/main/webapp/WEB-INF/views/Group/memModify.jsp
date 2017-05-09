@@ -7,7 +7,20 @@
 <!DOCTYPE html >
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<style type="text/css">
+#groupMemAdd{
+width : 200px;
+cursor: pointer;}
+img{
+width: 20px;
+cursor: pointer;}
+</style>
 <script type="text/javascript">
 	function accept1(memid){
 		alert("${ grid }");
@@ -47,56 +60,44 @@
 		}
 	}
 </script>
-<style type="text/css">
-#groupMemAdd{
-width : 200px;
-cursor: pointer;}
-img{
-width: 20px;
-cursor: pointer;}
-</style>
-<% String mem_id = (String)session.getAttribute("mem_id"); %>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 </head>
 <body>
 <div id = "header">
 	<jsp:include page="../header.jsp" flush="false"/>
 </div>
-
-	<h1>그룹 멤버 리스트</h1>
-<table>
-	<tr>
-	<td>아이디</td>
-	<td>이  름</td>
-	</tr>
-	<c:forEach var="memls" items="${memList}">
+<div id="container">
+		<h1>그룹 멤버 리스트</h1>
+	<table>
 		<tr>
-			<td>${memls.mem_id}</td>
-			<td>${memls.mem_name}</td>
-			<td style="display: none;">${grid}</td>
-			<td><img onclick="memDelete(this)" alt="cancle" src="./images/cancel.png"> </td>			
+		<td>아이디</td>
+		<td>이  름</td>
 		</tr>
-	</c:forEach>
-</table>	
-	<h1 id="groupMemAdd" onclick="groupMemAdd()">그룹초대</h1>		
-	<h1>가입 신청 리스트</h1>
-<table>
-	<c:forEach var="memWait" items="${grWait}">
-		<tr>
-			<td>${memWait.mem_name}</td> 
-			<td>${memWait.groupwaitdto.wait_regDate}</td>
-			<td id="memid">${memWait.mem_id}</td>
-			<td><input type="button" value="수락" onclick="accept1(this)"><input type="button" value="거절" onclick="refusal1(this)"></td>
-		</tr>					
-	</c:forEach>
-</table>	
-	<h1>그룹 해체</h1>
-	<input type="button" value="그룹 해체" onclick="groupBye()">
-	
-<div id = "footer">
-	<jsp:include page="../footer.jsp" flush="false"/>
+		<c:forEach var="memls" items="${memList}">
+			<tr>
+				<td>${memls.mem_id}</td>
+				<td>${memls.mem_name}</td>
+				<td style="display: none;">${grid}</td>
+				<td><img onclick="memDelete(this)" alt="cancle" src="./images/cancel.png"> </td>			
+			</tr>
+		</c:forEach>
+	</table>	
+		<h1 id="groupMemAdd" onclick="groupMemAdd()">그룹초대</h1>		
+		<h1>가입 신청 리스트</h1>
+	<table>
+		<c:forEach var="memWait" items="${grWait}">
+			<tr>
+				<td>${memWait.mem_name}</td> 
+				<td>${memWait.groupwaitdto.wait_regDate}</td>
+				<td id="memid">${memWait.mem_id}</td>
+				<td><input type="button" value="수락" onclick="accept1(this)"><input type="button" value="거절" onclick="refusal1(this)"></td>
+			</tr>					
+		</c:forEach>
+	</table>	
+		<h1>그룹 해체</h1>
+		<input type="button" value="그룹 해체" onclick="groupBye()">
 </div>
-
+	<div id = "footer">
+		<jsp:include page="../footer.jsp" flush="false"/>
+	</div>
 </body>
 </html>
