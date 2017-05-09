@@ -8,6 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>검색했을 때</title>
+<link rel="stylesheet" href="css/main.css" type="text/css"/>
 <style type="text/css">
 table {
 	border-collapse: collapse;

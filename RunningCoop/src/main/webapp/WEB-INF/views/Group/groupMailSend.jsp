@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 	$(function(){
@@ -14,9 +16,12 @@
 		}
 	})
 </script>
-<title>Insert title here</title>
 </head>
 <body>
+<div id="header">
+	<jsp:include page="../header.jsp" flush="false"/>
+</div>
+<div id="container">
 	<form action="./goGroupMail.do" method="post">
 	<table>
 		<tr>보낸이</tr>
@@ -24,6 +29,9 @@
 		<tr><td><input type="submit" value="메일보내기"></td></tr>
 	</table>
 	</form>
-
+</div>
+<div id="footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>
 </body>
 </html>

@@ -1,0 +1,12 @@
+#user_sidebar{
+	position: fixed;
+	top : 50px;
+	right : 0px;
+	
+	padding : 5px;
+	
+	width : 15%;
+	height : 90%;
+	
+	
+}
