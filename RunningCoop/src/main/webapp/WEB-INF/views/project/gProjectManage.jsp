@@ -8,7 +8,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>그룹 프로젝트 관리 페이지</title>
+
+<link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+
 <style type="text/css">
 	#con_body{
 		border : 1px solid black;
@@ -54,16 +57,9 @@
 	
 	// 프로젝트 팀 일정 관리(컨트롤러 실행)
 	function view_calendar_manage(){
-		var pr_id = $("#pr_id").val();
-		$.ajax({
-			type: "GET",
-			url: "./viewTeamSchedule.do",
-			data: "pr_id="+pr_id,
-			async: false,
-			success: function(msg){
-				showTeamCalendar(msg)
-			}
-		});
+		$(".info_manage").css("display", "none");
+		$(".calendar_manage").css("display", "block");
+		$(".mem_manage").css("display", "none");
 	}
 	
 	//프로젝트 팀 일정 관리
@@ -330,8 +326,6 @@
 		})
 	}
 	
-	
-	
 </script>
 </head>
 <body>
@@ -385,7 +379,7 @@
 		<div class = "calendar_manage">
 			<div>
 				<%-- <jsp:include page="../schedule/teamCalendar.jsp" flush="false"/> --%>
-				<iframe width="100%" height="100%" src="./viewTeamSchedule.do">
+				<iframe width="100%" height="100%"  src="./viewTeamSchedule.do?pr_id=${ pr_id }">
 				</iframe>
 			</div>
 			<div>
