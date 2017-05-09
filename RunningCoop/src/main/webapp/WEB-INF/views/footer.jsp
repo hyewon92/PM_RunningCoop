@@ -11,8 +11,7 @@
 	String userId = (String) session.getAttribute("mem_id");
 	String gr_id = (String)session.getAttribute("gr_id");
 %>
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style>
@@ -149,7 +148,7 @@
 </script>
 </head>
 <body>
-
+<div id = "user_sidebar">
 	<input type="button" value="프로젝트선택"
 		onclick="goProSelect()">
 	<p id="doingPro"></p>
@@ -179,5 +178,6 @@
 		<% String grSession = (String)session.getAttribute("gr_id"); %>
 		<input type = "button" value = "그룹채팅" onclick = "goSocket('<%=grSession%>')">
 	</div>
+</div>
 </body>
 </html>

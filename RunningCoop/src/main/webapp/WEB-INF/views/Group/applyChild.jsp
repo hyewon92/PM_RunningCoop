@@ -10,27 +10,34 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>그룹보기</h1>
-<c:forEach var="info" items="${info}">
-	<table>
-		<tr>
-			<td>그룹명</td>
-			<td>${info.GR_NAME}</td>
-		</tr>
-		<tr>
-			<td>그룹관리자</td>
-			<td>${info.MEM_NAME}</td>
-		</tr>
-		<tr>
-			<td>그룹생성목적</td>
-			<td>${info.GR_GOAL}</td>
-		</tr>
-		<tr>
-			<td>신청일자</td>
-			<td>${info.GR_REGDATE}</td>
-		</tr>
-	</table>
-</c:forEach>
-
+<div id="header">
+	<jsp:include page="../header.jsp" flush="false"/>
+</div>
+<div id="container">
+	<h1>그룹보기</h1>
+	<c:forEach var="info" items="${info}">
+		<table>
+			<tr>
+				<td>그룹명</td>
+				<td>${info.GR_NAME}</td>
+			</tr>
+			<tr>
+				<td>그룹관리자</td>
+				<td>${info.MEM_NAME}</td>
+			</tr>
+			<tr>
+				<td>그룹생성목적</td>
+				<td>${info.GR_GOAL}</td>
+			</tr>
+			<tr>
+				<td>신청일자</td>
+				<td>${info.GR_REGDATE}</td>
+			</tr>
+		</table>
+	</c:forEach>
+</div>
+<div id="footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>
 </body>
 </html>

@@ -7,31 +7,39 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" href="css/main.css" type="text/css"/>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
 <style type="text/css">
 #groupimg2{
 background-image: url("./grImgs/img01.png");
 background-repeat: no-repeat;
 }
 </style>
+
 <script type="text/javascript">
 function openChild(){
     window.open("./showGrCreate.do", "GroupCreate", "width=640, height=450, resizable = no, scrollbars = no");
  }
-</script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script type="text/javascript">
-	$(function(){
-		$("table[name=groupimg]").each(function(){
-			var result = Math.floor(Math.random() * 14);
-			$(this).css({"background":"url(./grImgs/img"+result+".png)", 'background-repeat' : 'no-repeat', 'background-position':'center center'}); 
 
-		})
+$(function(){
+	$("table[name=groupimg]").each(function(){
+		var result = Math.floor(Math.random() * 14);
+		$(this).css({"background":"url(./grImgs/img"+result+".png)", 'background-repeat' : 'no-repeat', 'background-position':'center center'}); 
+
 	})
-</script>	
-<title>Insert title here</title>
+})
+</script>
+
 </head>
 <body>
+<div id="header">
+	<jsp:include page="../header.jsp" flush="false"/>
+</div>
 
+<div id="container">
 	<c:forEach var = "grdto" items="${lists}" >
 	<table name="groupimg">
 		<tr><td><a href="./gProSelect.do?gr_id=${grdto.gr_id}">${grdto.gr_id}</a> </td></tr>
@@ -45,6 +53,10 @@ function openChild(){
 
 <p><input type="button" onclick="location.href='./grApply.do'" value="그룹승인관리"></p>
 <input type = "button" value = "그룹생성" onclick = "openChild()">
-	
+</div>
+
+<div id="footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>	
 </body>
 </html>

@@ -5,7 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>사이드바메뉴</title>
+<title>그룹 선택</title>
+<link rel="stylesheet" href="css/main.css" type="text/css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -52,15 +53,23 @@
 </script>
 </head>
 <body>
-<% 
-   String userName = (String)session.getAttribute("mem_name"); 
-   String userId = (String)session.getAttribute("mem_id");
-%>
-<form action="./allGrSelect.do" method="post">
-<div class="ui-widget">
-   <input type="text" name="gr_name" id="gr_name"/>
-   <input type="submit" value="그룹검색"/>
+<div id="header">
+	<jsp:include page="../header.jsp" flush="false"/>
 </div>
-</form>
+<div id="container">
+	<% 
+	   String userName = (String)session.getAttribute("mem_name"); 
+	   String userId = (String)session.getAttribute("mem_id");
+	%>
+	<form action="./allGrSelect.do" method="post">
+	<div class="ui-widget">
+	   <input type="text" name="gr_name" id="gr_name"/>
+	   <input type="submit" value="그룹검색"/>
+	</div>
+	</form>
+</div>
+<div id="footer">
+	<jsp:include page="../footer.jsp" flush="false"/>
+</div>
 </body>
 </html>

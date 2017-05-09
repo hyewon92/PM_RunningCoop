@@ -16,6 +16,7 @@
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="css/main.css" type="text/css">
 </head>
 <body>
 <div id = "header">

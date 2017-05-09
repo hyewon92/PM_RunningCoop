@@ -6,9 +6,22 @@
 <!DOCTYPE html >
 <html>
 <head>
-<% String mem_id2 = (String)session.getAttribute("mem_id"); %>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" href="css/main.css" type="text/css" />
+
+<%@include file="/WEB-INF/views/Group/bootstrap.jsp"%>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="./js/paging.js"></script>
+
+<style type="text/css">
+#grname{
+cursor: pointer;
+}
+</style>
+
+<% String mem_id2 = (String)session.getAttribute("mem_id"); %>
 <script type="text/javascript">
 var openwin;
 	function openChild(val){
@@ -30,15 +43,6 @@ var openwin;
 		});
 	}
 </script>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<%@include file="/WEB-INF/views/Group/bootstrap.jsp"%>
-<script src="./js/paging.js"></script>
-<style type="text/css">
-#grname{
-cursor: pointer;
-}
-</style>
 </head>
 <body>
 <div id = "header">
@@ -99,18 +103,8 @@ cursor: pointer;
 			</div>
 		</form>
 	</div>	
-<!-- 	<table> -->
-<%-- 	<c:forEach var="grList" items="${allGrlists }"> --%>
-<!-- 		<tr> -->
-<%-- 		<td>그룹 ID : </td><td><input type="text" value="${grList.GR_ID}" readonly="readonly" id="gr_id"></td> --%>
-<%-- 		<td>그룹이름 :</td><td>${grList.GR_NAME }</td> --%>
-<%-- 		<td>담 당 자 : </td><td>${grList.MEM_NAME }<input type="button" onclick="openChild(this)" value="그룹가입신청"></td> --%>
-<!-- 		</tr>	 -->
-<%-- 	</c:forEach> --%>
-<!-- 	</table> -->
 	
 	<div>
-
 		<select>
 	<c:forEach var="dtos" items="${lists}">
 				<option>${dtos.gr_id}</option>	
