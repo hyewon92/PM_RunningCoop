@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
@@ -22,6 +22,7 @@
 	}
 	
 	.calendar_manage{
+		height : 600px;
 		display : none;
 	}
 	
@@ -57,16 +58,9 @@
 	
 	// 프로젝트 팀 일정 관리(컨트롤러 실행)
 	function view_calendar_manage(){
-		var pr_id = $("#pr_id").val();
-		$.ajax({
-			type: "GET",
-			url: "./viewTeamSchedule.do",
-			data: "pr_id="+pr_id,
-			async: false,
-			success: function(msg){
-				showTeamCalendar(msg)
-			}
-		});
+		$(".info_manage").css("display", "none");
+		$(".calendar_manage").css("display", "block");
+		$(".mem_manage").css("display", "none");
 	}
 	
 	//프로젝트 팀 일정 관리
@@ -386,9 +380,8 @@
 		<div class = "calendar_manage">
 			<div>
 				<%-- <jsp:include page="../schedule/teamCalendar.jsp" flush="false"/> --%>
-			</div>
-			<div>
-				세부일정 조회/추가
+				<iframe width = "100%" height = "595px"  src = "./viewTeamSchedule.do?pr_id=${ pr_id }">
+				</iframe>
 			</div>
 		</div>
 	</div>

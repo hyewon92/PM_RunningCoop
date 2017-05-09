@@ -6,13 +6,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
+import javax.websocket.server.HandshakeRequest;
 
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
+import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -25,7 +29,8 @@ public class MySocketHandler extends TextWebSocketHandler {
    
    private ArrayList<WebSocketSession> list ; 
    private Map<WebSocketSession,String> map = new HashMap<WebSocketSession,String>();
-   private ArrayList<String> memList;
+   HttpSession sysSession;
+   //private ArrayList<String> memList;
    
    public MySocketHandler() {
       list = new ArrayList<WebSocketSession>();
@@ -44,7 +49,7 @@ public class MySocketHandler extends TextWebSocketHandler {
    }
    
    @Override
-   public void handleTextMessage(WebSocketSession session,TextMessage message)
+   public void handleTextMessage(WebSocketSession session, TextMessage message)
    throws Exception {
 	  logger.info("handleTextMessage()실행");
       String msg = message.getPayload();
@@ -52,7 +57,8 @@ public class MySocketHandler extends TextWebSocketHandler {
       
       Map<String, Object> mySession = session.getHandshakeAttributes();	//WebsocketSession의 session값을 httpSesssion값으로 변경
       String myGrSession = (String)mySession.get("gr_id");	//접속자의 그룹 아이디
-      memList = new ArrayList<String>();	//그룹 접속자 리스트
+      String myMemSession = (String)mySession.get("mem_id");	//접속자 아이디
+      //memList = new ArrayList<String>();	//그룹 접속자 리스트
       
       if( msg != null && !msg.equals("") ) {
          if(msg.indexOf("#$nick_") > -1 ) {
@@ -62,33 +68,47 @@ public class MySocketHandler extends TextWebSocketHandler {
             	Map<String, Object> sessionMap = s.getHandshakeAttributes();
             	String otherGrSession = (String)sessionMap.get("gr_id");
             	String otherMemSession = (String)sessionMap.get("mem_id");
-            	logger.info("myGrSession="+myGrSession);
-            	logger.info("otherGrSession="+otherGrSession);
+            	//logger.info("myGrSession="+myGrSession);
+            	//logger.info("otherGrSession="+otherGrSession);
+            	
+            	ArrayList<String> grMemList = new ArrayList<String>();
+            	System.out.println("그룹아이디: "+myGrSession);
+            	System.out.println("멤버아이디: "+myMemSession);
+            	System.out.println("멤버아이디2: "+otherGrSession);
+            	
                if(myGrSession.equals(otherGrSession)) {	//같은 그룹 소속일 때
+            	   sysSession.setAttribute("socket"+myGrSession, grMemList.add(myMemSession));
+            	  // sysSession.setAttribute("test", "test값");
                   s.sendMessage(
                   new TextMessage("<font color='red' size='2px'>"+map.get(session)+" 님이 입장했습니다.</font>")
                   );
-                  memList.add(otherMemSession);	
+                 // memList.add(otherMemSession);	
                }
             }
-            for(WebSocketSession s2 : list){	//그룹 접속자 리스트 보내기
+/*            for(WebSocketSession s2 : list){	//그룹 접속자 리스트 보내기
             	JSONObject obj = new JSONObject();
             	obj.put("memList", memList);
             	s2.sendMessage(new TextMessage(obj.toString()));
-            }
+            }*/
          }else {
         	 String msg2 = msg.substring(0, msg.indexOf(":")).trim();
             for(WebSocketSession s : list) {
             	Map<String, Object> sessionMap = s.getHandshakeAttributes();
             	String otherGrSession = (String)sessionMap.get("gr_id");
-            	String myMemSession = (String)sessionMap.get("mem_id");
+            	//String myMemSession = (String)sessionMap.get("mem_id");
             	if(myGrSession.equals(otherGrSession)){
             		if(msg2.equals(myMemSession)){
-            			msg = msg.replace(msg.substring(0, msg.indexOf(":")).trim(),"나");
-            			txt = "<font color='pink' size='2px' style = 'float : right;'>"+msg+"</font>" ;
+            			System.out.println("진짜처음:"+msg);
+            			System.out.println("처음:"+msg.substring(0, msg.trim().indexOf(":")+1));
+            			String newMsg = "[나] \n"+msg.replace(msg.substring(0, msg.trim().indexOf(":")+1),"");
+            			System.out.println("newMsg:"+newMsg);
+            			//txt = "<font color='pink' size='2px' style = 'float : right;'>"+newMsg+"</font>" ;
+            			txt = newMsg;
             		}else{
-            			System.out.println("멤버에게");
-            			txt = "<font color='black' size='2px' style = 'float : left;'>"+msg+"</font>" ;
+            			//txt = "<font color='black' size='2px' style = 'float : left;'>"+msg+"</font>" ;
+            			String part1 = msg.substring(0, msg.trim().indexOf(":")).trim();
+            			String part2 = "["+part1+"] \n"+msg.substring(msg.trim().indexOf(":")+1);
+            			txt = part2;
             		}
             		s.sendMessage(new TextMessage(txt));
             	}
@@ -100,6 +120,7 @@ public class MySocketHandler extends TextWebSocketHandler {
    @Override
    public void afterConnectionClosed(WebSocketSession session,CloseStatus status)
    throws Exception {
+	   logger.info("afterConnectionClosed()실행");
       super.afterConnectionClosed(session, status);
       Map<String, Object> mySession = session.getHandshakeAttributes();
       String myGrSession = (String)mySession.get("gr_id");
