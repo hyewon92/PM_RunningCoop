@@ -8,9 +8,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>프로젝트 검색 목록</title>
+
+<link rel="stylesheet" href="css/main.css" type="text/css"/>
 <%@include file="/WEB-INF/views/Group/bootstrap.jsp"%>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="./js/paging.js"></script>
+
 <style type="text/css">
 	.pr_detail_view{
 		border : 1px dotted green;

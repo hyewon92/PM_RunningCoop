@@ -8,9 +8,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>진행 중인 프로젝트 목록 조회 페이지</title>
+
+<link rel="stylesheet" href="css/main.css" type="text/css"/>
 <%@include file="/WEB-INF/views/Group/bootstrap.jsp"%>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="./js/paging.js"></script>
+
 <style type="text/css">
 	.pr_detail_view {
 		display : none;
@@ -20,6 +23,7 @@
 		cursor: pointer;
 	}
 </style>
+
 <script type="text/javascript">
 	function view_Detail(val){
 		$.ajax({

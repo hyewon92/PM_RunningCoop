@@ -8,10 +8,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>프로젝트 업무 리스트 화면</title>
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery-latest.js"></script>
+
+<link rel="stylesheet" href="css/main.css" type="text/css"/>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript" src="js/project/project.js"></script>
 <script type="text/javascript" src="js/project/worklist.js"></script>
+
 <style type="text/css">
 .work_Detail_View {
 	display: none;
