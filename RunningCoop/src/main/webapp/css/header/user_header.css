@@ -1,18 +1,17 @@
- #user_header{
- 	position : fixed;
+ #header {
+ 	position : absolute;
  	top: 0px;
  	left : 0px;
  	
- 	background : #fff;
+ 	background : #E6F4B5;
  	border-bottom : 1px solid #69B55B;
  	
- 	width : 100%;
+ 	width : 1200px;
  	height : 40px;
  	padding : 5px;
  	
- }
- 
- .btn {
+ } 
+ .header_btn {
 	display: inline-block;
     padding: 2px 12px;
     margin-bottom: 0;
@@ -33,33 +32,33 @@
     background-color: #5cb85c;
     border-color: #4cae4c;
     
-    position: relative;
-    top: -12px;
-    left : 740px;
+    position: absolute;
+    top: 12px;
+    left : 1030px;
 }
 
 .user_calendar{
-	position: absolute;
-	top : 10px;
-	left : 25px;
+	position: relative;
+	top : 5px;
+	left : 15px;
 	
 	width : 30px;
 	height : 30px;
 }
 
 .user_logo{
-	position: relative;
-	top : 5px;
-	left : 450px;
+	position: absolute;
+	top : 10px;
+	left : 500px;
 	
 	width : 200px;
 	height : 35px;
 }
 
 .user_edit{
-	position: relative;
-	top : -10px;
-	left : 730px;
+	position: absolute;
+	top : 17px;
+	left : 900px;
 	
 	font-size: 10pt;
 	color : grey;
@@ -72,8 +71,9 @@
 }
 
 .side_menu_toggle{
-	position : relative;
-	left : 750px;
+	position : absolute;
+	top : 10px;
+	left : 1150px;
 	
 	width : 30px;
 	height : 30px;

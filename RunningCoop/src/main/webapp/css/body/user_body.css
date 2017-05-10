@@ -1,12 +1,10 @@
 #container {
-	position : fixed;
-	top : 55px;
+	position : absolute;
+	top : 50px;
 	left : 0px;
 	
 	padding : 5px;
-	width : 83%;
-	height : 90%;
+	width : 1000px;
 	
-	overflow: scroll;
 }
 

@@ -6,11 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>사이드바메뉴</title>
-<%
-	String userName = (String) session.getAttribute("mem_name");
-	String userId = (String) session.getAttribute("mem_id");
-	String gr_id = (String)session.getAttribute("gr_id");
-%>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -26,6 +21,11 @@
 	height: 100px;
 }
 </style>
+<%
+	String userName = (String) session.getAttribute("mem_name");
+	String userId = (String) session.getAttribute("mem_id");
+	String gr_id = (String)session.getAttribute("gr_id");
+%>
 <script type="text/javascript">
    $(function(){
          $("#gr_name").autocomplete({
@@ -148,36 +148,31 @@
 </script>
 </head>
 <body>
-<div id = "user_sidebar">
-	<input type="button" value="프로젝트선택"
-		onclick="goProSelect()">
-	<p id="doingPro"></p>
-	<p id="todoPro"></p>
-	<p id="donePro"></p>
-	<input type="button" value="그룹선택"
-		onclick="location.href='./myGrSelect.do?mem_id=<%=userId%>'"><br/>
-	<input type="button" value="문의게시판"
-		onclick="location.href = './qnaList.do'"><br/>
-	<input type="button" value="공지게시판"
-		onclick="location.href = './noticeList.do'"><br/>
-	<input type="button" onclick="location.href='./grselect.do?gr_id=<%=gr_id%>'" value="그룹관리"><br/> 
-	<form action="./allGrSelect.do" method="post">
+	
+	<img alt="프로젝트 선택" class="footer_icon" src="./images/footer/icon_selectProject.png" onclick="goProSelect()"/>
+	<p id="doingPro" class="iProject"></p>
+	<p id="todoPro" class="iProject"></p>
+	<p id="donePro" class="iProject"></p>
+	<img alt="그룹 선택" class="footer_icon" src="./images/footer/icon_selectGroup.png" onclick="location.href='./myGrSelect.do?mem_id=<%=userId%>'"/>
+	<!-- <form action="./allGrSelect.do" method="post">
 		<div class="ui-widget">
-			<input type="text" name="gr_name" id="gr_name" /> <input
+			<input type="text" name="gr_name" id="gr_name" class="searchbox"/> <input
 				type="submit" value="그룹검색" />
 		</div>
-	</form>
-	<form action="./allPrSelect.do" method="post">
+	</form> -->
+	<!-- <form action="./allPrSelect.do" method="post">
 		<div class="ui-widget">
 			<input type="text" name="pr_name" id="pr_name" />
 			<input type="submit" value="프로젝트 검색"/>
 		</div>
-	</form>
+	</form> -->
+	<img alt="그룹" class="footer_icon" src="./images/footer/icon_group.png"/>
+	<p class="groupMenu"><a href="#" onclick="location.href='./grselect.do?gr_id=<%=gr_id%>'">그룹 관리</a></p>
+<% String grSession = (String)session.getAttribute("gr_id"); %>
+	<p class="groupMenu"><a href="#" onclick="goSocket('<%=grSession%>')">그룹 채팅</a></p>
+	<img alt="검색하기" class="footer_icon" src="./images/footer/icon_search.png"/>
+	<img alt="공지게시판" class="footer_icon" src="./images/footer/icon_noticeBoard.png" onclick="location.href = './noticeList.do'"/>
+	<img alt="문의게시판" class="footer_icon" src="./images/footer/icon_qnaBoard.png" onclick="location.href = './qnaList.do'"/>
 	
-	<div class = "chat">
-		<% String grSession = (String)session.getAttribute("gr_id"); %>
-		<input type = "button" value = "그룹채팅" onclick = "goSocket('<%=grSession%>')">
-	</div>
-</div>
 </body>
 </html>

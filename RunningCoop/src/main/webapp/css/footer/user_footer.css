@@ -1,12 +1,54 @@
-#user_sidebar{
-	position: fixed;
+#footer{
+	position: absolute;
 	top : 50px;
-	right : 0px;
+	left: 1000px;
 	
 	padding : 5px;
+	padding-top : 25px;
 	
-	width : 15%;
-	height : 90%;
+	width : 200px;
+	height: 100%;
 	
+	background : #69B55B;
+	color : white;
 	
+}
+
+.footer_icon{
+	width : 160px;
+	height :30px;
+	
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 18px;
+}
+
+.iProject {
+	margin-left : 30px;
+	line-height: 7px;
+	
+	font-size: 10pt;
+}
+
+.iProject a{
+	color : green;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.groupMenu {
+	margin-left : 30px;
+	line-height: 7px;
+	
+	font-size: 10pt;
+}
+
+.groupMenu a{
+	color : white;
+	text-decoration: none;
+}
+
+.searchbox {
+	width : 150px;
+	margin-left: 10px;
 }
