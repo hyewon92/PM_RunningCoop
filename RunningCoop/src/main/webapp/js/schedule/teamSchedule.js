@@ -4,21 +4,21 @@
  */
 
 //지정일 일정 조회
-	function dailyList(val1, val2, val3){
+	function dailyList(val1, val2, val3, val4){
 			$(".listBox").children().remove();
 		$.ajax({
 			type : "POST",
-			url : "./temaDailySchSelect.do",
-			data: "date="+val1+"-"+val2+"-"+val3,
+			url : "./teamDailySchSelect.do",
+			data: "date="+val1+"-"+val2+"-"+val3+"&pr_id="+val4,
 			async: false,
 			success: function(msg){
-				showDailyList(msg, val1, val2, val3)
+				showDailyList(msg, val1, val2, val3, val4)
 			}
 		});
 	}
 	
 	//지정일 일정 출력
-	function showDailyList(schedule, val1, val2, val3){
+	function showDailyList(schedule, val1, val2, val3, val4){
 		if(schedule.length == 0){
 			$(".listBox").append("<p>해당 일에 등록된 일정이 없습니다.</p>");
 		}else{
@@ -35,20 +35,20 @@
 					}
 				$(".listBox").css("display", "block");
 				$(".detailBox").css("display", "none");
-				$(".listBox").append("<span class = 'listChk' onclick = 'showDetail("+sch_seq+",\""+val1+"\",\""+val2+"\",\""+val3+"\")'>"+title+"</span><br>");
+				$(".listBox").append("<span class = 'listChk' onclick = 'showDetail("+sch_seq+",\""+val1+"\",\""+val2+"\",\""+val3+"\",\""+val4+"\")'>"+title+"</span><br>");
 			}
 		}
 	}
 
 	//일정 상세정보 조회
-	function showDetail(val1, val2, val3, val4){
+	function showDetail(val1, val2, val3, val4, val5){
 		$.ajax({
 			type : "POST",
 			url : "./detailTeamSchedule.do",
 			data: "sch_seq="+val1,
 			async: false,
 			success: function(msg){
-				dailyList(val2, val3, val4);
+				dailyList(val2, val3, val4, val5);
 				showSchDetail(msg)
 			},
 			error:function(){
@@ -120,21 +120,20 @@
 		
 		//일정 등록
 		$(".scheduleBox").submit(function(){
-/*			alert($("#sch_title").val());
-			if($("#sch_newStartTime").val() == "" || $("#sch_newStartTime").val() == null){
+			if($("#sch_newStartTime").val().length == 0){
 				$("#sch_newStartTime").val("00:00");
 			}
-			if($("#sch_newEndTime").val() == "" || $("#sch_newEndTime").val() == null){
+			if($("#sch_newEndTime").val().length == 0){
 				$("#sch_newEndTime").val("00:00");
 			}
 			var newStartTotal = $("#sch_newStartDate").val()+" "+$("#sch_newStartTime").val();
 			$("#newStartTotal").val(newStartTotal);
 			var newEndTotal = $("#sch_newEndDate").val()+" "+$("#sch_newEndTime").val();
 			$("#newEndTotal").val(newEndTotal);
-			if($("#sch_title").val() == "" || $("#sch_title").val() == null){
+			if($("#sch_title").val().length == 0){
 				alert("일정 제목을 입력해주세요");
 				return false;
-			}*/
+			}
 			if($("#newStartTotal").val()>$("#newEndTotal").val()){
 				alert("날짜를 정확히 입력해주세요");
 				return false;
@@ -143,17 +142,17 @@
 		
 		//일정 수정
  		$(".scheduleModiBox").submit(function(){
- 			if($("#sch_upStartTime").val() == "" || $("#sch_upStartTime").val() == null){
+ 			if($("#sch_upStartTime").val().length == 0){
 				$("#sch_upStartTime").val("00:00");
 			}
-			if($("#sch_upEndTime").val() == "" || $("#sch_upEndTime").val() == null){
+			if($("#sch_upEndTime").val().length == 0){
 				$("#sch_upEndTime").val("00:00");
 			}
 			var upStartTotal = $("#sch_upStartDate").val()+" "+$("#sch_upStartTime").val();
 			$("#upStartTotal").val(upStartTotal);
 			var upEndTotal = $("#sch_upEndDate").val()+" "+$("#sch_upEndTime").val();
 			$("#upEndTotal").val(upEndTotal);
-			if($("#sch_upTitle").val() == "" || $("#sch_upTitle").val() == null){
+			if($("#sch_upTitle").val().length == 0){
 				alert("일정 제목을 입력해주세요");
 				return false;
 			}

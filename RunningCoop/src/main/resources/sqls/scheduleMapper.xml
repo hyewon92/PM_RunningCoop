@@ -45,7 +45,7 @@
 	</select>
 	
 	<!-- 지정일 일정 리스트 -->
-	<select id="DailySchSelect" parameterType="java.lang.String" resultMap="SchProDto">
+	<select id="dailySchSelect" parameterType="java.lang.String" resultMap="SchProDto">
 		<![CDATA[SELECT S.SCH_SEQ, S.SCH_TITLE, S.PR_ID, P.PR_NAME 
 		FROM RC_SCHEDULE S, RC_PROJECT P 
 		WHERE S.PR_ID = P.PR_ID(+) 
@@ -85,7 +85,7 @@
 	</select>
 	
 	<!-- 지정일 팀 일정 리스트 -->
-	<select id="dailyTeamSchSelect" parameterType="java.lang.String" resultMap="SchProDto">
+	<select id="teamDailySchSelect" parameterType="java.lang.String" resultMap="SchProDto">
 		<![CDATA[SELECT S.SCH_SEQ, S.SCH_TITLE, S.PR_ID, P.PR_NAME 
 		FROM RC_SCHEDULE S, RC_PROJECT P 
 		WHERE S.PR_ID = P.PR_ID 

@@ -136,16 +136,16 @@ public class ScheduleController {
 	}	
 	
 	//지정일 팀일정 목록 조회
-	@RequestMapping(value = "")
+	@RequestMapping(value = "/teamDailySchSelect.do")
 	@ResponseBody
-	public List<ScheduleDto> dailyTeamSchSelect(HttpServletRequest req, String date){
+	public List<ScheduleDto> teamDailySchSelect(String date, String pr_id){
 		logger.info("DailySchSelect실행");
 		Map<String, String> map = new HashMap<String, String>();
-		String pr_id = req.getParameter("pr_id");
 		map.put("pr_id", pr_id);
 		map.put("date", date);
 		List<ScheduleDto> list = new ArrayList<ScheduleDto>();
 		list = scheduleService.teamDailySchSelect(map);
+		System.out.println(list.size());
 		return list;
 	}
 	
