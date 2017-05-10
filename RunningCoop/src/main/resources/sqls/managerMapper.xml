@@ -87,6 +87,17 @@
 		ORDER BY MEM_REGDATE
 	</select>
 	
+	<!-- 회원정보 조회 -->
+	<select id="sysMemView" parameterType="java.lang.String" resultType="MemberDto">
+		SELECT MEM_ID, MEM_PW, MEM_NAME, MEM_EMAIL, MEM_PHONE
+		FROM RC_MEMBER
+		WHERE MEM_ID = #{mem_id}
+	</select>
 	
+	<!-- 회원정보 수정 -->
+	<update id="sysMemModify" parameterType="MemberDto">
+		UPDATE RC_MEMBER SET MEM_NAME = #{mem_name}, MEM_PW = #{mem_pw}, MEM_EMAIL = #{mem_email}, MEM_PHONE = #{mem_phone}
+		WHERE MEM_ID = #{mem_id}
+	</update>
 	
 </mapper>

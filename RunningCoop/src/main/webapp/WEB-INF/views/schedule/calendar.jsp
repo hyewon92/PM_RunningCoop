@@ -199,17 +199,17 @@
 	$(function(){
 		//일정 등록
 		$(".scheduleBox").submit(function(){
-			if($("#sch_newStartTime").val() == "" || $("#sch_newStartTime").val() == null){
+			if($("#sch_newStartTime").val().length == 0){
 				$("#sch_newStartTime").val("00:00");
 			}
-			if($("#sch_newEndTime").val() == "" || $("#sch_newEndTime").val() == null){
+			if($("#sch_newEndTime").val().length == 0){
 				$("#sch_newEndTime").val("00:00");
 			}
 			var newStartTotal = $("#sch_newStartDate").val()+" "+$("#sch_newStartTime").val();
 			$("#newStartTotal").val(newStartTotal);
 			var newEndTotal = $("#sch_newEndDate").val()+" "+$("#sch_newEndTime").val();
 			$("#newEndTotal").val(newEndTotal);
-			if($("#sch_title").val() == "" || $("#sch_title").val() == null){
+			if($("#sch_title").val().length == 0){
 				alert("일정 제목을 입력해주세요");
 				return false;
 			}
@@ -221,17 +221,17 @@
 		
 		//일정 수정
  		$(".scheduleModiBox").submit(function(){
- 			if($("#sch_upStartTime").val() == "" || $("#sch_upStartTime").val() == null){
+ 			if($("#sch_upStartTime").val().length == 0){
 				$("#sch_upStartTime").val("00:00");
 			}
-			if($("#sch_upEndTime").val() == "" || $("#sch_upEndTime").val() == null){
+			if($("#sch_upEndTime").val().length == 0){
 				$("#sch_upEndTime").val("00:00");
 			}
 			var upStartTotal = $("#sch_upStartDate").val()+" "+$("#sch_upStartTime").val();
 			$("#upStartTotal").val(upStartTotal);
 			var upEndTotal = $("#sch_upEndDate").val()+" "+$("#sch_upEndTime").val();
 			$("#upEndTotal").val(upEndTotal);
-			if($("#sch_upTitle").val() == "" || $("#sch_upTitle").val() == null){
+			if($("#sch_upTitle").val().length == 0){
 				alert("일정 제목을 입력해주세요");
 				return false;
 			}

@@ -24,7 +24,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
 	
 	@Override
 	public List<ScheduleDto> teamDailySchSelect(Map<String, String> map) {
-		logger.info("DailySchSelect 실행");
+		logger.info("teamDailySchSelect 실행");
 		List<ScheduleDto> lists = new ArrayList<ScheduleDto>();
 		lists = sqlSession.selectList(NAMESPACE+"teamDailySchSelect", map);
 		return lists;
@@ -47,9 +47,9 @@ public class ScheduleDaoImpl implements ScheduleDao {
 	
 	@Override
 	public List<ScheduleDto> dailySchSelect(Map<String, String> map) {
-		logger.info("DailySchSelect 실행");
+		logger.info("dailySchSelect 실행");
 		List<ScheduleDto> lists = new ArrayList<ScheduleDto>();
-		lists = sqlSession.selectList(NAMESPACE+"DailySchSelect", map);
+		lists = sqlSession.selectList(NAMESPACE+"dailySchSelect", map);
 		return lists;
 	}
 	

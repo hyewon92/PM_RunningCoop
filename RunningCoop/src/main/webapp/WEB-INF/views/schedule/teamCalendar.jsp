@@ -209,7 +209,7 @@
 			%>
 			<td style="color:<%=weekColor(i, dayOfWeek)%>;"><% String s_month = dateForm(String.valueOf(month)); %>
 				<% String s_i = dateForm(String.valueOf(i)); %> <%=schWrite(year, s_month, s_i)%></a>
-				<span class = "dailyList" onclick = "dailyList('<%=year%>', '<%=s_month%>', '<%=s_i%>')"><%=i %></span>
+				<span class = "dailyList" onclick = "dailyList('<%=year%>', '<%=s_month%>', '<%=s_i%>', '<%=pr_id%>')"><%=i %></span>
 				<div id="list"><%=schListView(year, month, i, lists) %></div></td>
 			<%
 					//토요일이 되면 줄바꿈

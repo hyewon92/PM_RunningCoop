@@ -604,6 +604,33 @@ public class sysManagerController {
 		return "sysManage/sysMemMgr";
 	}
 	
+	//회원정보조회
+	@RequestMapping(value = "/sysMemView.do", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, MemberDto> sysMemView(String mem_id){
+		logger.info("===================== 관리자 회원정보 조회 ============================");
+		Map<String, MemberDto> map = new HashMap<String, MemberDto>();
+		MemberDto dto = new MemberDto();
+		dto = service.sysMemView(mem_id);
+		map.put("info", dto);
+		System.out.println(map);
+		return map;
+	}
+	
+	//회원정보 수정
+	@RequestMapping(value = "/sysMemModify.do", method = RequestMethod.POST)
+	public String sysMemModify(MemberDto dto){
+		logger.info("===================== 관리자 회원정보 수정 ============================");
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		boolean result = false;
+		result = service.sysMemModify(dto);
+		if(result){
+			return "redirect:/sysMemMgr.do";
+		}else{
+			return "error/error";
+		}
+	}
+	
 	// 관리자 로그아웃
 	@RequestMapping(value="/adminLogout.do", method=RequestMethod.GET)
 	public String adminLogout(HttpSession session){

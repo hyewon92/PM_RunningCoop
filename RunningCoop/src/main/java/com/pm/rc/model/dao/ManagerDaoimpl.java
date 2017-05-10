@@ -67,6 +67,18 @@ public class ManagerDaoimpl implements ManagerDao {
 	public List<MemberDto> allMemberSelectSearch(Map<String, String> map) {
 		return sqlSession.selectList(NAMESPACE+"allMemberSelectSearch", map);
 	}
+	
+	@Override
+	public MemberDto sysMemView(String mem_id) {
+		return sqlSession.selectOne(NAMESPACE+"sysMemView", mem_id);
+	}
+	
+
+	@Override
+	public Boolean sysMemModify(MemberDto dto) {
+		int rst = sqlSession.update(NAMESPACE+"sysMemModify", dto);
+		return rst > 0 ? true: false;
+	}
 
 	@Override
 	public boolean grAppModify(String gr_id) {
