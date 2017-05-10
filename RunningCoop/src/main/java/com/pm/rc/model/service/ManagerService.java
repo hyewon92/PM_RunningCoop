@@ -53,6 +53,22 @@ public interface ManagerService {
 	public List<MemberDto> allMemberSelectSearch(Map<String, String> map);
 	
 	/**
+	 * 회원 정보 조회
+	 * @param mem_id
+	 * @return MemberDto
+	 * @author 김혜원
+	 * */
+	public MemberDto sysMemView(String mem_id);
+	
+	/**
+	 * 회원 정보 수정
+	 * @param dto
+	 * @return MemberDto
+	 * @author 김혜원
+	 * */
+	public Boolean sysMemModify(MemberDto dto);
+	
+	/**
 	 * 그룹 생성 승인
 	 * @param gr_id 그룹아이디
 	 * @return boolean

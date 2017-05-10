@@ -43,10 +43,29 @@ tr, th, td {
 }
 </style>
 <script type="text/javascript">
-	function viewInsertForm() {
-		$("#insert_Container").css("display", "block");
+	function selectMem(id) {
+		$.ajax({
+			type : "GET",
+			url: "./sysMemView.do",
+			data: "mem_id="+id,
+			async: false,
+			success: function(msg){
+				var mem_id = msg.info.mem_id;
+				var mem_pw = msg.info.mem_pw;
+				var mem_name = msg.info.mem_name;
+				var mem_email = msg.info.mem_email;
+				var mem_phone = msg.info.mem_phone;
+				
+				$("#upMem_id").val(mem_id);
+				$("#upMem_pw").val(mem_pw);
+				$("#upMem_name").val(mem_name);
+				$("#upMem_email").val(mem_email);
+				$("#upMem_phone").val(mem_phone);
+				$("#insert_Container").css("display", "block");
+			}
+		});
 	}
-
+	
 	function hideInsertForm() {
 		$("#insert_Container").css("display", "none");
 	}
@@ -91,15 +110,15 @@ tr, th, td {
 	</div>
 	<div class="container">
 		<div id="insert_Container">
-			<form action="">
+			<form id= "memModify" action = "./sysMemModify.do" method = "POST">
 				<fieldset>
-					<legend>회원 등록 양식</legend>
-					아이디 : <input type="text" name="mem_id" /><br/>
-					비밀번호 : <input type="password" name="mem_pw" /><br/> 
-					이름 : <input type="text" name="mem_name" /><br/> 
-					이메일 : <input type="text" name="mem_email" /><br/>
-					전화번호 : <input type="text" name="mem_phone" /><br/> 
-					<input type="submit" value="등록" /> 
+					<legend>회원 수정 양식</legend>
+					아이디 : <input type="text" id = "upMem_id" class = "upData" name="mem_id" /><br/>
+					비밀번호 : <input type="password" id = "upMem_pw" class = "upData" name="mem_pw" /><br/> 
+					이름 : <input type="text" id = "upMem_name" class = "upData" name="mem_name" /><br/> 
+					이메일 : <input type="text" id = "upMem_email" class = "upData" name="mem_email" /><br/>
+					전화번호 : <input type="text" id = "upMem_phone" class = "upData" name="mem_phone" /><br/> 
+					<input type="submit" value="수정"/> 
 					<input type="button" value="취소" onclick="hideInsertForm()" />
 				</fieldset>
 			</form>
@@ -125,7 +144,7 @@ tr, th, td {
 						<form action="./sysMemMgr.do" method="post" id='frmPaging'>			 
 						<table class="table table-bordered">
 							<tr>
-								<td colspan="8">
+								<td colspan="9">
 								<input type="button" value="회원 등록" 	onclick="viewInsertForm()" />
 								<input type="button" value="선택삭제" />
 								</td>
@@ -138,6 +157,7 @@ tr, th, td {
 								<th>이메일</th>
 								<th>휴대폰 번호</th>
 								<th>가입일자</th>
+								<th>수정</th>
 								<th>삭제</th>
 							</tr>
 							<c:choose>
@@ -156,6 +176,7 @@ tr, th, td {
 											<td>${ list.mem_email }</td>
 											<td>${ list.mem_phone }</td>
 											<td>${ list.mem_regDate }</td>
+											<td><input type = "button" value = "수정" onclick="selectMem('${list.mem_id}')"/></td>
 											<td><input type="button" value="삭제" onclick="" /></td>
 										</tr>
 									</c:forEach>

@@ -30,7 +30,7 @@ public class MySocketHandler extends TextWebSocketHandler {
    private ArrayList<WebSocketSession> list ; 
    private Map<WebSocketSession,String> map = new HashMap<WebSocketSession,String>();
    HttpSession sysSession;
-   //private ArrayList<String> memList;
+   private Map<String, String> grList = new HashMap<String, String>();
    
    public MySocketHandler() {
       list = new ArrayList<WebSocketSession>();
@@ -46,6 +46,12 @@ public class MySocketHandler extends TextWebSocketHandler {
       System.out.println("client session cnt : "+list.size()); 
       System.out.println("session connected : "+session.getId());
       map.put(session, "");
+      
+      //그룹리스트에 담기
+      Map<String, Object> mySession = session.getHandshakeAttributes();	//WebsocketSession의 session값을 httpSesssion값으로 변경
+      String myGrSession = (String)mySession.get("gr_id");	//접속자의 그룹 아이디
+      String myMemSession = (String)mySession.get("mem_id");	//접속자 아이디
+      grList.put(myMemSession, myGrSession);
    }
    
    @Override
@@ -77,7 +83,7 @@ public class MySocketHandler extends TextWebSocketHandler {
             	System.out.println("멤버아이디2: "+otherGrSession);
             	
                if(myGrSession.equals(otherGrSession)) {	//같은 그룹 소속일 때
-            	   sysSession.setAttribute("socket"+myGrSession, grMemList.add(myMemSession));
+           	   sysSession.setAttribute("socket"+myGrSession, grMemList.add(myMemSession));
             	  // sysSession.setAttribute("test", "test값");
                   s.sendMessage(
                   new TextMessage("<font color='red' size='2px'>"+map.get(session)+" 님이 입장했습니다.</font>")

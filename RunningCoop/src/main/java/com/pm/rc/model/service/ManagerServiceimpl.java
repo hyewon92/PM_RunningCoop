@@ -61,6 +61,16 @@ public class ManagerServiceimpl implements ManagerService {
 	}
 
 	@Override
+	public MemberDto sysMemView(String mem_id) {
+		return managerdao.sysMemView(mem_id);
+	}
+	
+	@Override
+	public Boolean sysMemModify(MemberDto dto) {
+		return managerdao.sysMemModify(dto);
+	}
+	
+	@Override
 	@Transactional
 	public boolean grAppModify(String[] gr_id) {
 		boolean isc = false;

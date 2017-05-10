@@ -49,12 +49,28 @@ public interface ManagerDao {
 	public int allMemberSelectCount ();
 	
 	/**
+	 * 회원 정보 수정
+	 * @param dto MemberDto
+	 * @return boolean
+	 * @author 김혜원
+	 * */
+	public Boolean sysMemModify(MemberDto dto);
+	
+	/**
 	 * 회원 목록 출력 (아이디 검색)
 	 * @param mem_id
 	 * @return list
 	 * @author 라한솔
 	 */
 	public List<MemberDto> allMemberSelectSearch(Map<String, String> map);
+	
+	/**
+	 * 회원 정보 조회
+	 * @param mem_id
+	 * @return MemberDto
+	 * @author 김혜원
+	 * */
+	public MemberDto sysMemView(String mem_id);
 	
 	/**
 	 * 그룹 생성 승인
