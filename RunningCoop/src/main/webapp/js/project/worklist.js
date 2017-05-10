@@ -45,10 +45,15 @@
 				var wd_erroryn = nodes[i].wd_errorYN;
 				var wd_endDate = nodes[i].wd_endDate;
 				var wd_complyn = nodes[i].wd_complYN;
+				var erroryn = "";
 				if ( wd_erroryn == 'N'){
-					wd_erroryn = "애로사항 없음";
+					alert(erroryn);
+					erroryn = "애로사항 없음";
+					var wk_id = $("#wk_id").val();
+					$("#"+wk_id).after("<img src='./images/bell.png'>");
 				} else {
-					wd_erroryn = "애로사항 있음";
+					erroryn = "애로사항 있음";
+					$("#wk_id").append("<p>rrrrr</P>");
 				}
 				
 				if ( wd_complyn == 'Y' ){
@@ -60,7 +65,8 @@
 				$("#wd_Field").children("#"+wd_id).append("<input type='checkbox' name='wd_complyn'/>")
 				.append("<span>"+wd_id+"</span>/")
 				.append("<span class='wd_title' onclick='wdEditForm("+wd_id+")'>"+wd_title+"</span>/")
-				.append("<span>"+wd_erroryn+"</span>/")
+				.append("<span style='display: none;'>"+wd_erroryn+"</span>")
+				.append("<span>"+erroryn+"</span>/")
 				.append("<span>"+wd_endDate+"</span>/")
 				.append("<span>"+wd_complyn+"</span>")
 				.append("<input type='button' value='완료' onclick='wdComplete("+wd_id+")'/>")
@@ -147,14 +153,17 @@
 	}
 	
 	/* 업무 상세 페이지 - 하위 업무 애로사항 표시 기능 */
-	function wdError(val){
-		var wd_id = $(val).children("span").eq(0).html();
-		var wk_id = $("#wk_id").val();
+	function wdError(val1){
+		var wd_id = $(val1).children("span").eq(0).html();
+		var wd_erroryn = $(val1).children("span").eq(2).html();
+		alert(wd_erroryn);
 		
+		var wk_id = $("#wk_id").val();
+		alert(wk_id);
 		$.ajax({
 			type : "POST",
 			url : "./wdError.do",
-			data : {"wd_id": wd_id, "wk_id": wk_id},
+			data : {"wd_id": wd_id, "wk_id": wk_id,"wd_erroryn" : wd_erroryn},
 			async : false,
 			success : function(msg){
 				$("#wd_Field").children("p").remove().children("div").remove();

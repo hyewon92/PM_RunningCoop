@@ -342,13 +342,24 @@ public class ProjectController {
 	public List<WorkDetailDto> workDetailError(HttpServletRequest request){
 		String wd_id = request.getParameter("wd_id");
 		String wk_id = request.getParameter("wk_id");
+		String wd_erroryn = request.getParameter("wd_erroryn");
 
 		logger.info("=============== 하위 업무 애로사항 표시 처리 =================");
 		logger.info("애로사항 표시할 하위 업무 id :"+wd_id);
 		logger.info("====================================================");
+		
+		if(wd_erroryn.equals("Y")){
+			wd_erroryn = "N";
+		} else {
+			wd_erroryn = "Y";
+		}
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("wd_id", wd_id);
+		map.put("wd_erroryn", wd_erroryn);
 
 		boolean isc = false;
-		isc = wService.wdErrorChk(wd_id);
+		isc = wService.wdErrorChk(map);
 
 		if(isc){
 			System.out.println("하위 업무 애로사항 표시 성공");

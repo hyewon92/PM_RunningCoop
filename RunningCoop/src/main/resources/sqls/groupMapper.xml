@@ -210,12 +210,12 @@
 	</update>
 	
 <!-- 	그룹관리자 신규관리자로 업데이트	 -->
-	<update id="newGrMgChange" parameterType="java.util.Map">
+	<update id="newGrMgChange" parameterType="java.lang.String">
 	UPDATE RC_GROUPMEM SET GR_LEVEL = 'GM' WHERE MEM_ID = #{mem_id} 
 	</update>
 	
 <!-- 	그룹관리자 예전관리자 업데이트 -->
-	<update id="oldGrMaChange" parameterType="java.util.Map">
+	<update id="oldGrMaChange" parameterType="java.lang.String">
 	UPDATE RC_GROUPMEM SET GR_LEVEL = 'GIM' WHERE MEM_ID = #{mem_id2}
 	</update>
 	
@@ -225,5 +225,11 @@
 		FROM RC_GROUPMEM 
 		WHERE MEM_ID = #{mem_id}
 		AND GR_ID = #{gr_id} 
+	</select>
+	
+<!-- 	그룹생성시 그룹이름 중복체크 확인 -->
+	<select id="grNameCheck" parameterType="java.lang.String" resultType="java.lang.Integer">
+	SELECT COUNT(GR_NAME) FROM RC_GROUP
+	WHERE GR_NAME = #{gr_name}
 	</select>
 </mapper>

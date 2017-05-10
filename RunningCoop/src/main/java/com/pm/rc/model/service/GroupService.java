@@ -207,7 +207,8 @@ public interface GroupService {
 	 * @return boolean
 	 * @author 라한솔
 	 */
-	public boolean grManagerChange(Map<String, String> map);
+	public boolean grManagerChange(String mem_id);
+	public boolean grManagerChange2(String mem_id2);
 	
 	/**
 	 * 그룹가입시 중복체크
@@ -216,4 +217,12 @@ public interface GroupService {
 	 * @author 라한솔
 	 */
 	public int groupCheck (Map<String, String> map);
+	
+	/**
+	 * 그룹생성시 그룹이름 중복체크
+	 * @param gr_name
+	 * @return int
+	 * @author 라한솔
+	 */
+	public int grNameCheck (String gr_name);
 }

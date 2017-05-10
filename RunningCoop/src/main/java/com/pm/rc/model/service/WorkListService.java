@@ -93,7 +93,7 @@ public interface WorkListService {
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean wdErrorChk(String wd_id);
+	public boolean wdErrorChk(Map<String, String> map);
 	
 	/**
 	 * 하위업무리스트 완료상태 수정

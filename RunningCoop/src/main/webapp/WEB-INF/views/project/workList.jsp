@@ -106,12 +106,12 @@
 						</c:when>
 						<c:otherwise>
 							<c:forEach var="doing" items="${ doing }">
-								<span onclick="viewWork('${ doing.get('WK_ID')}', '${ doing.get('WK_PRORATE') }')"> <input
+								<span onclick = "viewWork('${ doing.get('WK_ID')}', '${ doing.get('WK_PRORATE') }')"> <input
 									type="hidden" value="${ doing.get('WK_ID') }" /> ${ doing.get("WK_TITLE") }/(${ doing.get("MEM_NAME") })/${ doing.get("WK_PRORATE") }%
 								</span>
 								<input type="button" value="수정"
 									onclick="workEdit('${ doing.get('WK_ID') }', '${ doing.get('WK_TITLE') }', '${ doing.get('WK_ENDDATE') }', '${ doing.get('MEM_ID') }')" />
-								<input type="button" value="삭제"
+								<input id=${doing.get('WK_ID')} type="button" value="삭제"
 									onclick="workDelete('${ doing.get('WK_ID') }')" />
 								<br>
 							</c:forEach>
@@ -119,7 +119,7 @@
 					</c:choose>
 				</fieldset>
 			</div>
-			<div class="work_list">
+			<div class="work_list" >
 				<fieldset id="doneList" class="list_field">
 					<legend>Done</legend>
 					<c:choose>

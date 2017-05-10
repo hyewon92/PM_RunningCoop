@@ -34,7 +34,7 @@
             $("#chat_div").show();
             $("#chat").focus();
             
-            ws = new WebSocket("ws://192.168.0.150:8095/RunningCoop/wsChat.do");
+            ws = new WebSocket("ws://192.168.0.137:8095/RunningCoop/wsChat.do");
             ws.onopen = function() {
                ws.send("#$nick_"+nick);
                

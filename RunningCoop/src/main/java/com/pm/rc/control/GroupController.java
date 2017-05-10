@@ -313,14 +313,12 @@ public class GroupController {
 	public String grMgChange(HttpServletRequest req, HttpSession session){
 		Map<String, String> map = new HashMap<String, String>();
 		String gr_id = (String)session.getAttribute("gr_id");
-		String m1 = req.getParameter("mem_id");
-		String m2 = req.getParameter("mem_id2");
-		System.out.println("m1======"+m1+"m2======"+m2);
+		String mem_id = req.getParameter("mem_id");
+		String mem_id2 = req.getParameter("mem_id2");
 		
-		map.put("mem_id", req.getParameter("mem_id"));
-		map.put("mem_id2", req.getParameter("mem_id2"));
-		
-		boolean isc = service.grManagerChange(map);
+		boolean isc = false;
+		isc = service.grManagerChange(mem_id);
+		isc = service.grManagerChange2(mem_id2);
 		
 		if(isc==true){
 			return "redirect:/grmodify.do?gr_id="+gr_id;
@@ -338,6 +336,14 @@ public class GroupController {
 		map.put("mem_id", req.getParameter("mem_id"));
 		map.put("gr_id", req.getParameter("gr_id"));
 		int n = service.groupCheck(map);
+		return n;
+	}
+	
+	@RequestMapping(value="/grNameCk.do", method=RequestMethod.POST)
+	@ResponseBody
+	public int grNameCk(HttpServletRequest req){
+		logger.info("=========그룹생성 신청 그룹이름 중복체크 시작 ========");
+		int n = service.grNameCheck(req.getParameter("gr_name"));
 		return n;
 	}
 }

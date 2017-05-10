@@ -132,8 +132,8 @@ public class WorkListServiceImpl implements WorkListService {
 	}
 
 	@Override
-	public boolean wdErrorChk(String wd_id) {
-		return dao.wdErrorChk(wd_id);
+	public boolean wdErrorChk(Map<String, String> map) {
+		return dao.wdErrorChk(map);
 	}
 
 	@Override

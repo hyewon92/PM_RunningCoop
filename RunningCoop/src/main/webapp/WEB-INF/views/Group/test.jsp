@@ -51,7 +51,6 @@ $(function(){
 	</table>
 	</c:forEach>
 
-<p><input type="button" onclick="location.href='./grApply.do'" value="그룹승인관리"></p>
 <input type = "button" value = "그룹생성" onclick = "openChild()">
 </div>
 

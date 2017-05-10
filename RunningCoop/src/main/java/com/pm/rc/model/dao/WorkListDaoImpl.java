@@ -147,8 +147,8 @@ public class WorkListDaoImpl implements WorkListDao {
 	}
 
 	@Override
-	public boolean wdErrorChk(String wd_id) {
-		int num = sqlSession.update(NAMESPACE+"wdErrorChk", wd_id);
+	public boolean wdErrorChk(Map<String, String> map) {
+		int num = sqlSession.update(NAMESPACE+"wdErrorChk", map);
 		if(num > 0){
 			return true;
 		} else {

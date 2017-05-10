@@ -228,14 +228,14 @@ public class GroupDaoImp implements GroupDao{
 	}
 
 	@Override
-	public boolean newGrMgChange(Map<String, String> map) {
-		int n = sqlSession.update(NAMESPACE+"newGrMgChange",map);
+	public boolean newGrMgChange(String mem_id) {
+		int n = sqlSession.update(NAMESPACE+"newGrMgChange",mem_id);
 		return n>0? true:false;
 	}
 
 	@Override
-	public boolean oldGrMaChange(Map<String, String> map) {
-		int n = sqlSession.update(NAMESPACE+"oldGrMaChange",map);
+	public boolean oldGrMaChange(String mem_id2) {
+		int n = sqlSession.update(NAMESPACE+"oldGrMaChange",mem_id2);
 		return n>0? true:false;
 	}
 
@@ -244,5 +244,11 @@ public class GroupDaoImp implements GroupDao{
 		int n = sqlSession.selectOne(NAMESPACE+"grCheck",map);
 		return n;
 		}
+
+	@Override
+	public int grNameCheck(String gr_name) {
+		int n = sqlSession.selectOne(NAMESPACE+"grNameCheck",gr_name);
+		return n;
+	}
 
 }

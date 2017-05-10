@@ -263,8 +263,8 @@ public interface GroupDao {
 	 * @return boolean
 	 * @author 라한솔
 	 */
-	public boolean newGrMgChange(Map<String, String> map);
-	public boolean oldGrMaChange(Map<String, String> map);
+	public boolean newGrMgChange(String mem_id);
+	public boolean oldGrMaChange(String mem_id2);
 	
 	/**
 	 * 그룹가입시 중복체크
@@ -274,5 +274,12 @@ public interface GroupDao {
 	 */
 	public int groupCheck (Map<String, String> map);
 	
+	/**
+	 * 그룹생성시 그룹이름 중복체크
+	 * @param gr_name
+	 * @return int
+	 * @author 라한솔
+	 */
+	public int grNameCheck(String gr_name);
 }
 

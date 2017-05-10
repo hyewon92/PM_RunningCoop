@@ -52,8 +52,8 @@
   		WHERE WD_ID = #{wd_id}
 	</update>
 	
-	<update id="wdErrorChk" parameterType="java.lang.String">
-		UPDATE RC_WORKDETAIL SET WD_ERRORYN = 'Y'
+	<update id="wdErrorChk" parameterType="java.util.Map">
+		UPDATE RC_WORKDETAIL SET WD_ERRORYN = #{wd_erroryn}
  		WHERE WD_ID = #{wd_id}
 	</update>
 	

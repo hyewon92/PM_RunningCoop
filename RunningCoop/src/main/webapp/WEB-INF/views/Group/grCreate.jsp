@@ -26,12 +26,30 @@
 	function closee(){
 		close();
 	}
+	function grNameCheck(){
+		var chgrName = $("#grname").val();
+		$.ajax({
+			type : "POST",
+			url  : "./grNameCk.do",
+			data : "gr_name="+chgrName,
+			async: false,
+			success : function(data){
+				if(data==1){
+					alert("이미 사용중인 이름입니다.");
+					$("#grname").val("");
+				}else{
+					alert("해당 이름으로 사용하셔도 됩니다.");
+				}
+			}
+			
+		});
+	}
 </script>
 </head>
 <body>
 	<form class="createBox" action="./groupCreate.do" method="post">
 	<table>
-	<tr><td>그룹이름:</td><td><input type="text"  name="gr_name" id="grname"></td></tr>
+	<tr><td>그룹이름:</td><td><input type="text"  name="gr_name" id="grname"></td><td><input type="button" value="중복확인" onclick="grNameCheck()"></td></tr>
 	<tr><td>그룹담당자아이디:</td><td><input type="text" name="mem_id" value="<%=mem_id%>" readonly="readonly"></td></tr>
 	<tr><td>그룹목적</td>	<td><textarea rows="15" cols="27" name="gr_goal" id="grgoal"></textarea></tr>
 		<tr><td><input type="submit" value="그룹생성"></td><td><input type="button" onclick="closee()" value="취소"></td></tr>

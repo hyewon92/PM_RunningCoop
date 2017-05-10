@@ -57,14 +57,6 @@ public interface ManagerDao {
 	public Boolean sysMemModify(MemberDto dto);
 	
 	/**
-	 * 회원 정보 수정
-	 * @param dto MemberDto
-	 * @return boolean
-	 * @author 김혜원
-	 * */
-	public Boolean sysMemModify(MemberDto dto);
-	
-	/**
 	 * 회원 목록 출력 (아이디 검색)
 	 * @param mem_id
 	 * @return list
