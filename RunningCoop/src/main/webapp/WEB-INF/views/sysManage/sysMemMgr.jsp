@@ -8,6 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>시스템 공지 게시판 관리 페이지</title>
+<link rel="stylesheet" href="css/main.css" type="text/css"/>
 <%@include file="/WEB-INF/views/Group/bootstrap.jsp"%>
 <script src="./js/paging.js"></script>
 <script type="text/javascript"
@@ -105,10 +106,10 @@ tr, th, td {
 </script>
 </head>
 <body>
-	<div id="header">
+	<div id="sys_header">
 		<jsp:include page="../sysHeader.jsp" flush="false" />
 	</div>
-	<div class="container">
+	<div class="sys_container">
 		<div id="insert_Container">
 			<form id= "memModify" action = "./sysMemModify.do" method = "POST">
 				<fieldset>
@@ -124,10 +125,6 @@ tr, th, td {
 			</form>
 		</div>
 		<div id="mgr_Container">
-			<table id="mgr_table">
-				<tr>
-					<td>관리자 도구 모음</td>
-					<td rowspan="7">
 						<div id="mem_mgr_div">
 							<h3>회원 목록</h3>
 									<div id='select'>
@@ -144,40 +141,35 @@ tr, th, td {
 						<form action="./sysMemMgr.do" method="post" id='frmPaging'>			 
 						<table class="table table-bordered">
 							<tr>
-								<td colspan="9">
+								<td colspan="6">
 								<input type="button" value="회원 등록" 	onclick="viewInsertForm()" />
-								<input type="button" value="선택삭제" />
 								</td>
 							</tr>
 							<tr>
-								<th><input type="checkbox" name="number" onclick="checkAll(this.checked)"/></th>
-<!-- 								<th>번호</th> -->
 								<th>아이디</th>
 								<th>이름</th>
 								<th>이메일</th>
 								<th>휴대폰 번호</th>
 								<th>가입일자</th>
 								<th>수정</th>
-								<th>삭제</th>
+								<th>
+</th>
 							</tr>
 							<c:choose>
 								<c:when test="${ fn:length(list) == 0 }">
 									<tr>
-										<td colspan="8">조회 가능한 게시글이 없습니다</td>
+										<td colspan="6">조회 가능한 게시글이 없습니다</td>
 									</tr>
 								</c:when>
 								<c:otherwise>
 									<c:forEach var="list" items="${ list }" >
 										<tr>
-											<td><input type="checkbox" name="number" value="${ list.mem_id }" /></td>
-<%-- 											<td>${ vs.count }</td> --%>
 											<td><span onclick="">${ list.mem_id }</span></td>
 											<td>${ list.mem_name }</td>
 											<td>${ list.mem_email }</td>
 											<td>${ list.mem_phone }</td>
 											<td>${ list.mem_regDate }</td>
 											<td><input type = "button" value = "수정" onclick="selectMem('${list.mem_id}')"/></td>
-											<td><input type="button" value="삭제" onclick="" /></td>
 										</tr>
 									</c:forEach>
 								</c:otherwise>
@@ -214,29 +206,10 @@ tr, th, td {
 							<input type="submit" value="검색" />
 						</form>
 					</div>
-					</td>
-				</tr>
-				<tr>
-					<td><a href="./grApply.do">그룹 승인 관리</a></td>
-				</tr>
-				<tr>
-					<td><a href="./sysMemMgr.do">회원 관리</a></td>
-				</tr>
-				<tr>
-					<td><a href="./sysNoticeMgr.do">공지 게시판 관리</a></td>
-				</tr>
-				<tr>
-					<td><a href="./sysQnaMgr.do">문의 게시판 관리</a></td>
-				</tr>
-				<tr>
-					<td>공백</td>
-				</tr>
-				<tr>
-					<td><a href="./adminLogout.do">로그아웃</a></td>
-				</tr>
-			</table>
 		</div>
-
+	</div>
+	<div id="sys_footer">
+<%-- 		<jsp:include page="../sysFooter.jsp" flush="false"/> --%>
 	</div>
 </body>
 </html>

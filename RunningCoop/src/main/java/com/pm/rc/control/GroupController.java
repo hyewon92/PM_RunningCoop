@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.pm.rc.dto.GrChatMemberDto;
 import com.pm.rc.dto.GroupBoardDto;
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
@@ -34,6 +36,10 @@ import com.pm.rc.model.service.ManagerService;
 @Controller
 public class GroupController {
 	
+	/**
+	 * 채팅에 관련된 정보를 담기 위해 Application 객체 생성
+	 */
+	private ServletContext servletContext;
 	
 	public String createUUID(){
 		return UUID.randomUUID().toString();
@@ -286,10 +292,12 @@ public class GroupController {
 		return "account/grGogo";
 	}
 	
-	// WebSocket 채팅 ㄱㄱ
+	// WebSocket 채팅 
 	@RequestMapping(value="/socketOpen.do" , method=RequestMethod.GET)
 	public String socketOpen(){
 		logger.info("socketOpen 소켓 화면 이동");
+		GrChatMemberDto chatDto = new GrChatMemberDto();
+		//servletContext.setAttribute(name, chatDto);
 		return "socket";
 	}
 	
