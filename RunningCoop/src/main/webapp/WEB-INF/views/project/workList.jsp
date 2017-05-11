@@ -113,6 +113,7 @@
 									onclick="workEdit('${ doing.get('WK_ID') }', '${ doing.get('WK_TITLE') }', '${ doing.get('WK_ENDDATE') }', '${ doing.get('MEM_ID') }')" />
 								<input id=${doing.get('WK_ID')} type="button" value="삭제"
 									onclick="workDelete('${ doing.get('WK_ID') }')" />
+									<img alt="" src="./images/bell.png" style="display:none;">
 								<br>
 							</c:forEach>
 						</c:otherwise>

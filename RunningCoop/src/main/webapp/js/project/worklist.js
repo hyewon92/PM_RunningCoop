@@ -1,3 +1,13 @@
+	$(window).load(function(){
+		var wk_id2 = $("#wk_id").val();
+		if ( wd_erroryn == 'N'){
+			$("#"+wk_id2).next().css("display","none");
+		} else {
+			$("#"+wk_id2).next().css("display","");
+		}
+
+	alramCh = $(val1).children("span").eq(2).html();
+	})
 /* 업무 상세 페이지 조회 메소드 */
 	function viewWork(val, val2){
 		$("#wk_id").val(val);
@@ -46,14 +56,13 @@
 				var wd_endDate = nodes[i].wd_endDate;
 				var wd_complyn = nodes[i].wd_complYN;
 				var erroryn = "";
+				var wk_id2 = $("#wk_id").val();
 				if ( wd_erroryn == 'N'){
-					alert(erroryn);
 					erroryn = "애로사항 없음";
-					var wk_id = $("#wk_id").val();
-					$("#"+wk_id).after("<img src='./images/bell.png'>");
+					$("#"+wk_id2).next().css("display","none");
 				} else {
 					erroryn = "애로사항 있음";
-					$("#wk_id").append("<p>rrrrr</P>");
+					$("#"+wk_id2).next().css("display","");
 				}
 				
 				if ( wd_complyn == 'Y' ){
@@ -156,10 +165,8 @@
 	function wdError(val1){
 		var wd_id = $(val1).children("span").eq(0).html();
 		var wd_erroryn = $(val1).children("span").eq(2).html();
-		alert(wd_erroryn);
 		
 		var wk_id = $("#wk_id").val();
-		alert(wk_id);
 		$.ajax({
 			type : "POST",
 			url : "./wdError.do",
