@@ -11,23 +11,21 @@
 
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="js/circle-progress.js"></script>
 
-<style type="text/css">
-	.pr_list{
-		border : 1px dotted black;
-	}
-	
-	.pr_detail{
-		font-size: 8pt;
-		color: green;
-	}
-	
-	.pr_detail_view{
-		border : 1px dotted green;
-		display : none;
-	}
-</style>
 <script type="text/javascript">
+	function pro_rate(val){
+// 		(function($){
+			$('.circle').circleProgress({
+			    value: val/100
+			  }).on('circle-animation-progress', function(event, progress) {
+			    $(this).find('strong').html(Math.round(100 * progress) + '<i>%</i>');
+			  });
+// 		})(jQuery);
+	}
+
+	
 	function detailPro(val){
 		$.ajax({
 			type : "POST",
@@ -55,12 +53,15 @@
 		$("#pr_enddate").text(pr_enddate);
 		$("#pr_etc").text(pr_etc);
 		
-		$(".pr_detail_view").css("display", "block");
-	}
-	
-	function goSelectPro(){
-		$(".pr_detail_view").css("display", "none");
-		$(".pr_detail_view").eq(0).children("p").html("");
+		$(".pr_detail_view").css("display","block");
+		$(".pr_detail_view").dialog({
+			title : "프로젝트 정보 보기",
+			height : 400,
+			width : 500,
+			position : {my : "center", at : "center"},
+			resizable : false,
+			modal : true,
+		});
 	}
 	
 	function createPro(){
@@ -77,33 +78,44 @@
 	<jsp:include page="../header.jsp" flush="false"/>
 </div>
 <div id = "container">
-	<c:choose>
-		<c:when test="${ fn:length(list) == 0 }">
-			<p> 진행 중인 프로젝트가 없습니다</p>
-		</c:when>
-		<c:otherwise>
-			<c:forEach var="list" items="${ list }">
-				<div class="pr_list">
-					<p>${ list.pr_id }</p>
-					<span class="pr_detail" onclick="detailPro('${ list.pr_id}')">정보보기</span>
-					<p onclick="goToProject('${ list.pr_id }')">${ list.pr_name }</p>
-					<p>${ list.pr_proRate }</p>
-					<p>${ list.pr_endDate }</p>
-				</div>
-			</c:forEach>
-		</c:otherwise>
-	</c:choose>
-	
-	<input type="button" value="프로젝트 생성" onclick="createPro()"/>
+	<button class="body_btn pr_create" onclick="createPro()">프로젝트 생성</button>
 	
 	<div class="pr_detail_view">
-	<input type="button" value="닫기" onclick="goSelectPro()"/>
 		<p id="pr_name"></p>
 		<p id="mem_name"></p>
 		<p id="pr_memcnt"></p>
 		<p id="pr_goal"></p>
 		<p id="pr_enddate"></p>
 		<p id="pr_etc"></p>
+	</div>
+	
+	<div class = "project_list_view">
+		<c:choose>
+			<c:when test="${ fn:length(list) == 0 }">
+				<p> 진행 중인 프로젝트가 없습니다</p>
+			</c:when>
+			<c:otherwise>
+				<c:forEach var="list" items="${ list }">
+					<div class="pr_list">
+						<div class="pr_btn info_div">
+						<img alt="프로젝트 정보" class="pr_detail" src="images/project/pr_information.png" onclick="detailPro('${ list.pr_id }')"/>
+						</div>
+						<div class="pr_btn rate_div" onclick="pro_rate('${ list.pr_proRate }')">
+							<div class=”circle”>
+							<canvas width="100px" height="100px"></canvas>
+							<strong class=”circle_strong”></strong>
+							</div>
+						</div>
+						<div class="pr_btn date_div">
+							<span style="margin-right: 10px;">D-${ list.pr_endDate }</span>
+						</div>
+						<div class="pr_btn name_div">
+							<span onclick="goToProject('${ list.pr_id }')">${ list.pr_name }</span>
+						</div>
+					</div>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
 	</div>
 </div>
 <div id = "footer">

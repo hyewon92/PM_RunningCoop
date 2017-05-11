@@ -21,9 +21,9 @@ cursor: pointer;}
  function sidebar_toggle(){
 	 $("#footer").toggle(function(){
 		if($(this).css("display") == "none"){
-			$("#container").css("width", "99%");
+			$("#container").css("width", "1200px");
 		} else {
-			$("#container").css("width", "83.4%");
+			$("#container").css("width", "1000px");
 		}
 	 });
  }

@@ -152,8 +152,6 @@ tr, th, td {
 								<th>휴대폰 번호</th>
 								<th>가입일자</th>
 								<th>수정</th>
-								<th>
-</th>
 							</tr>
 							<c:choose>
 								<c:when test="${ fn:length(list) == 0 }">

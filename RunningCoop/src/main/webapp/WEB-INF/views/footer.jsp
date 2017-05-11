@@ -157,7 +157,7 @@
 			<p id="donePro" class="iProject"></p>
 		</li>
 		<li class="footer-menu"><a href="#" class="top_menu" onclick="location.href='./myGrSelect.do?mem_id=<%=userId%>'">그룹 선택</a></li>
-		<li class="footer-menu"><span class="top_menu">그룹</span></li>
+		<li class="menu_logo"><span class="top_menu">그룹</span></li>
 		<li class="group-menu">
 			<p class="groupMenu"><a href="#" onclick="location.href='./grselect.do?gr_id=<%=gr_id%>'">그룹 관리</a></p>
 		<% String grSession = (String)session.getAttribute("gr_id"); %>

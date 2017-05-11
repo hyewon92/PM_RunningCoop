@@ -1,0 +1,92 @@
+.pr_list{
+	width : 200px;
+	height : 250px;
+	
+	background: white;
+	border : 2px solid lightgrey;
+	
+	margin : 15px;
+	float: left;
+}
+
+.pr_list:HOVER{
+	box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.3);
+}
+
+.project_list_view{
+	width : 100%;
+	
+	padding : 10px;
+	padding-left: 25px;
+}
+
+.pr_create{
+    position: relative;
+    left: 380px;
+    top: 15px;
+    
+    padding: 5px 30px;
+    margin-bottom: 10px;
+    
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    
+	color: #fff;
+    font-size : 20pt;
+    font-weight: bold;
+    
+    border: 1px solid transparent;
+    border-radius: 5px;
+}
+
+.pr_detail_view{
+	width : 500px;
+	height : 400px;
+	
+	background : white;
+	border : 1px dotted green;
+	display : none;
+}
+
+.pr_detail{
+	margin-left : 177px;
+	margin-top : 3px;
+}
+
+.pr_btn {
+	width : 100%;
+}
+
+.info_div {
+	height : 5%
+}
+
+.rate_div {
+	height : 60%;
+}
+
+.circle_strong{
+position:absolute;
+top:30px;
+left:20px;
+text-align:center;
+line-height:40px;
+font-size:24px;
+}
+
+.date_div {
+	height : 15%;
+	text-align: right;
+	line-height : 100%;
+	font-size: 20pt;
+	font-weight: bold;
+}
+
+.name_div {
+	margin : 0px;
+	height : 20%;
+	
+	text-align : center;
+	font-size: 12pt;
+	line-height: 100%;
+}
