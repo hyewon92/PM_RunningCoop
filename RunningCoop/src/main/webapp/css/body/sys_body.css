@@ -3,13 +3,12 @@ body {
 	padding : 0;
 }
 
-#container {
+#sys_container {
 	position : absolute;
 	top : 50px;
-	left : 0px;
+	left : 200px;
 	
 	padding : 5px;
 	width : 1000px;
 	
 }
-

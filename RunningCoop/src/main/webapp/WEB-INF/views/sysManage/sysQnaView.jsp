@@ -8,6 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>시스템게시판 게시글 보기</title>
+<link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-latest.js"></script>
 <style type="text/css">
@@ -49,15 +50,11 @@ tr, th, td {
 <% 
 	String mem_id = (String)session.getAttribute("mem_id");
 %>
-	<div id="header">
-		<jsp:include page="../header.jsp" flush="false" />
+	<div id="sys_header">
+		<jsp:include page="../sysHeader.jsp" flush="false" />
 	</div>
-	<div id="container">
+	<div id="sys_container">
 		<div id="mgr_Container">
-			<table>
-				<tr>
-					<td>관리자 도구 모음</td>
-					<td rowspan="7">
 						<h3>공지 게시글 보기</h3>
 						<c:set var="view" value="${ view }" />
 						<input type="hidden" id="session" value="<%=mem_id %>" /> 
@@ -92,29 +89,10 @@ tr, th, td {
 						<input type="button" value="게시글 수정" id="editBtn" onclick="Edit()" style="display: none" /> 
 						<input type="button" value="게시글 삭제" id="deleteBtn" onclick="Delete()" style="display: none" /> 
 						<input type="button" value="목록으로" onclick="back()" />
-					</td>
-				</tr>
-				<tr>
-					<td><a href="./grApply.do">그룹 승인 관리</a></td>
-				</tr>
-				<tr>
-					<td><a href="./sysMemMgr.do">회원 관리</a></td>
-				</tr>
-				<tr>
-					<td><a href="./sysNoticeMgr.do">공지 게시판 관리</a></td>
-				</tr>
-				<tr>
-					<td><a href="./sysQnaMgr.do">문의 게시판 관리</a></td>
-				</tr>
-				<tr>
-					<td>공백</td>
-				</tr>
-				<tr>
-					<td><a href="./adminLogout.do">로그아웃</a></td>
-				</tr>
-			</table>
 		</div>
-
+	</div>
+	<div id="sys_footer">
+		<jsp:include page="../sysFooter.jsp" flush="false"/>
 	</div>
 </body>
 </html>

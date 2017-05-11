@@ -5,7 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>시스템 공지 게시판 관리 페이지</title>
-<link rel="stylesheet" href="daumOpenEditor/css/editor.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="css/main.css" type="text/css"/>
+<link rel="stylesheet" href="daumOpenEditor/css/editor.css" type="text/css"/>
 <script src="daumOpenEditor/js/editor_loader.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <style type="text/css">
@@ -51,15 +52,11 @@
 </head>
 <body>
 <% String mem_id = (String)session.getAttribute("mem_id"); %>
-	<div id="header">
+	<div id="sys_header">
 		<jsp:include page="../sysHeader.jsp" flush="false" />
 	</div>
-	<div id="container">
+	<div id="sys_container">
 		<div id="mgr_Container">
-			<table>
-				<tr>
-					<td>관리자 도구 모음</td>
-					<td rowspan="7">
 						<h3>공지 게시판 게시글 작성 페이지</h3>
 						<form id="qnaRepleWrite" action="./qnaRepleWrite.do" method="post"
 							enctype="multipart/form-data">
@@ -79,27 +76,6 @@
 						<button onclick='saveContent()'>등록</button>
 						</div>
 						<input type="button" value="목록으로" onclick="back()" />
-					</td>
-				</tr>
-				<tr>
-					<td><a href="./grApply.do">그룹 승인 관리</a></td>
-				</tr>
-				<tr>
-					<td><a href="./sysMemMgr.do">회원 관리</a></td>
-				</tr>
-				<tr>
-					<td><a href="./sysNoticeMgr.do">공지 게시판 관리</a></td>
-				</tr>
-				<tr>
-					<td><a href="./sysQnaMgr.do">문의 게시판 관리</a></td>
-				</tr>
-				<tr>
-					<td>공백</td>
-				</tr>
-				<tr>
-					<td><a href="./adminLogout.do">로그아웃</a></td>
-				</tr>
-			</table>
 		</div>
 		<!-- 다음 에디터 함수 -->
 		<script type="text/javascript">
@@ -174,6 +150,9 @@
         return true;
 	}
 </script>
+	</div>
+	<div id="sys_footer">
+		<jsp:include page="../sysFooter.jsp" flush="false"/>
 	</div>
 </body>
 </html>

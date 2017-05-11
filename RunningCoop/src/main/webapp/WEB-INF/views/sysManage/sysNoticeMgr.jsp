@@ -9,9 +9,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>시스템 공지 게시판 관리 페이지</title>
 <%@include file="/WEB-INF/views/Group/bootstrap.jsp"%>
+<link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script src="./js/paging.js"></script>
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <style type="text/css">
 #mgr_table {
 	width: 1000px;
@@ -71,15 +71,11 @@ tr, th, td {
 </script>
 </head>
 <body>
-	<div id="header">
+	<div id="sys_header">
 		<jsp:include page="../sysHeader.jsp" flush="false" />
 	</div>
-	<div class="container">
+	<div class="sys_container">
 		<div id="mgr_Container">
-			<table id="mgr_table">
-				<tr>
-					<td>관리자 도구 모음</td>
-					<td rowspan="7">
 						<div id="notice_mgr_div">
 							<h3>공지 게시판 관리 페이지</h3>
 							<div id='select'>
@@ -94,12 +90,11 @@ tr, th, td {
 										</span>
 							</div>
 							<form action="./sysNoticeMgr.do" method="post" id='frmPaging'>			 
-							<table class="table table-bordered">
 							<input type="button" value="게시글 등록" onclick="location.href='./noticeWriteForm.do'" />
 							<input type="button" value="선택삭제" onclick="checkDelete()" />
+							<table class="table table-bordered">
 								<tr>
 									<th><input type="checkbox" name="number" onclick="checkAll(this.checked)" /></th>
-<!-- 									<th>번호</th> -->
 									<th>제목</th>
 									<th>작성자</th>
 									<th>작성일자</th>
@@ -116,7 +111,6 @@ tr, th, td {
 											<tr>
 												<td><input type="checkbox" name="number"
 													value="${ list.SBR_UUID }" /></td>
-<%-- 												<td>${ vs.count }</td> --%>
 												<td><span
 													onclick="location.href='./viewNotice.do?sbr_uuid=${ list.SBR_UUID }'">${ list.SBR_TITLE }</span></td>
 												<td>${ list.MEM_NAME }</td>
@@ -157,28 +151,10 @@ tr, th, td {
 							<input type="submit" value="검색" />
 						</form>
 						</div>
-					</td>
-				</tr>
-				<tr>
-					<td><a href="./grApply.do">그룹 승인 관리</a></td>
-				</tr>
-				<tr>
-					<td><a href="./sysMemMgr.do">회원 관리</a></td>
-				</tr>
-				<tr>
-					<td><a href="./sysNoticeMgr.do">공지 게시판 관리</a></td>
-				</tr>
-				<tr>
-					<td><a href="./sysQnaMgr.do">문의 게시판 관리</a></td>
-				</tr>
-				<tr>
-					<td>공백</td>
-				</tr>
-				<tr>
-					<td><a href="./adminLogout.do">로그아웃</a></td>
-				</tr>
-			</table>
 		</div>
+	</div>
+	<div id="sys_footer">
+		<jsp:include page="../sysFooter.jsp" flush="false"/>
 	</div>
 </body>
 </html>

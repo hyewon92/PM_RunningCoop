@@ -209,7 +209,7 @@ tr, th, td {
 		</div>
 	</div>
 	<div id="sys_footer">
-<%-- 		<jsp:include page="../sysFooter.jsp" flush="false"/> --%>
+		<jsp:include page="../sysFooter.jsp" flush="false"/>
 	</div>
 </body>
 </html>

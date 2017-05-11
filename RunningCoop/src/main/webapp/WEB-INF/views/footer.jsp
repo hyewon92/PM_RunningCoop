@@ -149,30 +149,27 @@
 </head>
 <body>
 	
-	<img alt="프로젝트 선택" class="footer_icon" src="./images/footer/icon_selectProject.png" onclick="goProSelect()"/>
-	<p id="doingPro" class="iProject"></p>
-	<p id="todoPro" class="iProject"></p>
-	<p id="donePro" class="iProject"></p>
-	<img alt="그룹 선택" class="footer_icon" src="./images/footer/icon_selectGroup.png" onclick="location.href='./myGrSelect.do?mem_id=<%=userId%>'"/>
-	<!-- <form action="./allGrSelect.do" method="post">
-		<div class="ui-widget">
-			<input type="text" name="gr_name" id="gr_name" class="searchbox"/> <input
-				type="submit" value="그룹검색" />
-		</div>
-	</form> -->
-	<!-- <form action="./allPrSelect.do" method="post">
-		<div class="ui-widget">
-			<input type="text" name="pr_name" id="pr_name" />
-			<input type="submit" value="프로젝트 검색"/>
-		</div>
-	</form> -->
-	<img alt="그룹" class="footer_icon" src="./images/footer/icon_group.png"/>
-	<p class="groupMenu"><a href="#" onclick="location.href='./grselect.do?gr_id=<%=gr_id%>'">그룹 관리</a></p>
-<% String grSession = (String)session.getAttribute("gr_id"); %>
-	<p class="groupMenu"><a href="#" onclick="goSocket('<%=grSession%>')">그룹 채팅</a></p>
-	<img alt="검색하기" class="footer_icon" src="./images/footer/icon_search.png"/>
-	<img alt="공지게시판" class="footer_icon" src="./images/footer/icon_noticeBoard.png" onclick="location.href = './noticeList.do'"/>
-	<img alt="문의게시판" class="footer_icon" src="./images/footer/icon_qnaBoard.png" onclick="location.href = './qnaList.do'"/>
+	<ul class="sidebar_list">
+		<li class="footer-menu"><a href="#" class="top_menu" onclick="goProSelect()">프로젝트 선택</a></li>
+		<li class="bottom-menu">
+			<p id="doingPro" class="iProject"></p>
+			<p id="todoPro" class="iProject"></p>
+			<p id="donePro" class="iProject"></p>
+		</li>
+		<li class="footer-menu"><a href="#" class="top_menu" onclick="location.href='./myGrSelect.do?mem_id=<%=userId%>'">그룹 선택</a></li>
+		<li class="footer-menu"><span class="top_menu">그룹</span></li>
+		<li class="group-menu">
+			<p class="groupMenu"><a href="#" onclick="location.href='./grselect.do?gr_id=<%=gr_id%>'">그룹 관리</a></p>
+		<% String grSession = (String)session.getAttribute("gr_id"); %>
+			<p class="groupMenu"><a href="#" onclick="goSocket('<%=grSession%>')">그룹 채팅</a></p>
+		</li>
+		<li class="footer-menu"><a href="#" class="top_menu" onclick="location.href = './go_SearchForm.do'">검색하기</a></li>
+		<li class="footer-menu"><a href="#" class="top_menu" onclick="location.href = './noticeList.do'">공지게시판</a></li>
+		<li class="footer-menu"><a href="#" class="top_menu" onclick="location.href = './qnaList.do'">문의게시판</a></li>
+	</ul>
+	
+	
+	
 	
 </body>
 </html>

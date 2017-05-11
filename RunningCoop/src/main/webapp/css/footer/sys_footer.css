@@ -1,0 +1,15 @@
+#sys_footer{
+	position : absolute;
+	top : 50px;
+	left : 0px;
+	
+	height : 100%;
+	
+	background : #69B55B;
+}
+
+.sys_sidebar_list{
+	margin : 0px;
+	padding : 0px;
+	list-style: none;
+}

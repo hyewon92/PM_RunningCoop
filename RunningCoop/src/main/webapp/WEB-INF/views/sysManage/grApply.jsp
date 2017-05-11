@@ -6,8 +6,8 @@
 <!DOCTYPE html >
 <html>
 <head>
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery-latest.js"></script>
+<link rel="stylesheet" href="css/main.css" type="text/css"/>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <style type="text/css">
 	table {
 		border-collapse: collapse;
@@ -52,19 +52,15 @@
 <title>시스템 관리자 - 그룹 생성 승인 관리</title>
 </head>
 <body>
-	<div id="header">
+	<div id="sys_header">
 		<jsp:include page="../sysHeader.jsp" flush="false" />
 	</div>
-	<div id="container">
+	<div id="sys_container">
 		<div id="mgr_Container">
-			<table>
-				<tr>
-					<td>관리자 도구 모음</td>
-					<td rowspan="7">
 						<form id="aa" action="" method="post">
 							<table>
 								<tr>
-									<td colspan="2"><input type="submit" value="승인"
+									<td colspan="4"><input type="submit" value="승인"
 										onclick="test01()"><input type="submit" value="거절"
 										onclick="test02()"></td>
 								</tr>
@@ -72,7 +68,7 @@
 									<td><input type="checkbox"
 										onclick="cheakAll(this.checked)"></td>
 									<td>그룹명</td>
-									<td>그룹관리지</td>
+									<td>그룹관리자</td>
 									<td>신청일자</td>
 								</tr>
 								<c:forEach var="apply" items="${Apply}">
@@ -93,29 +89,10 @@
 									value="그룹검색" />
 							</div>
 						</form>
-					</td>
-				</tr>
-				<tr>
-					<td><a href="./grApply.do">그룹 승인 관리</a></td>
-				</tr>
-				<tr>
-					<td><a href="./sysMemMgr.do">회원 관리</a></td>
-				</tr>
-				<tr>
-					<td><a href="./sysNoticeMgr.do">공지 게시판 관리</a></td>
-				</tr>
-				<tr>
-					<td><a href="./sysQnaMgr.do">문의 게시판 관리</a></td>
-				</tr>
-				<tr>
-					<td>공백</td>
-				</tr>
-				<tr>
-					<td><a href="./adminLogout.do">로그아웃</a></td>
-				</tr>
-			</table>
 		</div>
-
+	</div>
+	<div id="sys_footer">
+		<jsp:include page="../sysFooter.jsp" flush="false"/>
 	</div>
 </body>
 </html>

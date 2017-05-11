@@ -1,8 +1,7 @@
 @import url(header/user_header.css);
+@import url(header/sys_header.css);
 @import url(footer/user_footer.css);
+@import url(footer/sys_footer.css);
 @import url(body/user_body.css);
-
-body {
-	overflow: auto;
-	padding : 0;
-}
+@import url(body/sys_body.css);
+@import url(body/search_Form.css);
