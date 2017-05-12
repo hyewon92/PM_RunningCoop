@@ -119,11 +119,10 @@ public class ProjectController {
 		isc = service.iPrInsert(map);
 		if(isc){
 			System.out.println("개인 프로젝트 등록 성공");
-			return "redirect:/iProSelect.do";
 		} else {
 			System.out.println("개인 프로젝트 등록 실패");
-			return "redirect:/createMPro.do";
 		}
+		return "redirect:/iProSelect.do";
 	}
 
 	// 그룹 프로젝트 생성 프로세스
@@ -215,6 +214,11 @@ public class ProjectController {
 		String pr_level = service.myLevelSelect(value);
 
 		session.setAttribute("pr_level", pr_level);
+		
+		Map<String, String> pr_detail = new HashMap<String, String>();
+		pr_detail = service.prDetailSelect(pr_id);
+		
+		model.addAttribute("pr_detail", pr_detail);
 
 		return "project/workList";
 	}

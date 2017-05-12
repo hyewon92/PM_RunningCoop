@@ -1,4 +1,5 @@
 @import url(user_Project.css);
+@import url(user_Worklist.css);
 
 body {
 	overflow: auto;
@@ -12,6 +13,8 @@ body {
 	
 	padding : 5px;
 	width : 1000px;
+	
+	margin : 0 auto;
 	
 }
 

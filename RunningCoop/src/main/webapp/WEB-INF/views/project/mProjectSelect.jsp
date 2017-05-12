@@ -12,20 +12,55 @@
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript" src="js/circle-progress.js"></script>
+<script type="text/javascript" src="js/canvasjs.min.js"></script>
 
 <script type="text/javascript">
-	function pro_rate(val){
-// 		(function($){
-			$('.circle').circleProgress({
-			    value: val/100
-			  }).on('circle-animation-progress', function(event, progress) {
-			    $(this).find('strong').html(Math.round(100 * progress) + '<i>%</i>');
-			  });
-// 		})(jQuery);
+	$(function(){
+		$(".pr_rate").each(function(){
+			var idName=$(this).attr("id");
+			var titleVal=$(this).attr("title");
+			startChart(idName,titleVal);
+		});
+	})
+	
+	function startChart(sel,val){
+			CanvasJS.addColorSet("greenShades",
+                [
+                "green",
+                "#D8D8D8"
+                ]);
+			var chart = new CanvasJS.Chart(sel, {
+				interactivityEnabled: false,
+				colorSet : "greenShades",
+				title : {
+					text : val+"%",
+					horizontalAlign : "center",
+					verticalAlign : "center",
+					fontSize : 30,
+				},
+				toolTip : {
+					enabled : false,
+				},
+				animationEnabled: true,
+				data: [
+				{
+					type: "doughnut",
+					explodeOnClick: false,
+					indexLabelFontFamily: "Garamond",
+					indexLabelFontSize: 20,
+					startAngle: 270,
+					toolTipContent: "{y} %",
+
+					dataPoints: [
+					{ y: val},
+					{ y: (100-val)}
+					]
+				}
+				]
+			});
+			chart.render();
 	}
 
-	
 	function detailPro(val){
 		$.ajax({
 			type : "POST",
@@ -65,7 +100,15 @@
 	}
 	
 	function createPro(){
-		location.href="./createMPro.do";
+		$("#create_Form").dialog({
+			title : "개인 프로젝트 생성",
+			height : 350,
+			width : 500,
+			position : {my : "center", at : "center"},
+			resizable : false,
+			modal : true,
+		});
+		
 	}
 	
 	function goToProject(val){
@@ -100,22 +143,57 @@
 						<div class="pr_btn info_div">
 						<img alt="프로젝트 정보" class="pr_detail" src="images/project/pr_information.png" onclick="detailPro('${ list.pr_id }')"/>
 						</div>
-						<div class="pr_btn rate_div" onclick="pro_rate('${ list.pr_proRate }')">
-							<div class=”circle”>
-							<canvas width="100px" height="100px"></canvas>
-							<strong class=”circle_strong”></strong>
-							</div>
+						<div class="pr_btn rate_div">
+							<div id="${ list.pr_id }_chart" class="pr_rate" title="${ list.pr_proRate }"></div>
 						</div>
 						<div class="pr_btn date_div">
 							<span style="margin-right: 10px;">D-${ list.pr_endDate }</span>
 						</div>
-						<div class="pr_btn name_div">
-							<span onclick="goToProject('${ list.pr_id }')">${ list.pr_name }</span>
+						<div class="pr_btn name_div" onclick="goToProject('${ list.pr_id }')">
+							<span>${ list.pr_name }</span>
 						</div>
 					</div>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
+	</div>
+	
+	<div id="create_Form">
+		<form action="./mProCreate.do" method="POST">
+		<table>
+			<tr>
+				<th>프로젝트 명</th>
+				<td>
+					<input type="text" name="pr_name"/>
+				</td>
+			</tr>
+			<tr>
+				<th>프로젝트 시작일자</th>
+				<td>
+					<input type="date" name="pr_startdate"/>
+				</td>
+			</tr>
+			<tr>
+				<th>프로젝트 종료일자</th>
+				<td>
+					<input type="date" name="pr_enddate"/>
+				</td>
+			</tr>
+			<tr>
+				<th>프로젝트 목적</th>
+				<td>
+					<input type="text" name="pr_goal"/>
+				</td>
+			</tr>
+			<tr>
+				<th>비고</th>
+				<td>
+					<input type="text" name="pr_etc"/>
+				</td>
+			</tr>
+		</table>
+	</form>
+	<input type="submit" class="body_btn create_btn" value="프로젝트 생성"/>
 	</div>
 </div>
 <div id = "footer">

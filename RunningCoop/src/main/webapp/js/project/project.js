@@ -63,13 +63,14 @@
 	function workInsert(){
 		$(".work_Edit_Form").css("display", "none");
 		$(".workInsert_Form").css("display", "block");
-	}
-	
-	/* 업무 추가 폼 닫기 */
-	function workInsert_Form_Close(){
-		$("#wk_insert_form").children("input[type=text]").val("");
-		$("#wk_insert_form").children("input[type=date]").val("");
-		$(".workInsert_Form").css("display", "none");
+		$(".workInsert_Form").dialog({
+			title : "업무 추가",
+			height : 300,
+			width : 400,
+			position : {my : "left bottom", at : "left bottom", of : "#add_work"},
+			resizable : false,
+			modal : true,
+		});
 	}
 	
 	/* 업무 삭제 기능 */

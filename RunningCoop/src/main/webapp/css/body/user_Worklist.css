@@ -1,0 +1,143 @@
+.pr_settings{
+	position : absolute;
+	top : 1%;
+	right : 2%;
+}
+
+#work_list_area{
+	text-align: center;
+}
+
+.list_field{
+	width : 100%;
+	height : 100%;
+	margin : 0 auto;
+	background : #E6E6E6;
+}
+
+.title_area{
+	margin : 0 auto;
+	width : 100%;
+	height : 10%;
+}
+
+.title_area span{
+	font-size: 18pt;
+	font-weight: bold;
+	
+	color : black;
+}
+
+.list_area{
+	margin : 0 auto;
+	width : 100%;
+	height : 90%;
+}
+
+.work_list{
+	width : 300px;
+	height : 600px;
+	
+	display : inline-block;
+	margin : 0 auto;
+}
+
+.list_area table{
+	width : 95%;
+	font-size : 9pt;
+	margin: 0 auto;
+	border-spacing: 0px 5px;
+}
+
+.work{
+	height : 50px;
+	background : white;
+}
+
+#add_work{
+	cursor : pointer;
+}
+.work img{
+	width : 35px;
+	height : 35px;
+}
+
+.work td:first-child{
+	border-top-left-radius : 10px;
+	border-bottom-left-radius : 10px;
+}
+
+.work td:last-child{
+	border-top-right-radius : 10px;
+	border-bottom-right-radius : 10px;
+}
+
+.workInsert_Form {
+	display: none;
+	text-align: center;
+}
+
+#wk_insert_form table{
+	text-align: left;
+	border-collapse: collapse;
+	margin-top : 20px;
+	margin-bottom : 10px;
+}
+
+#wk_insert_form th {
+	width : 35%;
+	border-bottom : 0.5px solid lightgrey;
+}
+
+#wk_insert_form td {
+	width : 65%;
+	border-bottom : 0.5px solid lightgrey;
+}
+
+.workInsert_btn{
+	color : white;
+	padding: 2px 5px;
+    margin-bottom: 5px;
+	background-color: #5cb85c;
+    border-color: #4cae4c;
+    font-size : 20pt;
+    font-weight: bold;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+.work_Detail_View {
+	display: none;
+}
+
+.wd_title {
+	cursor: pointer;
+}
+
+.work_Edit_Form {
+	display: none;
+}
+
+.promem_list {
+	display: none;
+}
+
+
+.project_manage {
+	display: none;
+}
+
+#allProgress{
+	width: 100%;
+	background-color: #ddd;
+}
+
+#partProgress{
+	width: 0px;
+	height: 30px;
+	background-color: #4CAF50;
+  	text-align: center;
+  	line-height: 30px;
+  	color: white;
+}
+
