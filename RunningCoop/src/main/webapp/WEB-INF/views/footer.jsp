@@ -4,22 +4,21 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>사이드바메뉴</title>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style>
-.ui-autocomplete {
-	max-height: 100px;
-	overflow-y: auto;
-	/* prevent horizontal scrollbar */
-	overflow-x: hidden;
-}
-
-* html .ui-autocomplete {
-	height: 100px;
-}
+	.ui-autocomplete {
+		max-height: 100px;
+		overflow-y: auto;
+		/* prevent horizontal scrollbar */
+		overflow-x: hidden;
+	}
+	
+	* html .ui-autocomplete {
+		height: 100px;
+	}
 </style>
 <%
 	String userName = (String) session.getAttribute("mem_name");
@@ -83,6 +82,7 @@
          selectDoingPro();
          selectTodoPro();
          selectDonePro();
+
    });
    
 	function selectDoingPro(){
@@ -139,12 +139,14 @@
   	
   	function goSocket(session){
   		var gr_id = session;
-  		if(gr_id == null){
+  		if(gr_id == "null"
+  				){
   			alert("그룹 선택 후 이용바랍니다");
   		}else{
-  			location.href = "./socketOpen.do";
+  			window.open("./socketOpen.do", "그룹채팅", "width = 310, heigth = 380, resizeable = no, scrollbar = yes, left = 300, top = 50");
   		}
   	}
+  	
 </script>
 </head>
 <body>
@@ -160,16 +162,13 @@
 		<li class="menu_logo"><span class="top_menu">그룹</span></li>
 		<li class="group-menu">
 			<p class="groupMenu"><a href="#" onclick="location.href='./grselect.do?gr_id=<%=gr_id%>'">그룹 관리</a></p>
-		<% String grSession = (String)session.getAttribute("gr_id"); %>
-			<p class="groupMenu"><a href="#" onclick="goSocket('<%=grSession%>')">그룹 채팅</a></p>
+		<%-- <% String grSession = (String)session.getAttribute("gr_id"); %> --%>
+	 		<p class="groupMenu"><a href="#" onclick="goSocket('<%=gr_id%>')">그룹 채팅</a></p> 
 		</li>
 		<li class="footer-menu"><a href="#" class="top_menu" onclick="location.href = './go_SearchForm.do'">검색하기</a></li>
 		<li class="footer-menu"><a href="#" class="top_menu" onclick="location.href = './noticeList.do'">공지게시판</a></li>
 		<li class="footer-menu"><a href="#" class="top_menu" onclick="location.href = './qnaList.do'">문의게시판</a></li>
 	</ul>
-	
-	
-	
-	
+
 </body>
 </html>

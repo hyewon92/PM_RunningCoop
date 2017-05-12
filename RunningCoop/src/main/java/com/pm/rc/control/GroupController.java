@@ -1,15 +1,14 @@
 package com.pm.rc.control;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.ServletConfigAware;
 
 import com.pm.rc.dto.GrChatMemberDto;
 import com.pm.rc.dto.GroupBoardDto;
@@ -34,7 +34,7 @@ import com.pm.rc.model.service.ManagerService;
 
 //4. dispatcher에 의해 연결된 Class @Controller 생성
 @Controller
-public class GroupController {
+public class GroupController implements ServletConfigAware {
 	
 	/**
 	 * 채팅에 관련된 정보를 담기 위해 Application 객체 생성
@@ -59,6 +59,14 @@ public class GroupController {
 	// Mail 서비스
 	@Autowired
 	private JavaMailSender mailSend;
+	
+	/*
+	 *Application 객체를 사용하기 위해 객체를 담아줌
+	 * */
+	@Override
+	public void setServletConfig(ServletConfig servletConfig) {
+		servletContext = servletConfig.getServletContext();
+	}
 	
 	// 그룹선택 초기 화면 
 	@RequestMapping(value= "/myGrSelect.do" , method=RequestMethod.GET)
@@ -292,13 +300,57 @@ public class GroupController {
 		return "account/grGogo";
 	}
 	
-	// WebSocket 채팅 
+	// WebSocket 채팅 접속했을 때
 	@RequestMapping(value="/socketOpen.do" , method=RequestMethod.GET)
-	public String socketOpen(){
-		logger.info("socketOpen 소켓 화면 이동");
-		GrChatMemberDto chatDto = new GrChatMemberDto();
-		//servletContext.setAttribute(name, chatDto);
+	public String socketOpen(HttpSession session, Model model){
+		logger.info("socketOpen 소켓 화면 이동 1)리스트에 접속자 값 넣기");
+		String mem_id = (String)session.getAttribute("mem_id");
+		String gr_id = (String)session.getAttribute("gr_id");
+		//GrChatMemberDto chatDto = new GrChatMemberDto();
+		//servletContext.setAttribute(mem_id, chatDto);
+		//ArrayList<String> chatList = (ArrayList<String>)servletContext.getAttribute("chatList");
+		System.out.println("servletContext.getAttribute()::::::::::::::"+servletContext.getAttribute("chatList"));
+		HashMap<String, String> chatList = (HashMap<String, String>)servletContext.getAttribute("chatList");
+		if(chatList == null){
+			chatList = new HashMap<String, String>();
+			chatList.put(mem_id, gr_id);
+			servletContext.setAttribute("chatList", chatList);
+		}else{
+			chatList.put(mem_id, gr_id);
+			servletContext.setAttribute("chatList", chatList);
+		}
+		logger.info("socketOpen 소켓 화면 이동 2)리스트 값 전달");
+		//model.addAttribute("chatList", chatList);
+		
 		return "socket";
+	}
+	
+	//WebSocket 채팅 종료했을 때
+	@RequestMapping(value = "/socketOut.do", method={RequestMethod.GET, RequestMethod.POST})
+	public void socketOut(HttpSession session, Model model){
+		logger.info("socketOut 소켓에서 나오기");
+		String mem_id = (String)session.getAttribute("mem_id");
+		HashMap<String, String> chatList = (HashMap<String, String>)servletContext.getAttribute("chatList");
+		System.out.println("기존 접속 회원 리스트:"+chatList);
+		if(chatList != null){
+			chatList.remove(mem_id);
+		}
+		System.out.println("갱신 후 접속 회원 리스트:"+chatList);
+		servletContext.setAttribute("chatList", chatList);
+		
+	}
+	
+	//채팅 접속자 리스트 출력
+	@RequestMapping(value = "/viewChatList.do", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Map<String, String>> viewChatList(){
+		Map<String, Map<String, String>> map = new HashMap<String, Map<String, String>>();
+		Map<String, String> chatList = (HashMap<String, String>)servletContext.getAttribute("chatList");
+		System.out.println("ajax확인::::::::::::::::::::::::::"+chatList);
+		String msg = chatList.get("user12");
+		System.out.println(msg);
+		map.put("list", chatList);
+		return map;
 	}
 	
 	@RequestMapping(value="/socketOpen2.do" , method=RequestMethod.GET)
