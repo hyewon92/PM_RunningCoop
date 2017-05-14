@@ -281,5 +281,7 @@ public interface GroupDao {
 	 * @author 라한솔
 	 */
 	public int grNameCheck(String gr_name);
+	
+	public List<Map<String, String>> grBoradList (String gr_id);
 }
 

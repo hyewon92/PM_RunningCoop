@@ -406,4 +406,15 @@ public class GroupController implements ServletConfigAware {
 		int n = service.grNameCheck(req.getParameter("gr_name"));
 		return n;
 	}
+	
+	@RequestMapping(value="/grBoradList.do" , method=RequestMethod.GET)
+	public String grBoradList(String gr_id, Model model){
+		logger.info("=========그룹게시판 목록 시작 ========");
+		String gr = gr_id;
+		System.out.println("그룹아이디 받아옴 값="+gr);
+		List<Map<String, String>> lists = service.grBoradList(gr_id);
+		model.addAttribute("grlists", lists);		
+		return "Group/grBorad";
+	}
+	
 }

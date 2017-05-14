@@ -234,6 +234,12 @@ public class GroupServiceImp implements GroupService{
 		return groupdao.grNameCheck(gr_name);
 	}
 
+	@Override
+	public List<Map<String, String>> grBoradList(String gr_id) {
+		List<Map<String, String>> lists = groupdao.grBoradList(gr_id);
+		return lists;
+	}
+
 
 
 }
