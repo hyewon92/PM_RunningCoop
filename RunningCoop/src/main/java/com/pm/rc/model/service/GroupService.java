@@ -225,4 +225,13 @@ public interface GroupService {
 	 * @author 라한솔
 	 */
 	public int grNameCheck (String gr_name);
+	
+	/**
+	 * 그룹게시판 목록 출력
+	 * @aprama gr_id
+	 * @return list
+	 * @author 라한솔
+	 */
+	public List<Map<String, String>> grBoradList(String gr_id);
+	
 }

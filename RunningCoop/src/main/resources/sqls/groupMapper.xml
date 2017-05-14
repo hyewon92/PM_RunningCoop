@@ -232,4 +232,11 @@
 	SELECT COUNT(GR_NAME) FROM RC_GROUP
 	WHERE GR_NAME = #{gr_name}
 	</select>
+	
+<!-- 	그룹게시판 목록 출력 -->
+	<select id="grBoradList" parameterType="java.lang.String" resultType="java.util.Map">
+		SELECT BR.BR_UUID, BR.BR_TITLE, M.MEM_NAME, TO_CHAR(BR.BR_REGDATE, 'YYYY/MM/DD') BR_REGDATE, BR.BR_NOTICEYN
+		FROM RC_GRBOARD BR, RC_MEMBER M
+  		WHERE GR_ID = #{gr_id} AND BR.MEM_ID = M.MEM_ID AND BR.BR_DELYN = 'N'	
+	</select>
 </mapper>

@@ -251,4 +251,10 @@ public class GroupDaoImp implements GroupDao{
 		return n;
 	}
 
+	@Override
+	public List<Map<String, String>> grBoradList(String gr_id) {
+		List<Map<String, String>> lists = sqlSession.selectList(NAMESPACE+"grBoradList",gr_id);
+		return lists;
+	}
+
 }
