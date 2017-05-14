@@ -139,11 +139,10 @@
   	
   	function goSocket(session){
   		var gr_id = session;
-  		if(gr_id == "null"
-  				){
+  		if(gr_id == "null"){
   			alert("그룹 선택 후 이용바랍니다");
   		}else{
-  			window.open("./socketOpen.do", "그룹채팅", "width = 310, heigth = 380, resizeable = no, scrollbar = yes, left = 300, top = 50");
+  			window.open("./socketOpen.do", "그룹채팅", "width = 460, height = 480, resizeable = no, scrollbar = yes, left = 300, top = 50");
   		}
   	}
   	
@@ -161,6 +160,7 @@
 		<li class="footer-menu"><a href="#" class="top_menu" onclick="location.href='./myGrSelect.do?mem_id=<%=userId%>'">그룹 선택</a></li>
 		<li class="menu_logo"><span class="top_menu">그룹</span></li>
 		<li class="group-menu">
+			<p class="groupMenu"><a href="#" onclick="location.href='./grBoradList.do?gr_id=<%=gr_id%>'">그룹게시판</a></p>
 			<p class="groupMenu"><a href="#" onclick="location.href='./grselect.do?gr_id=<%=gr_id%>'">그룹 관리</a></p>
 		<%-- <% String grSession = (String)session.getAttribute("gr_id"); %> --%>
 	 		<p class="groupMenu"><a href="#" onclick="goSocket('<%=gr_id%>')">그룹 채팅</a></p> 
