@@ -4,15 +4,133 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>그룹채팅</title>
+
 <style type="text/css">
-	#receive_msg{
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+/* 	@font-face{
+		font-family: "the120";
+		src: url('font/The120.ttf');
+	} */
+
+	body{
+		padding: 0px;
+		font-family: 'Jeju Gothic', sans-serif;
+	}
+
+	table{
+		border: 1px solid #B4B4B4;
+		border-collapse: collapse;
+	}
+	
+	.sender_img{
+		border: 6px solid;
+ 		background-color: #69B55B; 
+		background-clip: padding-box;
+		-webkit-border-image: url(images/sender_bubble.png) 25 25 round;
+		-o-border-image: url(images/sender_bubble.png) 25 25 round;
+		border-image: url(images/sender_bubble.png) 25 25 round; 
+		padding-top: 3px;
+		padding-bottom: 3px;
+		padding-left: 3px;
+		padding-right: 11px;
+		float: right;
+		font-size: 12px;
+		text-align: justify;
+	}
+	
+	.receiver_img{
+		border: 6px solid;
+ 		background-color: #E6F4B5; 
+		background-clip: padding-box;
+		-webkit-border-image: url(images/receiver_bubble.png) 25 25 round;
+		-o-border-image: url(images/receiver_bubble.png) 25 25 round;
+		border-image: url(images/receiver_bubble.png) 25 25 round; 
+		padding-top: 3px;
+		padding-bottom: 3px;
+		padding-right: 3px;
+		padding-left: 11px;
+		float: left;
+		font-size: 12px;
+		text-align: justify;
+	}
+	
+	.receive_msg{
 		padding: 3px;
-		width: 300px;
-		height: 360px;
+		width: 350px;
+		height: 400px;
 		overflow: auto;
 		overflow-x: hidden;
+		background: #F3F3F3;
 	}
+	
+	.chat{
+		float:left; margin-top:4px; margin-left: 2px;
+	}
+	
+	.chat_btn{
+		margin-top: 0px;
+		margin-left: 5px;
+		width: 52px;
+		height: 31px;
+		background-image: url('images/btn_send.png');
+		background-size: 100% 100%;
+		display: inline-block;
+	}
+	
+	.memListBox{
+ 		text-align: center; 
+		vertical-align: text-top; 
+		padding: 10px; 
+		overflow: auto;
+		/* background: #D8D8D8; */
+	}
+	
+	.listTitle{
+		height:50px; 
+		vertical-align: top; 
+		font-size: 12px; 
+		font-weight: bold;
+	}
+	
+	.mem_icon{
+		padding: 0px;
+		display : inline-block;
+		float: left;
+	}
+	
+	.memList{
+		vertical-align: top;
+	}
+	
+	.noticeTxt{
+		clear:both;
+		margin: 10px;
+	}
+	
+	.noticeTxt font{
+		padding-top: 5px;
+		padding-bottom: 5px;
+		padding-left: 20px;
+		padding-right: 20px;
+		background: white;
+		border-radius: 3px;
+	}
+	
+	.sendTxt{
+		width:172px; 
+		float:right; 
+		margin:2px; 
+		word-break:break-word;
+	}
+	
+	.receiveTxt{
+		width:172px; 
+		float:left; 
+		margin:2px; 
+		word-break:break-word;
+	}
+	
 </style>
 
    <% 
@@ -29,11 +147,11 @@
       $(document).ready(function() {
     	  
             nick = $("#nickName").val();
-            $("#receive_msg").html('');
-            $("#chat_div").show();
-            $("#chat").focus();
+            $(".receive_msg").html('');
+            $(".chat_div").show();
+            $(".chat").focus();
             
-            ws = new WebSocket("ws://192.168.4.116:8095/RunningCoop/wsChat.do");
+            ws = new WebSocket("ws://192.168.4.117:8095/RunningCoop/wsChat.do");
             
             ws.onopen = function() {
                ws.send("#$nick_"+nick);
@@ -43,29 +161,31 @@
             	var msg = event.data;
             	var id = "<%=grId%>";
             	if(msg.startsWith("<font color=")){	//입장,퇴장
-	               $("#receive_msg").append(msg+"<br/>");
+	               $(".receive_msg").append($("<div class = 'noticeTxt'>").append(msg+"<br/>"));
 					viewList(id);
             	}else if(msg.startsWith("[나]")){	//대화내용
-            		$("#receive_msg").append($("<div>").text(msg).css("text-align", "right"));
+/*             		for(var i = 1; i*10 < msg.length; i++){
+            			msg.replace(msg.charAt(i*10),msg.charAt(i*10)+"\n");
+            		} */
+            		$(".receive_msg").append($("<div class = 'sendTxt'>").append($("<span class ='sender_img'>").text(msg))).append("<br><br>");
             	}else{
-            		$("#receive_msg").append($("<div>").text(msg).css("text-align", "left"));
+            		$(".receive_msg").append($("<div class = 'receiveTxt'>").append($("<span class = 'receiver_img'>").text(msg))).append("<br><br>");
             	}
             	
-            	$("#receive_msg").scrollTop($("#receive_msg")[0].scrollHeight);
+            	$(".receive_msg").scrollTop($(".receive_msg")[0].scrollHeight);
             }
             ws.onclose = function(event) {
                alert("채팅방이 삭제됩니다."); 
             }
       
-         $("#chat_btn").bind("click",function() {
-            if($("#chat").val() == '' ) {
+         $(".chat_btn").bind("click",function() {
+            if($(".chat").val() == '' ) {
                alert("내용을 입력하세요");
                return ;
             }else {
-            	location.href = '#last';
-               ws.send(nick+" : "+$("#chat").val());
-               $("#chat").val('');
-               $("#chat").focus();
+               ws.send(nick+" : "+$(".chat").val());
+               $(".chat").val('');
+               $(".chat").focus();
             }
          });
       });
@@ -82,27 +202,22 @@
       } 
       
       function viewList(grId){
-    	  $("#memList").children().remove();
+    	  $(".memList").children().remove();
     	  $.ajax({
     		 type: "POST",
     		 url: "./viewChatList.do",
     		 data: "mem_id="+$("#nickName"),
     		 async: false,
+    		 
     		 success: function(result){
     			 for(var k in result.list){
  					if(result.list[k]==grId){
-						$("#memList").append("<p>"+k+"</p>"); 
+						$(".memList").prepend("<img class = 'mem_icon' src = 'images/chat_member.png'><p style = 'font-size : 13px;padding : 5px;border-bottom: 0.5px solid #B4B4B4;'>"+k+"</p>"); 
 					}
     			 }
     		 }
     	  });
-      }
-      
-/*       function closeChat(){
-    	  alert("채팅종료");
-	      location.href = "./socketOut.do";
-      } */
-      
+      }      
 /*       function printMemList(memList){
     	  $("#memBox").children("p").remove();
     	  var list = JSON.parse(memList);
@@ -114,25 +229,25 @@
 </script>
 </head>
 <body>
-   <table border="1">
+   <table>
    <tr>
-      <td width="310px" height="370px" align="center">
-      <div id="receive_msg" style="border:1px">
-      <div id = "last"></div> 
+      <td width="360x" height="390px" align="center">
+      <div class ="receive_msg" style="border:1px">
+      <div class = "last"></div> 
       <input type="hidden" id="nickName" value = <%=mem_id%> />
       </div>
+      </td>
+      <td width="130px" class = "memListBox">
+      	<div class = "listTitle">접속자 목록</div>
+      	<div class = "memList"></div> 
       </td>
    </tr>   
    </table>
    
-   <div id="chat_div" style="display:none">
-   <div id="memBox">
-    <div id = "memList">
-   	</div> 
-   </div>
-   <input type="text" id="chat" size="20"  
-          onKeypress="if(event.keyCode==13) $('#chat_btn').click();" />
-   <input type="button" id="chat_btn" value="입력"/>          
+   <div class="chat_div" style="display:none; margin-top: 10px;">
+   <input type="text" class="chat" size="53"
+          onKeypress="if(event.keyCode==13) $('.chat_btn').click();" />
+   <div class="chat_btn"></div>          
    </div>
       
 </body>
