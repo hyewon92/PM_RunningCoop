@@ -18,8 +18,8 @@
 			data : "wk_id="+val,
 			async : false,
 			success : function(msg){
-				$("#wd_Field").children("p").remove().children("div").remove();
-				$("#wd_modal").css("display", "block");
+				/*$("#wd_Field").children("p").remove().children("div").remove();*/
+				$(".wd_modal").css("display", "block");
 				showWorkDetail(msg)
 				changeProgress(val2);
 			}
@@ -45,43 +45,37 @@
 	
 	/* 업무 상세 페이지 - 하위 업무 리스트 출력 */
 	function showWorkDetail(nodes){
-		
-		 if(nodes == null){
-			$("#wd_Field").append("<p>하위 업무가 없습니다</p>");
+		$("#wd_field_table").children().remove();
+		 if(nodes.length == 0){
+			$("#wd_field_table").append("<tr><td colspan='7'>하위업무가 없습니다.</td></tr>");
 		} else {
-			$("#wd_Field").append("<p>선택|하위업무아이디|하위업무내용|애로사항여부|마감일자|완료여부</p>");
 			  for(var i = 0; i < nodes.length; i++){
 				var wd_id = nodes[i].wd_id;
 				var wd_title = nodes[i].wd_title;
 				var wd_erroryn = nodes[i].wd_errorYN;
 				var wd_endDate = nodes[i].wd_endDate;
 				var wd_complyn = nodes[i].wd_complYN;
-				var erroryn = "";
 				var wk_id2 = $("#wk_id").val();
+				var erroryn = "";
 				if ( wd_erroryn == 'N'){
-					erroryn = "애로사항 없음";
-					$("#"+wk_id2).next().css("display","none");
+					erroryn = "";
 				} else {
-					erroryn = "애로사항 있음";
-					$("#"+wk_id2).next().css("display","");
+					erroryn = "<img alt='애로알림' src='images/project/wd_error_btn.png'/>";
 				}
 				
 				if ( wd_complyn == 'Y' ){
-					wd_complyn = "완료업무";
+					wd_complyn = "<img alt='업무완료' src='images/project/wd_complete_btn.png'/>";
 				} else {
-					wd_complyn = "미완료업무";
+					wd_complyn = " ";
 				}
-				$("#wd_Field").append("<p id="+wd_id+" class='wd_list'>");
-				$("#wd_Field").children("#"+wd_id).append("<input type='checkbox' name='wd_complyn'/>")
-				.append("<span>"+wd_id+"</span>/")
-				.append("<span class='wd_title' onclick='wdEditForm("+wd_id+")'>"+wd_title+"</span>/")
-				.append("<span style='display: none;'>"+wd_erroryn+"</span>")
-				.append("<span>"+erroryn+"</span>/")
-				.append("<span>"+wd_endDate+"</span>/")
-				.append("<span>"+wd_complyn+"</span>")
-				.append("<input type='button' value='완료' onclick='wdComplete("+wd_id+")'/>")
-				.append("<input type='button' value='애로사항' onclick='wdError("+wd_id+")'/>")
-				.append("<input type='button' value='삭제' onclick='wdDelete("+wd_id+")'/>");
+				
+				$("#wd_field_table").append("<tr><td style='width:10% text-align:center;;'>"+wd_complyn+"</td>" +
+						"<td style='width:30%;'><span class='wd_title' onclick='wdEditForm(\""+wd_id+"\")'>"+wd_title+"</span></td>" +
+						"<td style='width:10%; text-align:center;'>"+erroryn+"</td>" +
+						"<td style='width:20%;'><span>"+wd_endDate+"</span></td>" +
+						"<td style='width:10%; text-align:center;'><img alt='완료버튼' src='images/project/wd_complete_btn.png' onclick='wdComplete(\""+wd_id+"\")'/></td>" +
+						"<td style='width:10%; text-align:center;'><img alt='애로알림버튼' src='images/project/wd_error_btn.png' onclick='wdError(\""+wd_id+"\",\""+wd_erroryn+"\")'/></td>" +
+						"<td style='width:10%; text-align:center;'><img alt='삭제버튼' src='images/project/wd_delete_btn.png' onclick='wdDelete(\""+wd_id+"\")'/></td></tr>");
 			}
 		}
 		 
@@ -147,7 +141,7 @@
 	
 	/* 업무 상세 페이지 - 하위 업무 완료 기능 */
 	function wdComplete(val){
-		var wd_id = $(val).children("span").eq(0).html();
+		var wd_id = val;
 		var wk_id = $("#wk_id").val();
 		
 		$.ajax({
@@ -163,9 +157,9 @@
 	}
 	
 	/* 업무 상세 페이지 - 하위 업무 애로사항 표시 기능 */
-	function wdError(val1){
-		var wd_id = $(val1).children("span").eq(0).html();
-		var wd_erroryn = $(val1).children("span").eq(2).html();
+	function wdError(val1, val2){
+		var wd_id = val1;
+		var wd_erroryn = val2;
 		
 		var wk_id = $("#wk_id").val();
 		$.ajax({
@@ -182,7 +176,7 @@
 	
 	/* 업무 상세 페이지 - 하위 업무 삭제 기능 */
 	function wdDelete(val){
-		var wd_id = $(val).children("span").eq(0).html();
+		var wd_id = val;
 		var wk_id = $("#wk_id").val();
 		
 		$.ajax({

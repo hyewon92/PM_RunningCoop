@@ -178,44 +178,50 @@
 			<input type="submit" value="수정" />
 		</div>
 		
-		<div id="wd_modal">
-			<div id="work_Detail">
-				<input type="hidden" id="wk_id" value="" />
-				<img alt="닫기" src="images/project/wd_close_btn.png" onclick="backToProject()"/>
-				<div id="work_Detail_Insert">
-					업무명 <input type="text" id="insert_wd_title" name="wd_title" value="" />
-					마감기한<input type="date" id="insert_wd_endDate" name="wd_endDate"
-						value="" /> <input type="button" value="추가" onclick="wd_Insert()" />
+		<div class="wd_modal">
+			<div class="modal_content">
+				<div class="modal_header">
+					<h2 style="display:inline;">업무 상세 화면</h2>
+					<img alt="닫기" src="images/project/wd_close_btn.png" onclick="backToProject()"/>
 				</div>
-				<div id="wd_Field">
-					<p>업무 상세화면</p>
-					<fieldset>
-						<legend>업무 상세화면</legend>
-						<div id = "allProgress">
-							<div id = "partProgress"></div>
-						</div>
-					</fieldset>
-				</div>
-				<div class="work_Attach_View">
-					<fieldset id="wk_Attach_List">
-						<legend>첨부파일</legend>
-					</fieldset>
-					<div id="file_area">
-						<form id="file_attach_form" action="./attachInsert.do"
-							method="POST" enctype="multipart/form-data">
-							<input type="hidden" name="wk_id" value="" /> <input type="file"
-								id="new_attach_file" name="gatt_name" value="" /> <input
-								type="button" value="등록" onclick="wkAttach_Insert(this)" />
-						</form>
+				<div class="modal_body">
+					<div id = "allProgress">
+						<div id = "partProgress"></div>
 					</div>
-				</div>
-				<div class="work_Comment_View">
-					<fieldset id="wk_Comment_List">
-						<legend>댓글</legend>
-					</fieldset>
-					<div>
-						<input type="text" id="new_wcom_content" value="" /> <input
-							type="button" value="등록" onclick="wcom_Insert()" />
+					<input type="hidden" id="wk_id" value="" />
+					<div class="wd_Field">
+						<div class="wd_table_area">
+							<table id="wd_field_table">
+							</table>
+						</div>
+						<div class="work_Detail_Insert">
+							<span>업무명</span>
+							<input type="text" id="insert_wd_title" name="wd_title" value="" />
+							<span>마감기한</span>
+							<input type="date" id="insert_wd_endDate" name="wd_endDate" value="" /> <input type="button" class="body_btn wd_insert_btn" value="추가" onclick="wd_Insert()" />
+						</div>
+					</div>
+					<div class="work_Attach_View">
+						<span>첨부파일</span>
+						<div id="wk_Attach_List">
+						</div>
+						<div id="file_area">
+							<form id="file_attach_form" action="./attachInsert.do"
+								method="POST" enctype="multipart/form-data">
+								<input type="hidden" name="wk_id" value="" /> <input type="file"
+									id="new_attach_file" name="gatt_name" value="" /> <input
+									type="button" value="등록" onclick="wkAttach_Insert(this)" />
+							</form>
+						</div>
+					</div>
+					<div class="work_Comment_View">
+						<span>댓글</span>
+						<div id="wk_Comment_List">
+						</div>
+						<div id="new_comment_insert">
+							<input type="text" id="new_wcom_content" value="" /> <input
+								type="button" value="등록" onclick="wcom_Insert()" />
+						</div>
 					</div>
 				</div>
 			</div>

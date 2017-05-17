@@ -173,7 +173,7 @@
   	color: white;
 }
 
-#wd_modal{
+.wd_modal{
 	display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -186,34 +186,116 @@
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-#work_Detail{
-	background-color: #fefefe;
-    margin: 10% auto; /* 15% from the top and centered */
-    padding: 20px;
+.modal_content{
+	position: relative;
+	top : 15%;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
     border: 1px solid #888;
-    width : 80%;
-    width: 90%; /* Could be more or less, depending on screen size */
-    text-align: right;
+    width: 80%;
+    height: 70%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
 }
 
-#work_Detail_Insert{
-	width : 500px;
-	height : 20px;
+.modal_header{
+	text-align: right;
+	padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+
+.modal_header img {
+	margin-left: 80%;
+}
+
+.modal_body{
+	height: 90%;
+    width: 98%;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.wd_Field{
+	width: 70%;
+    height: 60%;
+    float: left;
+    padding: 10px;
+    text-align: left;
+    margin-top : 10px;
+}
+
+.wd_table_area{
+	height : 90%;
+	overflow: auto;
+}
+
+.work_Detail_Insert{
+	width: 100%;
+    height: 9%;
+    border : 0.5px solid grey;
+    text-align: justify;
+    padding-top: 5px;
+}
+
+.work_Detail_Insert span {
+	margin-right: 10px;
+    margin-left: 15px;
+}
+
+.work_Detail_Insert input {
+	margin-right: 40px;
+}
+
+.wd_insert_btn {
+	color : white;
+	padding: 1px 5px;
+	background-color: #5cb85c;
+    border-color: #4cae4c;
+    font-size : 12pt;
+    font-weight: bold;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    margin-left: 40px;
+}
+
+#wd_field_table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.work_Attach_View{
+	width: 26%;
+    height: 60%;
+    float: right;
+    border: 1px solid black;
+    text-align: left;
+    margin-top: 10px;
+}
+
+.work_Comment_View {
+    width: 100%;
+    height: 25%;
+    clear: both;
+    border: 1px solid black;
+    padding: 10px 0px;
+    text-align: left;
+}
+
+#wk_Attach_List{
+	height : 90%;
 	border : 1px solid black;
 }
 
-#wd_Field{
-	width : 70%;
-	height : 300px;
-	float : left;
+#file_area{
+	height : 10%;
+	border : 1px solid black;
 }
 
-.work_Attach_View{
-	width : 30%;
-	height : 300px;
-	float : right;
-}
-
-.work_Attach_View{
-	clear : both;
+#new_comment_insert{
+	border : 1px solid black;
 }
