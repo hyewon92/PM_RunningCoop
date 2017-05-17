@@ -142,7 +142,8 @@
   		if(gr_id == "null"){
   			alert("그룹 선택 후 이용바랍니다");
   		}else{
-  			window.open("./socketOpen.do", "그룹채팅", "width = 460, height = 480, resizeable = no, scrollbar = yes, left = 300, top = 50");
+  			var option = "";
+  			window.open("./socketOpen.do", "그룹채팅", "width = 460, height = 480, resizable = no, toolbar = no, menubar = no, location = no, fullscreen = no, left = 300, top = 50");
   		}
   	}
   	
