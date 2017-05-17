@@ -124,12 +124,32 @@
 	<button class="body_btn pr_create" onclick="createPro()">프로젝트 생성</button>
 	
 	<div class="pr_detail_view">
-		<p id="pr_name"></p>
-		<p id="mem_name"></p>
-		<p id="pr_memcnt"></p>
-		<p id="pr_goal"></p>
-		<p id="pr_enddate"></p>
-		<p id="pr_etc"></p>
+		<table class="pr_detail_table">
+			<tr>
+				<th>프로젝트명</th>
+				<td><span id="pr_name"></span></td>
+			</tr>
+			<tr>
+				<th>프로젝트관리자</th>
+				<td><span id="mem_name"></span></td>
+			</tr>
+			<tr>
+				<th>프로젝트 인원</th>
+				<td><span id="pr_memcnt"></span></td>
+			</tr>
+			<tr>
+				<th>프로젝트목적</th>
+				<td><span id="pr_goal"></span></td>
+			</tr>
+			<tr>
+				<th>프로젝트마감기한</th>
+				<td><span id="pr_enddate"></span></td>
+			</tr>
+			<tr>
+				<th style="height : 80px;">비고</th>
+				<td style="height : 80px;"><span id="pr_etc"></span></td>
+			</tr>
+		</table>
 	</div>
 	
 	<div class = "project_list_view">
@@ -147,7 +167,10 @@
 							<div id="${ list.pr_id }_chart" class="pr_rate" title="${ list.pr_proRate }"></div>
 						</div>
 						<div class="pr_btn date_div">
-							<span style="margin-right: 10px;">D-${ list.pr_endDate }</span>
+							<span style="margin-right: 10px;">D
+						<c:if test="${ fn:startsWith(list.pr_endDate, '-') == true }">${ fn:replace(list.pr_endDate, '-', '+') }</c:if>
+						<c:if test="${ fn:startsWith(list.pr_endDate, '-') == false }">-${ list.pr_endDate }</c:if>
+							</span>
 						</div>
 						<div class="pr_btn name_div" onclick="goToProject('${ list.pr_id }')">
 							<span>${ list.pr_name }</span>

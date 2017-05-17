@@ -8,6 +8,7 @@
 
 	alramCh = $(val1).children("span").eq(2).html();
 	})
+	
 /* 업무 상세 페이지 조회 메소드 */
 	function viewWork(val, val2){
 		$("#wk_id").val(val);
@@ -18,7 +19,7 @@
 			async : false,
 			success : function(msg){
 				$("#wd_Field").children("p").remove().children("div").remove();
-				$(".work_Detail_View").css("display", "block");
+				$("#wd_modal").css("display", "block");
 				showWorkDetail(msg)
 				changeProgress(val2);
 			}

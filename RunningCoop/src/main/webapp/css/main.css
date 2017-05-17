@@ -5,3 +5,41 @@
 @import url(body/user_body.css);
 @import url(body/sys_body.css);
 @import url(body/search_Form.css);
+
+ @media screen and (max-width: 800px) {
+	.top_menu {
+		margin-left:5px;
+    	font-size: 13pt;
+    	letter-spacing: -1px;
+    }
+	
+	.bottom-menu {
+    	width: 100%;
+    	margin-bottom: 10px;
+    	margin-left: 10px;
+	}
+	
+	.menu_logo span {
+    	font-size: 13pt;
+    	letter-spacing: -1px;
+    	margin-left: 5px;
+	}
+	
+	.iProject{
+		letter-spacing:-1px;
+		font_size: 8pt;
+	}
+	
+	.pr_create{
+		padding: 2px 15px;
+		margin-top: 40px;
+    	margin-bottom: 10px;
+    	background-color: #5cb85c;
+    	border-color: #4cae4c;
+		color: #fff;
+    	font-size : 15pt;
+    	font-weight: bold;
+    	border: 1px solid transparent;
+    	border-radius: 5px;
+	}
+}

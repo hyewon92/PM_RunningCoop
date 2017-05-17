@@ -3,19 +3,16 @@
 
 body {
 	overflow: auto;
-	padding : 0;
+    padding: 0;
+    margin: 0;
 }
 
 #container {
-	position : absolute;
-	top : 50px;
+	position: absolute;
 	left : 0px;
-	
-	padding : 5px;
-	width : 1000px;
-	
-	margin : 0 auto;
-	
+	top : 50px;
+	width : 80%;
+	text-align: center;
 }
 
 .body_btn{

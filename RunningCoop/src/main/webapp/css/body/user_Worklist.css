@@ -77,21 +77,31 @@
 	text-align: center;
 }
 
+#wk_insert_div{
+	width : 380px;
+	height: 270px;
+	float : left;
+	margin : 0 auto;
+}
+
 #wk_insert_form table{
 	text-align: left;
 	border-collapse: collapse;
-	margin-top : 20px;
-	margin-bottom : 10px;
+	padding : 5px;
+	margin: 0 auto;
+	margin-top : 30px;
 }
 
 #wk_insert_form th {
 	width : 35%;
 	border-bottom : 0.5px solid lightgrey;
+	padding : 5px;
 }
 
 #wk_insert_form td {
 	width : 65%;
 	border-bottom : 0.5px solid lightgrey;
+	padding : 5px;
 }
 
 .workInsert_btn{
@@ -104,10 +114,18 @@
     font-weight: bold;
     border: 1px solid transparent;
     border-radius: 3px;
+    margin-top : 15px;
 }
 
-.work_Detail_View {
-	display: none;
+.workInsert_mem_btn{
+	color : white;
+	padding: 1px 3px;
+	background-color: #5cb85c;
+    border-color: #4cae4c;
+    font-size : 15pt;
+    font-weight: bold;
+    border: 1px solid transparent;
+    border-radius: 3px;
 }
 
 .wd_title {
@@ -119,9 +137,23 @@
 }
 
 .promem_list {
-	display: none;
+	float : right;
+	width : 200px;
+	height : 270px;
+	border-left: 0.5px solid #D8D8D8;
 }
 
+.promem_list table {
+	border-collapse: collapse;
+	margin: 0 auto;
+	width : 90%;
+	margin-top : 20px;
+}
+
+.promem_list th,td,tr {
+	border-top: 0.5px solid #D8D8D8;
+	border-bottom : 0.5px solid #D8D8D8;
+}
 
 .project_manage {
 	display: none;
@@ -141,3 +173,47 @@
   	color: white;
 }
 
+#wd_modal{
+	display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+#work_Detail{
+	background-color: #fefefe;
+    margin: 10% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width : 80%;
+    width: 90%; /* Could be more or less, depending on screen size */
+    text-align: right;
+}
+
+#work_Detail_Insert{
+	width : 500px;
+	height : 20px;
+	border : 1px solid black;
+}
+
+#wd_Field{
+	width : 70%;
+	height : 300px;
+	float : left;
+}
+
+.work_Attach_View{
+	width : 30%;
+	height : 300px;
+	float : right;
+}
+
+.work_Attach_View{
+	clear : both;
+}

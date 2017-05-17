@@ -129,78 +129,94 @@
 			</div>
 		</div>
 		<div id="workInsert_Form" class="workInsert_Form">
-			<form id="wk_insert_form" action="./workInsert.do?pr_id=${ pr_id }" method="POST">
+			<div id="wk_insert_div">
+				<form id="wk_insert_form" action="./workInsert.do?pr_id=${ pr_id }" method="POST">
+					<table>
+						<tr>
+							<th>업무 명</th>
+							<td><input type="text" name="wk_title" value="" /></td>
+						</tr>
+						<tr>
+							<th>업무 담당자</th>
+							<td><input type="text" id="insert_mem_id" name="mem_id" value="${ mem_id }" /></td>
+						</tr>
+						<tr>
+							<th>업무 마감기한</th>
+							<td><input type="date" name="wk_endDate" value="" /></td>
+						</tr>
+					</table>
+					<input type="submit" class="body_btn workInsert_btn" value="등록" />
+				</form>
+			</div>
+			<div id="promem_list_insert" class="promem_list">
 				<table>
 					<tr>
-						<th>업무 명</th>
-						<td><input type="text" name="wk_title" value="" /></td>
-					</tr>
-					<tr>
-						<th>업무 담당자</th>
-						<td><input type="text" class="input_mem_id" name="mem_id" value="${ mem_id }" /><input type="button" class="body_btn workInsert_btn" value="멤버조회" onclick="searchMem()" /></td>
-					</tr>
-					<tr>
-						<th>업무 마감기한</th>
-						<td><input type="date" name="wk_endDate" value="" /></td>
+						<th colspan="2">프로젝트 멤버</th>
 					</tr>
 				</table>
-			</form>
-			<input type="submit" class="body_btn workInsert_btn" value="등록" />
+			</div>
 		</div>
 		<div id="work_Edit_Form" class="work_Edit_Form">
-			<fieldset>
-				<legend>업무 수정 양식</legend>
-				<form id="work_edit" action="./workEdit.do?pr_id=${ pr_id }"
-					method="POST">
-					<input type="hidden" id="edit_wk_id" name="wk_id" value="" /> <input
-						type="button" value="닫기" onclick="wkEditClose()" /><br /> 업무 내용<input
-						type="text" id="input_wk_title" name="wk_title" value="" /> 마감 기한<input
-						type="date" id="input_wk_endDate" name="wk_endDate" value="" />
-					담당자 <input type="text" class="input_mem_id" name="mem_id" value="" />
-					<input type="button" value="멤버조회" onclick="searchMem()" /><br>
-					<input type="submit" value="수정" />
-				</form>
-			</fieldset>
+			<form id="work_edit" action="./workEdit.do?pr_id=${ pr_id }" method="POST">
+			<input type="hidden" id="edit_wk_id" name="wk_id" value="" />
+			<table>
+				<tr>
+					<th>업무내용</th>
+					<td><input type="text" id="input_wk_title" name="wk_title" value="" /></td>
+				</tr>
+				<tr>
+					<th>마감기한</th>
+					<td><input type="date" id="input_wk_endDate" name="wk_endDate" value="" /></td>
+				</tr>
+				<tr>
+					<th>담당자</th>
+					<td><input type="text" class="input_mem_id" name="mem_id" value="" />
+						<input type="button" value="멤버조회" onclick="searchMem()" /></td>
+				</tr>
+			</table>
+			</form>
+			<input type="submit" value="수정" />
 		</div>
-		<div id="promem_list" class="promem_list">
-			<fieldset>
-				<legend>프로젝트 멤버</legend>
-			</fieldset>
-		</div>
-		<div id="work_Detail" class="work_Detail_View">
-			<input type="hidden" id="wk_id" value="" /> <input type="button"
-				value="닫기" onclick="backToProject()" />
-			<div id="work_Detail_Insert">
-				업무명 <input type="text" id="insert_wd_title" name="wd_title" value="" />
-				마감기한<input type="date" id="insert_wd_endDate" name="wd_endDate"
-					value="" /> <input type="button" value="추가" onclick="wd_Insert()" />
-			</div>
-			<fieldset id="wd_Field">
-				<legend>업무 상세화면</legend>
-				<div id = "allProgress">
-					<div id = "partProgress"></div>
+		
+		<div id="wd_modal">
+			<div id="work_Detail">
+				<input type="hidden" id="wk_id" value="" />
+				<img alt="닫기" src="images/project/wd_close_btn.png" onclick="backToProject()"/>
+				<div id="work_Detail_Insert">
+					업무명 <input type="text" id="insert_wd_title" name="wd_title" value="" />
+					마감기한<input type="date" id="insert_wd_endDate" name="wd_endDate"
+						value="" /> <input type="button" value="추가" onclick="wd_Insert()" />
 				</div>
-			</fieldset>
-			<div class="work_Comment_View">
-				<fieldset id="wk_Comment_List">
-					<legend>댓글</legend>
-				</fieldset>
-				<div>
-					<input type="text" id="new_wcom_content" value="" /> <input
-						type="button" value="등록" onclick="wcom_Insert()" />
+				<div id="wd_Field">
+					<p>업무 상세화면</p>
+					<fieldset>
+						<legend>업무 상세화면</legend>
+						<div id = "allProgress">
+							<div id = "partProgress"></div>
+						</div>
+					</fieldset>
 				</div>
-			</div>
-			<div class="work_Attach_View">
-				<fieldset id="wk_Attach_List">
-					<legend>첨부파일</legend>
-				</fieldset>
-				<div id="file_area">
-					<form id="file_attach_form" action="./attachInsert.do"
-						method="POST" enctype="multipart/form-data">
-						<input type="hidden" name="wk_id" value="" /> <input type="file"
-							id="new_attach_file" name="gatt_name" value="" /> <input
-							type="button" value="등록" onclick="wkAttach_Insert(this)" />
-					</form>
+				<div class="work_Attach_View">
+					<fieldset id="wk_Attach_List">
+						<legend>첨부파일</legend>
+					</fieldset>
+					<div id="file_area">
+						<form id="file_attach_form" action="./attachInsert.do"
+							method="POST" enctype="multipart/form-data">
+							<input type="hidden" name="wk_id" value="" /> <input type="file"
+								id="new_attach_file" name="gatt_name" value="" /> <input
+								type="button" value="등록" onclick="wkAttach_Insert(this)" />
+						</form>
+					</div>
+				</div>
+				<div class="work_Comment_View">
+					<fieldset id="wk_Comment_List">
+						<legend>댓글</legend>
+					</fieldset>
+					<div>
+						<input type="text" id="new_wcom_content" value="" /> <input
+							type="button" value="등록" onclick="wcom_Insert()" />
+					</div>
 				</div>
 			</div>
 		</div>
