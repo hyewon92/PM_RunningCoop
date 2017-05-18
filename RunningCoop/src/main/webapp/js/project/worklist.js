@@ -6,7 +6,9 @@
 			$("#"+wk_id2).next().css("display","");
 		}
 
-	alramCh = $(val1).children("span").eq(2).html();
+		alramCh = $(val1).children("span").eq(2).html();
+		
+		
 	})
 	
 /* 업무 상세 페이지 조회 메소드 */
@@ -233,11 +235,11 @@
 	/* 업무 상세 페이지 - 업무 코멘트 목록 출력 기능 */
 	function showcommentList(nodes){
 		$("#wk_Comment_List").children("table").remove().end().children("p").remove();
+		$("#wk_Comment_List").append("<table class='comment_list_table'>")
 		if( nodes.length == 0){
-			$("#wk_Comment_List").append("<p>댓글이 없습니다</p>");
+			$("#wk_Comment_List").children("table").append("<tr><td colspan='3'>코멘트가 없습니다</td></tr>");
 		} else {
-			$("#wk_Comment_List").append("<table>")
-			.children("table").append("<tr><td>작성자</td><td>내용</td><td>작성일</td></tr>");
+			$("#wk_Comment_List").children("table").append("<tr><td>작성자</td><td>내용</td><td>작성일</td></tr>");
 			for(var i = 0; i < nodes.length; i++){
 				var mem_id = nodes[i].MEM_ID;
 				var mem_name = nodes[i].MEM_NAME;
@@ -319,7 +321,7 @@
 	
 	/* 업무 상세 페이지 - 첨부파일 리스트 출력 기능 */
 	function showattachList(nodes){
-		$("#wk_Attach_List").children("table").remove().end().children("p").remove();
+		$("#wk_Attach_List").children("p").remove();
 		if(nodes.length == 0){
 			$("#wk_Attach_List").append("<p>첨부파일이 없습니다</p>");
 		} else {
@@ -327,9 +329,13 @@
 				var gatt_seq = nodes[i].gatt_seq;
 				var gatt_name = nodes[i].gatt_name;
 				var gatt_size = nodes[i].gatt_size;
-				$("#wk_Attach_List").append("<p><a href='./gbfileDown.do?gatt_seq="+gatt_seq+"'>"+gatt_name+"</a>("+gatt_size+")<input type='button' value='삭제' onclick='attachDelete(\""+gatt_seq+"\")'</p>");
+				$("#wk_Attach_List").append("<p><a href='./gbfileDown.do?gatt_seq="+gatt_seq+"' class='wd_file_list'>"+gatt_name+"</a>&nbsp;<img alt='파일삭제' src='images/project/wd_delete_btn.png' onclick='attachDelete(\""+gatt_seq+"\")'/></p>");
 			}
 		}
+	}
+	
+	function file_insert(val){
+		wkAttach_Insert(val);
 	}
 	
 	/* 업무 상세 페이지 - 첨부파일 추가 */
