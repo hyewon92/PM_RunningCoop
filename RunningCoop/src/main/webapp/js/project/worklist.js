@@ -11,7 +11,7 @@
 		
 	})
 	
-/* 업무 상세 페이지 조회 메소드 */
+	/* 업무 상세 페이지 조회 메소드 */
 	function viewWork(val, val2){
 		$("#wk_id").val(val);
 		$.ajax({
@@ -72,7 +72,7 @@
 				}
 				
 				$("#wd_field_table").append("<tr><td style='width:10% text-align:center;;'>"+wd_complyn+"</td>" +
-						"<td style='width:30%;'><span class='wd_title' onclick='wdEditForm(\""+wd_id+"\")'>"+wd_title+"</span></td>" +
+						"<td style='width:30%;'><span class='wd_title' onclick='wdEditForm(this,\""+wd_id+"\")'>"+wd_title+"</span></td>" +
 						"<td style='width:10%; text-align:center;'>"+erroryn+"</td>" +
 						"<td style='width:20%;'><span>"+wd_endDate+"</span></td>" +
 						"<td style='width:10%; text-align:center;'><img alt='완료버튼' src='images/project/wd_complete_btn.png' onclick='wdComplete(\""+wd_id+"\")'/></td>" +
@@ -107,14 +107,18 @@
 	}
 	
 	/* 업무 상세 페이지 - 하위 업무 수정 폼 출력 */
-	function wdEditForm(val){
-		var wd_id = $(val).children("span").eq(0).html();
-		$(val).siblings("div").remove();
-		$(val).after("<div>");
-		$(val).siblings("div").append("하위업무내용<input type='textbox' id = 'newWdTitle' name='wd_title' value=''/>")
+	function wdEditForm(val, wd_id){
+		$(".tr_edit").remove();
+		$(val).parent().parent().after("<tr class='tr_edit'><td colspan='2'>업무내용<input type='text' id='newWdTitle' style='margin-left:5px;' name='wd_title' value=''/></td>" +
+				"<td colspan='3'>마감일자<input type='date' id='newWdEndDate' style='margin-left:5px;' name='wd_endDate' value=''/></td>" +
+				"<td colspan='2'><input type='button' value='수정' class='body_btn wd_edit_btn' onclick='wdEdit(\""+wd_id+"\")'/>" +
+				"<input type='button' value='취소' class='body_btn wd_edit_cancle_btn' onclick='wdEdit_Cancle()'/></td>" +
+				"</tr>");
+		
+		/*$(val).siblings("div").append("하위업무내용<input type='textbox' id = 'newWdTitle' name='wd_title' value=''/>")
 		.append("마감일자<input type='date' id = 'newWdEndDate' name='wd_endDate' value=''/>")
 		.append("<input type='button' value='수정' onclick='wdEdit("+wd_id+")'/>")
-		.append("<input type='button' value='취소' onclick='wdEdit_Cancle()'/>");
+		.append("<input type='button' value='취소' onclick='wdEdit_Cancle()'/>");*/
 	}
 	
 	/* 업무 상세 페이지 - 하위 업무 수정 기능 */
@@ -122,7 +126,7 @@
 		var wd_title = $("#newWdTitle").val();
 		var wd_endDate = $("#newWdEndDate").val();
 		var wk_id = $("#wk_id").val();
-		var wd_id = $(val).children("span").eq(0).html();
+		var wd_id = val;
 		
 		$.ajax({
 			type : "POST",
@@ -130,7 +134,7 @@
 			data : {"wd_title":wd_title, "wd_endDate":wd_endDate, "wd_id":wd_id, "wk_id":wk_id},
 			async : false,
 			success : function(msg){
-				$("#wd_Field").children("p").remove().children("div").remove();
+				$(".tr_edit").remove();
 				showWorkDetail(msg)
 			}
 		});
@@ -138,7 +142,7 @@
 	
 	/* 업무 상세 페이지 - 하위 업무 수정 폼 닫기 */
 	function wdEdit_Cancle(){
-		$("#wd_Field").children("div").remove();
+		$(".tr_edit").remove();
 	}
 	
 	/* 업무 상세 페이지 - 하위 업무 완료 기능 */
@@ -231,43 +235,16 @@
 		})
 	}
 	
-	
-	/* 업무 상세 페이지 - 업무 코멘트 목록 출력 기능 */
-	function showcommentList(nodes){
-		$("#wk_Comment_List").children("table").remove().end().children("p").remove();
-		$("#wk_Comment_List").append("<table class='comment_list_table'>")
-		if( nodes.length == 0){
-			$("#wk_Comment_List").children("table").append("<tr><td colspan='3'>코멘트가 없습니다</td></tr>");
-		} else {
-			$("#wk_Comment_List").children("table").append("<tr><td>작성자</td><td>내용</td><td>작성일</td></tr>");
-			for(var i = 0; i < nodes.length; i++){
-				var mem_id = nodes[i].MEM_ID;
-				var mem_name = nodes[i].MEM_NAME;
-				var wcom_content = nodes[i].WCOM_CONTENT;
-				var wcom_id = nodes[i].WCOM_ID;
-				var wcom_regdate = nodes[i].WCOM_REGDATE;
-				if(mem_id == '<%=mem_id%>'){
-					$("#wk_Comment_List").children("table")
-					.append("<tr><td>"+mem_name+"</td><td>"+wcom_content+"<input type='button' value='수정' onclick='wcom_Edit(this, \""+wcom_id+"\", \""+wcom_content+"\")'/><input type='button' value='삭제' onclick='wcom_Delete(\""+wcom_id+"\")'/></td><td>"+wcom_regdate+"</td></tr>");
-				} else {
-					$("#wk_Comment_List").children("table")
-					.append("<tr><td>"+nodes[i].MEM_NAME+"</td><td>"+nodes[i].WCOM_CONTENT+"</td><td>"+nodes[i].WCOM_REGDATE+"</td></tr>");
-				}
-			}
-		}
-		
-	}
-	
 	/* 업무 상세 페이지 - 업무 코멘트 수정 폼 출력 */
 	function wcom_Edit(val, val2, val3){
 		var wcom_id = val2;
 		var wcom_content = val3;
 		
-		$(val).parents("tr").siblings(".commentEditForm").remove();
-		$(val).parents("tr").after("<tr class='commentEditForm'><td><input type='hidden' name='wcom_id' value='"+wcom_id+"'/></td>"+
-				"<td><input type='text' name='wcom_content' value='"+wcom_content+"'/>"+
-				"<td><input type='button' value='수정' onclick='commentEdit()'</td></tr>");
-		
+		$(".commentEditForm").remove();
+		$(val).parent().parent().after("<tr class='commentEditForm'><td><input type='hidden' name='wcom_id' value='"+wcom_id+"'/></td>"+
+				"<td><input type='text' name='wcom_content' style='width: 80%;' value='"+wcom_content+"'/></td>"+
+				"<td><input type='button' value='수정' class='body_btn wcom_delete_btn' style='margin-right:5px;' onclick='commentEdit()'/>"+
+				"<input type='button' value='취소' class='body_btn wcom_delete_btn' onclick='wcom_edit_cancle()'/></td></tr>");
 	}
 	
 	/* 업무 상세 페이지 - 업무 코멘트 수정 기능  */
@@ -286,6 +263,11 @@
 				showcommentList(nodes)
 			}
 		});
+	}
+	
+	/* 업무 상세 페이지 - 업무 코멘트 수정 취소 기능 */
+	function wcom_edit_cancle(){
+		$(".commentEditForm").remove();
 	}
 	
 	/* 업무 상세 페이지 - 업무 코멘트 삭제 기능 */

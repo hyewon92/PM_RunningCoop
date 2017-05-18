@@ -215,8 +215,8 @@
 				</td>
 			</tr>
 		</table>
+		<input type="submit" class="body_btn create_btn" value="프로젝트 생성"/>
 	</form>
-	<input type="submit" class="body_btn create_btn" value="프로젝트 생성"/>
 	</div>
 </div>
 <div id = "footer">

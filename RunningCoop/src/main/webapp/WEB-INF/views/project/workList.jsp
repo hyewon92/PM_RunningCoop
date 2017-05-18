@@ -15,13 +15,44 @@
 <script type="text/javascript" src="js/project/worklist.js"></script>
 
 <script type="text/javascript">
-	<%String pr_level = (String) session.getAttribute("pr_level");%>
+	<%
+		String pr_level = (String) session.getAttribute("pr_level");
+		String mem_id = (String)session.getAttribute("mem_id");
+	%>
 	/* 관리자 여부에 따라 프로젝트 관리 버튼 출력 */
 	$(document).ready(function(){
 		if( '<%=pr_level%>' == 'PM'){
 			$(".project_manage").css("display", "block");
 		}
 	})
+	
+	/* 업무 상세 페이지 - 업무 코멘트 목록 출력 기능 */
+	function showcommentList(nodes){
+		$("#wk_Comment_List").children("table").remove().end().children("p").remove();
+		$("#wk_Comment_List").append("<table class='comment_list_table'>")
+		if( nodes.length == 0){
+			$("#wk_Comment_List").children("table").append("<tr><td colspan='3'>코멘트가 없습니다</td></tr>");
+		} else {
+			$("#wk_Comment_List").children("table").append("<tr><td>작성자</td><td>내용</td><td>작성일</td></tr>");
+			for(var i = 0; i < nodes.length; i++){
+				var mem_id = nodes[i].MEM_ID;
+				var mem_name = nodes[i].MEM_NAME;
+				var wcom_content = nodes[i].WCOM_CONTENT;
+				var wcom_id = nodes[i].WCOM_ID;
+				var wcom_regdate = nodes[i].WCOM_REGDATE;
+				if(mem_id == '<%=mem_id%>'){
+					$("#wk_Comment_List").children(".comment_list_table")
+					.append("<tr><td>"+mem_name+"</td><td>"+wcom_content+"<img alt='댓글수정버튼' src='images/project/wcom_edit_btn.png' onclick='wcom_Edit(this, \""+wcom_id+"\", \""+wcom_content+"\")'/>"+
+					"<img alt='댓글삭제버튼' src='images/project/wcom_delete_btn.png' onclick='wcom_Delete(\""+wcom_id+"\")'/></td><td>"+wcom_regdate+"</td></tr>");
+				} else {
+					$("#wk_Comment_List").children(".comment_list_table")
+					.append("<tr><td>"+nodes[i].MEM_NAME+"</td><td>"+nodes[i].WCOM_CONTENT+"</td><td>"+nodes[i].WCOM_REGDATE+"</td></tr>");
+				}
+			}
+		}
+		
+	}
+	
 </script>
 </head>
 <body>
