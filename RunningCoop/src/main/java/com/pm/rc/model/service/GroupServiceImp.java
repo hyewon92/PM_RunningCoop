@@ -240,6 +240,13 @@ public class GroupServiceImp implements GroupService{
 		return lists;
 	}
 
+	@Override
+	public int groupImg(String gr_id) {
+//		List<GroupDto> lists = groupdao.groupImg(gr_id);
+		int n = groupdao.groupImg(gr_id);
+		return n;
+	}
+
 
 
 }

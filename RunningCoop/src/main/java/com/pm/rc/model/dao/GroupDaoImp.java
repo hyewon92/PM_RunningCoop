@@ -257,4 +257,12 @@ public class GroupDaoImp implements GroupDao{
 		return lists;
 	}
 
+	@Override
+	public int groupImg(String gr_id) {
+//		List<GroupDto> lists = sqlSession.selectOne(NAMESPACE+"groupImg",gr_id);
+//		System.out.println(lists+"nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+		int n = sqlSession.selectOne(NAMESPACE+"groupImg",gr_id);
+		return n;
+	}
+
 }

@@ -87,7 +87,7 @@ public class sysManagerController {
 		List<GroupDto> lists = service.grApplySelectGroup(gr_id);
 		model.addAttribute("info" , lists);
 
-		return "Group/applyChild";
+		return "Group/grCreateInformation";
 	}
 
 	// 공지 게시판 관리 페이지 이동

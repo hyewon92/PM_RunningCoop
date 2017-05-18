@@ -20,17 +20,31 @@ background-repeat: no-repeat;
 </style>
 
 <script type="text/javascript">
+window.onload = function(){
+	var val = $("#grimg").text();
+	$.ajax({
+		type : "POST",
+		url : "./groupImg.do",
+		data : "gr_id="+val,
+		async : false,
+		success : function(nodes){
+// 			alert(nodes);
+			$("table[name=groupimg]").css({"background":"url(./grImgs/img"+nodes+".png)", 'background-repeat' : 'no-repeat', 'background-position':'center center'}); 
+ 		}
+	})
+}
+// $(function(){
+// })
+
 function openChild(){
     window.open("./showGrCreate.do", "GroupCreate", "width=640, height=450, resizable = no, scrollbars = no");
  }
 
-$(function(){
-	$("table[name=groupimg]").each(function(){
-		var result = Math.floor(Math.random() * 14);
-		$(this).css({"background":"url(./grImgs/img"+result+".png)", 'background-repeat' : 'no-repeat', 'background-position':'center center'}); 
 
-	})
-})
+
+// 	$("table[name=groupimg]").each(function(){
+// 		var result = Math.floor(Math.random() * 14);
+// 		$(this).css({"background":"url(./grImgs/img"+result+".png)", 'background-repeat' : 'no-repeat', 'background-position':'center center'}); 
 </script>
 
 </head>
@@ -42,7 +56,7 @@ $(function(){
 <div id="container">
 	<c:forEach var = "grdto" items="${lists}" >
 	<table name="groupimg">
-		<tr><td><a href="./gProSelect.do?gr_id=${grdto.gr_id}">${grdto.gr_id}</a> </td></tr>
+		<tr><td id="grimg"><a href="./gProSelect.do?gr_id=${grdto.gr_id}">${grdto.gr_id}</a></td></tr>
 		<tr><td>${grdto.gr_name}</td></tr>
 		<tr><td>${grdto.gr_memCnt}</td></tr>
 		<tr><td>${grdto.gr_goal}</td></tr>

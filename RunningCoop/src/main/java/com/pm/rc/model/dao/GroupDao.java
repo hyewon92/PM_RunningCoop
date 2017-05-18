@@ -283,5 +283,14 @@ public interface GroupDao {
 	public int grNameCheck(String gr_name);
 	
 	public List<Map<String, String>> grBoradList (String gr_id);
+	
+	/**
+	 *그룹선택시 이미지 출력
+	 *@param gr_id
+	 *@return String
+	 *@author 라한솔
+	 */
+	public int groupImg (String gr_id);
+	
 }
 

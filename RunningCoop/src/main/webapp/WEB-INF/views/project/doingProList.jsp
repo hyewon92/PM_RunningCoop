@@ -61,7 +61,7 @@
 	<div id="header">
 		<jsp:include page="../header.jsp" flush="false" />
 	</div>
-	<div class="container">
+	<div id="container">
 		<h3>진행 중인 프로젝트 목록</h3>
 		<div id='select'>
 			<span> <select class='btn btn-primary' id='listCount'
@@ -156,6 +156,7 @@
 				</ul>
 			</div>
 		</form>
+	</div>
 		<div class="pr_search_area">
 			<form action="./myPrSelect.do" method="post">
 				<input type="hidden" name="pr_condition" value="I" /> <input

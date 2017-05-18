@@ -78,7 +78,7 @@ public class GroupController implements ServletConfigAware {
 		List<GroupDto> lists = service.myGrSelect(map);
 		model.addAttribute("lists" , lists);
 		session.removeAttribute("gr_id");
-		return "Group/test";
+		return "Group/myGrSelect";
 	}
 	//그룹선택하여 정보 확인 및 그룹관리 화면
 	@RequestMapping(value="/grselect.do" ,  method=RequestMethod.GET)
@@ -88,7 +88,7 @@ public class GroupController implements ServletConfigAware {
 		logger.info("그룹정보 띄우기");
 		List<Map<String, String>> lists = service.grDetailSelect(map);
 		model.addAttribute("grSelect" , lists);
-		return "Group/test2";
+		return "Group/groupManger";
 	}
 	//그룹관리 화면
 	@RequestMapping(value="/grmodify.do" , method=RequestMethod.GET)
@@ -98,7 +98,7 @@ public class GroupController implements ServletConfigAware {
 		logger.info("그룹상세정보 띄우기");
 		List<Map<String, String>> lists = service.grDetailSelect(map);
 		model.addAttribute("grSelect" , lists);
-		return "Group/grmodify";
+		return "Group/grInformationModify";
 	}
 	//그룹 정보 수정 하는 곳
 	@RequestMapping(value="/realGrmodify.do", method= RequestMethod.POST)
@@ -132,7 +132,7 @@ public class GroupController implements ServletConfigAware {
 		model.addAttribute("paging",paging);
 		model.addAttribute("gr_name",grid);
 		lists.forEach(System.err::println);
-		return "Group/grList";
+		return "Group/grSeachList";
 	}
 	// 멤버 관리 화면
 	@RequestMapping(value="/memModi.do" , method=RequestMethod.GET)
@@ -155,7 +155,7 @@ public class GroupController implements ServletConfigAware {
 	public String test (HttpServletRequest req , Model model){
 		logger.info("그룹리스트 에서 ");
 		model.addAttribute("grid", req.getParameter("gr_id"));
-		return "Group/grListChild";
+		return "Group/grJoinRequest";
 	}
 	
 	// 그룹 가입신청 시작
@@ -169,7 +169,7 @@ public class GroupController implements ServletConfigAware {
 		boolean n = service.grWaitInsert(map);
 		model.addAttribute("result", n);
 		if(n=true){
-			return "Group/grListChild";
+			return "Group/grJoinRequest";
 		}else{
 			return "account/error/error";
 		}
@@ -365,7 +365,7 @@ public class GroupController implements ServletConfigAware {
 		List<MemberDto> lists = service.grMemSelect(gr_id);
 		model.addAttribute("memlists" , lists);
 		
-		return "Group/grManagerCh";
+		return "Group/grManagerChange";
 	}
 	
 	//그룹 관리자 위임
@@ -415,6 +415,16 @@ public class GroupController implements ServletConfigAware {
 		List<Map<String, String>> lists = service.grBoradList(gr_id);
 		model.addAttribute("grlists", lists);		
 		return "Group/grBorad";
+	}
+	
+	@RequestMapping(value="groupImg.do", method=RequestMethod.POST)
+	@ResponseBody
+	public int groupImgCk (String gr_id){
+		logger.info("=========그룹선택시 이미지 출력 시작 ========");
+		int n = service.groupImg(gr_id);
+//		List<GroupDto> lists = service.groupImg(gr_id);
+//		System.out.println("asdfasdfasdf"+lists.get(0).getGr_img());
+	return n;	
 	}
 	
 }

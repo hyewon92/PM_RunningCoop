@@ -239,4 +239,9 @@
 		FROM RC_GRBOARD BR, RC_MEMBER M
   		WHERE GR_ID = #{gr_id} AND BR.MEM_ID = M.MEM_ID AND BR.BR_DELYN = 'N'	
 	</select>
+	
+<!-- 	그룹선택시 이미지 값 출력 -->
+	<select id="groupImg" parameterType="java.lang.String" resultType="java.lang.Integer">
+	SELECT GR_IMG FROM RC_GROUP WHERE GR_ID = #{gr_id}
+	</select>
 </mapper>
