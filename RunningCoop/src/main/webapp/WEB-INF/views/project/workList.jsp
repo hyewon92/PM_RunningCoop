@@ -208,19 +208,18 @@
 						<div id="file_area">
 							<form id="file_attach_form" action="./attachInsert.do"
 								method="POST" enctype="multipart/form-data">
-								<input type="hidden" name="wk_id" value="" /> <input type="file"
-									id="new_attach_file" name="gatt_name" value="" /> <input
-									type="button" value="등록" onclick="wkAttach_Insert(this)" />
+								<input type="hidden" name="wk_id" value="" />
+								<label class="file_input_label" for="new_attach_file"><img alt="파일첨부" src="images/project/wk_file_attach_btn.png"/>&nbsp;<span>파일추가</span></label>
+								<input type="file" class="body_btn" id="new_attach_file" name="gatt_name" value="" onchange="file_insert(this)"/>
 							</form>
 						</div>
 					</div>
 					<div class="work_Comment_View">
-						<span>댓글</span>
 						<div id="wk_Comment_List">
 						</div>
 						<div id="new_comment_insert">
-							<input type="text" id="new_wcom_content" value="" /> <input
-								type="button" value="등록" onclick="wcom_Insert()" />
+							<input type="text" id="new_wcom_content" value="" />
+							<input type="button" class="body_btn comment_insert_btn" value="등록" onclick="wcom_Insert()" />
 						</div>
 					</div>
 				</div>
