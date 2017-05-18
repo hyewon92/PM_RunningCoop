@@ -212,7 +212,7 @@
     		 success: function(result){
     			 for(var k in result.list){
  					if(result.list[k]==grId){
-						$(".memList").prepend("<img class = 'mem_icon' src = 'images/chat_member.png'><p style = 'font-size : 13px;padding : 5px;border-bottom: 0.5px solid #B4B4B4;'>"+k+"</p>"); 
+						$(".memList").prepend("<img class = 'mem_icon' src = 'images/chat_member.png' alt = '접속자아이콘'><p style = 'font-size : 13px;padding : 5px;border-bottom: 0.5px solid #B4B4B4;'>"+k+"</p>"); 
 					}
     			 }
     		 }
