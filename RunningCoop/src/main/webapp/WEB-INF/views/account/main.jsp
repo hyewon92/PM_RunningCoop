@@ -14,7 +14,6 @@
 	body{
 		font-family: "Arial";
 		font-family: 'Nanum Gothic', sans-serif;
-		font-weight: bold;
 	}
 	.mainHeader{
 		width: 100%;
@@ -44,16 +43,6 @@
 		height: 50px;
 	}
 	
-/* 	.idPart, .pwPart{
-		height: 50px;
-		margin: auto;
-	}
-	
-	.idPart span, .pwPart span{
-		float: left;
-		padding: 10px;
-	} */
-	
 	.id, .pw{
 		width: 300px;
 		height: 40px;
@@ -76,32 +65,21 @@
 		margin-top: 4pt;
 	}
 	
-/* 	.pw{
-		margin: 5px;
-		width: 250px;
-		height: 40px;
-		background: #EAEAEA;
-		border: 2px solid transparent;
-		transition: border .5s;
-		float: right;
-	} */
-	
 	.id:focus, .pw:focus {
 		border: 2px solid #69B55B;
 		box-shadow: none;
 	}
 	
-	.loginBtn{
-		width: 300px;
-		height: 40px;
-   		padding: 2px 12px;
+	.accountBtn{
+		width: 80px;
+		height: 20px;
+   		padding: 2px;
 		margin: auto;
-		color: #fff;
-	    font-size: 14px;
-	    background-color: #5cb85c;
-	    border-color: #4cae4c;
-	    border: 1px solid transparent;
-   		border-radius: 4px;
+		color: #9E9E9E;
+	    font-size: 12px;
+	    background-color: white;
+	    border: 0.5px solid #9E9E9E;
+	    text-align: center;
    		cursor: pointer;
 	}
 	
@@ -110,35 +88,132 @@
 		background: white;
 	}
 	
-	.joinAccount{
-		display: none;
-		background: white;
+	.join_modal{
+		display: none; /* Hidden by default */
+	    position: fixed; /* Stay in place */
+	    z-index: 1; /* Sit on top */
+	    left: 0;
+	    top: 0;
+	    width: 100%; /* Full width */
+	    height: 100%; /* Full height */
+	    overflow: auto; /* Enable scroll if needed */
+	    background-color: rgb(0,0,0); /* Fallback color */
+	    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
+ 	
+	.joinModal_content{
+		position: relative;
+	    top: 5%;
+	    background-color: #f5f6f7;
+	    margin: auto;
+	    padding: 0;
+	    border: 1px solid #888;
+	    width: 40%;
+	    min-width: 350px;
+	    height: 500px;
+	    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+	    -webkit-animation-name: animatetop;
+	    -webkit-animation-duration: 0.4s;
+	    animation-name: animatetop;
+	    animation-duration: 0.4s
 	}
 	
+	.joinModal_header{
+		text-align: center;
+		padding: 7px;
+	    background-color: #5cb85c;
+	    color: white;
+	}
 	
+	.joinModal_header img {
+		width: 25px;
+		height: 25px;
+		float: right;
+	}
 	
+	.joinModal_body{
+		height: 90%;
+	    margin: auto;
+	    padding: 20px;
+	}
+	
+	.joinField{
+		border: 0;
+	}
+	
+	.rowGroup{
+		zoom: 1;
+	    margin-bottom: 10px;
+	    border: solid 1px #dadada;
+	    background: #fff;
+	}
+	
+	.join_row:FIRST-CHILD{
+		border-top: none;
+	}
+	
+	.join_row{
+		box-sizing: border-box;
+	    padding: 11px 11px 11px 13px;
+	    background: #fff;	
+	    border-bottom: solid 1px #dadada;
+	}
+	
+	.join_row:eq(last){
+		border-bottom: none;
+	}
+		
+	.ps_box .int_id{
+		background-position: 100% -57px;
+	}
+	
+	.ps_box{
+		position: relative;
+	    display: block;
+	    height: 27px;
+	    background: #fff;
+	}
+	
+	.join_row .int{
+		font-size: 12px;
+	    position: relative;
+	    z-index: 10;
+	    height: 17px;
+	    padding: 6px 0;
+	    border: none;
+	    background: #fff;
+	}
+	
+	.join_row .int{
+		width: 100%;
+	}
+	
+	.int:focus{
+		outline: none;
+	}
+	
+	.timeWord{
+		font-size: 8pt;
+		display: none;
+	}
 </style>
 <script type="text/javascript">
-/* 	function goLogin(){
-		if($("#id").val()==""||$("#pw").val()==""){
-			alert("아이디, 비밀번호 모두 입력해주세요");
-		}else{
-			$(".loginBox").submit();
-		}
-	} */
+	$(function(){
+		$(".loginBox").submit(function(){
+			if($("#loginId").val()==""||$("#loginPw").val()==""){
+				alert("아이디와 비밀번호 모두 입력해주세요");
+				return false;
+			}
+		});
+	});
 	
 	
 	function joinAccount(){
-		/* location.href = "./searchAccount.do"; */
-		$(".joinAccount").css("display","block");
-		$(".joinAccount").dialog({
-			title : "회원가입",
-			height : 250,
-			width : 500,
-			position : {my : "center", at : "center"},
-			resizable : false,
-			modal : true
-		});
+		$(".join_modal").css("display", "block");
+	}
+	
+	function closeJoin(){
+		$(".join_modal").css("display", "none");
 	}
 
 	function goJoin(){
@@ -151,7 +226,6 @@
 	*/
 	
 	function backToMain(){
-		location.href = "./main.do";
 	}
 	
 	var interval;
@@ -186,10 +260,10 @@
 	//아이디 중복확인 결과
 	function printIdCk(map){
 		if(map.result){
-			$("#resultIdChk").text("사용 가능한 아이디입니다");
+			$("#resultIdChk").html("사용 가능한 아이디입니다").css("font-size","7pt");
 			checked = true;
 		}else{
-			$("#resultIdChk").text("중복된 아이디입니다. 다시 입력해주세요");
+			$("#resultIdChk").html("중복된 아이디입니다.<br>다시 입력해주세요").css("font-size","7pt");
 			checked = false;
 		}
 	}
@@ -252,6 +326,7 @@
 				}
 			});
 			$("#chkInfo").css("display","block");
+			$(".timeWord").css("display","block");
 			timeCount(240, sEvent, eEvent);
 		}
 	}
@@ -341,7 +416,6 @@
 				var phone1 = $("#phone1").val();
 				var phone2 = $("#phone2").val();
 				var phone3 = $("#phone3").val();
-				alert(phone1);
 				var standardPhone = /\d{3,4}$/;
 				if(!standardPhone.test(phone1)||!standardPhone.test(phone2)||!standardPhone.test(phone3)){
 					alert("숫자형식으로 3~4자씩 입력해주세요");
@@ -349,7 +423,6 @@
 				}
 				else{
 					$("#phone").val(phone1+phone2+phone3);
-					alert($("#phone").val());
 				
  					//공백 확인
 					if($("#id").val()==""||$("#pw").val()==""||$("#pw2").val()==""||$("#mem_name")==""||$("mem_email")==""||$("#num")==""||$("#mem_phone")==""){
@@ -363,89 +436,120 @@
 							return false;
 							break;
 						}
-					} 
+					}
 			}
 		});
 	});
 </script>
 </head>
 <body>
-
+	
+	<!-- 관리자 로그인 -->
+	<div>
+		<input type="button" class = "accountBtn" value="관리자 로그인" style = "position: absolute; right: 10px; top: 10px;" onclick="location.href='./systemManagerLogin.do'"/>
+	</div>	
+	
+	<!-- 로고 -->
 	<div class = "mainHeader">
 		<img alt = "로고" src = "images/header/logo.png">
 	</div>
 	
+	<!-- 게정 관리 부분 -->
 	<div class = "mainContain">
+		<!-- 로그인 -->
 		<div class = "accountBox">
 		<form class = "LoginBox" action="./ckLogin.do" method="post">
 			<div class = "login">
 				<div class = "idPart">
-					<input type = "text" class = "id" id = "id" name = "mem_id" placeholder = "아이디" value = "">
+					<input type = "text" class = "id" id = "loginId" name = "mem_id" placeholder = "아이디" value = "">
 				</div>
 				<div class = "pwPart">
-					<input type = "password" class = "pw" id = "pw" name = "mem_pw" placeholder = "비밀번호" value = "" onKeypress="if(event.keyCode==13) $('.loginBtn').click();">
+					<input type = "password" class = "pw" id = "loginPw" name = "mem_pw" placeholder = "비밀번호" value = "" onKeypress="if(event.keyCode==13) $('.accountBtn').click();">
 				</div>
 			</div>
 			<div class = "enter">
-				<input type = "submit" class = "loginBtn" id = "loginBtn" value = "로그인">
+				<input type = "submit" class = "accountBtn" id = "loginBtn" value = "로그인" style = "width: 300px; height: 40px; font-size:14pt; border-radius: 4px; background-color: #5cb85c; color: #fff;">
 			</div>
 		</form>
 		<span style = "font-size: 8pt; color: black; text-decoration: underline;" onclick = "searchAccount()">아이디/비밀번호찾기</span>
 		<span style = "font-size: 8pt; color: black; text-decoration: underline;" onclick = "joinAccount()">회원가입</span>
 		</div>
 		
-		<div>
-			<input type="button" value="관리자 로그인" onclick="location.href='./systemManagerLogin.do'"/>
-		</div>
-		
 		<!-- 회원가입 -->
-		<div class = "modal">
-			<div class = "modal_content">
-				<div class = "modal_header">
-					<h2 style="display:inline;">회원가입</h2>
-					<img alt="닫기" src="images/project/wd_close_btn.png" onclick="backToMain()"/>
+		<div class = "join_modal">
+			<div class = "joinModal_content">
+				<div class = "joinModal_header">
+					<p style="font-size:20px; display:inline;">회원가입</p>
+					<img alt="닫기" src="images/project/wd_close_btn.png" onclick="closeJoin()"/>
 				</div>
-				<div class = "modal_body">
-				
+				<div class = "joinModal_body">
+					<div class = "joinAccount">
+						<form class = "joinBox" action="./chkJoin.do" method="post">
+							<fieldset class = "joinField">
+								<legend></legend>
+								<div class = "rowGroup">
+					 				<div class = "join_row">
+					 					<span class = "ps_box int_id">
+					 						<input type = "text" class = "int" id = "id" name = "mem_id" placeholder = "아이디(영소문자, 숫자 포함 8~12자)" style = "width: 50%; float:left;";> 
+					 						<input type = "button" class = "accountBtn" id = "idChk" value = "중복확인" onclick = "id_chk()" style = "float:right; margin-right:5px;">
+											<span id = "resultIdChk"></span>
+					 					</span>
+					 				</div>
+					 				<div class = "join_row">
+					 					<span class = "ps_box int_id">
+					 						<input type = "password" class = "int" id = "pw" name = "mem_pw" placeholder = "비밀번호">
+					 					</span>
+					 				</div>
+					 				<div class = "join_row">
+					 					<span class = "ps_box int_id">
+					 						<input type = "password" class = "int" id = "pw2" placeholder = "비밀번호 재확인"  style = "width: 70%; float: left;">
+					 						<input type = "button" class = "accountBtn" value = "확인" onclick = "pw_chk()" style = "float:right; margin-right:5px;">
+					 					</span>
+					 				</div>
+					 				<div class = "join_row">
+					 					<span class = "ps_box int_id">
+					 						<input type = "text" class = "int" id = "name" name = "mem_name" placeholder = "이름(대소문자를 구분한 영문, 한글, 숫자포함 10자 이내)" style = "width: 70%; float: left;">
+					 						<input type = "button" class = "accountBtn" onclick = "name_chk()" value = "확인" style = "float:right; margin-right:5px;">
+					 					</span>
+					 				</div>
+								</div>
+								<div class = "rowGroup">
+									<div class = "join_row">
+										<span class = "ps_box int_id">
+											 <input type = "text" class = "int" id = "email" name = "mem_email" placeholder = "이메일" style = "width: 75%; float: left;">
+											 <input type = "button" class = "accountBtn" onclick = "sendMail()" value = "인증메일 전송" style = "float:right; margin-right:5px;">
+										</span>
+									</div>
+									<div class = "join_row">
+										<span class = "ps_box int_id">
+											<div id = "chkInfo">
+												<%String num = (String)session.getAttribute("identifyNum"); %>
+												<input type = "text" class= "int" id = "num" placeholder = "인증번호입력" style = "width: 60%; float: left;">
+												<input type = "button" class = "accountBtn" id = "btnIdentify" value = "확인" onclick = "identifyNum()" style = "float:right; margin-right:5px;">
+												<span id = "minute" style = "font-size:9pt;"></span><span class= "timeWord">분</span>
+												<span id = "second" style = "font-size:9pt;"></span><span class= "timeWord">초</span>
+											</div> 
+										</span>
+									</div>
+									<div class = "join_row">
+										<span class = "ps_box int_id">
+											<input type = "text" class = "int" id = "phone1" placeholder = "연락처(ex.010)" style = "width: 30%; float: left; text-align: center;"><span style = "font-size:14pt; float: left; padding: 0px 5px 0px 5px;">-</span>
+											<input type = "text" class = "int" id = "phone2" placeholder = "연락처(ex.1234)" style = "width: 30%; float: left; text-align: center;"><span style = "font-size:14pt; float: left; padding: 0px 5px 0px 5px;">-</span>
+											<input type = "text" class = "int" id = "phone3" placeholder = "연락처(ex.1234)" style = "width: 30%; float: left; text-align: center;">
+											<input type = "hidden" id = "phone" name = "mem_phone"><br>
+										</span>
+									</div>
+								</div>
+							</fieldset>
+							<div class = "enter">
+								<input type = "submit" class = "accountBtn" id = "join" value = "가입" style = "width: 440px; height: 40px; padding-top: 5px; padding-bottom: 5px;">
+							</div>
+						</form>
+					</div>						
 				</div>
 			</div>
 		</div>
-		<div class = "joinAccount">
-			<form class = "joinBox" action="./chkJoin.do" method="post">
-				<fieldset>
-					<legend>필수정보</legend>
-					<div class = "essentialPart">
-		 				(*)아이디: <input type = "text" id = "id" name = "mem_id" title = "영소문자, 숫자 포함 8~12자">
-						<input type = "button" id = "idChk" value = "중복확인" onclick = "id_chk()">
-						<span id = "resultIdChk"></span>
-						<br>
-						(*)패스워드: <input type = "password" id = "pw" name = "mem_pw" title = "영소문자, 숫자 포함 8~16자"><br>
-						(*)패스워드 재확인: <input type = "password" id = "pw2"><input type = "button" value = "확인" onclick = "pw_chk()"><br>
-						(*)이름: <input type = "text" id = "name" name = "mem_name" title = "대소문자를 구분한 영문, 한글, 숫자포함 10자 이내">
-								<input type = "button" onclick = "name_chk()" value = "확인">
-						<br>
-						(*)이메일: <input type = "text" id = "email" name = "mem_email" size="30px">
-								 <input type = "button" value = "인증메일 전송" onclick = "sendMail()"><br>
-						<div id = "chkInfo">
-							<%String num = (String)session.getAttribute("identifyNum"); %>
-							인증번호 입력: <input type = "text" id = "num">
-							<input type = "button" id = "btnIdentify" value = "확인" onclick = "identifyNum()">
-							<span id = "minute"></span>분
-							<span id = "second"></span>초 
-						</div> 
-						(*)연락처: 
-						<input type = "text" id = "phone1"> -
-						<input type = "text" id = "phone2"> -
-						<input type = "text" id = "phone3">
-						<input type = "hidden" id = "phone" name = "mem_phone"><br>
-					</div>
-				</fieldset>
-				<div class = "enter">
-					<input type = "submit" id = "join" value = "가입" >
-				</div>
-			</form>
-		</div>
-		
+		<!-- 회원가입 끝 -->
 	</div>
 	
 </body>
