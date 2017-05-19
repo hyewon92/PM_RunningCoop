@@ -194,7 +194,7 @@ function openChild(){
 				<div class="group-image-box">
 					<img src="./grImgs/img${waitg.gr_img}.png" class="group-image">
 					<a href="#"><div class="detail-group-btn">!</div></a>
-					<a href="#"><div class="delete-group-btn">x</div></a>
+					<a href=""><div class="delete-group-btn">x</div></a>
 				</div>
 				<div>
 					<div class="group-name">

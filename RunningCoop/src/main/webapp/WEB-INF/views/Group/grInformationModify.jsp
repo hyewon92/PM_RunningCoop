@@ -37,6 +37,22 @@
 				alert("정보수정 완료");
 			}
 		})
+		for(var i =1; i<15; i++){
+			var imgNum = "이미지" + i;
+			$('#imsg').append($('<option>').attr('value',imgNum).text(imgNum));
+		};
+		var grimgnum = "이미지"+$("#gr_imgNum").text();
+		
+		$("#imsg").val(grimgnum).prop("selected", true);
+		$('#imsg').change(function(){
+			
+			var imgln = $(this).val().length;
+			var GroupImgs = $(this).val().substring(3, imgln );
+			$("#imgname").val(GroupImgs);
+			
+			$("#imgbox").attr("src","./grImgs/img"+GroupImgs+".png");
+		})	
+		
 	})
 	function groupManagerCh(){
 		var mem = "<%=mem_id%>";
@@ -90,7 +106,12 @@ cursor: pointer;}
 				<tr>
 					<td>${grSelect.GR_REGDATE }</td>
 					<td></td>
+					<td id="gr_imgNum">${grSelect.GR_IMG}</td>
 				</tr>
+				<tr><td>그룹이미지</td><td> <select id="imsg">
+					</select> <input type="hidden" id="imgname" value="" ></td>
+					<td><img id="imgbox" alt="" src="./grImgs/img${grSelect.GR_IMG}.png">
+					</tr>
 				<tr>
 					<td colspan="2" style="text-align: center;">
 						<input type="submit" value="정보수정">

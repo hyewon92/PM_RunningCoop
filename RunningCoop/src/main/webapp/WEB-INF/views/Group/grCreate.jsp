@@ -22,7 +22,20 @@
 				return false;
 			}
 		});
+		for(var i =1; i<15; i++){
+			var imgNum = "이미지" + i;
+			$('#imsg').append($('<option>').attr('value',imgNum).text(imgNum));
+		};
+		
+		$('#imsg').change(function(){
+			var imgln = $(this).val().length;
+			var GroupImgs = $(this).val().substring(3, imgln );
+			$("#imgname").val(GroupImgs);
+			
+			$("#imgbox").attr("src","./grImgs/img"+GroupImgs+".png");
+		})
 	});
+	
 	function closee(){
 		close();
 	}
@@ -44,6 +57,7 @@
 			
 		});
 	}
+	
 </script>
 </head>
 <body>
@@ -51,6 +65,10 @@
 	<table>
 	<tr><td>그룹이름:</td><td><input type="text"  name="gr_name" id="grname"></td><td><input type="button" value="중복확인" onclick="grNameCheck()"></td></tr>
 	<tr><td>그룹담당자아이디:</td><td><input type="text" name="mem_id" value="<%=mem_id%>" readonly="readonly"></td></tr>
+	<tr><td>그룹이미지</td><td> <select id="imsg">
+					</select> <input type="hidden" id="imgname" value="" ></td>
+					<td><img id="imgbox" alt="" src="./grImgs/img1.png">
+					</tr>
 	<tr><td>그룹목적</td>	<td><textarea rows="15" cols="27" name="gr_goal" id="grgoal"></textarea></tr>
 		<tr><td><input type="submit" value="그룹생성"></td><td><input type="button" onclick="closee()" value="취소"></td></tr>
 	</table>

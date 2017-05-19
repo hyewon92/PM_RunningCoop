@@ -28,7 +28,19 @@
 	<jsp:include page="../header.jsp" flush="false"/>
 </div>
 <div id = "container">
-	<table>
+<div id='select'>
+			<span> <select class='btn btn-primary' id='listCount' name='listCount'
+				onchange='listCnt();'>
+					<option>선택</option>
+					<option value='5' >5</option>
+					<option value='10'>10</option>
+					<option value='15'>15</option>
+					<option value='20'>20</option>
+			</select>
+			</span>
+		</div>
+		<form action="./noticeList.do" method="post" id='frmPaging'>
+	<table class="table table-bordered">
 		<tr>
 			<th>번호</th>
 			<th>제목</th>
@@ -53,6 +65,30 @@
 		</c:otherwise>
 	</c:choose>
 	</table>
+			<!-- 5. paging view -->
+			<!--출력할 페이지번호, 출력할 페이지 시작 번호, 출력할 리스트 갯수 -->
+			<input type='hidden' name='index' id='index' value='${paging.index}'>
+			<input type='hidden' name='pageStartNum' id='pageStartNum' value='${paging.pageStartNum}'>
+			<input type='hidden' name='listCnt' id='listCnt' value='${paging.listCnt}'>		
+		<div class="center">
+				<ul class="pagination">
+					<!--맨 첫페이지 이동 -->
+					<li><a href='#' onclick='pagePre(${paging.pageCnt+1},${paging.pageCnt});'>&laquo;</a></li>
+					<!--이전 페이지 이동 -->
+					<li><a href='#' onclick='pagePre(${paging.pageStartNum},${paging.pageCnt});'>&lsaquo;</a></li>
+					<!--페이지번호 -->
+					<c:forEach var='i' begin="${paging.pageStartNum}" end="${paging.pageLastNum}" step="1">
+						<li><a href='#' onclick='pageIndex(${i});'>${i}</a></li>
+					</c:forEach>
+					<!--다음 페이지 이동 -->
+					<li><a href='#' onclick='pageNext(${paging.pageStartNum},${paging.total},${paging.listCnt},${paging.pageCnt});'>&rsaquo;</a></li>
+					<!--마지막 페이지 이동 -->
+					<li><a href='#' onclick='pageLast(${paging.pageStartNum},${paging.total},${paging.listCnt},${paging.pageCnt});'>&raquo;</a></li>
+				</ul>
+			</div>
+		</form>
+	</div>
+	<div>
 	<form action="./noticeSList.do" method="POST">
 		<input type="textbox" name="sbr_title" /> <input type="submit"
 			value="검색" />

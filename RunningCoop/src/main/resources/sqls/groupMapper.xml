@@ -28,7 +28,7 @@
 	</select>
 
 	<select id="grDetailSelect" parameterType="java.util.Map" resultType="java.util.Map">
-		SELECT G.GR_ID, G.GR_NAME, M.MEM_NAME, G.GR_MEMCNT,
+		SELECT G.GR_ID, G.GR_NAME, M.MEM_NAME, G.GR_MEMCNT,G.GR_IMG,
 		G.GR_GOAL,
 		TO_CHAR(G.GR_REGDATE, 'YYYY/MM/DD') GR_REGDATE
 		,G.GR_SEARCHYN ,

@@ -35,15 +35,20 @@ public class SysBoardController {
 	private UserSysBoardService service;
 
 	// 공지 게시글 목록
-	@RequestMapping(value = "/noticeList.do", method = RequestMethod.GET)
-	public String noticeList(Model model, HttpSession session){
+	@RequestMapping(value = "/noticeList.do", method = {RequestMethod.GET,RequestMethod.POST})
+	public String noticeList(Model model, HttpSession session, HttpServletRequest req){
+		ManagePagingDto mpaging = new ManagePagingDto(req.getParameter("index"), 
+														req.getParameter("pageStartNum"), 
+														req.getParameter("listCnt"));
 
 		logger.info("================== 공지 게시판으로 이동 ==================");
-
-		List<Map<String, String>> list = null;
-		list = service.noticeListSelect();
+		
+		List<Map<String, String>> list = service.noticeListSelectPaing(mpaging);
+		mpaging.setTotal(service.noticeListSelectCount());
+		
 
 		model.addAttribute("list", list);
+		model.addAttribute("paging",mpaging);
 
 		return "sysBoard/noticeList";
 	}
@@ -142,16 +147,17 @@ public class SysBoardController {
 	}
 
 	// 문의 게시판 목록 출력
-	@RequestMapping(value="/qnaList.do", method = RequestMethod.GET)
+	@RequestMapping(value="/qnaList.do", method = {RequestMethod.GET,RequestMethod.POST})
 	public String qnaList(Model model, HttpServletRequest req){
 		ManagePagingDto maPaing = new ManagePagingDto(req.getParameter("index"), 
 														req.getParameter("pageStartNum"), req.getParameter("listCnt"));
 		logger.info("================== 문의 게시판으로 이동 ==================");
 
-		List<Map<String, String>> list = null;
-		service.qnaListSelectPaing(maPaing);
+		List<Map<String, String>> list = service.qnaListSelectPaing(maPaing);
+		maPaing.setTotal(service.qnaListSelectPaingCount());
 
 		model.addAttribute("list", list);
+		model.addAttribute("paging", maPaing);
 
 		return "sysBoard/qnaList";
 	}
