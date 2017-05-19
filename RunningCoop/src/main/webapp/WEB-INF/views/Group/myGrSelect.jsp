@@ -125,6 +125,27 @@ background-repeat: no-repeat;
     padding: 3px;
     cursor:pointer;
 }
+
+.gr_detail_view{
+	display : none;
+}
+
+.gr_create_form_btn{
+	color: white;
+    padding: 2px 20px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    font-size: 20pt;
+    font-weight: bold;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+.gr_create_form_btn:HOVER{
+	box-shadow : 2px 2px 5px #C8C8C8;
+}
 </style>
 
 <script type="text/javascript">
@@ -257,7 +278,7 @@ function showProDetail(nodes){
 	<div class="bodyContainer">
 
 	<div>
-		<input type = "button" value = "그룹생성" onclick = "openChild()">
+		<input type = "button" class="body_btn gr_create_form_btn" value = "그룹생성" onclick = "openChild()">
 	</div>
 	
 	<div class="container">
@@ -293,7 +314,6 @@ function showProDetail(nodes){
 				</c:choose>   
 			</div>
 		<c:set var = "waitg2" value="${watiLists}" />   
-<<<<<<< HEAD
 		<div style="clear:both;" class="group-title">
 			승인 대기 그룹 (${fn:length(waitg2)})
 			<div class="openBtn">
@@ -325,7 +345,6 @@ function showProDetail(nodes){
 				    </c:otherwise>
 				</c:choose>
 			</div>
-=======
 		<div style="clear:both;" class="group-title">승인 대기 그룹 (${fn:length(waitg2)})</div>
 		
 		<c:choose>

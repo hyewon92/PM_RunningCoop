@@ -46,6 +46,14 @@
 				$("#pr_etc").text(pr_etc);
 				
 				$(".pr_detail_view").css("display", "block");
+				$(".pr_detail_view").dialog({
+					title : "프로젝트 정보 보기",
+					height : 400,
+					width : 500,
+					position : {my : "center", at : "center"},
+					resizable : false,
+					modal : true
+				});
 			}
 		});
 	}
@@ -67,6 +75,9 @@
 				$("#individual_project_list").css("display", "block");
 			}
 		});
+		
+		var listCnt = $("#iListCnt").val();
+		$("#listCount").val(listCnt).prop("selected", true);
 	});
 </script>
 </head>
@@ -76,11 +87,19 @@
 	</div>
 	<div id="container">
 		<h3>진행 예정인 프로젝트 목록</h3>
+		
+		<div class="pr_search_area">
+			<form action="./myPrSelect.do" method="post">
+				<input type="hidden" name="pr_condition" value="C" />
+				<input type="text" name="pr_name" />
+				<input type="submit" class="body_btn pr_search_btn" value="검색" />
+			</form>
+		</div>
+		
 		<div id="div_select_area">
 			<input type="radio" name="project_type" value="individual" checked/>개인 프로젝트
 			<input type="radio" name="project_type" value="group"/>그룹 프로젝트&nbsp;&nbsp;
 			<select class='project_list_select' id='listCount' name='listCount' onchange="projectListCnt()">
-					<option>선택</option>
 					<option value='5'>5</option>
 					<option value='10'>10</option>
 					<option value='15'>15</option>
@@ -116,10 +135,10 @@
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="ilist" items="${ iPrList }" varStatus="vs">
-							<tr>
+							<tr onclick="view_Detail('${ ilist.PR_ID}')">
 								<td>${ vs.count }</td>
 								<td>개인</td>
-								<td><span class="pr_name" onclick="view_Detail('${ ilist.PR_ID}')">${ ilist.PR_NAME }</span></td>
+								<td><span class="pr_name">${ ilist.PR_NAME }</span></td>
 								<td>${ ilist.MEM_NAME }</td>
 								<td></td>
 							</tr>
@@ -170,10 +189,10 @@
 						</c:when>
 						<c:otherwise>
 							<c:forEach var="glist" items="${ gPrList }" varStatus="vs">
-								<tr>
+								<tr onclick="view_Detail('${ glist.PR_ID }')">
 									<td>${ vs.count }</td>
 									<td>그룹</td>
-									<td><span class="pr_name" onclick="view_Detail('${ glist.PR_ID }')">${ glist.PR_NAME }</span></td>
+									<td><span class="pr_name">${ glist.PR_NAME }</span></td>
 									<td>${ glist.MEM_NAME }</td>
 									<td>${ glist.GR_NAME }</td>
 								</tr>
@@ -202,22 +221,33 @@
 				</div>
 		</div>
 			
-		<div class="pr_search_area">
-			<form action="./myPrSelect.do" method="post">
-				<input type="hidden" name="pr_condition" value="T" />
-				<input type="text" name="pr_name" />
-				<input type="submit" class="body_btn pr_search_btn" value="검색" />
-			</form>
-		</div>
-		
 		<div class="pr_detail_view">
-			<input type="button" value="닫기" onclick="goSelectPro()" />
-			<p id="pr_name"></p>
-			<p id="mem_name"></p>
-			<p id="pr_memcnt"></p>
-			<p id="pr_goal"></p>
-			<p id="pr_enddate"></p>
-			<p id="pr_etc"></p>
+			<table class="pr_detail_table">
+				<tr>
+					<th>프로젝트명</th>
+					<td><span id="pr_name"></span></td>
+				</tr>
+				<tr>
+					<th>프로젝트관리자</th>
+					<td><span id="mem_name"></span></td>
+				</tr>
+				<tr>
+					<th>프로젝트 인원</th>
+					<td><span id="pr_memcnt"></span></td>
+				</tr>
+				<tr>
+					<th>프로젝트목적</th>
+					<td><span id="pr_goal"></span></td>
+				</tr>
+				<tr>
+					<th>프로젝트마감기한</th>
+					<td><span id="pr_enddate"></span></td>
+				</tr>
+				<tr>
+					<th style="height : 80px;">비고</th>
+					<td style="height : 80px;"><span id="pr_etc"></span></td>
+				</tr>
+			</table>
 		</div>
 	</div>
 	

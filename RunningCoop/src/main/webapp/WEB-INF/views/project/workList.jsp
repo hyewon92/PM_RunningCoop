@@ -87,12 +87,12 @@
 							</c:when>
 							<c:otherwise>
 								<c:forEach var="todo" items="${ todo }">
-									<tr class="work">
-										<td onclick="viewWork('${ todo.get('WK_ID') }', 0)">${ todo.get('WK_TITLE') }</td>
+									<tr class="work" onclick="viewWork('${ todo.get('WK_ID') }', 0)">
+										<td>${ todo.get('WK_TITLE') }</td>
 										<td>${ todo.get('MEM_NAME') }</td>
 										<td>${ todo.get('WK_PRORATE') }%</td>
-										<td><input type="button" value="수정" onclick="workEdit('${ todo.get('WK_ID') }', '${ todo.get('WK_TITLE') }', '${ todo.get('WK_ENDDATE') }', '${ todo.get('MEM_ID') }')" /></td>
-										<td><input type="button" value="삭제" onclick="workDelete('${ todo.get('WK_ID') }')" /></td>
+										<td><input type="button" value="수정" class="body_btn workedit_btn" onclick="workEdit('${ todo.get('WK_ID') }', '${ todo.get('WK_TITLE') }', '${ todo.get('WK_ENDDATE') }', '${ todo.get('MEM_ID') }', event)" /></td>
+										<td><input type="button" value="삭제" class="body_btn workdelete_btn" onclick="workDelete('${ todo.get('WK_ID') }', event)" /></td>
 									</tr>
 								</c:forEach>
 							</c:otherwise>
@@ -116,12 +116,12 @@
 							</c:when>
 							<c:otherwise>
 								<c:forEach var="doing" items="${ doing }">
-									<tr class="work">
-										<td onclick = "viewWork('${ doing.get('WK_ID')}', '${ doing.get('WK_PRORATE') }')">${ doing.get("WK_TITLE") }</td>
+									<tr class="work" onclick = "viewWork('${ doing.get('WK_ID')}', '${ doing.get('WK_PRORATE') }')">
+										<td>${ doing.get("WK_TITLE") }</td>
 										<td>${ doing.get("MEM_NAME") }</td>
 										<td>${ doing.get("WK_PRORATE") }%</td>
-										<td><input type="button" value="수정" onclick="workEdit('${ doing.get('WK_ID') }', '${ doing.get('WK_TITLE') }', '${ doing.get('WK_ENDDATE') }', '${ doing.get('MEM_ID') }')" /></td>
-										<td><input id=${doing.get('WK_ID')} type="button" value="삭제" onclick="workDelete('${ doing.get('WK_ID') }')" /></td>
+										<td><input type="button" value="수정" class="body_btn workedit_btn" onclick="workEdit('${ doing.get('WK_ID') }', '${ doing.get('WK_TITLE') }', '${ doing.get('WK_ENDDATE') }', '${ doing.get('MEM_ID') }')" /></td>
+										<td><input id=${doing.get('WK_ID')} type="button" class="body_btn workdelete_btn" value="삭제" onclick="workDelete('${ doing.get('WK_ID') }')" /></td>
 										<td><img alt="" src="./images/bell.png" style="display:none;"></td>
 									</tr>
 								</c:forEach>
@@ -180,33 +180,50 @@
 				</form>
 			</div>
 			<div id="promem_list_insert" class="promem_list">
-				<table>
+				<table id="promem_insert_table">
+					<thead>
 					<tr>
 						<th colspan="2">프로젝트 멤버</th>
 					</tr>
+					</thead>
+					<tbody>
+					</tbody>
 				</table>
 			</div>
 		</div>
+		
 		<div id="work_Edit_Form" class="work_Edit_Form">
-			<form id="work_edit" action="./workEdit.do?pr_id=${ pr_id }" method="POST">
-			<input type="hidden" id="edit_wk_id" name="wk_id" value="" />
-			<table>
-				<tr>
-					<th>업무내용</th>
-					<td><input type="text" id="input_wk_title" name="wk_title" value="" /></td>
-				</tr>
-				<tr>
-					<th>마감기한</th>
-					<td><input type="date" id="input_wk_endDate" name="wk_endDate" value="" /></td>
-				</tr>
-				<tr>
-					<th>담당자</th>
-					<td><input type="text" class="input_mem_id" name="mem_id" value="" />
-						<input type="button" value="멤버조회" onclick="searchMem()" /></td>
-				</tr>
-			</table>
-			</form>
-			<input type="submit" value="수정" />
+			<div id="wk_edit_div">
+				<form id="work_edit" action="./workEdit.do?pr_id=${ pr_id }" method="POST">
+				<input type="hidden" id="edit_wk_id" name="wk_id" value="" />
+				<table>
+					<tr>
+						<th>업무내용</th>
+						<td><input type="text" id="edit_wk_title" name="wk_title" value="" /></td>
+					</tr>
+					<tr>
+						<th>마감기한</th>
+						<td><input type="date" id="edit_wk_endDate" name="wk_endDate" value="" /></td>
+					</tr>
+					<tr>
+						<th>담당자</th>
+						<td><input type="text" id="edit_mem_id" name="mem_id" value="" /></td>
+					</tr>
+				</table>
+				<input type="submit" class="body_btn work_edit_btn" value="수정" />
+				</form>
+			</div>
+			<div id="promem_list_edit" class="promem_list">
+				<table id="promem_edit_table">
+					<thead>
+					<tr>
+						<th colspan="2">프로젝트 멤버</th>
+					</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
 		</div>
 		
 		<div class="wd_modal">

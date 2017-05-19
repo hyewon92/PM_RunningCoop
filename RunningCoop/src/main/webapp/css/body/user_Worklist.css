@@ -4,6 +4,10 @@
 	right : 2%;
 }
 
+.pr_settings:HOVER{
+	cursor : pointer;
+}
+
 #work_list_area{
 	text-align: center;
 }
@@ -24,7 +28,6 @@
 .title_area span{
 	font-size: 18pt;
 	font-weight: bold;
-	
 	color : black;
 }
 
@@ -54,6 +57,41 @@
 	background : white;
 }
 
+.work:HOVER {
+    cursor: pointer;
+    background-color: #F8F8F8;
+}
+
+.workedit_btn{
+	color: white;
+    padding: 1px 3px;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    font-size: 10pt;
+    font-weight: bold;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+.workedit_btn:HOVER {
+    box-shadow: 1px 1px 1px #C8C8C8;
+}
+
+.workdelete_btn{
+	color: white;
+    padding: 1px 3px;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    font-size: 10pt;
+    font-weight: bold;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+.workdelete_btn:HOVER {
+    box-shadow: 1px 1px 1px #C8C8C8;
+}
+
 #add_work{
 	cursor : pointer;
 }
@@ -67,7 +105,7 @@
 	border-bottom-left-radius : 10px;
 }
 
-.work td:first-child:HOVER {
+.work tr {
     cursor: pointer;
 }
 
@@ -138,6 +176,49 @@
 
 .work_Edit_Form {
 	display: none;
+}
+
+#wk_edit_div {
+    width: 400px;
+    height: 270px;
+    float: left;
+    text-align: center;
+}
+
+#work_edit table{
+	text-align: left;
+    border-collapse: collapse;
+    padding: 5px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+#work_edit th {
+	width : 35%;
+	border-bottom : 0.5px solid lightgrey;
+	padding : 5px;
+}
+
+#work_edit td {
+	width : 65%;
+	border-bottom : 0.5px solid lightgrey;
+	padding : 5px;
+}
+
+#work_edit input[type=text], input[type=date] {
+    width: 200px;
+}
+
+.work_edit_btn{
+	color : white;
+	padding: 1px 3px;
+	background-color: #5cb85c;
+    border-color: #4cae4c;
+    font-size : 15pt;
+    font-weight: bold;
+    border: 1px solid transparent;
+    border-radius: 3px;
 }
 
 .promem_list {
@@ -218,6 +299,10 @@
 	margin-left: 40%;
 }
 
+.modal_header img:HOVER{
+	cursor : pointer;
+}
+
 .modal_body{
 	height: 90%;
     width: 98%;
@@ -246,6 +331,7 @@
     text-align: center;
     padding-top: 10px;
     line-height: 100%;
+    font-size: 11pt;
 }
 
 .work_Detail_Insert span {
@@ -258,7 +344,7 @@
 }
 
 .work_Detail_Insert input[type=text] {
-    width: 40%;
+    width: 30%;
 }
 
 .wd_insert_btn {
@@ -270,6 +356,10 @@
     font-weight: bold;
     border: 1px solid transparent;
     border-radius: 3px;
+}
+
+.wd_insert_btn:HOVER{
+	box-shadow: 1px 1px 1px #C8C8C8;
 }
 
 #wd_field_table {
@@ -333,7 +423,8 @@
 #wk_Attach_List p {
 	line-height: 100%;
     margin: 0px;
-    margin-top: 3px;
+    margin-top: 5px;
+    font-size: 10pt;
 }
 
 #wk_Attach_List img {
@@ -419,6 +510,10 @@
     border: 1px solid transparent;
     border-radius: 5px;
     margin-left: 15px;
+}
+
+.comment_insert_btn:HOVER{
+	box-shadow: 1px 1px 1px #C8C8C8;
 }
 
 .wcom_delete_btn{

@@ -93,7 +93,7 @@
 	  	data : "mem_id="+mem_id,
 	  	async : false,
 	  	success : function(msg){
-	  		$("#doingPro").html("진행중인 프로젝트 <a href='./goDoingSelect.do'>"+msg.DOINGPRO+"</a>건");
+	  		$("#doingPro").html("진행중인 프로젝트 <span>"+msg.DOINGPRO+"</span>건");
 	  		},
 	  	})
 	}
@@ -107,7 +107,7 @@
   			   data : "mem_id="+mem_id,
   			   async : false,
   			   success : function(msg){
-  				   $("#todoPro").html("진행예정인 프로젝트 <a href='./goTodoSelect.do'>"+msg.TODOPRO+"</a>건");
+  				   $("#todoPro").html("진행예정인 프로젝트 <span>"+msg.TODOPRO+"</span>건");
   			   }
   		   })
   	   }
@@ -121,7 +121,7 @@
 			data : "mem_id=" + mem_id,
 			async : false,
 			success : function(msg) {
-				$("#donePro").html("진행완료인 프로젝트 <a href='./goDoneSelect.do'>" + msg.DONEPRO + "</a>건");
+				$("#donePro").html("진행완료인 프로젝트 <span>" + msg.DONEPRO + "</span>건");
 			}
 		})
 	}
@@ -153,16 +153,23 @@
 	<ul class="sidebar_list">
 		<li class="footer-menu"><a href="#" class="top_menu" onclick="goProSelect()">프로젝트 선택</a></li>
 		<li class="bottom-menu">
-			<p id="doingPro" class="iProject"></p>
-			<p id="todoPro" class="iProject"></p>
-			<p id="donePro" class="iProject"></p>
+			<ul class="iProject">
+				<li><a href='./goDoingSelect.do' id="doingPro"></a></li>
+				<li><a href='./goTodoSelect.do' id="todoPro"></a></li>
+				<li><a href='./goDoneSelect.do' id="donePro"></a></li>
+			</ul>
 		</li>
 		<li class="footer-menu"><a href="#" class="top_menu" onclick="location.href='./myGrSelect.do?mem_id=<%=userId%>'">그룹 선택</a></li>
 		<li class="menu_logo"><span class="top_menu">그룹</span></li>
 		<li class="bottom-menu">
-			<p class="groupMenu"><a href="#" onclick="location.href='./grBoradList.do?gr_id=<%=gr_id%>'">그룹게시판</a></p>
-			<p class="groupMenu"><a href="#" onclick="location.href='./grselect.do?gr_id=<%=gr_id%>'">그룹 관리</a></p>
-	 		<p class="groupMenu"><a href="#" onclick="goSocket('<%=gr_id%>')">그룹 채팅</a></p> 
+			<ul class="groupMenu">
+				<li><a href="#" onclick="location.href='./grBoradList.do?gr_id=<%=gr_id%>'">그룹 게시판</a></li>
+				<li><a href="#" onclick="location.href='./grselect.do?gr_id=<%=gr_id%>'">그룹 관리</a></li>
+				<li><a href="#" onclick="goSocket('<%=gr_id%>')">그룹 채팅</a></li>
+			</ul>
+			
+			
+	 		 
 		</li>
 		<li class="footer-menu"><a href="#" class="top_menu" onclick="location.href = './go_SearchForm.do'">검색하기</a></li>
 		<li class="footer-menu"><a href="#" class="top_menu" onclick="location.href = './noticeList.do'">공지게시판</a></li>

@@ -12,6 +12,11 @@
     text-align: center;
 }
 
+.projectTable tr:HOVER {
+    background-color: #F8F8F8;
+    cursor: pointer;
+}
+
 #div_select_area{
 	text-align: right;
 }
@@ -77,13 +82,13 @@
 }
 
 .pr_search_area {
-    clear: both;
-    padding-top: 15px;
+    float: left;
+    margin-left: 45px;
 }
 
 .pr_search_area	input[type=text]{
-	width: 250px;
-    height: 25px;
+	width: 200px;
+    height: 20px;
     font-size: 12pt;
     vertical-align: middle;
 }
@@ -93,9 +98,13 @@
     padding: 1px 10px;
     background-color: #5cb85c;
     border-color: #4cae4c;
-    font-size: 15pt;
+    font-size: 12pt;
     font-weight: bold;
     border: 1px solid transparent;
     border-radius: 3px;
     margin-left: 10px;
+}
+
+.pr_search_btn:HOVER {
+	box-shadow : 1px 1px 5px #C8C8C8;
 }

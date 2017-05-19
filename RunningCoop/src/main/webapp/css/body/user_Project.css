@@ -9,6 +9,11 @@
 
 .pr_list:HOVER{
 	box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.3);
+	cursor : pointer;
+}
+
+.canvasjs-chart-canvas:HOVER{
+	cursor : pointer;
 }
 
 .project_list_view{
@@ -29,6 +34,10 @@
     border-radius: 5px;
 }
 
+.pr_create:HOVER {
+	box-shadow : 1px 1px 5px #C8C8C8;
+}
+
 .pr_detail_view{
 	width : 500px;
 	height : 400px;
@@ -37,9 +46,13 @@
 	display : none;
 }
 
-.pr_detail{
-	margin-left : 177px;
-	margin-top : 3px;
+.pr_detail {
+    margin-left: 85%;
+    margin-top: 3px;
+}
+
+.pr_detail:HOVER {
+	opacity : 0.5;
 }
 
 .pr_btn {
@@ -51,7 +64,8 @@
 }
 
 .rate_div {
-	height : 60%;
+	height: 60%;
+    margin-top: 10px;
 }
 
 .pr_rate {
@@ -61,20 +75,20 @@
 }
 
 .date_div {
-	height : 15%;
-	text-align: right;
-	line-height : 100%;
-	font-size: 16pt;
-	font-weight: bold;
+	height: 15%;
+    text-align: right;
+    line-height: 100%;
+    font-size: 13pt;
+    font-weight: bold;
 }
 
 .name_div {
-	margin : 0 auto;
-	border-top : 0.5px solid lightgrey;
-	width : 90%;
-	height : 20%;
-	text-align : center;
-	cursor : pointer;
+	margin: 0 auto;
+    border-bottom: 0.5px solid lightgrey;
+    width: 90%;
+    height: 15%;
+    text-align: center;
+    font-weight: bold;
 }
 
 .name_div span {

@@ -51,6 +51,10 @@
 	height : 30px;
 }
 
+.user_calendar:HOVER{
+	cursor : pointer;	
+}
+
 .user_logo{
 	margin-top : 5px;
 	position : relative;
@@ -59,6 +63,10 @@
 	
 	width : 200px;
 	height : 35px;
+}
+
+.user_logo:HOVER{
+	cursor:pointer;
 }
 
 .user_menu{
@@ -86,4 +94,8 @@
 	
 	width : 30px;
 	height : 30px;
+}
+
+.side_menu_toggle:HOVER{
+	cursor : pointer;
 }

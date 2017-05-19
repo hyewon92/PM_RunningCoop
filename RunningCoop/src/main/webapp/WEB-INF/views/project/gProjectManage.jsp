@@ -12,26 +12,6 @@
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 
-<style type="text/css">
-	#con_body{
-		border : 1px solid black;
-	}
-	
-	.mem_manage{
-		display : none;
-	}
-	
-	.calendar_manage{
-		height : 600px;
-		display : none;
-	}
-	
-	.mem_list{
-		width : 150px;
-		height : 300px;
-		overflow: scroll;
-	}
-</style>
 <script type="text/javascript">
 <%
 	String mem_id = (String)session.getAttribute("mem_id");
@@ -335,33 +315,57 @@
 </div>
 <div id = "container">
 	<input type="hidden" id = "pr_id" value="${ pr_id }"/>
-	<div id = "con_header">
-		<span>프로젝트 관리</span> <input type="button" value="닫기"/>
-	</div>
+	<h3>그룹 프로젝트 관리 페이지</h3>
 	<div id = "con_side">
-		<input type="button" value="프로젝트 정보관리" onclick="view_info_manage()"/>
-		<input type="button" value="멤버 관리" onclick="view_mem_manage()"/>
-		<input type="button" value="팀 일정 관리" onclick="view_calendar_manage()"/>
-		<input type="button" value="프로젝트 삭제" onclick="project_delete()"/>
+		<input type="button" value="프로젝트 정보관리" class="gPr_manage_btn" onclick="view_info_manage()"/>
+		<input type="button" value="멤버 관리" class="gPr_manage_btn" onclick="view_mem_manage()"/>
+		<input type="button" value="팀 일정 관리" class="gPr_manage_btn" onclick="view_calendar_manage()"/>
+		<input type="button" value="프로젝트 삭제" class="gPr_manage_btn" onclick="project_delete()"/>
 	</div>
 	<div id = "con_body">
 		<div class = "info_manage">
+			<h4>프로젝트 정보 수정</h4>
 			<c:set var="detail" value="${ detail }"></c:set>
-			프로젝트 정보 수정 화면 <br/><br/>
-			프로젝트 명 : <input type="text" name="pr_name" value="${ detail.PR_NAME }"/><br>
-			담당자 : ${ detail.MEM_NAME }<br>
-			프로젝트 시작일 : ${ detail.PR_STARTDATE }<br/>
-			마감기한 : <input type="date" name="pr_endDate" value="${ detail.PR_ENDDATE }"/><br>
-			프로젝트 목적 : <input type="text" name="pr_goal" value="${ detail.PR_GOAL }"/><br>
-			<input type="hidden" id="searchYN" value="${ detail.PR_SEARCHYN }"/>
-			공개 여부 : <input type="radio" name="pr_searchYN" value="A"/>공개 <input type="radio" name="pr_searchYN" value="N"/>비공개<br>
-			<input type="hidden" id="condition" value="${ detail.PR_CONDITION }"/>
-			진행상태 : <select name = "pr_condition">
-				<option value="T">진행 예정</option>
-				<option value="I">진행 중</option>
-				<option value="C">진행 완료</option>
-			</select><br/><br/>
-			<input type="button" value="수정" onclick="projectEdit()"/>
+			<table class="project_manage_table">
+				<tr>
+					<th>프로젝트 명</th>
+					<td><input type="text" name="pr_name" value="${ detail.PR_NAME }"/></td>
+				</tr>
+				<tr>
+					<th>프로젝트 담당자</th>
+					<td>${ detail.MEM_NAME }</td>
+				</tr>
+				<tr>
+					<th>프로젝트 시작일</th>
+					<td>${ detail.PR_STARTDATE }</td>
+				</tr>
+				<tr>
+					<th>프로젝트 마감기한</th>
+					<td><input type="date" name="pr_endDate" value="${ detail.PR_ENDDATE }"/></td>
+				</tr>
+				<tr>
+					<th>공개 여부</th>
+					<td><input type="hidden" id="searchYN" value="${ detail.PR_SEARCHYN }"/>
+						<input type="radio" name="pr_searchYN" value="A"/>공개 <input type="radio" name="pr_searchYN" value="N"/>비공개
+					</td>
+				</tr>
+				<tr>
+					<th>진행상태</th>
+					<td>
+						<input type="hidden" id="condition" value="${ detail.PR_CONDITION }"/>
+						<select name = "pr_condition">
+							<option value="T">진행 예정</option>
+							<option value="I">진행 중</option>
+							<option value="C">진행 완료</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>프로젝트 목적</th>
+					<td><textarea name="pr_goal">${ detail.PR_GOAL }</textarea>
+				</tr>
+			</table>
+			<input type="button" value="수정" class="body_btn pr_info_edit_btn" onclick="projectEdit()"/>
 		</div>
 		<div class = "mem_manage">
 			<div class = "mem_manage_con" id = "mem_list">
@@ -379,7 +383,6 @@
 		</div>
 		<div class = "calendar_manage">
 			<div>
-				<%-- <jsp:include page="../schedule/teamCalendar.jsp" flush="false"/> --%>
 				<iframe width = "100%" height = "595px"  src = "./viewTeamSchedule.do?pr_id=${ pr_id }">
 				</iframe>
 			</div>

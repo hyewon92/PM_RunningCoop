@@ -634,7 +634,6 @@ public class sysManagerController {
 	@RequestMapping(value = "/sysMemModify.do", method = RequestMethod.POST)
 	public String sysMemModify(MemberDto dto){
 		logger.info("===================== 관리자 회원정보 수정 ============================");
-		Map<String, Boolean> map = new HashMap<String, Boolean>();
 		boolean result = false;
 		result = service.sysMemModify(dto);
 		if(result){

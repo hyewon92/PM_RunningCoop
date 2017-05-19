@@ -57,27 +57,42 @@
 }
 
 .iProject {
-	line-height: 16px;
-    font-size: 10pt;
-    margin-left: 3px;
-    margin: 1px;
+	list-style: none;
+    line-height: 18px;
+    padding-left: 10px;
 }
 
 .iProject a{
-	color : green;
-	font-weight: bold;
 	text-decoration: none;
+	color : white;
+    font-size: 10pt;
+}
+
+.iProject li:HOVER {
+    text-decoration: underline;
+}
+
+.iProject span{
+	color: green;
+    font-weight: bold;
+    font-size: 10pt;
+    vertical-align: baseline;
 }
 
 .groupMenu {
-	line-height: 7px;
-	
-	font-size: 10pt;
+	list-style: none;
+    line-height: 18px;
+    padding-left: 10px;
+    font-size : 10pt;
 }
 
 .groupMenu a{
 	color : white;
 	text-decoration: none;
+}
+
+.groupMenu a:HOVER {
+    text-decoration: underline;
 }
 
 .searchbox {
