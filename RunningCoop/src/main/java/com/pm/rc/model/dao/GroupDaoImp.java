@@ -39,10 +39,9 @@ public class GroupDaoImp implements GroupDao{
 	}
 
 	@Override
-	public List<Map<String, String>> grDetailSelect (Map<String,String> map) {
-	List<Map<String, String>> lists = sqlSession.selectList(NAMESPACE +"grDetailSelect" , map);
+	public Map<String, String> grDetailSelect (Map<String,String> map) {
 		logger.info("grDetailSelect 작동결과");
-		return lists;
+		return sqlSession.selectOne(NAMESPACE +"grDetailSelect" , map);
 	}
 
 	@Override

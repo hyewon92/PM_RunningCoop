@@ -51,7 +51,7 @@ public interface GroupService {
 	 * @return GroupDto
 	 * @author 김혜원
 	 * */
-	public List<Map<String, String>> grDetailSelect(Map<String, String> map);
+	public Map<String, String> grDetailSelect(Map<String, String> map);
 	
 	/**
 	 * 그룹 생성

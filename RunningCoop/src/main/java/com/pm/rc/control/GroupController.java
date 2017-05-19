@@ -86,11 +86,12 @@ public class GroupController implements ServletConfigAware {
 	//그룹선택하여 정보 확인 및 그룹관리 화면
 	@RequestMapping(value="/grselect.do" ,  method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String,String> grDetailSelect(Model model, HttpServletRequest request){
+	public Map<String, String> grDetailSelect(Model model, HttpServletRequest request){
 		Map<String,String> map = new HashMap<String, String>();
 		map.put("gr_id", request.getParameter("gr_id"));
 		logger.info("그룹정보 띄우기");
-		Map<String, String> map2 = service.grDetailSelect(map);
+		Map<String, String> map2 = new HashMap<String, String>();
+		map2 = service.grDetailSelect(map);
 		
 		return map2;
 	}

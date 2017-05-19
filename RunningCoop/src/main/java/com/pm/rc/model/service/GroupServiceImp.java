@@ -33,7 +33,7 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public List<Map<String, String>> grDetailSelect (Map<String, String> map) {
+	public Map<String, String> grDetailSelect (Map<String, String> map) {
 		return groupdao.grDetailSelect(map);
 	}
 
