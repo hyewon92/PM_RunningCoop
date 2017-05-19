@@ -76,7 +76,10 @@ public class GroupController implements ServletConfigAware {
 		System.out.println("여기는되나");
 		logger.info("그룹선택 작동됨");
 		List<GroupDto> lists = service.myGrSelect(map);
+		List<GroupDto> watiLists = service.waitGrSelect(map);
+		
 		model.addAttribute("lists" , lists);
+		model.addAttribute("watiLists" , watiLists);
 		session.removeAttribute("gr_id");
 		return "Group/myGrSelect";
 	}

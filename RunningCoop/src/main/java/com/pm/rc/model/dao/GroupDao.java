@@ -32,6 +32,14 @@ public interface GroupDao {
 	public List<GroupDto> myGrSelect(Map<String, String> map);
 	
 	/**
+	 *생성한 승인 대기 그룹 조회
+	 * @param mem_id 회원 아이디
+	 * @return List&lt;GroupDto&gt;
+	 * @author 김혜원
+	 * */
+	public List<GroupDto> waitGrSelect(Map<String, String> map);
+	
+	/**
 	 * 그룹 상세 정보 출력
 	 * @param gr_id 그룹아이디
 	 * @return List&lt;GroupDto&gt;

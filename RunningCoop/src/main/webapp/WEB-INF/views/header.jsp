@@ -8,9 +8,9 @@
 <title>헤더</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <style type="text/css">
-img{
+/* img{
 width: 20px; height: 20px;
-cursor: pointer;}
+cursor: pointer;} */
 
 </style>
 <script type="text/javascript">

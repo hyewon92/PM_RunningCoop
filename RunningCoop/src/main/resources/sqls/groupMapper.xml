@@ -15,10 +15,16 @@
 	</resultMap>
 
 	<select id="myGrSelect" parameterType="java.util.Map" resultType="GroupDto">
-		SELECT G.GR_ID , G.GR_NAME,G.GR_GOAL,TO_CHAR(G.GR_REGDATE, 'YYYY/MM/DD') GR_REGDATE FROM RC_GROUP G
+		SELECT G.GR_ID , G.GR_NAME,G.GR_GOAL,TO_CHAR(G.GR_REGDATE, 'YYYY/MM/DD'),G.GR_IMG,G.GR_REGDATE FROM RC_GROUP G
 		WHERE G.GR_ID IN
 		(SELECT GR_ID FROM RC_GROUPMEM WHERE MEM_ID IN #{mem_id})
 		AND G.GR_DELYN = 'N' AND G.GR_APPYN = 'Y'
+	</select>
+	<select id="waitGrSelect" parameterType="java.util.Map" resultType="GroupDto">
+		SELECT G.GR_ID , G.GR_NAME,G.GR_GOAL,TO_CHAR(G.GR_REGDATE, 'YYYY/MM/DD'),G.GR_IMG,G.GR_REGDATE FROM RC_GROUP G
+		WHERE G.GR_ID IN
+		(SELECT GR_ID FROM RC_GROUPMEM WHERE MEM_ID IN #{mem_id})
+		AND G.GR_DELYN = 'N' AND G.GR_APPYN = 'N'
 	</select>
 
 	<select id="grDetailSelect" parameterType="java.util.Map" resultType="java.util.Map">

@@ -30,6 +30,14 @@ public interface GroupService {
 	public List<GroupDto> myGrSelect(Map<String, String> map);
 	
 	/**
+	 * 생성한 승인대기 그룹 조회
+	 * @param mem_id 회원 아이디
+	 * @return List&lt;GroupDto&gt;
+	 * @author 민슬기
+	 * */
+	public List<GroupDto> waitGrSelect(Map<String, String> map);
+	
+	/**
 	 * 그룹 검색 조회(그룹명)
 	 * @param gr_name 그룹명
 	 * @return List&lt;GroupDto&gt;
