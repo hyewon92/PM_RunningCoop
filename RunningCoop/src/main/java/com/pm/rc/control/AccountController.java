@@ -183,19 +183,25 @@ public class AccountController {
 	}
 
 	//회원가입처리
-	@RequestMapping(value = "/chkJoin.do", method = RequestMethod.POST)
-	public String ckJoin(HttpSession session, MemberDto dto){
-		logger.info("ckJoin실행");
-		boolean isc = accountService.memInsert(dto);
-		if(isc == false){
-			return "account/error/error";
-		}else{
-			session.setAttribute("mem_id", dto.getMem_id());
-			session.setAttribute("mem_pw", dto.getMem_pw());
-			session.setAttribute("mem_name", dto.getMem_name());
-			return "account/joinAfter";
-		}
-	}
+	   @RequestMapping(value = "/chkJoin.do", method = RequestMethod.POST)
+	   public String ckJoin(HttpSession session, MemberDto dto){
+	      logger.info("ckJoin실행");
+	      boolean isc = accountService.memInsert(dto);
+	      if(isc == false){
+	         return "account/error/error";
+	      }else{
+	         session.setAttribute("mem_id", dto.getMem_id());
+	         session.setAttribute("mem_pw", dto.getMem_pw());
+	         session.setAttribute("mem_name", dto.getMem_name());
+	         return "redirect:/afterJoin.do";
+	      }
+	   }
+	   
+	   //회원가입 완료 후 그룹가입신청/메인페이지 선택
+	   @RequestMapping(value = "/afterJoin.do")
+	   public String afterJoin(){
+		   return "account/joinAfter";
+	   }
 
 	//회원가입 후 바로 메인화면 이동
 	@RequestMapping(value = "/firstLogin.do")
