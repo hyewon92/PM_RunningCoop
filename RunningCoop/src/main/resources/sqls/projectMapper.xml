@@ -325,7 +325,6 @@
 		WHERE RNUM BETWEEN #{start} AND #{last}
 	</select>
 		
-	<!-- 그룹프로젝트 페이징 처리 쿼리문 total 쿼리문 -->
 	<select id="countTotalpaging" resultType="java.lang.Integer" parameterType="ProjectPagingDto">
 		SELECT NVL(COUNT(*),0)
 		FROM RC_GROUP G, RC_PROJECT P, RC_MEMBER M
@@ -334,6 +333,7 @@
 		AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id})
 		AND P.PR_DELYN = 'N'
 	</select>
+		<!-- 그룹프로젝트 myDoingGPrListSelect 페이징 처리 끝 -->
 	
 	<select id="myDoingIPrListSelect" parameterType="java.lang.String" resultType="java.util.Map">
 		SELECT P.PR_ID, P.PR_NAME, M.MEM_NAME

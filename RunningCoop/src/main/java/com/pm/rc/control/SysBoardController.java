@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.pm.rc.dto.ManagePagingDto;
 import com.pm.rc.model.service.UserSysBoardService;
 
 @Controller
@@ -142,12 +143,13 @@ public class SysBoardController {
 
 	// 문의 게시판 목록 출력
 	@RequestMapping(value="/qnaList.do", method = RequestMethod.GET)
-	public String qnaList(Model model){
-
+	public String qnaList(Model model, HttpServletRequest req){
+		ManagePagingDto maPaing = new ManagePagingDto(req.getParameter("index"), 
+														req.getParameter("pageStartNum"), req.getParameter("listCnt"));
 		logger.info("================== 문의 게시판으로 이동 ==================");
 
 		List<Map<String, String>> list = null;
-		list = service.qnaListSelect();
+		service.qnaListSelectPaing(maPaing);
 
 		model.addAttribute("list", list);
 

@@ -21,6 +21,27 @@
 			var titleVal=$(this).attr("title");
 			startChart(idName,titleVal);
 		});
+		
+		$("form").submit(function(evnet){
+			var pr_name = $("input[name=pr_name]").val();
+			var pr_startdate = $("input[name=pr_startdate]").val();
+			var pr_enddate = $("input[name=pr_enddate]").val();
+			var pr_goal =  $("input[name=pr_goal]").val();
+			
+			var date1 = new Date(pr_startdate);
+			var date2 = new Date(pr_enddate);
+			var pr_startdate = Date.parse(date1);
+			var pr_enddate   = Date.parse(date2); 
+			
+			var dateCal = pr_startdate-pr_enddate;
+			
+			if(dateCal>0 || pr_name=="" || pr_startdate=="" || pr_enddate=="" || pr_goal==""){
+				alert("내용을 입력해주세요");			
+				return false;
+			}
+				alert("프로젝트 생성 완료");
+			return true;
+		})
 	})
 	
 	function startChart(sel,val){
@@ -182,7 +203,7 @@
 	</div>
 	
 	<div id="create_Form">
-		<form action="./mProCreate.do" method="POST">
+		<form action="./mProCreate.do" method="POST" onsubmit="">
 		<table>
 			<tr>
 				<th>프로젝트 명</th>
