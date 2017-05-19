@@ -167,6 +167,10 @@
 		background-position: 100% -57px;
 	}
 	
+	.int_id{
+		overflow: auto;
+	}
+	
 	.ps_box{
 		position: relative;
 	    display: block;
@@ -191,13 +195,11 @@
 	.int:focus{
 		outline: none;
 	}
-	
-	.timeWord{
-		font-size: 8pt;
-		display: none;
-	}
 </style>
 <script type="text/javascript">
+
+	var joinStatus = 0;
+
 	$(function(){
 		$(".loginBox").submit(function(){
 			if($("#loginId").val()==""||$("#loginPw").val()==""){
@@ -210,10 +212,12 @@
 	
 	function joinAccount(){
 		$(".join_modal").css("display", "block");
+		joinStatus = 1;
 	}
 	
 	function closeJoin(){
 		$(".join_modal").css("display", "none");
+		joinStatus = 0;
 	}
 
 	function goJoin(){
@@ -225,123 +229,130 @@
 	회원가입
 	*/
 	
-	function backToMain(){
-	}
-	
 	var interval;
 	var checked = [false, false, false, false, false];
 	
 	//아이디 제약조건, 중복 확인
 	function id_chk(){
-		checked[0] = true;
-		var mem_id = $("#id").val();
-		var standardId = /^[a-z0-9]{8,12}$/g;
-		if(!standardId.test(mem_id)){
-			alert("아이디는 영소문자, 숫자를 포함하여 8~12자로 작성해야 합니다.");
-			$("#id").val("");
-			checked[0] = false;
-		}else{
-			$.ajax({
-				type: "GET",
-				url: "./memIdSelect.do",
-				data: "mem_id="+mem_id,
-				async: false,
-				success: function(msg){
-					printIdCk(msg)
-				},
-				error: function(){
-					checked[0] = false;
-					alert("아이디 중복 조회 전송 실패, 다시 해주세요");
-				}
-			});
+		if(joinStatus == 1){
+			checked[0] = true;
+			var mem_id = $("#id").val();
+			var standardId = /^[a-z0-9]{8,12}$/g;
+			if(!standardId.test(mem_id)){
+				alert("아이디는 영소문자, 숫자를 포함하여 8~12자로 작성해야 합니다.");
+				$("#id").val("");
+				checked[0] = false;
+			}else{
+				$.ajax({
+					type: "GET",
+					url: "./memIdSelect.do",
+					data: "mem_id="+mem_id,
+					async: false,
+					success: function(msg){
+						printIdCk(msg)
+					},
+					error: function(){
+						checked[0] = false;
+						alert("아이디 중복 조회 전송 실패, 다시 해주세요");
+					}
+				});
+			}
 		}
 	}
 	
 	//아이디 중복확인 결과
 	function printIdCk(map){
-		if(map.result){
-			$("#resultIdChk").html("사용 가능한 아이디입니다").css("font-size","7pt");
-			checked = true;
-		}else{
-			$("#resultIdChk").html("중복된 아이디입니다.<br>다시 입력해주세요").css("font-size","7pt");
-			checked = false;
+		if(joinStatus == 1){
+			if(map.result){
+				$("#resultIdChk").html("사용 가능한 아이디입니다").css("font-size","7pt");
+				checked = true;
+			}else{
+				$("#resultIdChk").html("중복된 아이디입니다.<br>다시 입력해주세요").css("font-size","7pt");
+				checked = false;
+			}
 		}
 	}
 	
 	//비밀번호 제약조건, 재확인
 	function pw_chk(){
-		checked[1] = true;
-		var standardPw = /^((?=.*\d)(?=.*[a-z]).{8,15})$/gm;
-
-		if(!standardPw.test($("#pw").val())){
-			checked[1] = false;
-			alert("비밀번호는 영소문자, 숫자를 포함하여 8~16자로 작성해야 합니다.");
-			$("#pw").val("");
-			$("#pw2").val("");
-		}else{
-			if($("#pw").val()!=$("#pw2").val()){
+		if(joinStatus == 1){
+			checked[1] = true;
+			var standardPw = /^((?=.*\d)(?=.*[a-z]).{8,15})$/gm;
+	
+			if(!standardPw.test($("#pw").val())){
 				checked[1] = false;
-				$("#modifyInfo").prop("disabled", true);
-				alert("비밀번호가 일치하지 않습니다.\n 재입력해주세요.");
+				alert("비밀번호는 영소문자, 숫자를 포함하여 8~16자로 작성해야 합니다.");
 				$("#pw").val("");
-				$("#pw").val("");
+				$("#pw2").val("");
 			}else{
-				alert("비밀번호가 확인됐습니다.");
+				if($("#pw").val()!=$("#pw2").val()){
+					checked[1] = false;
+					$("#modifyInfo").prop("disabled", true);
+					alert("비밀번호가 일치하지 않습니다.\n 재입력해주세요.");
+					$("#pw").val("");
+					$("#pw").val("");
+				}else{
+					alert("비밀번호가 확인됐습니다.");
+				}
 			}
 		}
 	}
 	
 	//이름 제약조건 확인
 	function name_chk(){
-		checked[2] = true;
-		var standardName = /^[a-z0-9ㄱ-ㅎㅏ-ㅣ가-힣]{1,10}$/g;
-		if(!standardName.test($("#name").val())){
-			checked[2] = false;
-			alert("이름은 대소문자를 구분한 영문, 한글, 숫자를 포함한 10자 이내로 작성해야 합니다.");
-			$("#name").val("");
-		}else{
-			alert("사용가능합니다");
+		if(joinStatus == 1){
+			checked[2] = true;
+			var standardName = /^[a-z0-9ㄱ-ㅎㅏ-ㅣ가-힣]{1,10}$/g;
+			if(!standardName.test($("#name").val())){
+				checked[2] = false;
+				alert("이름은 대소문자를 구분한 영문, 한글, 숫자를 포함한 10자 이내로 작성해야 합니다.");
+				$("#name").val("");
+			}else{
+				alert("사용가능합니다");
+			}
 		}
 	}
 	
 	//인증번호 메일 전송
 	function sendMail(){
-		checked[3] = true;
-		var mem_name = $("#name").val();
-		var toMail = $("#email").val();
-		if(mem_name == null || toMail == null){
-			alert("이름과 이메일을 모두 입력해주세요.");
-		}else{
-			$.ajax({
-				type: "POST",
-				url: "./joinMailSending.do",
-				data: "mem_name="+mem_name+"&toMail="+toMail,
-				async: false,
-				success: function(){
-					alert("해당 메일계정으로 인증번호를 전송했습니다.");
-				},
-				error: function(){
-					checked[3] = false;
-					alert("인증번호 전송 실패, 다시 시도해주세요.");
-				}
-			});
-			$("#chkInfo").css("display","block");
-			$(".timeWord").css("display","block");
-			timeCount(240, sEvent, eEvent);
+		if(joinStatus == 1){
+			checked[3] = true;
+			var mem_name = $("#name").val();
+			var toMail = $("#email").val();
+			if(mem_name == null || toMail == null){
+				alert("이름과 이메일을 모두 입력해주세요.");
+			}else{
+				$.ajax({
+					type: "POST",
+					url: "./joinMailSending.do",
+					data: "mem_name="+mem_name+"&toMail="+toMail,
+					async: false,
+					success: function(){
+						alert("해당 메일계정으로 인증번호를 전송했습니다.");
+					},
+					error: function(){
+						checked[3] = false;
+						alert("인증번호 전송 실패, 다시 시도해주세요.");
+					}
+				});
+				$("#chkInfo").css("display","block");
+				$(".timeWord").css("display","block");
+				timeCount(240, sEvent, eEvent);
+			}
 		}
 	}
 	
 	//인증번호 입력 시간 카운트
 	function timeCount(time, sEvent, eEvent){
-
-		//카운트 시간 설정
-		var setTime = time;
-				
-		//1초마다 실행
-		interval = setInterval(function(){
-			timer();
-			}, 1000);
-				
+		if(joinStatus == 1){
+			//카운트 시간 설정
+			var setTime = time;
+					
+			//1초마다 실행
+			interval = setInterval(function(){
+				timer();
+				}, 1000);
+		}
 		function timer(){
 			setTime = setTime-1;
 			var minute = Math.floor(setTime/60);
@@ -363,8 +374,8 @@
 	
 	//카운트 동작 이벤트
 	function sEvent(minute, second){
-		$("#minute").text(minute);
-		$("#second").text(second);
+		$("#minute").text(minute+"분");
+		$("#second").text(second+"초");
 	}
 	
 	//카운트 종료 시 이벤트
@@ -374,38 +385,44 @@
 	
 	//입력 후 시간 카운트 정지+세션(인증번호)삭제
 	function endIdentify(){
-		clearInterval(interval);
-		$.ajax({
-			type: "POST",
-			url: "./removeIdentify.do",
-			async: false
-		});
+		if(joinStatus == 1){
+			clearInterval(interval);
+			$.ajax({
+				type: "POST",
+				url: "./removeIdentify.do",
+				async: false
+			});
+		}
 	}
 	
 	//인증번호 입력확인
 	function identifyNum(){
 		var val = $("#num").val();
-		$.ajax({
-			type: "POST",
-			url: "./ckIdentifyNum.do",
-			data: "input="+val,
-			async: false,
-			success: function(msg){
-				endIdentify();
-				resultIdentify(msg)
-			}
-		});
+		if(joinStatus == 1){
+			$.ajax({
+				type: "POST",
+				url: "./ckIdentifyNum.do",
+				data: "input="+val,
+				async: false,
+				success: function(msg){
+					endIdentify();
+					resultIdentify(msg)
+				}
+			});
+		}
 	}
 	
 	//인증번호 입력 결과
 	function resultIdentify(map){
-		if(map.result){
-			checked[4] = true;
-			alert("인증이 완료됐습니다.");
-		}else{
-			checked[4] = false;
-			alert("인증이 실패했습니다. 다시 해주세요.");
-			$("#num").val("");
+		if(joinStatus == 1){
+			if(map.result){
+				checked[4] = true;
+				alert("인증이 완료됐습니다.");
+			}else{
+				checked[4] = false;
+				alert("인증이 실패했습니다. 다시 해주세요.");
+				$("#num").val("");
+			}
 		}
 	}
 	
@@ -437,8 +454,9 @@
 							break;
 						}
 					}
-			}
-		});
+				}
+				
+			});
 	});
 </script>
 </head>
@@ -522,17 +540,19 @@
 									</div>
 									<div class = "join_row">
 										<span class = "ps_box int_id">
-											<div id = "chkInfo">
+											<div id = "chkInfo" style = "overflow: auto;">
 												<%String num = (String)session.getAttribute("identifyNum"); %>
 												<input type = "text" class= "int" id = "num" placeholder = "인증번호입력" style = "width: 60%; float: left;">
+												<div class = "timeCut" style = "float: left; overflow: auto;">
+													<span id = "minute" style = "font-size:9pt;"></span>
+													<span id = "second" style = "font-size:9pt;"></span>
+												</div>
 												<input type = "button" class = "accountBtn" id = "btnIdentify" value = "확인" onclick = "identifyNum()" style = "float:right; margin-right:5px;">
-												<span id = "minute" style = "font-size:9pt;"></span><span class= "timeWord">분</span>
-												<span id = "second" style = "font-size:9pt;"></span><span class= "timeWord">초</span>
 											</div> 
 										</span>
 									</div>
 									<div class = "join_row">
-										<span class = "ps_box int_id">
+										<span class = "ps_box int_id" style = "overflow : auto;">
 											<input type = "text" class = "int" id = "phone1" placeholder = "연락처(ex.010)" style = "width: 30%; float: left; text-align: center;"><span style = "font-size:14pt; float: left; padding: 0px 5px 0px 5px;">-</span>
 											<input type = "text" class = "int" id = "phone2" placeholder = "연락처(ex.1234)" style = "width: 30%; float: left; text-align: center;"><span style = "font-size:14pt; float: left; padding: 0px 5px 0px 5px;">-</span>
 											<input type = "text" class = "int" id = "phone3" placeholder = "연락처(ex.1234)" style = "width: 30%; float: left; text-align: center;">
