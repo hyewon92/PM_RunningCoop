@@ -7,6 +7,7 @@
 <title>통합 검색 화면</title>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+
 <script type="text/javascript">
 	function doSearch(){
 		var type = $("#select_type option:selected").val();
@@ -30,14 +31,15 @@
 </div>
 <div id = "container">
 	
-	<select id="select_type">
-		<option value="choice">선택</option>
-		<option value="group">그룹</option>
-		<option value="project">프로젝트</option>
-	</select>
-	
-	<input type="text" id="search_word" name="search_word"/>
-	<button onclick="doSearch()">검색</button>
+	<div class="search_union_div">
+		<select id="select_type">
+			<option value="choice">선택</option>
+			<option value="group">그룹</option>
+			<option value="project">프로젝트</option>
+		</select>
+		<input type="text" id="search_word" name="search_word"/>
+		<button class="body_btn do_search_btn" onclick="doSearch()">검색</button>
+	</div>
 	
 	<div class="hide_form">
 		<form id="groupSearch" action="./allGrSelect.do" method="post">

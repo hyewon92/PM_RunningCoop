@@ -1,3 +1,37 @@
 .hide_form{
 	display : none;
 }
+
+.search_union_div {
+    margin-top: 30%;
+}
+
+#select_type {
+    width: 130px;
+    height: 30px;
+    margin-right: 10px;
+    vertical-align: middle;
+    font-size: 12pt;
+}
+
+#select_type option {
+    font-size: 12pt;
+}
+
+#search_word {
+    width: 300px;
+    height: 25px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.do_search_btn{
+	color: white;
+    padding: 3px 15px;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    font-size: 13pt;
+    font-weight: bold;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}

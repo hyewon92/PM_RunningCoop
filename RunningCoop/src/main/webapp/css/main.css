@@ -5,6 +5,7 @@
 @import url(body/user_body.css);
 @import url(body/sys_body.css);
 @import url(body/search_Form.css);
+@import url(body/user_projectList.css);
 
  @media screen and (max-width: 1000px){
  	.work_Detail_Insert span {

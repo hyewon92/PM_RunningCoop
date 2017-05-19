@@ -24,14 +24,14 @@
 	</select>
 	
 	<select id="wdSelect" parameterType="java.lang.String" resultType="WorkDetailDto">
-		SELECT WK_ID, WD_ID, WD_TITLE, WD_ERRORYN, TO_CHAR (WD_ENDDATE, 'YYMMDD') WD_ENDDATE, WD_COMPLYN
+		SELECT WK_ID, WD_ID, WD_TITLE, WD_ERRORYN, TO_CHAR (WD_ENDDATE, 'YYYY-MM-DD') WD_ENDDATE, WD_COMPLYN
   		FROM RC_WORKDETAIL
   		WHERE WK_ID = #{wk_id} AND WD_DELYN = 'N'
   		ORDER BY WD_ENDDATE
 	</select>
 	
 	<select id="wdComplSelect" parameterType="java.lang.String" resultType="WorkDetailDto">
-		SELECT WK_ID, WD_ID, WD_TITLE, WD_ERRORYN, TO_CHAR (WD_ENDDATE, 'YYMMDD') WD_ENDDATE, WD_COMPLYN
+		SELECT WK_ID, WD_ID, WD_TITLE, WD_ERRORYN, TO_CHAR (WD_ENDDATE, 'YYYY-MM-DD') WD_ENDDATE, WD_COMPLYN
   		FROM RC_WORKDETAIL
   		WHERE WK_ID = #{wk_id} AND WD_DELYN = 'N' AND WD_COMPLYN = 'Y'
 	</select>

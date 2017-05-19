@@ -11,23 +11,57 @@
 
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.js"></script>
+<script type="text/javascript" src="js/canvasjs.min.js"></script>
 
-<style type="text/css">
-	.pr_list{
-		border : 1px dotted black;
-	}
-	
-	.pr_detail{
-		font-size: 8pt;
-		color: green;
-	}
-	
-	.pr_detail_view{
-		border : 1px dotted green;
-		display : none;
-	}
-</style>
 <script type="text/javascript">
+
+	$(function(){
+		$(".pr_rate").each(function(){
+			var idName=$(this).attr("id");
+			var titleVal=$(this).attr("title");
+			startChart(idName,titleVal);
+		});
+	})
+	
+	function startChart(sel,val){
+			CanvasJS.addColorSet("greenShades",
+                [
+                "green",
+                "#D8D8D8"
+                ]);
+			var chart = new CanvasJS.Chart(sel, {
+				interactivityEnabled: false,
+				colorSet : "greenShades",
+				title : {
+					text : val+"%",
+					horizontalAlign : "center",
+					verticalAlign : "center",
+					fontSize : 30,
+				},
+				toolTip : {
+					enabled : false,
+				},
+				animationEnabled: true,
+				data: [
+				{
+					type: "doughnut",
+					explodeOnClick: false,
+					indexLabelFontFamily: "Garamond",
+					indexLabelFontSize: 20,
+					startAngle: 270,
+					toolTipContent: "{y} %",
+
+					dataPoints: [
+					{ y: val},
+					{ y: (100-val)}
+					]
+				}
+				]
+			});
+			chart.render();
+	}
+	
 	function detailPro(val){
 		$.ajax({
 			type : "POST",
@@ -47,7 +81,6 @@
 		var pr_goal = nodes.PR_GOAL;
 		var pr_enddate = nodes.PR_ENDDATE;
 		var pr_etc = nodes.PR_ETC;
-		var pr_prorate = nodes.PR_PRORATE;
 		
 		$("#pr_name").text(pr_name);
 		$("#mem_name").text(mem_name);
@@ -55,9 +88,16 @@
 		$("#pr_goal").text(pr_goal);
 		$("#pr_enddate").text(pr_enddate);
 		$("#pr_etc").text(pr_etc);
-		$("#pr_proRate").text(pr_prorate);
 		
-		$(".pr_detail_view").css("display", "block");
+		$(".pr_detail_view").css("display","block");
+		$(".pr_detail_view").dialog({
+			title : "프로젝트 정보 보기",
+			height : 400,
+			width : 500,
+			position : {my : "center", at : "center"},
+			resizable : false,
+			modal : true
+		});
 	}
 	
 	function goSelectPro(){
@@ -65,8 +105,15 @@
 		$(".pr_detail_view").eq(0).children("p").html("");
 	}
 	
-	function createPro(){
-		location.href="./createMPro.do";
+	function createGPro(){
+		$("#create_Form").dialog({
+			title : "그룹 프로젝트 생성",
+			height : 400,
+			width : 500,
+			position : {my : "center", at : "center"},
+			resizable : false,
+			modal : true
+		});
 	}
 	
 	function goToProject(val){
@@ -97,36 +144,107 @@
 	<jsp:include page="../header.jsp" flush="false" />
 </div>
 <div id = "container">
-<input type="button" value="개인프로젝트로 가기" onclick="location.href='./iProSelect.do'"/>
-	<c:choose>
-		<c:when test="${ fn:length(list) == 0 }">
-			<p> 진행 중인 프로젝트가 없습니다</p>
-		</c:when>
-		<c:otherwise>
-			<c:forEach var="list" items="${ list }">
-				<div class="pr_list">
-					<input type="button" value="프로젝트 탈퇴" onclick="leaveProject('${list.pr_id}')"/>
-					<p>${ list.pr_id }</p>
-					<span class="pr_detail" onclick="detailPro('${ list.pr_id}')">정보보기</span>
-					<p onclick="goToProject('${ list.pr_id }')">${ list.pr_name }</p>
-					<p>${ list.pr_proRate }</p>
-					<p>${ list.pr_endDate }</p>
-				</div>
-			</c:forEach>
-		</c:otherwise>
-	</c:choose>
-	
-	<input type="button" value="프로젝트 생성" onclick="createPro()"/>
+	<button class="body_btn pr_create" onclick="createGPro()">프로젝트 생성</button>
+	<input type="button" value="개인프로젝트로 가기" onclick="location.href='./iProSelect.do'"/>
 	
 	<div class="pr_detail_view">
-	<input type="button" value="닫기" onclick="goSelectPro()"/>
-		<p id="pr_name"></p>
-		<p id="mem_name"></p>
-		<p id="pr_proRate"></p>
-		<p id="pr_memcnt"></p>
-		<p id="pr_goal"></p>
-		<p id="pr_enddate"></p>
-		<p id="pr_etc"></p>
+		<table class="pr_detail_table">
+			<tr>
+				<th>프로젝트명</th>
+				<td><span id="pr_name"></span></td>
+			</tr>
+			<tr>
+				<th>프로젝트관리자</th>
+				<td><span id="mem_name"></span></td>
+			</tr>
+			<tr>
+				<th>프로젝트 인원</th>
+				<td><span id="pr_memcnt"></span></td>
+			</tr>
+			<tr>
+				<th>프로젝트목적</th>
+				<td><span id="pr_goal"></span></td>
+			</tr>
+			<tr>
+				<th>프로젝트마감기한</th>
+				<td><span id="pr_enddate"></span></td>
+			</tr>
+			<tr>
+				<th style="height : 80px;">비고</th>
+				<td style="height : 80px;"><span id="pr_etc"></span></td>
+			</tr>
+		</table>
+	</div>
+	
+	<div class = "project_list_view">
+		<c:choose>
+			<c:when test="${ fn:length(list) == 0 }">
+				<p> 진행 중인 프로젝트가 없습니다</p>
+			</c:when>
+			<c:otherwise>
+				<c:forEach var="list" items="${ list }">
+					<div class="pr_list">
+						<div class="pr_btn info_div">
+						<img alt="프로젝트 정보" class="pr_detail" src="images/project/pr_information.png" onclick="detailPro('${ list.pr_id }')"/>
+						</div>
+						<div class="pr_btn rate_div">
+							<div id="${ list.pr_id }_chart" class="pr_rate" title="${ list.pr_proRate }"></div>
+						</div>
+						<div class="pr_btn date_div">
+							<span style="margin-right: 10px;">D
+						<c:if test="${ fn:startsWith(list.pr_endDate, '-') == true }">${ fn:replace(list.pr_endDate, '-', '+') }</c:if>
+						<c:if test="${ fn:startsWith(list.pr_endDate, '-') == false }">-${ list.pr_endDate }</c:if>
+							</span>
+						</div>
+						<div class="pr_btn name_div" onclick="goToProject('${ list.pr_id }')">
+							<span>${ list.pr_name }</span>
+						</div>
+					</div>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
+	</div>
+	
+	<div id = "create_Form">
+		<form action="./gProCreate.do" method="POST">
+			<table>
+				<tr>
+					<th>소속그룹 아이디</th>
+					<td><input type="text" name="gr_id" value="${ gr_id }" readonly/></td>
+				</tr>
+				<tr>
+					<th>프로젝트 명</th>
+					<td>
+						<input type="text" name="pr_name"/>
+					</td>
+				</tr>
+				<tr>
+					<th>프로젝트 시작일자</th>
+					<td>
+						<input type="date" name="pr_startdate"/>
+					</td>
+				</tr>
+				<tr>
+					<th>프로젝트 종료일자</th>
+					<td>
+						<input type="date" name="pr_enddate"/>
+					</td>
+				</tr>
+				<tr>
+					<th>프로젝트 목적</th>
+					<td>
+						<input type="text" name="pr_goal"/>
+					</td>
+				</tr>
+				<tr>
+					<th>비고</th>
+					<td>
+						<input type="text" name="pr_etc"/>
+					</td>
+				</tr>
+			</table>
+		<input type="submit" value="프로젝트 생성"/>
+	</form>
 	</div>
 </div>
 <div id = "footer">

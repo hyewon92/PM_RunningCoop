@@ -58,7 +58,7 @@ public class AccountController {
 			} else{
 				session.setAttribute("mem_id", dto.getMem_id());
 				session.setAttribute("mem_name", dto.getMem_name());
-				return "account/loginAfter";
+				return "Group/myGrSelect";
 			}
 		}
 	}
@@ -201,7 +201,7 @@ public class AccountController {
 	@RequestMapping(value = "/firstLogin.do")
 	public String firstLogin(){
 		logger.info("firstLogin실행");
-		return "account/loginAfter";
+		return "Group/myGrSelect";
 	}
 
 	//탈퇴하기(페이지이동)
@@ -314,16 +314,12 @@ public class AccountController {
 		logger.info("memInfoModify실행");
 		boolean result = accountService.memInfoModify(dto);
 		if(result==true){
-			return "account/loginAfter";
+			return "Group/myGrSelect";
 		}else{
 			return "account/error/error";
 		}
 	}
 	
-	// 홈버튼 홈으로 이동
-	@RequestMapping(value="/goHome.do")
-	public String goHome(){
-		return "account/loginAfter";
-	}
+	
 
 }

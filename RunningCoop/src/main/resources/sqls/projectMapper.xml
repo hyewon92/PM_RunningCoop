@@ -275,7 +275,7 @@
 		WHERE PR_CONDITION = 'C' AND PR_ID IN (SELECT PR_ID FROM RC_PROMEM WHERE MEM_ID = #{mem_id})
 	</select>
 	
-<!-- 	myDidGPrListSelect 페이징 처리 시작	 -->
+	<!-- 	myDidGPrListSelect 페이징 처리 시작	 -->
 	<select id="myDidGPrListSelect" parameterType="ProjectPagingDto" resultType="java.util.Map">
 	SELECT *
 		FROM ( SELECT ROWNUM RNUM, P.*
@@ -300,8 +300,8 @@
 	AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id})
 	AND P.PR_DELYN = 'N'
 	</select>
-	<!-- 	myDidGPrListSelect 페이징 처리 끝	 -->
 	
+	<!-- myDidGPrListSelect 페이징 처리 끝 -->
 	<select id="myDidIPrListSelect" parameterType="java.lang.String" resultType="java.util.Map">
 		SELECT P.PR_ID, P.PR_NAME, M.MEM_NAME
 		FROM RC_PROJECT P, RC_MEMBER M
@@ -312,44 +312,28 @@
 		AND P.PR_CONDITION = 'C'
 	</select>
 	
-<!-- 	그룹프로젝트 페이징 처리 쿼리문 수정 시작  
-RUNM 뽑는 쿼리-->
-	
-		<select id="myDoingGPrListSelect" parameterType="ProjectPagingDto" resultType="java.util.Map">
-				SELECT *
-		FROM ( SELECT ROWNUM RNUM, P.*
-		      FROM (
-	            		SELECT G.GR_NAME, P.PR_ID, P.PR_NAME, M.MEM_NAME
-						FROM RC_GROUP G, RC_PROJECT P, RC_MEMBER M
-						WHERE P.PR_CONDITION = 'I' AND G.GR_ID = (SELECT GP.GR_ID FROM RC_GRPRO GP WHERE GP.PR_ID = P.PR_ID) 
-						AND M.MEM_ID = (SELECT PM.MEM_ID FROM RC_PROMEM PM WHERE PM.PR_ID = P.PR_ID AND PM.PR_LEVEL = 'PM')
-						AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id})
-						AND P.PR_DELYN = 'N'
-						ORDER BY P.PR_REGDATE DESC
-		      ) P
-		    )	
+	<!-- 그룹프로젝트 페이징 처리 쿼리문 수정 시작  RUNM 뽑는 쿼리 -->
+	<select id="myDoingGPrListSelect" parameterType="ProjectPagingDto" resultType="java.util.Map">
+		SELECT * FROM ( SELECT ROWNUM RNUM, P.* FROM (
+		        		SELECT G.GR_NAME, P.PR_ID, P.PR_NAME, M.MEM_NAME
+							FROM RC_GROUP G, RC_PROJECT P, RC_MEMBER M
+								WHERE P.PR_CONDITION = 'I' AND G.GR_ID = (SELECT GP.GR_ID FROM RC_GRPRO GP WHERE GP.PR_ID = P.PR_ID) 
+								AND M.MEM_ID = (SELECT PM.MEM_ID FROM RC_PROMEM PM WHERE PM.PR_ID = P.PR_ID AND PM.PR_LEVEL = 'PM')
+								AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id})
+								AND P.PR_DELYN = 'N'
+								ORDER BY P.PR_REGDATE DESC) P)	
 		WHERE RNUM BETWEEN #{start} AND #{last}
-		</select>
+	</select>
 		
-<!-- 		그룹프로젝트 페이징 처리 쿼리문 total  쿼리문 -->
-		<select id="countTotalpaging" resultType="java.lang.Integer" parameterType="ProjectPagingDto">
+	<!-- 그룹프로젝트 페이징 처리 쿼리문 total 쿼리문 -->
+	<select id="countTotalpaging" resultType="java.lang.Integer" parameterType="ProjectPagingDto">
 		SELECT NVL(COUNT(*),0)
 		FROM RC_GROUP G, RC_PROJECT P, RC_MEMBER M
 		WHERE P.PR_CONDITION = 'I' AND G.GR_ID = (SELECT GP.GR_ID FROM RC_GRPRO GP WHERE GP.PR_ID = P.PR_ID) 
 		AND M.MEM_ID = (SELECT PM.MEM_ID FROM RC_PROMEM PM WHERE PM.PR_ID = P.PR_ID AND PM.PR_LEVEL = 'PM')
 		AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id})
 		AND P.PR_DELYN = 'N'
-		</select>
-	
-	
-<!-- 	<select id="myDoingGPrListSelect" parameterType="java.lang.String" resultType="java.util.Map"> -->
-<!-- 		SELECT G.GR_NAME, P.PR_ID, P.PR_NAME, M.MEM_NAME -->
-<!-- 		FROM RC_GROUP G, RC_PROJECT P, RC_MEMBER M -->
-<!-- 		WHERE P.PR_CONDITION = 'I' AND G.GR_ID = (SELECT GP.GR_ID FROM RC_GRPRO GP WHERE GP.PR_ID = P.PR_ID)  -->
-<!-- 		AND M.MEM_ID = (SELECT PM.MEM_ID FROM RC_PROMEM PM WHERE PM.PR_ID = P.PR_ID AND PM.PR_LEVEL = 'PM') -->
-<!-- 		AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id}) -->
-<!-- 		AND P.PR_DELYN = 'N' -->
-<!-- 	</select> -->
+	</select>
 	
 	<select id="myDoingIPrListSelect" parameterType="java.lang.String" resultType="java.util.Map">
 		SELECT P.PR_ID, P.PR_NAME, M.MEM_NAME
@@ -361,7 +345,7 @@ RUNM 뽑는 쿼리-->
 		AND P.PR_CONDITION = 'I'
 	</select>
 	
-<!-- 	myTodoGP 페이징 처리 시작 -->
+	<!-- 	myTodoGP 페이징 처리 시작 -->
 	<select id="myTodoGPrListSelect" parameterType="ProjectPagingDto" resultType="java.util.Map">
 		SELECT *
 		FROM ( SELECT ROWNUM RNUM, P.*
@@ -389,7 +373,7 @@ RUNM 뽑는 쿼리-->
 	
 	<!-- 	myTodoGP 페이징 처리 끝 -->
 	
-<!-- 	myTodoIPrListSelect 페이징 처리 시작 -->
+	<!-- 	myTodoIPrListSelect 페이징 처리 시작 -->
 	<select id="myTodoIPrListSelect" parameterType="java.lang.String" resultType="java.util.Map">
 		SELECT P.PR_ID, P.PR_NAME, M.MEM_NAME, P.PR_CONDITION
 		FROM RC_PROJECT P, RC_MEMBER M
@@ -400,7 +384,7 @@ RUNM 뽑는 쿼리-->
 		AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id})
 	</select>
 	
-<!-- 	allPrSearchSelect 페이징 처리 시작 -->
+	<!-- 	allPrSearchSelect 페이징 처리 시작 -->
 	<select id="allPrSearchSelect" parameterType="ProjectPagingDto" resultType="java.util.Map">
 	SELECT *
 		FROM ( SELECT ROWNUM RNUM, P.*
