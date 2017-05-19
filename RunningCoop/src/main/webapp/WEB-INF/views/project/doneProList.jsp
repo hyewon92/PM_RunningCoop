@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -7,22 +7,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>진행 완료 프로젝트 목록 조회 페이지</title>
+<title>진행 완료인 프로젝트 목록 조회 페이지</title>
 
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
-<%@include file="/WEB-INF/views/Group/bootstrap.jsp"%>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="./js/paging.js"></script>
+<script type="text/javascript" src="js/paging.js"></script>
 
 <style type="text/css">
-	.pr_detail_view {
-		display : none;
-	}
-	
-	.pr_name {
-		cursor: pointer;
-	}
+.pr_detail_view {
+	display: none;
+}
+
+.pr_name {
+	cursor: pointer;
+}
 </style>
+
 <script type="text/javascript">
 	function view_Detail(val){
 		$.ajax({
@@ -54,118 +54,175 @@
 		$(".pr_detail_view").css("display", "none");
 		$(".pr_detail_view").eq(0).children("p").html("");
 	}
+	
+	$(function(){
+		$("#group_project_list").css("display", "none");
+		$("input[name=project_type]").on("change", function(){
+			var value = $(this).val();
+			if(value == "group"){
+				$("#individual_project_list").css("display", "none");
+				$("#group_project_list").css("display", "block");
+			} else {
+				$("#group_project_list").css("display", "none");
+				$("#individual_project_list").css("display", "block");
+			}
+		});
+	});
 </script>
 </head>
 <body>
-<div id = "header">
-	<jsp:include page="../header.jsp" flush="false"/>
-</div>
-<div id = "container">
-<h3>진행 완료 프로젝트 목록</h3>
-	<div id='select'>
-			<span> <select class='btn btn-primary' id='listCount' name='listCount'
-				onchange='listCnt();'>
+	<div id="header">
+		<jsp:include page="../header.jsp" flush="false" />
+	</div>
+	<div id="container">
+		<h3>진행 완료인 프로젝트 목록</h3>
+		<div id="div_select_area">
+			<input type="radio" name="project_type" value="individual" checked/>개인 프로젝트
+			<input type="radio" name="project_type" value="group"/>그룹 프로젝트&nbsp;&nbsp;
+			<select class='project_list_select' id='listCount' name='listCount' onchange="projectListCnt()">
 					<option>선택</option>
-					<option value='5' >5</option>
+					<option value='5'>5</option>
 					<option value='10'>10</option>
 					<option value='15'>15</option>
 					<option value='20'>20</option>
 			</select>
-			</span>
+			<form action="./goDoneSelect.do" method="post" id="frmPaging">
+				<input type='hidden' name='gIndex' id='gIndex' value='${gPaging.index}'>
+				<input type='hidden' name='gPageStartNum' id='gPageStartNum' value='${gPaging.pageStartNum}'>
+				<input type='hidden' name='gListCnt' id='gListCnt' value='${gPaging.listCnt}'>
+				<input type='hidden' name='iIndex' id='iIndex' value='${iPaging.index}'>
+				<input type='hidden' name='iPageStartNum' id='iPageStartNum' value='${iPaging.pageStartNum}'>
+				<input type='hidden' name='iListCnt' id='iListCnt' value='${iPaging.listCnt}'>
+			</form>
 		</div>
-		<form action="./goDoneSelect.do" method="post" id='frmPaging'>
-<table class="table table-bordered">
-	<tr>
-		<th>번호</th>
-		<th>소속</th>
-		<th>프로젝트명</th>
-		<th>PM명</th>
-		<th>비고</th>
-	</tr>
-	<tr>
-		<td colspan = "5">그룹 프로젝트</td>
-	</tr>
-	<c:choose>
-		<c:when test="${ fn:length(gPrList) == 0 }">
-			<tr>
-				<td colspan="5">조회 가능한 그룹 프로젝트가 없습니다.</td>
-			</tr>
-		</c:when>
-		<c:otherwise>
-			<c:forEach var="glist" items="${ gPrList }" varStatus="vs">
+		
+		<div id="individual_project_list">
+			<table class="projectTable">
 				<tr>
-					<td>${ vs.count }</td>
-					<td>그룹</td>
-					<td><span class = "pr_name" onclick="view_Detail('${ glist.PR_ID }')">${ glist.PR_NAME }</span></td>
-					<td>${ glist.MEM_NAME }</td>
-					<td>${ glist.GR_NAME }</td>
+					<th style="width: 8%;">번호</th>
+					<th style="width: 8%;">소속</th>
+					<th style="width: 54%;">프로젝트명</th>
+					<th style="width: 15%;">PM명</th>
+					<th style="width: 15%;">비고</th>
 				</tr>
-			</c:forEach>
-		</c:otherwise>
-	</c:choose>
-	<tr>
-		<td colspan = "5">개인프로젝트</td>
-	</tr>
-	<c:choose>
-		<c:when test="${ fn:length(iProList) == 0 }">
-			<tr>
-				<td colspan="5">조회가능한 그룹 프로젝트가 없습니다</td>
-			</tr>
-		</c:when>
-		<c:otherwise>
-			<c:forEach var="ilist" items="${ iProList }">
 				<tr>
-					<td></td>
-					<td>개인</td>
-					<td><span class = "pr_name" onclick="view_Detail('${ ilist.PR_ID}')">${ ilist.PR_NAME }</span></td>
-					<td>${ ilist.MEM_NAME }</td>
-					<td></td>
+					<td colspan="5" style="background-color : #E8E8E8;">개인프로젝트</td>
 				</tr>
-			</c:forEach>
-		</c:otherwise>
-	</c:choose>
-</table>
-<!-- 5. paging view -->
-			<!--출력할 페이지번호, 출력할 페이지 시작 번호, 출력할 리스트 갯수 -->
-			<input type='hidden' name='index' id='index' value='${paging.index}'>
-			<input type='hidden' name='pageStartNum' id='pageStartNum' value='${paging.pageStartNum}'>
-			<input type='hidden' name='listCnt' id='listCnt' value='${paging.listCnt}'>		
-		<div class="center">
+				<c:choose>
+					<c:when test="${ fn:length(iPrList) == 0 }">
+						<tr>
+							<td colspan="5">조회가능한 개인 프로젝트가 없습니다</td>
+						</tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="ilist" items="${ iPrList }" varStatus="vs">
+							<tr>
+								<td>${ vs.count }</td>
+								<td>개인</td>
+								<td><span class="pr_name" onclick="view_Detail('${ ilist.PR_ID}')">${ ilist.PR_NAME }</span></td>
+								<td>${ ilist.MEM_NAME }</td>
+								<td></td>
+							</tr>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+			</table>
+			
+			<div class="pagenum_div">
 				<ul class="pagination">
 					<!--맨 첫페이지 이동 -->
-					<li><a href='#' onclick='pagePre(${paging.pageCnt+1},${paging.pageCnt});'>&laquo;</a></li>
+					<li><a href='#'
+						onclick='pagePre(${iPaging.pageCnt+1},${iPaging.pageCnt});'>&laquo;</a></li>
 					<!--이전 페이지 이동 -->
-					<li><a href='#' onclick='pagePre(${paging.pageStartNum},${paging.pageCnt});'>&lsaquo;</a></li>
+					<li><a href='#'
+						onclick='pagePre(${iPaging.pageStartNum},${iPaging.pageCnt});'>&lsaquo;</a></li>
 					<!--페이지번호 -->
-					<c:forEach var='i' begin="${paging.pageStartNum}" end="${paging.pageLastNum}" step="1">
-						<li><a href='#' onclick='pageIndex(${i});'>${i}</a></li>
+					<c:forEach var='i' begin="${iPaging.pageStartNum}" end="${iPaging.pageLastNum}" step="1">
+						<li><a href='#' onclick='projectPageIndex(${i});'>${i}</a></li>
 					</c:forEach>
 					<!--다음 페이지 이동 -->
-					<li><a href='#' onclick='pageNext(${paging.pageStartNum},${paging.total},${paging.listCnt},${paging.pageCnt});'>&rsaquo;</a></li>
+					<li><a href='#'
+						onclick='pageNext(${iPaging.pageStartNum},${iPaging.total},${iPaging.listCnt},${iPaging.pageCnt});'>&rsaquo;</a></li>
 					<!--마지막 페이지 이동 -->
-					<li><a href='#' onclick='pageLast(${paging.pageStartNum},${paging.total},${paging.listCnt},${paging.pageCnt});'>&raquo;</a></li>
+					<li><a href='#'
+						onclick='pageLast(${iPaging.pageStartNum},${iPaging.total},${iPaging.listCnt},${iPaging.pageCnt});'>&raquo;</a></li>
 				</ul>
 			</div>
-		</form>
+		</div>
+		
+		<div id="group_project_list" style="display:none;">
+				<table class="projectTable">
+					<tr>
+						<th style="width: 8%;">번호</th>
+						<th style="width: 8%;">소속</th>
+						<th style="width: 54%;">프로젝트명</th>
+						<th style="width: 15%;">PM명</th>
+						<th style="width: 15%;">비고</th>
+					</tr>
+					<tr>
+						<td colspan="5" style="background : #E8E8E8;">그룹 프로젝트</td>
+					</tr>
+					<c:choose>
+						<c:when test="${ fn:length(gPrList) == 0 }">
+							<tr>
+								<td colspan="5">조회가능한 그룹 프로젝트가 없습니다.</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="glist" items="${ gPrList }" varStatus="vs">
+								<tr>
+									<td>${ vs.count }</td>
+									<td>그룹</td>
+									<td><span class="pr_name" onclick="view_Detail('${ glist.PR_ID }')">${ glist.PR_NAME }</span></td>
+									<td>${ glist.MEM_NAME }</td>
+									<td>${ glist.GR_NAME }</td>
+								</tr>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</table>
+				
+				<div class="pagenum_div">
+					<ul class="pagination">
+						<!--맨 첫페이지 이동 -->
+						<li><a href='#' onclick='pagePre(${gPaging.pageCnt+1},${gPaging.pageCnt});'>&laquo;</a></li>
+						<!--이전 페이지 이동 -->
+						<li><a href='#' onclick='pagePre(${gPaging.pageStartNum},${gPaging.pageCnt});'>&lsaquo;</a></li>
+						<!--페이지번호 -->
+						<c:forEach var='i' begin="${gPaging.pageStartNum}" end="${gPaging.pageLastNum}" step="1">
+							<li><a href='#' onclick='projectPageIndex(${i});'>${i}</a></li>
+						</c:forEach>
+						<!--다음 페이지 이동 -->
+						<li><a href='#'
+							onclick='pageNext(${gPaging.pageStartNum},${gPaging.total},${gPaging.listCnt},${gPaging.pageCnt});'>&rsaquo;</a></li>
+						<!--마지막 페이지 이동 -->
+						<li><a href='#'
+							onclick='pageLast(${gPaging.pageStartNum},${gPaging.total},${gPaging.listCnt},${gPaging.pageCnt});'>&raquo;</a></li>
+					</ul>
+				</div>
+		</div>
+			
+		<div class="pr_search_area">
+			<form action="./myPrSelect.do" method="post">
+				<input type="hidden" name="pr_condition" value="C" />
+				<input type="text" name="pr_name" />
+				<input type="submit" class="body_btn pr_search_btn" value="검색" />
+			</form>
+		</div>
+		
+		<div class="pr_detail_view">
+			<input type="button" value="닫기" onclick="goSelectPro()" />
+			<p id="pr_name"></p>
+			<p id="mem_name"></p>
+			<p id="pr_memcnt"></p>
+			<p id="pr_goal"></p>
+			<p id="pr_enddate"></p>
+			<p id="pr_etc"></p>
+		</div>
 	</div>
-<div class = "pr_search_area">
-	<form action="./myPrSelect.do" method="post">
-		<input type="hidden" name="pr_condition" value="C"/>
-		<input type="text" name="pr_name"/>
-		<input type="submit" value="검색"/>
-	</form>
-</div>
-<div class="pr_detail_view">
-	<input type="button" value="닫기" onclick="goSelectPro()"/>
-		<p id="pr_name"></p>
-		<p id="mem_name"></p>
-		<p id="pr_memcnt"></p>
-		<p id="pr_goal"></p>
-		<p id="pr_enddate"></p>
-		<p id="pr_etc"></p>
+	
+	<div id="footer">
+		<jsp:include page="../footer.jsp" flush="false" />
 	</div>
-<div id = "footer">
-	<jsp:include page="../footer.jsp" flush="false"/>
-</div>
 </body>
 </html>

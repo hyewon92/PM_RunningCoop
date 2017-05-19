@@ -71,11 +71,12 @@
 			data : "pr_id="+pr_id,
 			async : false,
 			success : function(nodes){
-				$("#promem_list_insert").children("fieldset").children("p").remove();
+				$("#promem_list_insert").children("table").children("tr").remove();
 				if(nodes.length == 0){
 					$("#promem_list_insert").children("table")
 					.append("<tr><td colspan='2'>조회 결과가 없습니다</td></tr>")
 				} else {
+					
 					for(var i = 0; i < nodes.length; i++){
 						var mem_name = nodes[i].MEM_NAME;
 						var mem_id = nodes[i].MEM_ID;

@@ -292,7 +292,7 @@
 		WHERE RNUM BETWEEN #{start} AND #{last}	
 	</select>
 	
-	<select id="createMyDidGprListTotalCount" parameterType="ProjectPagingDto" resultType="java.lang.Integer">
+	<select id="myDidGpTotalcount" parameterType="java.lang.String" resultType="java.lang.Integer">
 	SELECT NVL(COUNT(*),0)
 	FROM RC_GROUP G, RC_PROJECT P, RC_MEMBER M
 	WHERE P.PR_CONDITION = 'C' AND G.GR_ID = (SELECT GP.GR_ID FROM RC_GRPRO GP WHERE GP.PR_ID = P.PR_ID) 
@@ -300,19 +300,36 @@
 	AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id})
 	AND P.PR_DELYN = 'N'
 	</select>
-	
 	<!-- myDidGPrListSelect 페이징 처리 끝 -->
-	<select id="myDidIPrListSelect" parameterType="java.lang.String" resultType="java.util.Map">
-		SELECT P.PR_ID, P.PR_NAME, M.MEM_NAME
-		FROM RC_PROJECT P, RC_MEMBER M
-		WHERE NOT P.PR_ID IN (SELECT GP.PR_ID FROM RC_GRPRO GP)
+	
+	<!-- myDidIPrListSelect 페이징 시작 -->
+	<select id="myDidIPrListSelect" parameterType="ProjectPagingDto" resultType="java.util.Map">
+		SELECT *
+		FROM ( SELECT ROWNUM RNUM, P.*
+		      FROM (
+				SELECT P.PR_ID, P.PR_NAME, M.MEM_NAME, P.PR_CONDITION
+				FROM RC_PROJECT P, RC_MEMBER M
+				WHERE NOT P.PR_ID IN (SELECT GP.PR_ID FROM RC_GRPRO GP)
+				AND M.MEM_ID = (SELECT PM.MEM_ID FROM RC_PROMEM PM WHERE PM.PR_LEVEL = 'PM' AND PM.PR_ID = P.PR_ID)
+				AND P.PR_DELYN = 'N'
+				AND P.PR_CONDITION = 'C'
+				AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id})
+		    ) P)
+		WHERE RNUM BETWEEN #{start} AND #{last}	
+	</select>
+	
+	<select id="myDidIpTotalcount" parameterType="java.lang.String" resultType="java.lang.Integer">
+	SELECT NVL(COUNT(*),0)
+	FROM RC_PROJECT P, RC_MEMBER M
+	WHERE NOT P.PR_ID IN (SELECT GP.PR_ID FROM RC_GRPRO GP)
 		AND M.MEM_ID = (SELECT PM.MEM_ID FROM RC_PROMEM PM WHERE PM.PR_LEVEL = 'PM' AND PM.PR_ID = P.PR_ID)
 		AND P.PR_ID IN (SELECT PR_ID FROM RC_PROMEM WHERE MEM_ID = #{mem_id})
 		AND P.PR_DELYN = 'N'
 		AND P.PR_CONDITION = 'C'
 	</select>
+	<!-- myDidIPrListSelect 페이징 끝  -->
 	
-	<!-- 그룹프로젝트 페이징 처리 쿼리문 수정 시작  RUNM 뽑는 쿼리 -->
+	<!-- myDoingGPrListSelect 페이징 시작 -->
 	<select id="myDoingGPrListSelect" parameterType="ProjectPagingDto" resultType="java.util.Map">
 		SELECT * FROM ( SELECT ROWNUM RNUM, P.* FROM (
 		        		SELECT G.GR_NAME, P.PR_ID, P.PR_NAME, M.MEM_NAME
@@ -325,7 +342,7 @@
 		WHERE RNUM BETWEEN #{start} AND #{last}
 	</select>
 		
-	<select id="countTotalpaging" resultType="java.lang.Integer" parameterType="ProjectPagingDto">
+	<select id="myDoingGpTotalcount" resultType="java.lang.Integer" parameterType="java.lang.String">
 		SELECT NVL(COUNT(*),0)
 		FROM RC_GROUP G, RC_PROJECT P, RC_MEMBER M
 		WHERE P.PR_CONDITION = 'I' AND G.GR_ID = (SELECT GP.GR_ID FROM RC_GRPRO GP WHERE GP.PR_ID = P.PR_ID) 
@@ -333,12 +350,28 @@
 		AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id})
 		AND P.PR_DELYN = 'N'
 	</select>
-		<!-- 그룹프로젝트 myDoingGPrListSelect 페이징 처리 끝 -->
+	<!-- myDoingGPrListSelect 페이징 끝 -->
 	
-	<select id="myDoingIPrListSelect" parameterType="java.lang.String" resultType="java.util.Map">
-		SELECT P.PR_ID, P.PR_NAME, M.MEM_NAME
-		FROM RC_PROJECT P, RC_MEMBER M
-		WHERE NOT P.PR_ID IN (SELECT GP.PR_ID FROM RC_GRPRO GP)
+	<!-- myDoingIPrListSelect 페이징 시작 -->
+	<select id="myDoingIPrListSelect" parameterType="ProjectPagingDto" resultType="java.util.Map">
+		SELECT *
+		FROM ( SELECT ROWNUM RNUM, P.*
+		      FROM (
+				SELECT P.PR_ID, P.PR_NAME, M.MEM_NAME, P.PR_CONDITION
+				FROM RC_PROJECT P, RC_MEMBER M
+				WHERE NOT P.PR_ID IN (SELECT GP.PR_ID FROM RC_GRPRO GP)
+				AND M.MEM_ID = (SELECT PM.MEM_ID FROM RC_PROMEM PM WHERE PM.PR_LEVEL = 'PM' AND PM.PR_ID = P.PR_ID)
+				AND P.PR_DELYN = 'N'
+				AND P.PR_CONDITION = 'I'
+				AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id})
+		    ) P)	
+		WHERE RNUM BETWEEN #{start} AND #{last}
+	</select>
+	
+	<select id="myDoingIpTotalcount" parameterType="java.lang.String" resultType="java.lang.Integer">
+	SELECT NVL(COUNT(*),0)
+	FROM RC_PROJECT P, RC_MEMBER M
+	WHERE NOT P.PR_ID IN (SELECT GP.PR_ID FROM RC_GRPRO GP)
 		AND M.MEM_ID = (SELECT PM.MEM_ID FROM RC_PROMEM PM WHERE PM.PR_LEVEL = 'PM' AND PM.PR_ID = P.PR_ID)
 		AND P.PR_ID IN (SELECT PR_ID FROM RC_PROMEM WHERE MEM_ID = #{mem_id})
 		AND P.PR_DELYN = 'N'
@@ -362,7 +395,7 @@
 		WHERE RNUM BETWEEN #{start} AND #{last}
 	</select>
 	
-	<select id="createMytodoGPlistTotalCount" parameterType="ProjectPagingDto" resultType="java.lang.Integer">
+	<select id="myTodoGpTotalcount" parameterType="java.lang.String" resultType="java.lang.Integer">
 		SELECT NVL(COUNT(*),0)
 		FROM RC_GROUP G, RC_PROJECT P, RC_MEMBER M
 		WHERE P.PR_CONDITION = 'T' AND G.GR_ID = (SELECT GP.GR_ID FROM RC_GRPRO GP WHERE GP.PR_ID = P.PR_ID) 
@@ -370,19 +403,34 @@
 		AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id})
 		AND P.PR_DELYN = 'N'
 	</select>
-	
 	<!-- 	myTodoGP 페이징 처리 끝 -->
 	
 	<!-- 	myTodoIPrListSelect 페이징 처리 시작 -->
-	<select id="myTodoIPrListSelect" parameterType="java.lang.String" resultType="java.util.Map">
-		SELECT P.PR_ID, P.PR_NAME, M.MEM_NAME, P.PR_CONDITION
-		FROM RC_PROJECT P, RC_MEMBER M
-		WHERE NOT P.PR_ID IN (SELECT GP.PR_ID FROM RC_GRPRO GP)
+	<select id="myTodoIPrListSelect" parameterType="ProjectPagingDto" resultType="java.util.Map">
+		SELECT *
+		FROM ( SELECT ROWNUM RNUM, P.*
+		      FROM (
+				SELECT P.PR_ID, P.PR_NAME, M.MEM_NAME, P.PR_CONDITION
+				FROM RC_PROJECT P, RC_MEMBER M
+				WHERE NOT P.PR_ID IN (SELECT GP.PR_ID FROM RC_GRPRO GP)
+				AND M.MEM_ID = (SELECT PM.MEM_ID FROM RC_PROMEM PM WHERE PM.PR_LEVEL = 'PM' AND PM.PR_ID = P.PR_ID)
+				AND P.PR_DELYN = 'N'
+				AND P.PR_CONDITION = 'T'
+				AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id})
+		    ) P)	
+		WHERE RNUM BETWEEN #{start} AND #{last}
+	</select>
+	
+	<select id="myTodoIpTotalcount" parameterType="java.lang.String" resultType="java.lang.Integer">
+	SELECT NVL(COUNT(*),0)
+	FROM RC_PROJECT P, RC_MEMBER M
+	WHERE NOT P.PR_ID IN (SELECT GP.PR_ID FROM RC_GRPRO GP)
 		AND M.MEM_ID = (SELECT PM.MEM_ID FROM RC_PROMEM PM WHERE PM.PR_LEVEL = 'PM' AND PM.PR_ID = P.PR_ID)
+		AND P.PR_ID IN (SELECT PR_ID FROM RC_PROMEM WHERE MEM_ID = #{mem_id})
 		AND P.PR_DELYN = 'N'
 		AND P.PR_CONDITION = 'T'
-		AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id})
 	</select>
+	<!-- 	myTodoIPrListSelect 페이징 끝 -->
 	
 	<!-- 	allPrSearchSelect 페이징 처리 시작 -->
 	<select id="allPrSearchSelect" parameterType="ProjectPagingDto" resultType="java.util.Map">
@@ -413,25 +461,60 @@
 	
 	<!-- 	allPrSearchSelect 페이징 처리 끝 -->
 	
-	<select id="myGPrSearchSelect" parameterType="java.util.Map" resultType="java.util.Map">
-		SELECT G.GR_NAME, P.PR_ID, P.PR_NAME, M.MEM_NAME
+	<!-- myGPrSearchSelect 페이징 시작 -->
+	<select id="myGPrSearchSelect" parameterType="ProjectPagingDto" resultType="java.util.Map">
+		SELECT *
+		FROM ( SELECT ROWNUM RNUM, P.*
+		      FROM (
+	            SELECT G.GR_NAME, P.PR_ID, P.PR_NAME, M.MEM_NAME, P.PR_CONDITION
+				FROM RC_GROUP G, RC_PROJECT P, RC_MEMBER M
+				WHERE G.GR_ID = (SELECT GP.GR_ID FROM RC_GRPRO GP WHERE GP.PR_ID = P.PR_ID) 
+				AND M.MEM_ID = (SELECT PM.MEM_ID FROM RC_PROMEM PM WHERE PM.PR_ID = P.PR_ID AND PM.PR_LEVEL = 'PM')
+				AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id})
+				AND P.PR_DELYN = 'N'
+				AND P.PR_NAME LIKE '%${ pr_name }%'
+		      ) P
+		    )	
+		WHERE RNUM BETWEEN #{start} AND #{last}
+	</select>
+	
+	<select id="myGpSearchTotalcount" parameterType="java.util.Map" resultType="java.lang.Integer">
+	SELECT NVL(COUNT(*),0)
 		FROM RC_GROUP G, RC_PROJECT P, RC_MEMBER M
-		WHERE P.PR_CONDITION = #{pr_condition} AND G.GR_ID = (SELECT GP.GR_ID FROM RC_GRPRO GP WHERE GP.PR_ID = P.PR_ID) 
+		WHERE G.GR_ID = (SELECT GP.GR_ID FROM RC_GRPRO GP WHERE GP.PR_ID = P.PR_ID) 
 		AND M.MEM_ID = (SELECT PM.MEM_ID FROM RC_PROMEM PM WHERE PM.PR_ID = P.PR_ID AND PM.PR_LEVEL = 'PM')
 		AND P.PR_ID IN (SELECT PM.PR_ID FROM RC_PROMEM PM WHERE PM.MEM_ID = #{mem_id})
 		AND P.PR_DELYN = 'N'
 		AND P.PR_NAME LIKE '%${pr_name}%'
 	</select>
+	<!-- myGPrSearchSelect 페이징 끝 -->
 	
-	<select id="myIPrSearchSelect" parameterType="java.util.Map" resultType="java.util.Map">
-		SELECT P.PR_ID, P.PR_NAME, M.MEM_NAME
+	<!-- myIPrSearchSelect 페이징 시작 -->
+	<select id="myIPrSearchSelect" parameterType="ProjectPagingDto" resultType="java.util.Map">
+		SELECT *
+		FROM ( SELECT ROWNUM RNUM, P.*
+		      FROM (
+	            SELECT P.PR_ID, P.PR_NAME, M.MEM_NAME, P.PR_CONDITION
+				FROM RC_PROJECT P, RC_MEMBER M
+				WHERE NOT P.PR_ID IN (SELECT GP.PR_ID FROM RC_GRPRO GP)
+				AND M.MEM_ID = (SELECT PM.MEM_ID FROM RC_PROMEM PM WHERE PM.PR_LEVEL = 'PM' AND PM.PR_ID = P.PR_ID)
+				AND P.PR_ID IN (SELECT PR_ID FROM RC_PROMEM WHERE MEM_ID = #{ mem_id})
+				AND P.PR_DELYN = 'N'
+				AND P.PR_NAME LIKE '%${ pr_name }%'
+		      ) P
+		    )	
+		WHERE RNUM BETWEEN #{start} AND #{last}
+	</select>
+	
+	<select id="myIpSearchTotalcount" parameterType="java.util.Map" resultType="java.lang.Integer">
+	SELECT NVL(COUNT(*),0)
 		FROM RC_PROJECT P, RC_MEMBER M
 		WHERE NOT P.PR_ID IN (SELECT GP.PR_ID FROM RC_GRPRO GP)
 		AND M.MEM_ID = (SELECT PM.MEM_ID FROM RC_PROMEM PM WHERE PM.PR_LEVEL = 'PM' AND PM.PR_ID = P.PR_ID)
 		AND P.PR_ID IN (SELECT PR_ID FROM RC_PROMEM WHERE MEM_ID = #{mem_id})
 		AND P.PR_DELYN = 'N'
-		AND P.PR_CONDITION = #{pr_condition}
 		AND P.PR_NAME LIKE '%${pr_name}%'
 	</select>
+	<!-- myIPrSearchSelect 페이징 끝 -->
 
 </mapper>

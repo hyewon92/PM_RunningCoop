@@ -114,11 +114,6 @@
 				"<td colspan='2'><input type='button' value='수정' class='body_btn wd_edit_btn' onclick='wdEdit(\""+wd_id+"\")'/>" +
 				"<input type='button' value='취소' class='body_btn wd_edit_cancle_btn' onclick='wdEdit_Cancle()'/></td>" +
 				"</tr>");
-		
-		/*$(val).siblings("div").append("하위업무내용<input type='textbox' id = 'newWdTitle' name='wd_title' value=''/>")
-		.append("마감일자<input type='date' id = 'newWdEndDate' name='wd_endDate' value=''/>")
-		.append("<input type='button' value='수정' onclick='wdEdit("+wd_id+")'/>")
-		.append("<input type='button' value='취소' onclick='wdEdit_Cancle()'/>");*/
 	}
 	
 	/* 업무 상세 페이지 - 하위 업무 수정 기능 */

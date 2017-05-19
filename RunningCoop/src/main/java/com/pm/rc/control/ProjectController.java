@@ -1099,10 +1099,14 @@ public class ProjectController {
 	public String goDoingSelect(HttpSession session, Model model , HttpServletRequest req){
 		String mem_id = (String)session.getAttribute("mem_id");
 		String pr_name = "";
-		ProjectPagingDto prPaging = new ProjectPagingDto(req.getParameter("index"),
-														 req.getParameter("pageStartNum"),
-														 req.getParameter("listCnt"),
-														 mem_id,pr_name);
+		ProjectPagingDto gPrPaging = new ProjectPagingDto(req.getParameter("gIndex"),
+														 req.getParameter("gPageStartNum"),
+														 req.getParameter("gListCnt"),
+														 mem_id, pr_name);
+		ProjectPagingDto iPrPaging = new ProjectPagingDto(req.getParameter("iIndex"),
+														req.getParameter("iPageStartNum"),
+														req.getParameter("iListCnt"),
+														mem_id, pr_name);
 				
 		
 		logger.info("====================== 진행 중인 프로젝트 목록 조회 =========================");
@@ -1112,13 +1116,16 @@ public class ProjectController {
 		List<Map<String, String>> GPrlist = new ArrayList<Map<String, String>>();
 		List<Map<String, String>> IPrlist = new ArrayList<Map<String, String>>();
 		
-		GPrlist = service.myDoingGPrListSelect(prPaging);
-		prPaging.setTotal(service.myDoingGpTotalcount(mem_id));
-		IPrlist = service.myDoingIPrListSelect(mem_id);
+		GPrlist = service.myDoingGPrListSelect(gPrPaging);
+		gPrPaging.setTotal(service.myDoingGpTotalcount(mem_id));
+		IPrlist = service.myDoingIPrListSelect(iPrPaging);
+		iPrPaging.setTotal(service.myDoingIpTotalcount(mem_id));
+		
 		
 		model.addAttribute("gPrList", GPrlist);
-		model.addAttribute("paging",prPaging);	
+		model.addAttribute("gPaging",gPrPaging);
 		model.addAttribute("iPrList", IPrlist);
+		model.addAttribute("iPaging", iPrPaging);
 		
 		return "project/doingProList";
 	}
@@ -1128,9 +1135,13 @@ public class ProjectController {
 	public String goTodoSelect(HttpSession session, Model model, HttpServletRequest req){
 		String mem_id = (String)session.getAttribute("mem_id");
 		String pr_name = "";
-		ProjectPagingDto prPaging = new ProjectPagingDto(req.getParameter("index"),
-														 req.getParameter("pageStartNum"),
-														 req.getParameter("listCnt"),
+		ProjectPagingDto gPrPaging = new ProjectPagingDto(req.getParameter("gIndex"),
+														 req.getParameter("gPageStartNum"),
+														 req.getParameter("gListCnt"),
+														 mem_id, pr_name);
+		ProjectPagingDto iPrPaging = new ProjectPagingDto(req.getParameter("iIndex"),
+														 req.getParameter("iPageStartNum"),
+														 req.getParameter("iListCnt"),
 														 mem_id, pr_name);
 		
 		logger.info("====================== 진행 예정인 프로젝트 목록 조회 =========================");
@@ -1140,13 +1151,15 @@ public class ProjectController {
 		List<Map<String, String>> GPrlist = new ArrayList<Map<String, String>>();
 		List<Map<String, String>> IPrlist = new ArrayList<Map<String, String>>();
 		
-		GPrlist = service.myTodoGPrListSelect(prPaging);
-		prPaging.setTotal(service.myTodoGPlistTotalCount(mem_id));
-		IPrlist = service.myTodoIPrListSelect(mem_id);
+		GPrlist = service.myTodoGPrListSelect(gPrPaging);
+		gPrPaging.setTotal(service.myTodoGpTotalcount(mem_id));
+		IPrlist = service.myTodoIPrListSelect(iPrPaging);
+		iPrPaging.setTotal(service.myTodoIpTotalcount(mem_id));
 		
 		model.addAttribute("gPrList", GPrlist);
-		model.addAttribute("paging",prPaging);
-		model.addAttribute("iProList", IPrlist);
+		model.addAttribute("gPaging", gPrPaging);
+		model.addAttribute("iPrList", IPrlist);
+		model.addAttribute("iPaging", iPrPaging);
 		
 		return "project/todoProList";
 	}
@@ -1156,10 +1169,14 @@ public class ProjectController {
 	public String goDoneSelect(HttpSession session, Model model, HttpServletRequest req){
 		String mem_id = (String)session.getAttribute("mem_id");
 		String pr_name = "";
-		ProjectPagingDto prPaging = new ProjectPagingDto(req.getParameter("index"),
-														 req.getParameter("pageStartNum"),
-														 req.getParameter("listCnt"),
+		ProjectPagingDto gPrPaging = new ProjectPagingDto(req.getParameter("gIndex"),
+														 req.getParameter("gPageStartNum"),
+														 req.getParameter("gListCnt"),
 														 mem_id, pr_name);
+		ProjectPagingDto iPrPaging = new ProjectPagingDto(req.getParameter("iIndex"),
+														req.getParameter("iPageStartNum"),
+														req.getParameter("iListCnt"),
+														mem_id, pr_name);
 		
 		logger.info("====================== 진행 완료인 프로젝트 목록 조회 =========================");
 		logger.info("프로젝트 조회할 멤버 아이디 : "+mem_id);
@@ -1168,13 +1185,15 @@ public class ProjectController {
 		List<Map<String, String>> GPrlist = new ArrayList<Map<String, String>>();
 		List<Map<String, String>> IPrlist = new ArrayList<Map<String, String>>();
 		
-		GPrlist = service.myDidGPrListSelect(prPaging);
-		prPaging.setTotal(service.createMyDidGprListTotalCount(mem_id));
-		IPrlist = service.myDidIPrListSelect(mem_id);
+		GPrlist = service.myDidGPrListSelect(gPrPaging);
+		gPrPaging.setTotal(service.myDidGpTotalcount(mem_id));
+		IPrlist = service.myDidIPrListSelect(iPrPaging);
+		iPrPaging.setTotal(service.myDidIpTotalcount(mem_id));
 		
 		model.addAttribute("gPrList", GPrlist);
-		model.addAttribute("paging",prPaging);
-		model.addAttribute("iProList", IPrlist);
+		model.addAttribute("gPaging",gPrPaging);
+		model.addAttribute("iPrList", IPrlist);
+		model.addAttribute("iPaging", iPrPaging);
 		
 		return "project/doneProList";
 	}
@@ -1225,28 +1244,41 @@ public class ProjectController {
 	public String myPrSelect(HttpServletRequest request, HttpSession session, Model model){
 		String mem_id = (String)session.getAttribute("mem_id");
 		String pr_name = request.getParameter("pr_name");
-		String pr_condition = request.getParameter("pr_condition");
+		/*String pr_condition = request.getParameter("pr_condition");*/
+		
+		ProjectPagingDto gPrPaging = new ProjectPagingDto(request.getParameter("gIndex"),
+				 request.getParameter("gPageStartNum"),
+				 request.getParameter("gListCnt"),
+				 mem_id, pr_name);
+		ProjectPagingDto iPrPaging = new ProjectPagingDto(request.getParameter("iIndex"),
+				request.getParameter("iPageStartNum"),
+				request.getParameter("iListCnt"),
+				mem_id, pr_name);
 		
 		logger.info("================== 나의 프로젝트 검색 목록 조회 ===================");
 		logger.info("조회할 프로젝트 명 : "+pr_name);
 		logger.info("프로젝트를 조회할 멤버 아이디 : "+mem_id);
-		logger.info("조회할 프로젝트 상태 : "+pr_condition);
+		/*logger.info("조회할 프로젝트 상태 : "+pr_condition);*/
 		logger.info("=========================================================");
 		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("mem_id", mem_id);
 		map.put("pr_name", pr_name);
-		map.put("pr_condition", pr_condition);
+		/*map.put("pr_condition", pr_condition);*/
 		
 		List<Map<String, String>> glist = new ArrayList<Map<String, String>>();
 		List<Map<String, String>> ilist = new ArrayList<Map<String, String>>();
 		
 		glist = service.myGPrSearchSelect(map);
+		gPrPaging.setTotal(service.myGpSearchTotalcount(gPrPaging));
 		ilist = service.myIPrSearchSelect(map);
+		iPrPaging.setTotal(service.myIpSearchTotalcount(iPrPaging));
 		
 		model.addAttribute("glist", glist);
 		model.addAttribute("ilist", ilist);
-		model.addAttribute("pr_condition", pr_condition);
+		/*model.addAttribute("pr_condition", pr_condition);*/
+		model.addAttribute("gPaging", gPrPaging);
+		model.addAttribute("iPaging", iPrPaging);
 		
 		return "project/myPrSearchList";
 	}

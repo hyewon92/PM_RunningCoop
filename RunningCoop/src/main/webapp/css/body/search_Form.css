@@ -35,3 +35,33 @@
     border: 1px solid transparent;
     border-radius: 3px;
 }
+
+.search_project_div{
+	float : left;
+	margin-left: 10px;
+}
+
+.search_select_type{
+	width: 100px;
+    height: 20px;
+    margin-right: 10px;
+    vertical-align: middle;
+    font-size: 10pt;
+}
+
+#search_word_02{
+	width: 200px;
+    height: 15px;
+    vertical-align: middle;
+}
+
+.do_search_btn_02{
+	color: white;
+    padding: 1px 4px;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    font-size: 11pt;
+    font-weight: bold;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}

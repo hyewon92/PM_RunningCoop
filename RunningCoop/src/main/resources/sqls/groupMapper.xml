@@ -12,6 +12,7 @@
 		<result property="gr_name" column="GR_NAME"/>
 		<result property="gr_regDate" column="GR_REGDATE"/>
 		<result property="memberdto.mem_name" column="mem_name"/>
+		<result property="gr_joinYN" column="GR_JOINYN"/>
 	</resultMap>
 
 	<select id="myGrSelect" parameterType="java.util.Map" resultType="GroupDto">
@@ -137,7 +138,7 @@
 		SELECT *
 		FROM ( SELECT ROWNUM RNUM, P.*
 		      FROM (
-	            SELECT G.GR_ID, G.GR_NAME, M.MEM_NAME, G.GR_REGDATE FROM RC_GROUP G, RC_MEMBER M 
+	            SELECT G.GR_ID, G.GR_NAME, M.MEM_NAME, G.GR_REGDATE, G.GR_JOINYN FROM RC_GROUP G, RC_MEMBER M 
 				WHERE M.MEM_ID IN (SELECT GM.MEM_ID FROM RC_GROUPMEM GM WHERE GM.GR_ID = G.GR_ID AND GM.GR_LEVEL = 'GM')
 				AND G.GR_NAME LIKE '%'||#{gr_name}||'%'
 				ORDER BY G.GR_REGDATE DESC

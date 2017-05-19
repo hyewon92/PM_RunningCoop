@@ -25,70 +25,117 @@ public interface ProjectDao {
 	public List<ProjectDto> myProSelect(String mem_id);
 	
 	/**
-	 * 나의 완료한 프로젝트 조회
-	 * @param mem_id
-	 * @return
-	 */
-	public Map<String, String> myDidPrSelect(String mem_id);
-	
-	/**
-	 * 내가 완료한 그룹 프로젝트 리스트
-	 * @param mem_id
-	 * @return
-	 */
-	public List<Map<String, String>> myDidGPrListSelect(ProjectPagingDto prPaging);
-	public int createMyDidGprListTotalCount (String mem_id);
-	
-	/**
-	 * 내가 완료한 개인 프로젝트 리스트
-	 * @param mem_id
-	 * @return
-	 */
-	public List<Map<String, String>> myDidIPrListSelect(String mem_id);
-	
-	/**
 	 * 나의 진행중인 프로젝트 조회
+	 * 사이드 메뉴의 진행중인 프로젝트 건 수 조회 dao
 	 * @param mem_id
 	 * @return
 	 */
 	public Map<String, String> myDoingPrSelect(String mem_id);
 	
 	/**
-	 * 내가 진행중인 그룹 프로젝트 리스트
-	 * @param mem_id
-	 * @return
-	 */
-	public List<Map<String, String>> myDoingGPrListSelect(ProjectPagingDto prPaging);
-	public int myDoingGpTotalcount(String mem_id);
-	
-	/**
-	 * 내가 진행중인 개인 프로젝트 리스트
-	 * @param mem_id
-	 * @return
-	 */
-	public List<Map<String, String>> myDoingIPrListSelect(String mem_id);
-	
-	/**
 	 * 나의 진행예정 프로젝트 조회
+	 * 사이드 메뉴의 진행예정 프로젝트 건 수 조회 dao
 	 * @param mem_id
 	 * @return
 	 */
 	public Map<String, String> myToDoPrSelect(String mem_id);
 	
 	/**
-	 * 내가 해야 할 그룹 프로젝트 리스트
+	 * 나의 진행완료 프로젝트 조회
+	 * 사이드 메뉴의 진행완료 프로젝트 건 수 조회 dao
+	 * @param mem_id
+	 * @return
+	 */
+	public Map<String, String> myDidPrSelect(String mem_id);
+	
+	/* 나의 진행중인 프로젝트 조회 dao */
+	/**
+	 * 나의 진행중인 그룹 프로젝트 리스트 조회
+	 * @param mem_id
+	 * @return
+	 */
+	public List<Map<String, String>> myDoingGPrListSelect(ProjectPagingDto prPaging);
+	
+	/**
+	 * 페이징 - 나의 진행중인 그룹 프로젝트 리스트 총 갯수
+	 * @param mem_id
+	 * @return
+	 */
+	public int myDoingGpTotalcount(String mem_id);
+	
+	/**
+	 * 나의 진행중인 개인 프로젝트 리스트 조회
+	 * @param mem_id
+	 * @return
+	 */
+	public List<Map<String, String>> myDoingIPrListSelect(ProjectPagingDto prPaging);
+	
+	/**
+	 * 페이징 - 나의 진행중인 개인 프로젝트 리스트 총 갯수
+	 * @param mem_id
+	 * @return
+	 */
+	public int myDoingIpTotalcount(String mem_id);
+	/* 나의 진행중인 프로젝트 조회 dao 끝 */
+	
+	/* 나의 진행예정 프로젝트 조회 dao */
+	/**
+	 * 나의 진행예정 그룹 프로젝트 리스트 조회
 	 * @param mem_id
 	 * @return
 	 */
 	public List<Map<String, String>> myTodoGPrListSelect(ProjectPagingDto prPaging);
-	public int myTodoGPlistTotalCount(String mem_id);
 	
 	/**
-	 * 내가 해야 할 개인 프로젝트 리스트
+	 * 페이징 - 나의 진행예정 그룹 프로젝트 총 갯수
 	 * @param mem_id
 	 * @return
 	 */
-	public List<Map<String, String>> myTodoIPrListSelect(String mem_id);
+	public int myTodoGpTotalcount(String mem_id);
+	
+	/**
+	 * 나의 진행예정 개인 프로젝트 리스트 조회
+	 * @param mem_id
+	 * @return
+	 */
+	public List<Map<String, String>> myTodoIPrListSelect(ProjectPagingDto prPaging);
+	
+	/**
+	 * 페이징 - 나의 진행예정 개인 프로젝트 리스트 총 갯수
+	 * @param mem_id
+	 * @return
+	 */
+	public int myTodoIpTotalcount(String mem_id);
+	/* 나의 진행예정 프로젝트 dao 끝 */
+	
+	/* 나의 진행완료 프로젝트 dao */
+	/**
+	 * 나의 진행완료 그룹 프로젝트 리스트 조회
+	 * @param mem_id
+	 * @return
+	 */
+	public List<Map<String, String>> myDidGPrListSelect(ProjectPagingDto prPaging);
+	
+	/**
+	 * 페이징 - 나의 진행완료 그룹 프로젝트 리스트 총 갯수
+	 * @param mem_id
+	 * @return
+	 */
+	public int myDidGpTotalcount (String mem_id);
+	
+	/**
+	 * 나의 진행완료 개인 프로젝트 리스트 조회
+	 * @param mem_id
+	 * @return
+	 */
+	public List<Map<String, String>> myDidIPrListSelect(ProjectPagingDto prPaging);
+	
+	/**
+	 * 페이징 - 나의 진행완료 개인 프로젝트 리스트 총 갯수
+	 * @param mem_id
+	 * @return
+	 */
+	public int myDidIpTotalcount(String mem_id);
 	
 	/**
 	 * 시스템 전체  프로젝트 조회(검색)
@@ -108,12 +155,26 @@ public interface ProjectDao {
 	public List<Map<String, String>> myGPrSearchSelect(Map<String, String> map);
 	
 	/**
+	 * 페이징 - 내 프로젝트 목록에서 그룹 프로젝트 검색 시 총 건수
+	 * @param map
+	 * @return
+	 */
+	public int myGpSearchTotalcount(ProjectPagingDto dto);
+	
+	/**
 	 * 프로젝트명으로 검색 (내 프로젝트 목록에서 개인 프로젝트 검색)
 	 * @param map mem_id, pr_name을 받아서 검색
 	 * @return List&lt;ProjectDto&gt;
 	 * @author 김혜원
 	 * */
 	public List<Map<String, String>> myIPrSearchSelect(Map<String, String> map);
+	
+	/**
+	 * 페이징 - 내 프로젝트 목록에서 개인 프로젝트 검색 시 총 건수
+	 * @param map
+	 * @return
+	 */
+	public int myIpSearchTotalcount(ProjectPagingDto dto);
 	
 	/**
 	 * 해당하는 프로젝트의 상세정보를 조회

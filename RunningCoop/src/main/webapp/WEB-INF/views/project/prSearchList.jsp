@@ -10,7 +10,6 @@
 <title>프로젝트 검색 목록</title>
 
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
-<%@include file="/WEB-INF/views/Group/bootstrap.jsp"%>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="./js/paging.js"></script>
 
@@ -45,7 +44,7 @@ function showProDetail(nodes){
 	var pr_enddate = nodes.PR_ENDDATE;
 	var pr_etc = nodes.PR_ETC;
 	
-	$("#pr_name").text(pr_name);
+	$("#pr_name_detail").text(pr_name);
 	$("#mem_name").text(mem_name);
 	$("#pr_memcnt").text(pr_memcnt);
 	$("#pr_goal").text(pr_goal);
@@ -53,11 +52,34 @@ function showProDetail(nodes){
 	$("#pr_etc").text(pr_etc);
 	
 	$(".pr_detail_view").css("display", "block");
+	$(".pr_detail_view").dialog({
+		title : "프로젝트 정보 보기",
+		height : 400,
+		width : 500,
+		position : {my : "center", at : "center"},
+		resizable : false,
+		modal : true
+	});
 }
 
 function goSelectPro(){
 	$(".pr_detail_view").css("display", "none");
 	$(".pr_detail_view").eq(0).children("p").html("");
+}
+
+function doSearch(){
+	var type = $("#search_select_type option:selected").val();
+	var work = $("#search_word_02").val();
+
+	if(type == "choice"){
+		alert("검색 타입을 선택해주세요!");
+	} else if (type == "group"){
+		$("#gr_name").val(work);
+		$("#groupSearch").submit();
+	} else {
+		$("#pr_name").val(work);
+		$("#projectSearch").submit();
+	}
 }
 </script>
 </head>
@@ -65,50 +87,60 @@ function goSelectPro(){
 <div id = "header">
 	<jsp:include page="../header.jsp" flush="false"/>
 </div>
+
 <div id = "container">
 <h3>프로젝트 검색 목록</h3>
-	<div id='select'>
-			<span> <select class='btn btn-primary' id='listCount' name='listCount'
-				onchange='listCnt();'>
-					<option>선택</option>
-					<option value='5' >5</option>
-					<option value='10'>10</option>
-					<option value='15'>15</option>
-					<option value='20'>20</option>
-			</select>
-			</span>
-		</div>
-	<form action="./allPrSelect.do" method="post" id='frmPaging'>
-<table class="table table-bordered">
-	<tr>
-		<th>번호</th>
-		<th>소속</th>
-		<th>프로젝트명</th>
-		<th>PM명</th>
-	</tr>
-	<c:choose>
-		<c:when test="${ fn:length(list) == 0 }">
-			<tr>
-				<td colspan="4">검색된 프로젝트가 없습니다</td>
-			</tr>
-		</c:when>
-		<c:otherwise>
-			<c:forEach var="list" items="${ list }" varStatus="vs">
-				<tr>
-					<td>${ vs.count }</td>
-					<td>${ list.GRYN }</td>
-					<td><span class="pr_name" onclick="detailPro('${list.PR_ID}')">${ list.PR_NAME }</span></td>
-					<td>${ list.MEM_NAME }</td>
-				</tr>
-			</c:forEach>
-		</c:otherwise>
-	</c:choose>
-</table>
-<!-- 5. paging view -->
-			<!--출력할 페이지번호, 출력할 페이지 시작 번호, 출력할 리스트 갯수 -->
+	<div class="search_project_div">
+		<select class="search_select_type" id="search_select_type">
+			<option value="choice">선택</option>
+			<option value="group">그룹</option>
+			<option value="project">프로젝트</option>
+		</select>
+		<input type="text" id="search_word_02" name="search_word"/>
+		<button class="body_btn do_search_btn_02" onclick="doSearch()">검색</button>
+	</div>
+	
+	<div id="div_select_area">
+		<select class='project_list_select' id='listCount' name='listCount' onchange='listCnt();'>
+			<option>선택</option>
+			<option value='5' >5</option>
+			<option value='10'>10</option>
+			<option value='15'>15</option>
+			<option value='20'>20</option>
+		</select>
+		<form action="./allPrSelect.do" method="post" id='frmPaging'>
 			<input type='hidden' name='index' id='index' value='${paging.index}'>
 			<input type='hidden' name='pageStartNum' id='pageStartNum' value='${paging.pageStartNum}'>
-			<input type='hidden' name='listCnt' id='listCnt' value='${paging.listCnt}'>		
+			<input type='hidden' name='listCnt' id='listCnt' value='${paging.listCnt}'>
+		</form>
+	</div>
+	
+	<div class="div_result_area">
+		<table class="projectTable">
+			<tr>
+				<th style="width: 10%;">번호</th>
+				<th style="width: 20%;">소속</th>
+				<th style="width: 40%;">프로젝트명</th>
+				<th style="width: 30%;">PM명</th>
+			</tr>
+			<c:choose>
+				<c:when test="${ fn:length(list) == 0 }">
+					<tr>
+						<td colspan="4">검색된 프로젝트가 없습니다</td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="list" items="${ list }" varStatus="vs">
+						<tr>
+							<td>${ vs.count }</td>
+							<td>${ list.GRYN }</td>
+							<td><span class="pr_name" onclick="detailPro('${list.PR_ID}')">${ list.PR_NAME }</span></td>
+							<td>${ list.MEM_NAME }</td>
+						</tr>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
+		</table>
 		<div class="center">
 				<ul class="pagination">
 					<!--맨 첫페이지 이동 -->
@@ -124,18 +156,52 @@ function goSelectPro(){
 					<!--마지막 페이지 이동 -->
 					<li><a href='#' onclick='pageLast(${paging.pageStartNum},${paging.total},${paging.listCnt},${paging.pageCnt});'>&raquo;</a></li>
 				</ul>
+		</div>
+	</div>
+			
+	<div class="hide_form">
+		<form id="groupSearch" action="./allGrSelect.do" method="post">
+			<div class="ui-widget">
+				<input type="text" name="gr_name" id="gr_name" class="searchbox"/>
+			</div>
+		</form>
+		<form id="projectSearch" action="./allPrSelect.do" method="post">
+			<div class="ui-widget">
+				<input type="text" name="pr_name" id="pr_name" />
 			</div>
 		</form>
 	</div>
-<div class="pr_detail_view">
-	<input type="button" value="닫기" onclick="goSelectPro()"/>
-		<p id="pr_name"></p>
-		<p id="mem_name"></p>
-		<p id="pr_memcnt"></p>
-		<p id="pr_goal"></p>
-		<p id="pr_enddate"></p>
-		<p id="pr_etc"></p>
+	
+	<div class="pr_detail_view">
+		<table class="pr_detail_table">
+			<tr>
+				<th>프로젝트명</th>
+				<td><span id="pr_name_detail"></span></td>
+			</tr>
+			<tr>
+				<th>프로젝트관리자</th>
+				<td><span id="mem_name"></span></td>
+			</tr>
+			<tr>
+				<th>프로젝트 인원</th>
+				<td><span id="pr_memcnt"></span></td>
+			</tr>
+			<tr>
+				<th>프로젝트목적</th>
+				<td><span id="pr_goal"></span></td>
+			</tr>
+			<tr>
+				<th>프로젝트마감기한</th>
+				<td><span id="pr_enddate"></span></td>
+			</tr>
+			<tr>
+				<th style="height : 80px;">비고</th>
+				<td style="height : 80px;"><span id="pr_etc"></span></td>
+			</tr>
+		</table>
 	</div>
+</div>
+
 <div id = "footer">
 	<jsp:include page="../footer.jsp" flush="false"/>
 </div>

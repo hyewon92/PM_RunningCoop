@@ -11,7 +11,7 @@
 
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="./js/paging.js"></script>
+<script type="text/javascript" src="js/paging.js"></script>
 
 <style type="text/css">
 .pr_detail_view {
@@ -79,74 +79,24 @@
 		<div id="div_select_area">
 			<input type="radio" name="project_type" value="individual" checked/>개인 프로젝트
 			<input type="radio" name="project_type" value="group"/>그룹 프로젝트&nbsp;&nbsp;
-			<select class='project_list_select' id='listCount' name='listCount' onchange='listCnt();'>
+			<select class='project_list_select' id='listCount' name='listCount' onchange="projectListCnt()">
 					<option>선택</option>
 					<option value='5'>5</option>
 					<option value='10'>10</option>
 					<option value='15'>15</option>
 					<option value='20'>20</option>
 			</select>
-		</div>
-		<div id="group_project_list">
-			<form action="./goDoingSelect.do" method="post" id='frmPaging'>
-				<table class="projectTable">
-					<tr>
-						<th style="width: 8%;">번호</th>
-						<th style="width: 8%;">소속</th>
-						<th style="width: 54%;">프로젝트명</th>
-						<th style="width: 15%;">PM명</th>
-						<th style="width: 15%;">비고</th>
-					</tr>
-					<tr>
-						<td colspan="5" style="background : #E8E8E8;">그룹 프로젝트</td>
-					</tr>
-					<c:choose>
-						<c:when test="${ fn:length(gPrList) == 0 }">
-							<tr>
-								<td colspan="5">조회 가능한 그룹 프로젝트가 없습니다.</td>
-							</tr>
-						</c:when>
-						<c:otherwise>
-							<c:forEach var="glist" items="${ gPrList }" varStatus="vs">
-								<tr>
-									<td>${ vs.count }</td>
-									<td>그룹</td>
-									<td><span class="pr_name" onclick="view_Detail('${ glist.PR_ID }')">${ glist.PR_NAME }</span></td>
-									<td>${ glist.MEM_NAME }</td>
-									<td>${ glist.GR_NAME }</td>
-								</tr>
-							</c:forEach>
-						</c:otherwise>
-					</c:choose>
-				</table>
-				<!-- 5. paging view -->
-				<!--출력할 페이지번호, 출력할 페이지 시작 번호, 출력할 리스트 갯수 -->
-				<input type='hidden' name='index' id='index' value='${paging.index}'>
-				<input type='hidden' name='pageStartNum' id='pageStartNum'
-					value='${paging.pageStartNum}'> <input type='hidden'
-					name='listCnt' id='listCnt' value='${paging.listCnt}'>
-				<div class="pagenum_div">
-					<ul class="pagination">
-						<!--맨 첫페이지 이동 -->
-						<li><a href='#' onclick='pagePre(${paging.pageCnt+1},${paging.pageCnt});'>&laquo;</a></li>
-						<!--이전 페이지 이동 -->
-						<li><a href='#' onclick='pagePre(${paging.pageStartNum},${paging.pageCnt});'>&lsaquo;</a></li>
-						<!--페이지번호 -->
-						<c:forEach var='i' begin="${paging.pageStartNum}" end="${paging.pageLastNum}" step="1">
-							<li><a href='#' onclick='pageIndex(${i});'>${i}</a></li>
-						</c:forEach>
-						<!--다음 페이지 이동 -->
-						<li><a href='#'
-							onclick='pageNext(${paging.pageStartNum},${paging.total},${paging.listCnt},${paging.pageCnt});'>&rsaquo;</a></li>
-						<!--마지막 페이지 이동 -->
-						<li><a href='#'
-							onclick='pageLast(${paging.pageStartNum},${paging.total},${paging.listCnt},${paging.pageCnt});'>&raquo;</a></li>
-					</ul>
-				</div>
+			<form action="./goDoingSelect.do" method="post" id="frmPaging">
+				<input type='hidden' name='gIndex' id='gIndex' value='${gPaging.index}'>
+				<input type='hidden' name='gPageStartNum' id='gPageStartNum' value='${gPaging.pageStartNum}'>
+				<input type='hidden' name='gListCnt' id='gListCnt' value='${gPaging.listCnt}'>
+				<input type='hidden' name='iIndex' id='iIndex' value='${iPaging.index}'>
+				<input type='hidden' name='iPageStartNum' id='iPageStartNum' value='${iPaging.pageStartNum}'>
+				<input type='hidden' name='iListCnt' id='iListCnt' value='${iPaging.listCnt}'>
 			</form>
 		</div>
+		
 		<div id="individual_project_list">
-		<form action="./goDoingSelect.do" method="post" id='frmPaging'>
 			<table class="projectTable">
 				<tr>
 					<th style="width: 8%;">번호</th>
@@ -161,7 +111,7 @@
 				<c:choose>
 					<c:when test="${ fn:length(iPrList) == 0 }">
 						<tr>
-							<td colspan="5">조회가능한 그룹 프로젝트가 없습니다</td>
+							<td colspan="5">조회가능한 개인 프로젝트가 없습니다</td>
 						</tr>
 					</c:when>
 					<c:otherwise>
@@ -177,44 +127,89 @@
 					</c:otherwise>
 				</c:choose>
 			</table>
-			<!-- 5. paging view -->
-			<!--출력할 페이지번호, 출력할 페이지 시작 번호, 출력할 리스트 갯수 -->
-			<input type='hidden' name='index' id='index' value='${paging.index}'>
-			<input type='hidden' name='pageStartNum' id='pageStartNum'
-				value='${paging.pageStartNum}'> <input type='hidden'
-				name='listCnt' id='listCnt' value='${paging.listCnt}'>
+			
 			<div class="pagenum_div">
 				<ul class="pagination">
 					<!--맨 첫페이지 이동 -->
 					<li><a href='#'
-						onclick='pagePre(${paging.pageCnt+1},${paging.pageCnt});'>&laquo;</a></li>
+						onclick='pagePre(${iPaging.pageCnt+1},${iPaging.pageCnt});'>&laquo;</a></li>
 					<!--이전 페이지 이동 -->
 					<li><a href='#'
-						onclick='pagePre(${paging.pageStartNum},${paging.pageCnt});'>&lsaquo;</a></li>
+						onclick='pagePre(${iPaging.pageStartNum},${iPaging.pageCnt});'>&lsaquo;</a></li>
 					<!--페이지번호 -->
-					<c:forEach var='i' begin="${paging.pageStartNum}"
-						end="${paging.pageLastNum}" step="1">
-						<li><a href='#' onclick='pageIndex(${i});'>${i}</a></li>
+					<c:forEach var='i' begin="${iPaging.pageStartNum}" end="${iPaging.pageLastNum}" step="1">
+						<li><a href='#' onclick='projectPageIndex(${i});'>${i}</a></li>
 					</c:forEach>
 					<!--다음 페이지 이동 -->
 					<li><a href='#'
-						onclick='pageNext(${paging.pageStartNum},${paging.total},${paging.listCnt},${paging.pageCnt});'>&rsaquo;</a></li>
+						onclick='pageNext(${iPaging.pageStartNum},${iPaging.total},${iPaging.listCnt},${iPaging.pageCnt});'>&rsaquo;</a></li>
 					<!--마지막 페이지 이동 -->
 					<li><a href='#'
-						onclick='pageLast(${paging.pageStartNum},${paging.total},${paging.listCnt},${paging.pageCnt});'>&raquo;</a></li>
+						onclick='pageLast(${iPaging.pageStartNum},${iPaging.total},${iPaging.listCnt},${iPaging.pageCnt});'>&raquo;</a></li>
 				</ul>
 			</div>
-		</form>
 		</div>
-			
+		
+		<div id="group_project_list" style="display:none;">
+				<table class="projectTable">
+					<tr>
+						<th style="width: 8%;">번호</th>
+						<th style="width: 8%;">소속</th>
+						<th style="width: 54%;">프로젝트명</th>
+						<th style="width: 15%;">PM명</th>
+						<th style="width: 15%;">비고</th>
+					</tr>
+					<tr>
+						<td colspan="5" style="background : #E8E8E8;">그룹 프로젝트</td>
+					</tr>
+					<c:choose>
+						<c:when test="${ fn:length(gPrList) == 0 }">
+							<tr>
+								<td colspan="5">조회가능한 그룹 프로젝트가 없습니다.</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="glist" items="${ gPrList }" varStatus="vs">
+								<tr>
+									<td>${ vs.count }</td>
+									<td>그룹</td>
+									<td><span class="pr_name" onclick="view_Detail('${ glist.PR_ID }')">${ glist.PR_NAME }</span></td>
+									<td>${ glist.MEM_NAME }</td>
+									<td>${ glist.GR_NAME }</td>
+								</tr>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</table>
+				
+				<div class="pagenum_div">
+					<ul class="pagination">
+						<!--맨 첫페이지 이동 -->
+						<li><a href='#' onclick='pagePre(${gPaging.pageCnt+1},${gPaging.pageCnt});'>&laquo;</a></li>
+						<!--이전 페이지 이동 -->
+						<li><a href='#' onclick='pagePre(${gPaging.pageStartNum},${gPaging.pageCnt});'>&lsaquo;</a></li>
+						<!--페이지번호 -->
+						<c:forEach var='i' begin="${gPaging.pageStartNum}" end="${gPaging.pageLastNum}" step="1">
+							<li><a href='#' onclick='projectPageIndex(${i});'>${i}</a></li>
+						</c:forEach>
+						<!--다음 페이지 이동 -->
+						<li><a href='#'
+							onclick='pageNext(${gPaging.pageStartNum},${gPaging.total},${gPaging.listCnt},${gPaging.pageCnt});'>&rsaquo;</a></li>
+						<!--마지막 페이지 이동 -->
+						<li><a href='#'
+							onclick='pageLast(${gPaging.pageStartNum},${gPaging.total},${gPaging.listCnt},${gPaging.pageCnt});'>&raquo;</a></li>
+					</ul>
+				</div>
+		</div>
 			
 		<div class="pr_search_area">
 			<form action="./myPrSelect.do" method="post">
-				<input type="hidden" name="pr_condition" value="I" />
+				<!-- <input type="hidden" name="pr_condition" value="I" /> -->
 				<input type="text" name="pr_name" />
 				<input type="submit" class="body_btn pr_search_btn" value="검색" />
 			</form>
 		</div>
+		
 		<div class="pr_detail_view">
 			<input type="button" value="닫기" onclick="goSelectPro()" />
 			<p id="pr_name"></p>
@@ -225,6 +220,7 @@
 			<p id="pr_etc"></p>
 		</div>
 	</div>
+	
 	<div id="footer">
 		<jsp:include page="../footer.jsp" flush="false" />
 	</div>

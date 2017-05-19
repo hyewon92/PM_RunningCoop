@@ -2,6 +2,7 @@
 function frmPaging() {
 	document.getElementById("frmPaging").submit();
 }
+
 // 이전 페이지 index
 function pagePre(index, pageCnt) {
 	if (0 < index - pageCnt) {
@@ -38,10 +39,26 @@ function pageIndex(pageStartNum) {
 	document.getElementById("index").value = pageStartNum - 1;
 	frmPaging();
 }
+
+function projectPageIndex(pageStartNum){
+	document.getElementById("gIndex").value = pageStartNum - 1;
+	document.getElementById("iIndex").value = pageStartNum - 1;
+	frmPaging();
+}
 // 리스트출력개수 처리
 function listCnt() {
 	document.getElementById("index").value = 0;
 	document.getElementById("pageStartNum").value = 1;
 	document.getElementById("listCnt").value = document.getElementById("listCount").value;
+	frmPaging();
+}
+
+function projectListCnt(){
+	document.getElementById("gIndex").value = 0;
+	document.getElementById("iIndex").value = 0;
+	document.getElementById("gPageStartNum").value = 1;
+	document.getElementById("iPageStartNum").value = 1;
+	document.getElementById("gListCnt").value = document.getElementById("listCount").value;
+	document.getElementById("iListCnt").value = document.getElementById("listCount").value;
 	frmPaging();
 }

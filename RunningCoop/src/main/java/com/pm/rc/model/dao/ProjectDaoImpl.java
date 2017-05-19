@@ -1,5 +1,6 @@
 package com.pm.rc.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,58 +52,83 @@ public class ProjectDaoImpl implements ProjectDao {
 	}
 	
 	@Override
-	public List<Map<String, String>> myDidGPrListSelect(ProjectPagingDto prPaging) {
-		return sqlSession.selectList(NAMESPACE+"myDidGPrListSelect", prPaging);
-	}
-	
-	@Override
-	public int createMyDidGprListTotalCount(String mem_id) {
-		return sqlSession.selectOne(NAMESPACE+"createMyDidGprListTotalCount",mem_id);
-	}
-
-	@Override
-	public List<Map<String, String>> myDidIPrListSelect(String mem_id) {
-		return sqlSession.selectList(NAMESPACE+"myDidIPrListSelect", mem_id);
-	}
-
-	@Override
 	public List<Map<String, String>> myDoingGPrListSelect(ProjectPagingDto prPaging) {
 		return sqlSession.selectList(NAMESPACE+"myDoingGPrListSelect", prPaging);
 	}
 	
 	@Override
 	public int myDoingGpTotalcount(String mem_id) {
-		return sqlSession.selectOne(NAMESPACE+"countTotalpaging",mem_id);
+		return sqlSession.selectOne(NAMESPACE+"myDoingGpTotalcount", mem_id);
 	}
-
+	
 	@Override
-	public List<Map<String, String>> myDoingIPrListSelect(String mem_id) {
-		return sqlSession.selectList(NAMESPACE+"myDoingIPrListSelect", mem_id);
+	public List<Map<String, String>> myDoingIPrListSelect(ProjectPagingDto prPaging) {
+		return sqlSession.selectList(NAMESPACE+"myDoingIPrListSelect", prPaging);
 	}
-
+	
+	@Override
+	public int myDoingIpTotalcount(String mem_id){
+		return sqlSession.selectOne(NAMESPACE+"myDoingIpTotalcount", mem_id);
+	}
+	
 	@Override
 	public List<Map<String, String>> myTodoGPrListSelect(ProjectPagingDto prPaging) {
 		return sqlSession.selectList(NAMESPACE+"myTodoGPrListSelect", prPaging);
 	}
-
+	
 	@Override
-	public int myTodoGPlistTotalCount(String mem_id) {
-		return sqlSession.selectOne(NAMESPACE+"createMytodoGPlistTotalCount",mem_id);
+	public int myTodoGpTotalcount(String mem_id) {
+		return sqlSession.selectOne(NAMESPACE+"myTodoGpTotalcount", mem_id);
 	}
 	
 	@Override
-	public List<Map<String, String>> myTodoIPrListSelect(String mem_id) {
-		return sqlSession.selectList(NAMESPACE+"myTodoIPrListSelect", mem_id);
+	public List<Map<String, String>> myTodoIPrListSelect(ProjectPagingDto prPaging) {
+		return sqlSession.selectList(NAMESPACE+"myTodoIPrListSelect", prPaging);
+	}
+	
+	@Override
+	public int myTodoIpTotalcount(String mem_id){
+		return sqlSession.selectOne(NAMESPACE+"myTodoIpTotalcount", mem_id);
+	}
+	
+	@Override
+	public List<Map<String, String>> myDidGPrListSelect(ProjectPagingDto prPaging) {
+		return sqlSession.selectList(NAMESPACE+"myDidGPrListSelect", prPaging);
+	}
+	
+	@Override
+	public int myDidGpTotalcount(String mem_id) {
+		return sqlSession.selectOne(NAMESPACE+"myDidGpTotalcount",mem_id);
+	}
+
+	@Override
+	public List<Map<String, String>> myDidIPrListSelect(ProjectPagingDto prPaging) {
+		return sqlSession.selectList(NAMESPACE+"myDidIPrListSelect", prPaging);
+	}
+	
+	@Override
+	public int myDidIpTotalcount(String mem_id){
+		return sqlSession.selectOne(NAMESPACE+"myDidIpTotalcount", mem_id);
 	}
 	
 	@Override
 	public List<Map<String, String>> myGPrSearchSelect(Map<String, String> map) {
 		return sqlSession.selectList(NAMESPACE+"myGPrSearchSelect", map);
 	}
+	
+	@Override
+	public int myGpSearchTotalcount(ProjectPagingDto dto){
+		return sqlSession.selectOne(NAMESPACE+"myGpSearchTotalcount", dto);
+	}
 
 	@Override
 	public List<Map<String, String>> myIPrSearchSelect(Map<String, String> map) {
 		return sqlSession.selectList(NAMESPACE+"myIPrSearchSelect", map);
+	}
+	
+	@Override
+	public int myIpSearchTotalcount(ProjectPagingDto dto){
+		return sqlSession.selectOne(NAMESPACE+"myIpSearchTotalcount", dto);
 	}
 
 	@Override
