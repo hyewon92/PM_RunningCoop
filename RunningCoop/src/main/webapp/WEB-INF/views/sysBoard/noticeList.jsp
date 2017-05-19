@@ -90,7 +90,7 @@
 	</div>
 	<div>
 	<form action="./noticeSList.do" method="POST">
-		<input type="textbox" name="sbr_title" /> <input type="submit"
+		<input type="text" name="sbr_title" /> <input type="submit"
 			value="검색" />
 	</form>
 	<br>

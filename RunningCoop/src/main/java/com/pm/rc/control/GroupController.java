@@ -84,14 +84,15 @@ public class GroupController implements ServletConfigAware {
 		return "Group/myGrSelect";
 	}
 	//그룹선택하여 정보 확인 및 그룹관리 화면
-	@RequestMapping(value="/grselect.do" ,  method=RequestMethod.GET)
-	public String grDetailSelect(Model model, HttpServletRequest request){
+	@RequestMapping(value="/grselect.do" ,  method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,String> grDetailSelect(Model model, HttpServletRequest request){
 		Map<String,String> map = new HashMap<String, String>();
 		map.put("gr_id", request.getParameter("gr_id"));
 		logger.info("그룹정보 띄우기");
-		List<Map<String, String>> lists = service.grDetailSelect(map);
-		model.addAttribute("grSelect" , lists);
-		return "Group/groupManger";
+		Map<String, String> map2 = service.grDetailSelect(map);
+		
+		return map2;
 	}
 	//그룹관리 화면
 	@RequestMapping(value="/grmodify.do" , method=RequestMethod.GET)
@@ -99,7 +100,7 @@ public class GroupController implements ServletConfigAware {
 		Map<String,String> map = new HashMap<String, String>();
 		map.put("gr_id", requestl.getParameter("gr_id"));
 		logger.info("그룹상세정보 띄우기");
-		List<Map<String, String>> lists = service.grDetailSelect(map);
+		Map<String, String> lists = service.grDetailSelect(map);
 		model.addAttribute("grSelect" , lists);
 		return "Group/grInformationModify";
 	}

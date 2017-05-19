@@ -11,8 +11,8 @@
 <title>Insert title here</title>
 
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<!-- <script type="text/javascript" src="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.js"></script> -->
 <style type="text/css">
 #groupimg2{
 background-image: url("./grImgs/img01.png");
@@ -67,6 +67,7 @@ background-repeat: no-repeat;
 	font-weight: bold;
 	line-height: 20px;
 	cursor: pointer;
+	z-index:100;
 }
 .delete-group-btn{
 	width:20px;
@@ -97,6 +98,10 @@ background-repeat: no-repeat;
 	text-indent: 5px;
 	font-size: 1.4em;
 	font-weight: bold;
+	text-overflow: ellipsis;
+	white-space: nowrap; 
+	width:100%;
+	overflow:hidden;
 }
 .group-title{
 	text-align:left;
@@ -106,6 +111,19 @@ background-repeat: no-repeat;
 	font-weight:bold;
 	text-indent:10px;
 	color:#424242;
+}
+.openBtn{
+	float:right;
+}
+.openBtn-text{
+	position: relative;
+    border: 1px solid gray;
+    border-radius: 5px;
+    font-size: .8em;  
+    bottom: 3px;
+    margin-bottom: 5px;
+    padding: 3px;
+    cursor:pointer;
 }
 </style>
 
@@ -123,15 +141,71 @@ background-repeat: no-repeat;
  		}
 	})
 } */
-// $(function(){
-// })
+$(function(){
+	$('#watingGroups').hide();
+})
 
 function openChild(){
     window.open("./showGrCreate.do", "GroupCreate", "width=640, height=450, resizable = no, scrollbars = no");
  }
 
+function openWatingGroup(){
+	$('#watingGroups').toggle();
+	console.log($('.openBtn-text').text());
+	$('.openBtn-text').text()=='열기'?$('.openBtn-text').text('닫기'):$('.openBtn-text').text('열기');
+}
 
+function goProject(grid){
+	
+	location.href="./gProSelect.do?gr_id="+grid;
+}
 
+function gropuChildOpen(event){
+	var grid= $(event.target).find('.gr_input_id').val();
+	console.log($(event.target).find('.gr_input_id').val());
+	event.stopPropagation();
+	$.ajax({
+		type : "POST",
+		url : "./grselect.do",
+		data : "gr_id="+grid,
+		async : false,
+		success : function(msg){
+			showProDetail(msg)
+		},
+		error : function(request, status, error ) {   // 오류가 발생했을 때 호출된다. 
+			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			alert('관리자에게 문의하세요.');
+		}
+	});
+}
+
+function showProDetail(nodes){
+	var gr_name 	= nodes.GR_NAME;
+	var mem_name 	= nodes.MEM_NAME;
+	var gr_memcnt 	= nodes.GR_MEMCNT;
+	var gr_goal 	= nodes.GR_GOAL;
+	var gr_regdate 	= nodes.GR_REGDATE;
+	var gr_searchyn = nodes.GR_SEARCHYN;
+	var gr_joinyn 	= nodes.GR_JOINYN;
+	
+	$("#gr_name").text(gr_name);
+	$("#mem_name").text(mem_name);
+	$("#gr_memcnt").text(gr_memcnt);
+	$("#gr_goal").text(gr_goal);
+	$("#gr_regdate").text(gr_regdate);
+	$("#gr_searchyn").text(gr_searchyn);
+	$("#gr_joinyn").text(gr_joinyn);
+	
+	$(".gr_detail_view").css("display","block");
+	$(".gr_detail_view").dialog({
+		title : "그룹 정보보기",
+		height : 400,
+		width : 500,
+		position : {my : "center", at : "center"},
+		resizable : false,
+		modal : true
+	});
+}
 // 	$("table[name=groupimg]").each(function(){
 // 		var result = Math.floor(Math.random() * 14);
 // 		$(this).css({"background":"url(./grImgs/img"+result+".png)", 'background-repeat' : 'no-repeat', 'background-position':'center center'}); 
@@ -144,47 +218,114 @@ function openChild(){
 </div>
 
 <div id="container">
-<%-- 	<c:forEach var = "grdto" items="${lists}" >
-	<table name="groupimg">
-		<tr><td id="grimg"><a href="./gProSelect.do?gr_id=${grdto.gr_id}">${grdto.gr_id}</a></td></tr>
-		<tr><td>${grdto.gr_name}</td></tr>
-		<tr><td>${grdto.gr_memCnt}</td></tr>
-		<tr><td>${grdto.gr_goal}</td></tr>
-		<tr><td>${grdto.gr_regDate}</td></tr>
-	</table>
-	</c:forEach> --%>
+	<!-- 그룹 정보 상세보기 팝업 START -->
+	<div class="gr_detail_view">
+		<table class="gr_detail_table">
+			<tr>
+				<th>그룹명</th>
+				<td><span id="gr_name"></span></td>
+			</tr>
+			<tr>
+				<th>그룹장</th>
+				<td><span id="mem_name"></span></td>
+			</tr>
+			<tr>
+				<th>그룹 멤버수</th>
+				<td><span id="gr_memcnt"></span></td>
+			</tr>
+			<tr>
+				<th>그룹목표</th>
+				<td><span id="gr_goal"></span></td>
+			</tr>
+			<tr>
+				<th>그룹 등록일</th>
+				<td><span id="gr_regdate"></span></td>
+			</tr>
+			<tr>
+				<th>그룹 공개여부</th>
+				<td><span id="gr_searchyn"></span></td>
+			</tr>
+			<tr>
+				<th>그룹 신청 가능 여부</th>
+				<td><span id="gr_joinyn"></span></td>
+			</tr>
+
+		</table>
+	</div>
+	<!-- 그룹 정보 상세보기 팝업 END -->
 	
 	<div class="bodyContainer">
 
+	<div>
+		<input type = "button" value = "그룹생성" onclick = "openChild()">
+	</div>
+	
 	<div class="container">
 		<c:set var = "grdto2" value="${lists}" />
 		<div class="group-title">내 그룹 (${fn:length(grdto2)})</div>
-		
-		<c:choose>
-		    <c:when test="${fn:length(grdto2) > 0}">
-		    	<c:forEach var = "grdto" items="${lists}" >
-		     	<div class="group-box">
-				<div class="group-image-box">
-					<img src="./grImgs/img${grdto.gr_img}.png" class="group-image">
-					<a href="#"><div class="detail-group-btn2">!</div></a>
-				</div>
-				<div>
-					<div class="group-name">
-						<a href="./gProSelect.do?gr_id=${grdto.gr_id}">
-						${grdto.gr_name}
+			<div id="myGroups">
+				<c:choose>
+				    <c:when test="${fn:length(grdto2) > 0}">
+				    	<c:forEach var = "grdto" items="${lists}" >
+				    	<a href="#" onclick="goProject('${grdto.gr_id}')">
+				     	<div class="group-box">
+						<div class="group-image-box">
+							<img src="./grImgs/img${grdto.gr_img}.png" class="group-image">
+							<div class="detail-group-btn2" onclick="gropuChildOpen(event);">
+							!<input type="hidden" value="${grdto.gr_id}" class="gr_input_id"/>
+							</div>
+						</div>
+						<div>
+							<div class="group-name">
+								
+								${grdto.gr_name}
+								
+							</div>
+						</div>
+						</div>
 						</a>
-					</div>
-				</div>
-				</div>
-				</c:forEach> 
-		    </c:when>
-		
-		    <c:otherwise>
-		        <div>my group이 없습니다.</div>
-		    </c:otherwise>
-		</c:choose>   
-		
+						</c:forEach> 
+				    </c:when>
+				
+				    <c:otherwise>
+				        <div>my group이 없습니다.</div>
+				    </c:otherwise>  
+				</c:choose>   
+			</div>
 		<c:set var = "waitg2" value="${watiLists}" />   
+<<<<<<< HEAD
+		<div style="clear:both;" class="group-title">
+			승인 대기 그룹 (${fn:length(waitg2)})
+			<div class="openBtn">
+			<span class="openBtn-text" onclick="openWatingGroup()">열기</span>
+			</div>
+		</div>
+			<div id="watingGroups">
+				<c:choose>
+				    <c:when test="${fn:length(waitg2) > 0}">
+				    	<c:forEach var = "waitg" items="${watiLists}" >
+				     	<div class="group-box">
+						<div class="group-image-box">
+							<img src="./grImgs/img${waitg.gr_img}.png" class="group-image">
+							<a href="#" onclick="gropuChildOpen(event);"><div class="detail-group-btn">!
+							<input type="hidden" value='${waitg.gr_id}'/ class="gr_input_id"></div></a>
+							<a href="#"><div class="delete-group-btn">x</div></a>
+						</div>
+						<div>
+							<div class="group-name">
+								${waitg.gr_name}
+							</div>
+						</div>
+						</div>
+						</c:forEach> 
+				    </c:when>
+				
+				    <c:otherwise>
+				        <div>승인 대기 그룹이 없습니다.</div>
+				    </c:otherwise>
+				</c:choose>
+			</div>
+=======
 		<div style="clear:both;" class="group-title">승인 대기 그룹 (${fn:length(waitg2)})</div>
 		
 		<c:choose>
@@ -213,7 +354,7 @@ function openChild(){
 		</div>
 	</div>
 
-<input type = "button" value = "그룹생성" onclick = "openChild()">
+
 </div>
 
 <div id="footer">
