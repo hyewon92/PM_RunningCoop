@@ -5,7 +5,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
+
 <style type="text/css">
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+	body{
+		font-family: 'Nanum Gothic', sans-serif;
+	}
 	.btn{
 		width: 220px;
 		height: 40px;
@@ -36,18 +42,20 @@
 		<jsp:include page="../header.jsp" flush="false"/>
 	</div>
 	<div id = "container" style = "padding:30px;">
-		<div style = "height:20%; margin-bottom: 40px;"><img src = "images/welcome.png" style = "margin-top:100px; width:600px; height:40px;"></div>
-		<div style = "overflow: hidden">
+		<div style = "height:20%; margin-bottom: 40px;"><img src = "images/welcome.png" style = "margin-top:100px; width:630px; height:40px;"></div>
+		<div style = "overflow: hidden; padding: 20px;">
 			<div style = "float: left; width: 50%;">
-				<div style = "width:100%;">
-					<img src = "images/group.png" style = "width:160px; height: 160px; margin-bottom:30px;">
-				</div>
-				<input type = "button" class = "btn" value = "메인으로 이동" onclick = "location.href='./firstLogin.do'">
-			</div>
-			<div>
-				<div style = "width:100%;">
+				<div style = "width:100%; text-align: center;">
 					<img src = "images/project.png" style = "width:160px; height: 160px; margin-bottom:30px;">
 				</div>
+				<div style = "margin-bottom: 20px;"><span style = "font-size: 14px;">개인 프로젝트도 이제 효율적으로 관리해보세요!</span></div>
+				<input type = "button" class = "btn" value = "프로젝트 시작하기" onclick = "location.href='./firstLogin.do'">
+			</div>
+			<div>
+				<div style = "width:100%; text-align: center;">
+					<img src = "images/group.png" style = "width:160px; height: 160px; margin-bottom:30px;">
+				</div>
+				<div style = "margin-bottom: 20px;"><span style = "font-size: 14px;">그룹멤버들과 효율적으로 프로젝트를 관리해보세요!</span></div>
 				<input type = "button" class = "btn"  value = "그룹 가입 신청하기" onclick = "grJoinChild('<%=mem_id%>')">
 			</div>
 		</div>

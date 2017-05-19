@@ -65,7 +65,18 @@
 	}
 	
 	.chat{
-		float:left; margin-top:4px; margin-left: 2px;
+		width: 340px;
+		height: 40px;
+		padding: 5px;
+		float:left; 
+		margin-top:4px; 
+		margin-left: 2px;
+		resize: none;
+		border: 0.5px solid #F3F3F3;
+	}
+	
+	.chat:focus{
+		outline: none;
 	}
 	
 	.chat_btn{
@@ -151,7 +162,7 @@
             $(".chat_div").show();
             $(".chat").focus();
             
-            ws = new WebSocket("ws://192.168.4.109:8095/RunningCoop/wsChat.do");
+            ws = new WebSocket("ws://192.168.0.14:8095/RunningCoop/wsChat.do");
             
             ws.onopen = function() {
                ws.send("#$nick_"+nick);
@@ -245,8 +256,8 @@
    </table>
    
    <div class="chat_div" style="display:none; margin-top: 10px;">
-   <input type="text" class="chat" size="53"
-          onKeypress="if(event.keyCode==13) $('.chat_btn').click();" />
+   <textarea class="chat"
+          onKeypress="if(event.keyCode==13) $('.chat_btn').click();" ></textarea>
    <div class="chat_btn"></div>          
    </div>
       
