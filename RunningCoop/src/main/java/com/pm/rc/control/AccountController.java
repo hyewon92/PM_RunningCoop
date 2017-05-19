@@ -58,7 +58,7 @@ public class AccountController {
 			} else{
 				session.setAttribute("mem_id", dto.getMem_id());
 				session.setAttribute("mem_name", dto.getMem_name());
-				return "Group/myGrSelect";
+				return "redirect:/myGrSelect.do?mem_id="+dto.getMem_id();
 			}
 		}
 	}
