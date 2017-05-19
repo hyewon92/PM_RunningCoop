@@ -30,6 +30,13 @@ public class GroupDaoImp implements GroupDao{
 		logger.info("myGrSelect 작동결과");
 		return lists;
 	}
+	
+	@Override
+	public List<GroupDto> waitGrSelect(Map<String, String> map) {
+		List<GroupDto> lists = sqlSession.selectList(NAMESPACE+"waitGrSelect" , map);
+		logger.info("waitGrSelect 작동결과");
+		return lists;
+	}
 
 	@Override
 	public List<Map<String, String>> grDetailSelect (Map<String,String> map) {

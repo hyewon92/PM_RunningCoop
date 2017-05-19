@@ -26,6 +26,11 @@ public class GroupServiceImp implements GroupService{
 	public List<GroupDto> myGrSelect(Map<String, String> map) {
 		return groupdao.myGrSelect(map);
 	}
+	
+	@Override
+	public List<GroupDto> waitGrSelect(Map<String, String> map) {
+		return groupdao.waitGrSelect(map);
+	}
 
 	@Override
 	public List<Map<String, String>> grDetailSelect (Map<String, String> map) {
