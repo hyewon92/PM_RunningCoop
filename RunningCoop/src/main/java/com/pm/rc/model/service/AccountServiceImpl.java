@@ -25,6 +25,11 @@ public class AccountServiceImpl implements AccountService {
 	public String memIdSelect(String mem_id) {
 		return accountDao.memIdSelect(mem_id);
 	}
+	
+	@Override
+	public boolean memEmailSelect(String mem_email) {
+		return accountDao.memEmailSelect(mem_email);
+	}
 
 	@Override
 	public boolean memInsert(MemberDto dto) {
@@ -46,6 +51,11 @@ public class AccountServiceImpl implements AccountService {
 		}else{
 			return false;
 		}
+	}
+	
+	@Override
+	public String memPwSelect(String mem_id) {
+		return accountDao.memPwSelect(mem_id);
 	}
 
 	@Override

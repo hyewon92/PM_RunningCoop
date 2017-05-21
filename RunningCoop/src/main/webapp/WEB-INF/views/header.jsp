@@ -43,7 +43,7 @@ cursor: pointer;} */
 	<img alt="개인 일정" class="user_calendar" src="./images/header/user_calendar.png" onclick="location.href='./viewSchedule.do?year=<%=year%>&month=<%=month%>'">
 	<img alt="" class="user_logo" src="./images/header/logo.png" onclick="goHome()">
 	<div class = "user_menu">
-		<span class="user_edit"><a href="#" onclick="location.href='./writeModifyForm.do?mem_id=<%=userId%>'"><%= userName%></a>님 접속중</span>
+		<span class="user_edit"><a href="#" onclick="location.href='./enterModify.do'"><%= userName%></a>님 접속중</span>
 		<input type = "button" class="header_btn user_logout" value = "LOGOUT" onclick = "location.href='./ckLogout.do'">
 		<img alt="사이드 메뉴 토글" class="side_menu_toggle" src="./images/header/menu_toggle.png" onclick="sidebar_toggle()"/>
 	</div>

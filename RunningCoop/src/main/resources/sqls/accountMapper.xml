@@ -8,6 +8,13 @@
 		FROM RC_MEMBER
 		WHERE MEM_ID=#{mem_id}
 	</select>
+	
+	<!-- 회원가입:이메일 중복 확인 -->
+	<select id="memEmailSelect" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT MEM_EMAIL
+		FROM RC_MEMBER
+		WHERE MEM_EMAIL=#{mem_email}
+	</select>
 
 	<!-- 회원가입 등록 -->
 	<insert id="memInsert" parameterType="MemberDto">
@@ -53,9 +60,6 @@
 		GM.GR_LEVEL = 'GM'
 	</select>
 	
-	<!-- 그룹멤버에서 GM 위임 -->
-	
-
 	<!-- 탙퇴하기 전 PM으로 소속된 프로젝트 조회 -->
  	<select id="levelPmSelect" parameterType="java.lang.String" resultType="java.util.Map">
 		<![CDATA[SELECT PM.PR_ID, P.PR_NAME, PM.PR_LEVEL, GP.GR_ID FROM RC_PROMEM PM, RC_PROJECT P, RC_GRPRO GP
@@ -116,6 +120,13 @@
 	<!-- 회원정보 출력 -->
 	<select id="memSelect" parameterType="java.lang.String" resultType="MemberDto">
 		SELECT MEM_ID, MEM_PW, MEM_NAME, MEM_EMAIL, MEM_PHONE 
+ 		FROM RC_MEMBER
+		WHERE MEM_ID = #{mem_id} AND MEM_DELYN = 'N'
+	</select>
+	
+	<!-- 회원정보 수정을 위한 비밀번호 확인 -->
+	<select id="memPwSelect" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT MEM_PW 
  		FROM RC_MEMBER
 		WHERE MEM_ID = #{mem_id} AND MEM_DELYN = 'N'
 	</select>

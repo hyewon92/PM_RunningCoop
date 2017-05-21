@@ -1,6 +1,7 @@
 package com.pm.rc.control;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,7 +90,8 @@ public class AccountController {
 
 	//아이디찾기
 	@RequestMapping(value = "/searchId.do", method = RequestMethod.POST)
-	public String searchId(Model model, HttpServletRequest req){
+	@ResponseBody
+	public Map<String, String> searchId(Model model, HttpServletRequest req){
 		logger.info("searchId 실행");
 		String name = req.getParameter("mem_name");
 		String email =req.getParameter("mem_email");
@@ -97,13 +99,9 @@ public class AccountController {
 		map.put("mem_name", name);
 		map.put("mem_email", email);
 		String id = accountService.memIdSearch(map);
-		if(id==null){
-			return "account/error/error";
-		}else{
-			model.addAttribute("id",id);
-			model.addAttribute("email",email);
-			return "account/resultId";
-		}
+		Map<String, String> resultMap = new HashMap<String, String>();
+		resultMap.put("resultId", id);
+		return resultMap;
 	}
 
 	//비밀번호찾기(화면 이동)
@@ -152,7 +150,19 @@ public class AccountController {
 		}
 		return map;
 	}
-
+	
+	//이메일 중복 조회
+	@RequestMapping(value = "/memEmailSelect.do", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Boolean> memEmailSelect(String mem_email){
+		logger.info("memEmailSelect실행");
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		System.out.println("mem_id="+mem_email);
+		boolean isc = accountService.memEmailSelect(mem_email);
+		map.put("result", isc);
+		return map;
+	}
+	
 	//본인인증 번호(세션) 삭제
 	@RequestMapping(value = "/removeIdentify.do")
 	@ResponseBody
@@ -204,12 +214,12 @@ public class AccountController {
 	   }
 
 	//회원가입 후 바로 메인화면 이동
-	@RequestMapping(value = "/firstLogin.do")
+/*	@RequestMapping(value = "/firstLogin.do")
 	public String firstLogin(){
 		logger.info("firstLogin실행");
 		return "Group/myGrSelect";
 	}
-
+*/
 	//탈퇴하기(페이지이동)
 	@RequestMapping(value = "/goLeave.do", method = RequestMethod.GET)
 	public String goLeave(HttpSession session, Model model){
@@ -304,16 +314,42 @@ public class AccountController {
 		return "account/grMemList";
 	}
 	 */
-	//개인정보 수정(폼으로 이동)
-	@RequestMapping(value = "/writeModifyForm.do", method = RequestMethod.GET)
-	public String writeModify(Model model, String mem_id){
+	
+	//개인정보 수정(본인확인 페이지) 이동
+	@RequestMapping(value = "/enterModify.do", method = {RequestMethod.POST ,RequestMethod.GET})
+	public String enterModify(){
+		logger.info("enterModify실행");
+		return "account/enterModify";
+	}
+	
+	//개인정보 수정(본인확인)+수정 폼으로 이동
+	@RequestMapping(value = "/ckPwInfo.do", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Boolean> ckPwInfo(HttpSession session, String mem_pw){
+		logger.info("ckPwInfo실행");
+		boolean isc = false;
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		String mem_id = (String)session.getAttribute("mem_id");
+		System.out.println("들어온 pw값: "+ mem_pw);
+		String pw = accountService.memPwSelect(mem_id);
+		if(mem_pw.equals(pw)){
+			isc = true;
+		}
+		map.put("result", isc);
+		return map;
+	}
+	
+	//개인정보 수정페이지 이동
+	@RequestMapping(value = "/writeModifyForm.do", method = RequestMethod.POST)
+	public String writeModify(Model model, HttpSession session){
 		logger.info("writeModifyForm실행");
+		String mem_id = (String)session.getAttribute("mem_id");
 		System.out.println(mem_id);
 		MemberDto dto = accountService.memSelect(mem_id);
 		model.addAttribute("dto", dto);
 		return "account/writeModifyForm";
 	}
-
+	
 	//개인정보 수정
 	@RequestMapping(value = "/memInfoModify.do", method = RequestMethod.POST)
 	public String memInfoModify(MemberDto dto){
