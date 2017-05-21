@@ -10,27 +10,50 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
+<link rel="stylesheet" href="css/body/user_account.css" type="text/css"/>
 <style type="text/css">
-	#calendar th {
-		background-color: aqua;
+	#calendar{
+	    float: left;
+	    margin-left: 50px;
+	    display:block;
+	    .border-box;
+	    background:white;
+	    width:650px;
+	    border:solid 1px #CCC;
+	    margin-bottom:10px;
 	}
 	
+	.calendar_header{
+		float:left;
+	    width:100%;
+	    height:60px;
+	    background-color: #5cb85c;
+	    color:white;
+	}
+	
+	.calendar_header *{
+	    height: 50px;
+	    line-height:50px !important;
+	    display:inline-block;
+    	vertical-align:middle;
+	} 
+	
+ 	#calendar th {
+		color: #5cb85c;
+		border-bottom: 1px solid #ccc;
+	} 
+	
 	#calendar td {
-		background-color: #ffe4c4;
+		background:white;
 		height: 80px;
 		vertical-align: top;
+		text-align: left;
+		font-size: 10pt;
+		border: 1px solid transparent;
 	}
 	
 	a {
 		text-decoration: none;
-	}
-	
-	#list div {
-		background-color: orange;
-	}
-	
-	#list {
-		font-size: 8pt;
 	}
 	
 	.plus {
@@ -45,7 +68,11 @@
 	}
 	
 	b {
-		font-size: 30pt;
+		font-size: 14pt;
+	}
+	
+	input[type=text]{
+		background: white;
 	}
 	
 	/* .scheduleDetailBox {
@@ -55,194 +82,31 @@
 	} */
 	
 	.scheduleBox, .scheduleModiBox {
-		border: 1px solid gray;
-		border-collapse: collapse;
+/* 		border: 1px solid gray;
+		border-collapse: collapse; */
+		width: 300px;
 		display: none;
 	}
 	
-	.listlBox{
-		border-collapse: collapse;
-		width: 200px;
+	#dayList{
+/* 		border-collapse: collapse;
+		width: 200px; */
+		width: 300px;
 		display: inline-block;
 		float: left;
 		display: none;
 	}
 	
-	.detailBox{
-		border: 1px solid gray;
-		border-collapse: collapse;
+	#dayDetail{
 		display : none;
-		width: 500px;
-		float: rigth;
+		width: 300px;
+		float: right;
 	}
 </style>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 
-<script type="text/javascript">
-	//지정일 일정 조회
- 	function dailyList(val1, val2, val3){
- 		$(".listBox").children().remove();
-		$.ajax({
-			type : "POST",
-			url : "./dailySchSelect.do",
-			data: "date="+val1+"-"+val2+"-"+val3,
-			async: false,
-			success: function(msg){
-				showDailyList(msg, val1, val2, val3)
-			}
-		});
-	}
-	
-	//지정일 일정 출력
-	function showDailyList(schedule, val1, val2, val3){
-		if(schedule.length == 0){
-			$(".listBox").append("<p>해당 일에 등록된 일정이 없습니다.</p>");
-		}else{
-			for(var i = 0; i < schedule.length; i++){
-				if(schedule[i].projectDto!=null && schedule[i].projectDto!=undefined){
-					var pr_name = schedule[i].projectDto.pr_name;
-					var pr_id = schedule[i].pr_id;
-				}
-					var sch_seq = schedule[i].sch_seq;
-					var sch_title = schedule[i].sch_title;
-					var title = sch_title;
-					if(schedule[i].pr_id != null){
-						title = pr_name+":"+sch_title;
-					}
-				$(".listBox").css("display", "block");
-				$(".detailBox").css("display", "none");
-				$(".listBox").append("<span class = 'listChk' onclick = 'showDetail("+sch_seq+",\""+val1+"\",\""+val2+"\",\""+val3+"\")'>"+title+"</span><br>");
-			}
-		}
-	}
-
-	//일정 상세정보 조회
-	function showDetail(val1, val2, val3, val4){
-		$.ajax({
-			type : "POST",
-			url : "./detailSchedule.do",
-			data: "sch_seq="+val1,
-			async: false,
-			success: function(msg){
-				dailyList(val2, val3, val4);
-				showSchDetail(msg)
-			},
-			error:function(){
-				alert("error");
-			}
-		});
-	}
-	
-	//일정 상세정보 출력
-	function showSchDetail(schedule){
-		var sch_seq = schedule.dto.sch_seq;
-		var pr_id = schedule.dto.pr_id;
-		var sch_startDate = schedule.dto.sch_startDate;
-		var sch_endDate = schedule.dto.sch_endDate;
-		var sch_title = schedule.dto.sch_title;
-		var sch_content = schedule.dto.sch_content;
-		
-		$("#sch_seq").val(sch_seq);
-		$("#sch_startDate").text("시작:"+sch_startDate);
-		$("#sch_endDate").text("종료:"+sch_endDate);
-		$("#sch_content").text(sch_content);
-			
- 		if(pr_id == null){
-			$("#sch_title").text(sch_title);
-		}else{
-			$("#sch_title").text(schedule.dto.projectDto.pr_name+":"+sch_title);
-		}
-		 
-		$(".scheduleBox").css("display", "none");
-		$(".detailBox").css("display", "block");
-		$(".scheduleModiBox").css("display", "none");
-		$(".listBox").css("display", "block");
-	}
-	
-	//일정 삭제
-	function goDelete(){
-		var sch_seq = $("#sch_seq").val();
-		if(confirm("정말로 삭제하시겠습니까?")){
-			location.href = "./deleteSchedule.do?sch_seq="+sch_seq;
-		}
-	}
-	
-	//일정 수정 폼 활성화
-	function goModify(){
-		alert($("#sch_startDate").text());
-		$("#sch_upSeq").val($("#sch_seq").val());
-		$("#sch_upStartDate").val($("#sch_startDate").text().substring(3,13));
-		$("#sch_upStartTime").val($("#sch_startDate").text().substring(14));
-		$("#sch_upEndDate").val($("#sch_endDate").text().substring(3,13));
-		$("#sch_upEndTime").val($("#sch_endDate").text().substring(14));
-		$("#sch_upTitle").val($("#sch_title").text());
-		$("#sch_upContent").val($("#sch_content").text());
-		
-		$(".scheduleModiBox").css("display", "block");
-		$(".scheduleBox").css("display", "none");
-		$(".detailBox").css("display", "none");
-		$(".listBox").css("display", "none");
-	}
-	
-	//일정 등록 폼 활성화
-	function openWriteForm(val1, val2, val3){
-		var array = [val1, val2, val3];
-		var day = array.join("-");
-		
-		$(".scheduleModiBox").css("display", "none");
-		$(".scheduleDetailBox").css("display", "none");
-		$(".scheduleBox").css("display", "block");
-		$("#sch_newStartDate").val(day);
-		$("#sch_newEndDate").val(day);
-	}
-	
-	$(function(){
-		//일정 등록
-		$(".scheduleBox").submit(function(){
-			if($("#sch_newStartTime").val().length == 0){
-				$("#sch_newStartTime").val("00:00");
-			}
-			if($("#sch_newEndTime").val().length == 0){
-				$("#sch_newEndTime").val("00:00");
-			}
-			var newStartTotal = $("#sch_newStartDate").val()+" "+$("#sch_newStartTime").val();
-			$("#newStartTotal").val(newStartTotal);
-			var newEndTotal = $("#sch_newEndDate").val()+" "+$("#sch_newEndTime").val();
-			$("#newEndTotal").val(newEndTotal);
-			if($("#sch_title").val().length == 0){
-				alert("일정 제목을 입력해주세요");
-				return false;
-			}
-			if($("#newStartTotal").val()>$("#newEndTotal").val()){
-				alert("날짜를 정확히 입력해주세요");
-				return false;
-			}
-		});
-		
-		//일정 수정
- 		$(".scheduleModiBox").submit(function(){
- 			if($("#sch_upStartTime").val().length == 0){
-				$("#sch_upStartTime").val("00:00");
-			}
-			if($("#sch_upEndTime").val().length == 0){
-				$("#sch_upEndTime").val("00:00");
-			}
-			var upStartTotal = $("#sch_upStartDate").val()+" "+$("#sch_upStartTime").val();
-			$("#upStartTotal").val(upStartTotal);
-			var upEndTotal = $("#sch_upEndDate").val()+" "+$("#sch_upEndTime").val();
-			$("#upEndTotal").val(upEndTotal);
-			if($("#sch_upTitle").val().length == 0){
-				alert("일정 제목을 입력해주세요");
-				return false;
-			}
-			if($("#upStartTotal").val()>$("#upEndTotal").val()){
-				alert("날짜를 정확히 입력해주세요");
-				return false;
-			}
-		}); 
-	});
-</script>
+<script type="text/javascript" src = "js/schedule/schedule.js"></script>
 </head>
 
 <%!
@@ -259,9 +123,6 @@
 
 	//일정작성
 	public String schWrite(int year, String month, String date){
-		System.out.println("month="+month);
-		System.out.println("date="+date);
-		
 		 /* "<a href = './writeSchedule.do?year="+year+"&month="+month+"&date="+date+"'>" */
 		return	"<img class = 'plus' alt = '일정등록' src = 'images/plus.png' onclick='openWriteForm(\""+year+"\",\""+month+"\",\""+date+"\")'>";
 	}
@@ -345,20 +206,20 @@
 	<h1>일정관리</h1>
 	<!-- 달력 출력 -->
 	<table id="calendar">
-		<caption>
+		<caption class = "calendar_header">
 			<a href="./viewSchedule.do?year=<%=year-1%>&month=<%=month%>"><img alt="이전 년도 이동" class="arrow" src="images/bigLeft.png"></a> 
 			<a href="./viewSchedule.do?year=<%=year%>&month=<%=month-1%>"><img alt="이전 월 이동" class="arrow" src="images/left.png"></a> 
 			<b><%=year %>년<%=month %>월</b> 
 			<a href="./viewSchedule.do?year=<%=year%>&month=<%=month+1%>"><img alt="이전 월 이동" class="arrow" src="images/right.png"></a> 
 			<a href="./viewSchedule.do?year=<%=year+1%>&month=<%=month%>"><img alt="이전 월 이동" class="arrow" src="images/bigRight.png"></a>
 		</caption>
-		<col width="80px">
-		<col width="80px">
-		<col width="80px">
-		<col width="80px">
-		<col width="80px">
-		<col width="80px">
-		<col width="80px">
+		<col width="14.28%">
+		<col width="14.28%">
+		<col width="14.28%">
+		<col width="14.28%">
+		<col width="14.28%">
+		<col width="14.28%">
+		<col width="14.28%">
 		<tr>
 			<th>일</th>
 			<th>월</th>
@@ -401,50 +262,77 @@
 		%>
 		</tr>
 	</table>
-
-	<!-- 일정 상세정보 출력부분 -->
-	<div class="scheduleDetailBox">
-		<div class = "listBox">
-		</div>
-		<div class  = "detailBox">
-				<input type="hidden" id="sch_seq">
-			<table>
-				<tr>
-					<td id="sch_startDate"></td>
-					<td id="sch_endDate"></td>
-				</tr>
-				<tr>
-					<td id="sch_title" colspan="2"></td>
-				</tr>
-				<tr>
-					<td id="sch_content" colspan="2"></td>
-				</tr>
-			</table>
-			<div>
-				<input type="button" value="수정" onclick="goModify()"> 
-				<input type="button" value="삭제" onclick="goDelete()">
+	
+	<div class = "calendarContent" style = "width:300px; display: inline-block;">
+		<!-- 일정 상세정보 출력부분 -->
+		<div class="scheduleDetailBox">
+			<!-- 지정일 리스트 -->
+			<div class = "rowGroup" id = "dayList">
+				<div class = "join_row" style = "border-bottom: none;">
+					<div class = "listBox">
+					</div>
+				</div>
+			</div>
+			
+			<!-- 일정 상세정보 조회 -->
+			<div class = "rowGroup" id = "dayDetail">
+				<div class  = "detailBox">
+					<input type="hidden" id="sch_seq">
+					<table style = "width: 298px;">
+						<tr>
+							<td class = "join_row" id="sch_startDate" style = "width:100%;"></td>
+						</tr>
+						<tr>
+							<td class = "join_row" id="sch_endDate" style = "width:100%;"></td>
+						</tr>
+						<tr>
+							<td class = "join_row" id="sch_title" style = "width:100%;"></td>
+						</tr>
+						<tr>
+							<td class = "join_row" id="sch_content" style = "width:100%;"></td>
+						</tr>
+					</table>
+					<div>
+						<input type="button" value="수정" onclick="goModify()"> 
+						<input type="button" value="삭제" onclick="goDelete()">
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-
+		
+		
 	<!-- 일정 수정 부분 -->
-	<form class="scheduleModiBox" action="./modifySchedule.do" method="post">
+	<form class=" row Group scheduleModiBox" action="./modifySchedule.do" method="post">
 		<div>
 			<input type = "hidden" id = "sch_upSeq" name = "sch_seq"> 
-			<input type = "hidden" name = "mem_id" value = <%=mem_id%>> 
-			시작 <input type = "date" id = "sch_upStartDate"> 
-			<input type = "time" id = "sch_upStartTime"> 
-			<input type = "hidden" id = "upStartTotal" name = "sch_startDate"> ~ 
-			종료<input type = "date" id = "sch_upEndDate"> 
-			<input type = "time" id = "sch_upEndTime">
-			<input type = "hidden" id = "upEndTotal" name = "sch_endDate"> <br>
-			제목:<input type = "text" id = "sch_upTitle" name = "sch_title"><br> 
-			내용:<input type = "text" id = "sch_upContent" name="sch_content">
+			<input type = "hidden" name = "mem_id" value = <%=mem_id%>>
+			<div style = "padding-bottom: 5px;">
+				<span style = "font-size:10pt; display: inline-block; float: left; margin-right: 3px;">시작 </span>
+				<input type = "date" class = "join_row" id = "sch_upStartDate" style = "width:130px; height: 30px; display: inline-block; padding: 0px;">
+				<input type = "time" class = "join_row" id = "sch_upStartTime" style = "width:130px; height: 30px; display: inline-block; padding: 0px;">
+				<input type = "hidden" name = "sch_startDate"> ~ 
+			</div>
+			<div style = "padding-bottom: 5px;">
+				<span style = "font-size:10pt; display: inline-block; float: left;">종료</span>
+				<input type = "date" class = "join_row" id = "sch_upEndDate" style = "width:130px; height: 30px; display: inline-block; padding: 0px;">
+				<input type = "time" class = "join_row" id = "sch_upEndTime" style = "width:130px; height: 30px; display: inline-block; padding: 0px;">
+				<input type = "hidden" id = "upEndTotal" name = "sch_endDate"> 
+			</div>
+			<div style = "padding-bottom: 5px;">
+			<span style = "font-size:10pt; display: inline-block; float: left;">제목</span><input type = "text" id = "sch_upTitle" name = "sch_title" style = "width:250px; height: 30px;"> 
+			</div>
+			<div><span style = "font-size:10pt; display: inline-block; float: left;">내용</span><input type = "text" id = "sch_upContent" name="sch_content" style = "width:250px; height: 30px;"> </div>
 		</div>
 		<div>
 			<input type="submit" value="수정">
 		</div>
-	</form>
+	</form>	
+	
+	
+	
+	
+	
+	</div>
 
 	<!-- 일정 등록 부분 -->
 	<form class="scheduleBox" action="./insertSchedule.do" method="post">
@@ -463,7 +351,6 @@
 			<input type="submit" value="등록">
 		</div>
 	</form>
-</div>
 <div id = "footer">
 	<jsp:include page="../footer.jsp" flush="false"/>
 </div>

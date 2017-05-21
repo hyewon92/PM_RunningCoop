@@ -42,23 +42,28 @@
 		<jsp:include page="../header.jsp" flush="false"/>
 	</div>
 	<div id = "container" style = "padding:30px;">
-		<div style = "height:20%; margin-bottom: 40px;"><img src = "images/welcome.png" style = "margin-top:100px; width:630px; height:40px;"></div>
-		<div style = "overflow: hidden; padding: 20px;">
+		<!-- 가입완료메세지 -->
+		<div style = "height:20%; margin-bottom: 40px;">
+			<img src = "images/welcome.png" style = "margin-top:100px; width:650px; height:35px;">
+		</div>
+		<!-- 메인본문 -->
+		<div style = "overflow: hidden; padding: 40px;">
 			<div style = "float: left; width: 50%;">
 				<div style = "width:100%; text-align: center;">
-					<img src = "images/project.png" style = "width:160px; height: 160px; margin-bottom:30px;">
+					<img alt="프로젝트시작" src = "images/project.png" style = "width:160px; height: 160px; margin-bottom:30px;">
 				</div>
 				<div style = "margin-bottom: 20px;"><span style = "font-size: 14px;">개인 프로젝트도 이제 효율적으로 관리해보세요!</span></div>
-				<input type = "button" class = "btn" value = "프로젝트 시작하기" onclick = "location.href='./firstLogin.do'">
+				<input type = "button" class = "btn" value = "프로젝트 시작하기" onclick = "location.href='./iProSelect.do'">
 			</div>
 			<div>
 				<div style = "width:100%; text-align: center;">
-					<img src = "images/group.png" style = "width:160px; height: 160px; margin-bottom:30px;">
+					<img alt="그룹가입" src = "images/group.png" style = "width:160px; height: 160px; margin-bottom:30px;">
 				</div>
 				<div style = "margin-bottom: 20px;"><span style = "font-size: 14px;">그룹멤버들과 효율적으로 프로젝트를 관리해보세요!</span></div>
-				<input type = "button" class = "btn"  value = "그룹 가입 신청하기" onclick = "grJoinChild('<%=mem_id%>')">
+				<input type = "button" class = "btn"  value = "그룹 가입 신청하기" onclick = "location.href='./groupGoGo.do'">
 			</div>
 		</div>
+		<!-- 메인 본문 끝 -->
 	</div>
 	
 	<div id = "footer">

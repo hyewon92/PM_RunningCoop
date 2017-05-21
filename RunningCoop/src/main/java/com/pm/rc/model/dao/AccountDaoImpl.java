@@ -35,6 +35,13 @@ public class AccountDaoImpl implements AccountDao {
 		String result = sqlSession.selectOne(NAMESPACE+"memIdSelect", mem_id);
 		return result;
 	}
+	
+	@Override
+	public boolean memEmailSelect(String mem_email) {
+		logger.info("memIdSelect실행");
+		String result = sqlSession.selectOne(NAMESPACE+"memEmailSelect", mem_email);
+		return result==null ? true:false;
+	}
 
 	@Override
 	public boolean memInsert(MemberDto dto) {
@@ -57,6 +64,13 @@ public class AccountDaoImpl implements AccountDao {
 		System.out.println("<<<<result>>>>:"+result);
 		return result==1 ? true:false;
 	}
+	
+	@Override
+	public String memPwSelect(String mem_id) {
+		logger.info("ckPwInfo실행");
+		String mem_pw = sqlSession.selectOne(NAMESPACE+"memPwSelect", mem_id);
+		return mem_pw;
+	}
 
 	@Override
 	public boolean memPwModify(Map<String, String> map) {
@@ -64,7 +78,7 @@ public class AccountDaoImpl implements AccountDao {
 		int n = sqlSession.update(NAMESPACE+"memPwModify", map);
 		return n>0 ? true:false;
 	}
-
+	
 	@Override
 	public MemberDto memSelect(String mem_id) {
 		logger.info("memSelect실행");

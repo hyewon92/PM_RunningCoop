@@ -20,6 +20,7 @@
 			<mvc:exclude-mapping path="/loginAfter.do"/>
 			<mvc:exclude-mapping path="/main.do"/> 
 			<mvc:exclude-mapping path="/memIdSelect.do"/>
+			<mvc:exclude-mapping path="/memEmailSelect.do"/>
 			<mvc:exclude-mapping path="/ckLogin.do"/>
 			<mvc:exclude-mapping path="/searchAccount.do"/>
 			<mvc:exclude-mapping path="/searchId.do"/>

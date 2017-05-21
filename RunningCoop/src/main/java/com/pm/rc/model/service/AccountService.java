@@ -29,6 +29,14 @@ public interface AccountService {
 	public String memIdSelect(String mem_id);
 	
 	/**
+	 * 이메일 중복 확인
+	 * @param mem_email 회원이메일
+	 * @return boolean(true: 중복 메일 없음, false: 중복메일 있음)
+	 * @author 김혜원
+	 * */
+	public boolean memEmailSelect(String mem_email);
+	
+	/**
 	 * 회원 등록 프로세스
 	 * @param dto 회원이 폼에 작성한 데이터를 MemberDto로 value 전송
 	 * @return 정상적으로 등록되면 true, 등록되지 않으면 false 반환
@@ -51,6 +59,14 @@ public interface AccountService {
 	 * @author 김혜원
 	 * */
 	public boolean memPwModify(Map<String, String> map);
+	
+	/**
+	 * 계정정보 수정을 위한 본인확인
+	 * @param mem_id 회원아이디
+	 * @return String(mem_pw:회원 비밀번호)
+	 * @author 김혜원
+	 * */
+	public String memPwSelect(String mem_id);
 	
 	/**
 	 * 계정정보조회
