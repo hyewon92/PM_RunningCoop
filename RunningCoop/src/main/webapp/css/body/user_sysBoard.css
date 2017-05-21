@@ -1,0 +1,184 @@
+
+/* 공지게시판 css 시작 */
+.noticeTable{
+	width: 95%;
+    height: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.notice_list_select{
+	width: 100px;
+    height: 30px;
+    margin-right: 25px;
+    font-size: 12pt;
+    background: #5cb85c;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 1px 5px;
+}
+
+.noticeTable th{
+	height: 25px;
+	background-color : #377d37;
+	color : white;
+	text-align: center;
+	font-size : 12pt;
+    border-top : 0.5px solid #D8D8D8;
+    border-bottom : 0.5px solid #D8D8D8;
+}
+
+.noticeTable td{
+	height: 25px;
+	text-align: center;
+	font-size : 10pt;
+	border-top : 0.5px solid #D8D8D8;
+    border-bottom : 0.5px solid #D8D8D8;
+}
+
+.noticeTable td:nth-child(2) {
+    text-align: left;
+    padding-left: 15px;
+    
+}
+
+.noticeTable td:nth-child(2) a{
+	text-decoration: none;
+    color : black;
+}
+
+.noticeTable td:nth-child(2) a:HOVER {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.noticeTable tr:HOVER {
+    background: #F8F8F8;
+}
+/* 공지게시판 css 끝 */
+
+/* 문의게시판 css 시작 */
+.user_control_div {
+    clear: both;
+    text-align: right;
+    padding-right: 25px;
+    margin-top: 10px;
+}
+
+.qna_writeForm_btn {
+    color: white;
+    padding: 2px 12px;
+    background-color: #377d37;
+    border-color: #4cae4c;
+    font-size: 11pt;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+.qnaTable {
+    width: 95%;
+    border-collapse: collapse;
+    margin : 0 auto;
+    margin-top : 10px;
+    margin-bottom : 10px;
+}
+
+.qnaTable th {
+    background: #377d37;
+    color: white;
+    font-size: 11pt;
+    height: 25px;
+    border-top: 0.5px solid #D8D8D8;
+    border-bottom: 0.5px solid #D8D8D8;
+}
+
+.qnaTable td {
+    height: 25px;
+    font-size: 10pt;
+    border-top: 0.5px solid #D8D8D8;
+    border-bottom: 0.5px solid #D8D8D8;
+}
+
+.qnaTable td:nth-child(2) {
+    text-align: left;
+    padding-left: 15px;
+    
+}
+
+.qnaTable td:nth-child(2) span:HOVER {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.qnaTable tr:HOVER {
+    background: #F8F8F8;
+}
+
+/* 게시글 보기 화면 css 시작*/
+#view_div {
+    width: 90%;
+    margin: 0 auto;
+    margin-top : 40px;
+}
+
+.board_view_table {
+    width: 95%;
+    border-collapse: collapse;
+    margin-bottom : 30px;
+}
+
+.board_view_table tr:first-child th:first-child {
+    background: #377d37;
+    color: white;
+}
+
+.board_view_table td {
+    border-top: 0.5px solid lightgrey;
+    border-bottom: 0.5px solid lightgrey;
+    height: 25px;
+    text-align: left;
+    font-size : 10pt;
+}
+
+.board_view_table th {
+    height: 25px;
+    border-top: 0.5px solid lightgrey;
+    border-bottom: 0.5px solid lightgrey;
+    background: #F8F8F8;
+    font-size : 11pt;
+}
+
+.board_edit{
+	color: white;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    font-size: 11pt;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    margin-right : 5px;
+}
+
+.board_delete{
+	color: white;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    font-size: 11pt;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    margin-right : 5px;
+}
+
+.board_return{
+	color: white;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    font-size: 11pt;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+/* 게시글 보기 화면 css 끝 */

@@ -3,6 +3,7 @@
 @import url(search_Form.css);
 @import url(user_projectList.css);
 @import url(user_ProjectManage.css);
+@import url(user_sysBoard.css);
 
 body {
 	overflow: auto;

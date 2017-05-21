@@ -66,7 +66,7 @@
 		<tr>
 			<th>제목</th>
 			<td>
-			<input type="hidden" value="${ view.get("SBR_UUID")}" id = "sbr_uuid"/>
+			<input type="hidden" value="${ view.get('SBR_UUID')}" id = "sbr_uuid"/>
 			${ view.get("SBR_TITLE") }</td>
 		</tr>
 		<tr>
