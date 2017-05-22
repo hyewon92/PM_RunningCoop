@@ -3,7 +3,7 @@
 <mapper namespace="com.pm.rc.sysBoard">
 	
 	<!-- 공지게시판 페이징 처리 시작 -->
-	<select id="noticeListSelect" parameterType="SysBoardDto" resultType="java.util.Map">
+	<select id="noticeListSelect" parameterType="SystemBoardDto" resultType="java.util.Map">
 		SELECT *
 		FROM ( SELECT ROWNUM RNUM, P.*
 		      FROM (
@@ -22,7 +22,7 @@
 		WHERE RNUM BETWEEN #{paging.start} AND #{paging.last}
 	</select>
 
-	<select id="noticeListSelectCount" parameterType="SysBoardDto" resultType="java.lang.Integer">
+	<select id="noticeListSelectCount" parameterType="SystemBoardDto" resultType="java.lang.Integer">
 		SELECT NVL(COUNT(*),0)
 			FROM RC_SYSBOARD SB, RC_MEMBER M
 			WHERE SB.MEM_ID = M.MEM_ID
@@ -34,7 +34,7 @@
 	<!-- 공지게시판 페이징 처리 끝 -->
 
 	<!-- 공지 게시글 목록 출력 (검색포함) 페이징처리 -->
-	<select id="noticeListSelectPaging" resultType="java.util.Map" parameterType="ManagePagingDto">
+	<select id="noticeListSelectPaging" resultType="java.util.Map" parameterType="SystemBoardDto">
 	SELECT *
 		FROM ( SELECT ROWNUM RNUM, P.*
 		      FROM (
@@ -54,7 +54,7 @@
 <!-- 	페이징처리끝 -->
 
 	<!-- 공지 게시글 검색 목록 출력 -->
-	<select id="noticeSearchSelect" parameterType="SysBoardDto" resultType="java.util.Map">
+	<select id="noticeSearchSelect" parameterType="SystemBoardDto" resultType="java.util.Map">
 		SELECT SB.SBR_UUID, SB.SBR_TITLE, M.MEM_NAME, SB.SBR_REGDATE
 		FROM RC_SYSBOARD SB, RC_MEMBER M
 		WHERE SB.MEM_ID = M.MEM_ID AND SB.SBR_NOTICEYN = 'Y' AND SB.SBR_DELYN = 'N'
@@ -77,7 +77,7 @@
 	</select>
 	
 <!-- 	문의게시판 목록 출력 페이징 처리  -->
-	<select id="qnaListSelectPaing" resultType="java.util.Map" parameterType="ManagePagingDto">
+	<select id="qnaListSelectPaing" resultType="java.util.Map" parameterType="SystemBoardDto">
 		SELECT *
 		FROM ( SELECT ROWNUM RNUM, P.*
 		      FROM (

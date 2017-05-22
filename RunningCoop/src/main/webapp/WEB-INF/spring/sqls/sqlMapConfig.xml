@@ -18,7 +18,7 @@
 		<typeAlias type="com.pm.rc.dto.WorkListDto" alias="WorkListDto"/>
 		<typeAlias type="com.pm.rc.dto.PagingDto" alias="pagingDto"/>
 		<typeAlias type="com.pm.rc.dto.ProjectPagingDto" alias="ProjectPagingDto"/>
-		<typeAlias type="com.pm.rc.dto.ManagePagingDto" alias="ManagePagingDto"/>
+		<typeAlias type="com.pm.rc.dto.PagingProDto" alias="PagingProDto"/>
 	</typeAliases>
 	
 	<mappers>
