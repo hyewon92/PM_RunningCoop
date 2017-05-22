@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+    	<w2:type>DEFAULT</w2:type>
+        <w2:buildDate/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+            <w2:dataCollection baseNode="map">
+            	<w2:dataList baseNode="list" repeatNode="map"
+            		id="dc_noticePost" saveRemovedData="true">
+            		<w2:columnInfo>
+            			<w2:column id="SBR_UUID" name="SBR_UUID"
+            				dataType="text">
+            			</w2:column>
+            			<w2:column id="MEM_ID" name="작성자"
+            				dataType="text">
+            			</w2:column>
+            			<w2:column id="SBR_TITLE" name="제목"
+            				dataType="text">
+            			</w2:column>
+            			<w2:column id="SBR_CONTENT" name="SBR_CONTENT"
+            				dataType="text">
+            			</w2:column>
+            			<w2:column id="SBR_REFER" name="SBR_REFER"
+            				dataType="number">
+            			</w2:column>
+            			<w2:column id="SBR_STEP" name="SBR_STEP"
+            				dataType="number">
+            			</w2:column>
+            			<w2:column id="SBR_DEPTH" name="SBR_DEPTH"
+            				dataType="number">
+            			</w2:column>
+            			<w2:column id="SBR_SCRYN" name="SBR_SCRYN"
+            				dataType="text">
+            			</w2:column>
+            			<w2:column id="SBR_PW" name="SBR_PW"
+            				dataType="text">
+            			</w2:column>
+            			<w2:column id="SBR_NOTICEYN" name="SBR_NOTICEYN"
+            				dataType="text">
+            			</w2:column>
+            			<w2:column id="SBR_REGDATE" name="SBR_REGDATE"
+            				dataType="text">
+            			</w2:column>
+            		</w2:columnInfo>
+            	</w2:dataList>
+            </w2:dataCollection>
+            <w2:workflowCollection>
+            </w2:workflowCollection>
+        </xf:model>
+        <script type="text/javascript"><![CDATA[
+        ]]></script>
+    </head>
+    <body>
+    	<xf:group style="padding: 10px;" id="" class="">
+    		<xf:group style="padding: 5px;margin-bottom: 20px;" id=""
+    			class="">
+    			<w2:textbox label="공지 게시판" style="" id=""></w2:textbox>
+    		</xf:group>
+    		<xf:group style="" id="" class="">
+    			<w2:gridView id="" ignoreToggleOnDisabled="false"
+    				useShiftKey="true" style="height: 220px;"
+    				useFilterList="false" scrollByColumn="false"
+    				scrollByColumnAdaptive="false" summaryAuto="false"
+    				fixedColumnWithHidden="true" summaryOnlyAuto="false" dataList=""
+    				ignoreCellClick="false">
+    			</w2:gridView>
+    		</xf:group></xf:group>
+    	
+    </body>
+</html>

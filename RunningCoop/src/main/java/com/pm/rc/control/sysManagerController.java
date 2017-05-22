@@ -17,9 +17,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -30,7 +32,7 @@ import com.pm.rc.dto.SystemBoardDto;
 import com.pm.rc.model.service.ManagerService;
 import com.pm.rc.model.service.UserSysBoardService;
 
-@Controller
+@RestController
 public class sysManagerController {
 
 	@Autowired
@@ -38,109 +40,162 @@ public class sysManagerController {
 
 	Logger logger = LoggerFactory.getLogger(sysManagerController.class);
 
-	@RequestMapping(value="/systemManagerLogin.do", method=RequestMethod.GET)
-	public String systemManagerLogin(){
-
-		logger.info("===============관리자 로그인 페이지로 이동=================");
-
-		return "sysManage/sysMgrLogin";
+	//시스템관리자 로그인
+	public Map<String, Boolean> adminLogin(@RequestBody(required = false) Map param){
+		logger.info("시스템 관리자 로그인");
+		String sParam1 =(String)param.get("mem_id");
+		String sParam2 =(String)param.get("mem_pw");
+		Boolean isc = false;
+		
+		Map<String, String> pMap = new HashMap<String, String>();
+		pMap.put("mem_id", sParam1);
+		pMap.put("mem_pw", sParam2);
+		
+		isc = service.adminLogin(pMap);
+		
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		map.put("result", isc);
+		
+		return map;
 	}
-
+	
 	//그룹 생성 신청 리스트 출력함
 	@RequestMapping(value="/grApply.do")
-	public String groupApply(Model model){
+	public Map<String, List<GroupDto>> groupApply(@RequestBody(required = false) Map param){	//param: gr_name
 		logger.info("그룹생성신청리스트출력시작");
-		List<GroupDto> lists = service.grApplySelect(null);
-		model.addAttribute("Apply",lists);
-		return "sysManage/grApply";
+		Map<String, List<GroupDto>> map = new HashMap<String, List<GroupDto>>();
+		List<GroupDto> lists = new ArrayList<GroupDto>() ;
+		String sParam = null;
+		sParam = (String) param.get("gr_name");
+		if(sParam == null){
+			lists = service.grApplySelect(null);
+		}else{
+			lists = service.grApplySelect(sParam);
+		}
+		map.put("result", lists);
+		return map;
 	}
 
 	//그룹승인 리스트 검색하여 출력
-	@RequestMapping(value="/grApplySch.do")
-	public String groupApply(Model model ,String gr_name){
+/*	@RequestMapping(value="/grApplySch.do")
+	public String groupApply(Model model ,String gr_name){//맵
 		logger.info("그룹생성신청리스트출력시작");
 		List<GroupDto> lists = service.grApplySelect(gr_name);
 		model.addAttribute("Apply",lists);
 		return "Group/grApply";
-	}
+	}*/
 
 	//그룹승인
 	@RequestMapping(value="/grApplyYse.do" , method=RequestMethod.POST)
-	public String grApplyYse(String[] gr_id){
+	public Map<String, Boolean> grApplyYse(@RequestBody(required = false) Map param){	//gr_id 배열
 		logger.info("그룹생성승인시작");
-		service.grAppModify(gr_id);
-		return "redirect:/grApply.do";
+		Boolean isc = false;
+		String[] sParam = null;
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		sParam = (String[])param.get("gr__id");
+		isc = service.grAppModify(sParam);
+		map.put("result", isc);
+		return map;
 	}
+	
 	//그룹거절
 	@RequestMapping(value="/grApplyNo.do" , method=RequestMethod.POST)
-	public String grApplyNo(String[] gr_id){
+	public Map<String, Boolean> grApplyNo(@RequestBody(required = false) Map param){	//gr_id 배열
 		logger.info("그룹승인거절시작");
-		service.grDelete(gr_id);
-		return "redirect:/grApply.do";
+		Boolean isc = false;
+		String[] sParam = null;
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		sParam = (String[])param.get("gr__id");
+		isc = service.grDelete(sParam);
+		map.put("result", isc);
+		return map;
 	}
 
 	// 그룹 간략정보 확인하기
 	@RequestMapping(value="/groupInfoChild.do" )
-	public String groupInfoChild(String gr_id , Model model){
-		List<GroupDto> lists = service.grApplySelectGroup(gr_id);
-		model.addAttribute("info" , lists);
+	public Map<String, List<GroupDto>> groupInfoChild(@RequestBody(required = false) Map param){	//param: gr_id
+		logger.info("그룹 간략정보 확인");
+		String sParam = null;
+		List<GroupDto> lists = new ArrayList<GroupDto>();
+		Map<String, List<GroupDto>> map = new HashMap<String, List<GroupDto>>();
+		sParam = (String)param.get("gr_id");
+		lists = service.grApplyInfoView(sParam);
+		map.put("result", lists);
 
-		return "Group/grCreateInformation";
+		return map;
 	}
 
 	// 공지 게시판 관리 페이지 이동
 	@RequestMapping(value="/sysNoticeMgr.do", method={RequestMethod.GET,RequestMethod.POST})
-	public String sysBoardManager(Model model, HttpServletRequest req){
+	public Map<String, Object> sysBoardManager(@RequestBody(required = false) Map param){
+		logger.info("공지 게시판 관리 페이지 이동");
 		SystemBoardDto dto = new SystemBoardDto();
-		PagingProDto paging = new PagingProDto(req.getParameter("index"), req.getParameter("pageStartNum"), req.getParameter("listCnt"));
-		dto.setPaging(paging);
+		String sParam1 = (String)param.get("index");
+		String sParam2 = (String)param.get("pageStartNum");
+		String sParam3 = (String)param.get("listCnt");
+		PagingProDto pgDto = new PagingProDto(sParam1, sParam2, sParam3);
 		
 		logger.info("========================= 관리자 - 공지게시판 관리 페이지 이동 ===============================");
 		
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 
+		dto.setPaging(pgDto);
 		list = service.noticeListSelect(dto);
-		maPaging.setTotal(service.noticeListSelectCount(dto));
+		pgDto.setTotal(service.noticeListSelectCount(dto));
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		list = service.noticeListSelect(dto);
+		pgDto.setTotal(service.noticeListSelectCount(dto));
+		
+		map.put("result1", list);
+		map.put("result2", pgDto);
 
-		model.addAttribute("list", list);
-		model.addAttribute("paging",maPaging);
-
-		return "sysManage/sysNoticeMgr";
+		return map;
 	}
 	
 	// 공지 게시판 게시글 검색
 	@RequestMapping(value="/sysNoticeSearch.do", method=RequestMethod.POST)
-	public String sysNoticeSearch(HttpServletRequest request, Model model){
+	public Map<String, Object> sysNoticeSearch(@RequestBody(required = false) Map param){
+		logger.info("공지 게시판 관리 페이지 이동");
 		
-		String sbr_title = request.getParameter("sbr_title");
+		String sParam1= (String)param.get("sbr_title");
+		String sParam2 = (String)param.get("index");
+		String sParam3 = (String)param.get("pageStartNum");
+		String sParam4 = (String)param.get("listCnt");
 		
 		logger.info("=================== 공지 게시판 게시글 검색 =====================");
-		logger.info("검색할 게시글 제목 : "+sbr_title);
+		logger.info("검색할 게시글 제목 : "+sParam1);
 		logger.info("=========================================================");
 		
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("sbr_title", sbr_title);
+		SystemBoardDto sbDto = new SystemBoardDto();
+		sbDto.setSbr_title(sParam1);
+		
+		PagingProDto pgDto = new PagingProDto(sParam2, sParam3, sParam4);
+		
+		sbDto.setPaging(pgDto);
 		
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-		list = sservice.noticeSearchSelect(map);
+		list = service.noticeListSelect(sbDto);
 		
-		model.addAttribute("list", list);
+		pgDto.setTotal(service.noticeListSelectCount(sbDto));
 		
-		return "sysManage/sysNoticeMgr";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("result1", list);
+		map.put("result2", pgDto);
+		
+		return map;
 	}
 
 	// 공지 게시글 작성페이지 이동
 	@RequestMapping(value="/noticeWriteForm.do", method=RequestMethod.GET)
 	public String NoticeWriteForm(){
-
 		logger.info("==================== 공지 게시글 작성 폼으로 이동 =====================");
-
 		return "sysManage/sysNoticeWrite";
 	}
 
-	// 공지 게시글 작성
+	// 공지 게시글 작성(놔두기)
 	@RequestMapping(value="/noticeWrite.do", method=RequestMethod.POST)
-	public String NoticeWriete(MultipartHttpServletRequest multipartRequest){
+	public String NoticeWriete(@RequestBody(required = false) Map param){
 		String sbr_title = multipartRequest.getParameter("sbr_title");
 		String sbr_content = multipartRequest.getParameter("sbr_content");
 		String mem_id = multipartRequest.getParameter("mem_id");
@@ -212,22 +267,23 @@ public class sysManagerController {
 
 	// 공지 게시글 수정 폼 이동
 	@RequestMapping(value="/sysBoardEditMove.do", method=RequestMethod.GET)
-	public String noticeEditForm(HttpServletRequest request, Model model){
-		String sbr_uuid = request.getParameter("sbr_uuid");
+	public Map<String, Map<String, String>> noticeEditForm(@RequestBody(required = false) Map param){
+		String sParam = (String)param.get("sbr_uuid");
+		
+		Map<String, Map<String, String>> map = new HashMap<String, Map<String, String>>();
+		
+		Map<String, String> pMap1 = new HashMap<String, String>();
+		pMap1.put("sbr_uuid", sParam);
 
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("sbr_uuid", sbr_uuid);
+		Map<String, String> pMap2 = new HashMap<String, String>();
+		pMap2 = service.editBoardViewSelect(pMap1);
+		map.put("result1", pMap2);
 
-		Map<String, String> view = new HashMap<String, String>();
-		view = sservice.editBoardViewSelect(map);
+		Map<String, String> pMap3 = new HashMap<String, String>();
+		pMap3 = service.sysAttachSelect(pMap1);
+		map.put("result2", pMap3);
 
-		Map<String, String> attach = null;
-		attach = sservice.sysAttachSelect(map);
-
-		model.addAttribute("view", view);
-		model.addAttribute("attach", attach);
-
-		return "sysManage/sysBoardEdit";
+		return map;
 	}
 
 
@@ -256,7 +312,7 @@ public class sysManagerController {
 
 			// 기존 파일 삭제
 			Map<String, String> originFile = new HashMap<String, String>();
-			originFile = sservice.sysAttachSelect(map);
+			originFile = service.sysAttachSelect(map);
 
 			File delFile = new File(originFile.get("SATT_PATH")+originFile.get("SATT_RNAME"));
 			delFile.delete();
@@ -321,9 +377,9 @@ public class sysManagerController {
 		uuid.put("sbr_uuid", sbr_uuid);
 
 		Map<String, String> view = new HashMap<String, String>();
-		view = sservice.sysBoardViewSelect(uuid);
+		view = service.sysBoardViewSelect(uuid);
 		Map<String, String> attach = new HashMap<String, String>();
-		attach = sservice.sysAttachSelect(uuid);
+		attach = service.sysAttachSelect(uuid);
 
 		model.addAttribute("view", view);
 
@@ -344,7 +400,7 @@ public class sysManagerController {
 		uuid.put("sbr_uuid", sbr_uuid);
 
 		Map<String, String> attach = null;
-		attach = sservice.sysAttachSelect(uuid);
+		attach = service.sysAttachSelect(uuid);
 
 		if(attach != null){
 			String savePath = ""+attach.get("SATT_PATH");
@@ -356,7 +412,7 @@ public class sysManagerController {
 		}
 
 		boolean isc = false;
-		isc = sservice.qnaBoardDelete(sbr_uuid);
+		isc = service.sysBoardDelete(sbr_uuid);
 
 		if(isc == true){
 			System.out.println("문의 게시글 삭제 성공");
@@ -382,9 +438,10 @@ public class sysManagerController {
 		logger.info("====================== 문의 게시판 관리 페이지 이동 ========================");
 
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-
-		list = sservice.qnaListSelectPaing(maPaing);
-		maPaing.setTotal(sservice.qnaListSelectPaingCount());
+		SystemBoardDto sbDto = new SystemBoardDto();	//param값 넣기
+		
+		list = service.qnaListSelect(sbDto);
+		maPaing.setTotal(service.qnaListSelectCount(sbDto));
 
 		model.addAttribute("list", list);
 		model.addAttribute("paging", maPaing);
@@ -406,7 +463,9 @@ public class sysManagerController {
 		map.put("sbr_title", sbr_title);
 		
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-		list = sservice.qnaSearchSelect(map);
+		
+		SystemBoardDto sbDto = new SystemBoardDto();
+		list = service.qnaListSelect(sbDto);	//sbDto 만들어야함
 		
 		model.addAttribute("list", list);
 		
@@ -427,9 +486,9 @@ public class sysManagerController {
 		uuid.put("sbr_uuid", sbr_uuid);
 
 		Map<String, String> view = new HashMap<String, String>();
-		view = sservice.sysBoardViewSelect(uuid);
+		view = service.sysBoardViewSelect(uuid);
 		Map<String, String> attach = new HashMap<String, String>();
-		attach = sservice.sysAttachSelect(uuid);
+		attach = service.sysAttachSelect(uuid);
 
 		model.addAttribute("view", view);
 
@@ -554,7 +613,7 @@ public class sysManagerController {
 			uuid.put("sbr_uuid", sbr_uuid);
 
 			Map<String, String> attach = null;
-			attach = sservice.sysAttachSelect(uuid);
+			attach = service.sysAttachSelect(uuid);
 
 			if(attach != null){
 				String savePath = ""+attach.get("SATT_PATH");
@@ -567,7 +626,7 @@ public class sysManagerController {
 
 			boolean isc = false;
 			
-			isc = sservice.qnaBoardDelete(sbr_uuid);
+			isc = service.sysBoardDelete(sbr_uuid);
 
 			if(isc == true){
 				System.out.println("게시글 삭제 성공");
