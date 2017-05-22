@@ -24,7 +24,7 @@
 	
 	<!-- 관리자 로그인 -->
 	<div>
-		<input type="button" class = "accountBtn" value="관리자 로그인" style = "position: absolute; right: 10px; top: 10px;" onclick="location.href='./systemManagerLogin.do'"/>
+		<input type="button" class = "accountBtn" value="관리자 로그인" style = "position: absolute; right: 10px; top: 10px;" onclick="location.href='./rcAdmin.do'"/>
 	</div>	
 	
 	<!-- 로고 -->
