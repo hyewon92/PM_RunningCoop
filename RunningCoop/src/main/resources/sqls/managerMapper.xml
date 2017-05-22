@@ -10,7 +10,7 @@
 	</select>
 
 	<!-- 	회원목록 페이징 처리  -->
-	<select id="allMemberSelect" resultType="MemberDto" parameterType="ManagePagingDto">
+	<select id="allMemberSelect" resultType="MemberDto" parameterType="PagingProDto">
 	SELECT *
 		FROM ( SELECT ROWNUM RNUM, P.*
 		      FROM (

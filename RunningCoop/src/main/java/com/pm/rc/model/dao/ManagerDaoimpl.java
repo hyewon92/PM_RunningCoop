@@ -30,6 +30,7 @@ public class ManagerDaoimpl implements ManagerDao {
 		int num = sqlSession.selectOne(NAMESPACE+"adminLogin", map);
 		return num>0 ? true : false;
 	}
+	
 	@Override
 	public List<MemberDto> allMemberSelect(PagingProDto maPaging) {
 		return sqlSession.selectList(NAMESPACE+"allMemberSelect",maPaging);
