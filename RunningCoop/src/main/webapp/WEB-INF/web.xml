@@ -41,6 +41,15 @@
 		<servlet-name>springDispatcherServlet</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>websquareDispatcher</servlet-name>
+		<servlet-class>websquare.http.DefaultRequestDispatcher</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>websquareDispatcher</servlet-name>
+		<url-pattern>*.wq</url-pattern>
+	</servlet-mapping>
 
 
 	<!-- 6. 한글 인코딩 -->

@@ -37,7 +37,7 @@
 			<mvc:exclude-mapping path="/WEB-INF/views/account/joinAfter.jsp"/>
 			<mvc:exclude-mapping path="/WEB-INF/views/account/error/error.jsp"/>
 			<mvc:exclude-mapping path="/groupGoGo.do"/>
-			<mvc:exclude-mapping path="/systemManagerLogin.do"/>
+			<mvc:exclude-mapping path="/rcAdmin.do"/>
 			<mvc:exclude-mapping path="/socketOpen.do"/>
 			<bean class="com.pm.rc.interceptor.LoginCheckInterceptor" />
 		</mvc:interceptor>
