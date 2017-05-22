@@ -4,57 +4,26 @@ import java.util.List;
 import java.util.Map;
 
 import com.pm.rc.dto.GroupDto;
-import com.pm.rc.dto.ManagePagingDto;
+import com.pm.rc.dto.PagingProDto;
 import com.pm.rc.dto.MemberDto;
+import com.pm.rc.dto.SystemBoardDto;
 
 public interface ManagerDao {
 	
 	/**
-	 * 그룹생성승인요청 리스트 출력  (전부)
-	 * @return list 
-	 * @author 라한솔
+	 * 관리자 로그인
+	 * @param map
+	 * @return
 	 */
-	public List<GroupDto> grApplySelect (String gr_name);
-	
-	/**
-	 * 그룹생성승인요청 리스트 출력 (그룹 이름 검색)
-	 * @param gr_name 그룹이름
-	 * @return list
-	 * @author 라한솔
-	 */
-	public List<GroupDto> grApplySelectGr(String gr_name);
-	
-	/**
-	 * 그룹 생성 거절 다음 해당 그룹 관리자 삭제 (그룹생성Dao)
-	 * @param gr_id 그룹아이디
-	 * @return boolean
-	 * @author 라한솔
-	 */
-	public boolean grDelete (String gr_id);
-	
-	/**
-	 * 그룹 생성 거절 다음 해당 그룹 관리자 삭제 (해당 그룹 관리자 삭제)
-	 * @param gr_id 그룹아디
-	 * @return boolean
-	 * @author 라한솔
-	 */
-	public boolean grDelete2 (String gr_id);
+	public boolean adminLogin(Map<String, String> map);
 	
 	/**
 	 * 회원 목록 출력 
 	 * @return list
 	 * @author 라한솔
 	 */
-	public List<MemberDto> allMemberSelect(ManagePagingDto maPaging);
+	public List<MemberDto> allMemberSelect(PagingProDto maPaging);
 	public int allMemberSelectCount ();
-	
-	/**
-	 * 회원 정보 수정
-	 * @param dto MemberDto
-	 * @return boolean
-	 * @author 김혜원
-	 * */
-	public Boolean sysMemModify(MemberDto dto);
 	
 	/**
 	 * 회원 목록 출력 (아이디 검색)
@@ -73,12 +42,50 @@ public interface ManagerDao {
 	public MemberDto sysMemView(String mem_id);
 	
 	/**
+	 * 회원 정보 수정
+	 * @param dto MemberDto
+	 * @return boolean
+	 * @author 김혜원
+	 * */
+	public Boolean sysMemModify(MemberDto dto);
+	
+	/**
+	 * 그룹생성승인요청 리스트 출력  (전부)
+	 * @return list 
+	 * @author 라한솔
+	 */
+	public List<GroupDto> grApplySelect (String gr_name);
+	
+	/**
+	 * 그룹승인화면에서 그룹선택시 간략정보 출력
+	 * @param String gr_Id
+	 * @return List&lt;GroupDto&gt;
+	 */
+	public List<GroupDto> grApplyInfoView(String gr_id);
+	
+	/**
+	 * 그룹 생성 거절 다음 해당 그룹 관리자 삭제 (그룹생성Dao)
+	 * @param gr_id 그룹아이디
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean grDelete (String gr_id);
+	
+	/**
+	 * 그룹 생성 거절 다음 해당 그룹 관리자 삭제 (해당 그룹 관리자 삭제)
+	 * @param gr_id 그룹아디
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean grDelete2 (String gr_id);
+	
+	/**
 	 * 그룹 생성 승인
 	 * @param gr_id 그룹아이디
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean grAppModify(String gr_id);	
+	public boolean grAppModify(String gr_id);
 	
 	/**
 	 * 공지사항 등록 : 첨부파일 등록
@@ -101,7 +108,7 @@ public interface ManagerDao {
 	 * @author 김혜원
 	 * */
 	public boolean noticeModify_1(Map<String, String> map);
-	
+
 	/**
 	 * 공지사항 수정 - 게시글 수정
 	 * @param map
@@ -109,7 +116,13 @@ public interface ManagerDao {
 	 */
 	public boolean noticeModify_2(Map<String, String> map);
 	
-	
+	/**
+	 * 수정 시 게시글 출력
+	 * @param sbr_uuid 수정할 게시글 uuid
+	 * @return Map 형태로 해당 게시글 반환
+	 */
+	public Map<String, String> editBoardViewSelect(Map<String, String> map);
+
 	/**
 	 * 문의 답글 등록 - 첨부파일 등록
 	 * @param dto SystemBoardDto객체
@@ -126,9 +139,42 @@ public interface ManagerDao {
 	public boolean qnaReplyInsert_2(Map<String, String> map);
 	
 	/**
-	 * 그룹승인화면에서 그룹선택시 간략정보 출력
-	 * @param String gr_Id
-	 * @return List&lt;GroupDto&gt;
+	 * 공지 게시글 목록 출력, 페이징처리
+	 * @return List&lt;SystemBoardDto&gt;
+	 * @author 김혜원
+	 * */
+	public List<Map<String, String>> noticeListSelect(SystemBoardDto dto);
+	
+	public int noticeListSelectCount(SystemBoardDto dto);
+	
+	/**
+	 * 문의 게시글 목록 출력
+	 * @return 문의 게시글의 목록을 
+	 * */
+	public List<Map<String, String>> qnaListSelect(SystemBoardDto dto);
+	
+	public int qnaListSelectCount(SystemBoardDto dto);
+	
+	/**
+	 * 게시글 보기 서비스
+	 * @param map sbr_uuid, sbr_pw을 Map객체에 담아 전송
+	 * @return 해당하는 게시글의 정보를 Map에 담아 반환
 	 */
-	public List<GroupDto> grApplySelectGroup(String gr_id);
+	public Map<String, String> sysBoardViewSelect(Map<String, String> map);
+	
+	/**
+	 * 첨부파일 조회 메소드
+	 * @param sbr_uuid
+	 * @return 첨부파일 정보를 Map로 반환
+	 */
+	public Map<String, String> sysAttachSelect(Map<String, String> map);
+	
+	/**
+	 * 게시글 삭제
+	 * @param sbr_uuid 시스템게시글 번호
+	 * @return boolean
+	 * @author 김혜원
+	 * */
+	public boolean sysBoardDelete(String sbr_uuid);
+	
 }

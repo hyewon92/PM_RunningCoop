@@ -3,7 +3,7 @@ package com.pm.rc.model.service;
 import java.util.List;
 import java.util.Map;
 
-import com.pm.rc.dto.ManagePagingDto;
+import com.pm.rc.dto.PagingProDto;
 
 /**
  * 회원 입장에서 시스템게시판(문의게시판, 공지게시판)관련 기능 인터페이스
@@ -17,7 +17,7 @@ public interface UserSysBoardService {
 	 * @author 김혜원
 	 * */
 	public List<Map<String, String>> noticeListSelect();
-	public List<Map<String, String>> noticeListSelectPaing(ManagePagingDto maPaging);
+	public List<Map<String, String>> noticeListSelectPaing(PagingProDto maPaging);
 	public int noticeListSelectCount();
 	
 	/**
@@ -33,7 +33,7 @@ public interface UserSysBoardService {
 	 * @return 문의 게시글의 목록을 
 	 * */
 	public List<Map<String, String>> qnaListSelect();
-	public List<Map<String, String>> qnaListSelectPaing(ManagePagingDto maPaing);
+	public List<Map<String, String>> qnaListSelectPaing(PagingProDto maPaing);
 	public int qnaListSelectPaingCount();
 	/**
 	 * 문의 게시글 검색

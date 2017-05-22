@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>시스템게시판 글쓰기 화면(사용자 문의글)</title>
+<title>문의게시판 :: 문의글 작성하기</title>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <link rel="stylesheet" href="daumOpenEditor/css/editor.css" type="text/css"/>
 <script src="daumOpenEditor/js/editor_loader.js" type="text/javascript" charset="utf-8"></script>
@@ -64,25 +64,31 @@
 <div id = "header">
 	<jsp:include page="../header.jsp" flush="false"/>
 </div>
+
 <div id = "container">
-	<form id="boardWrite" action="./boardWrite.do" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="mem_id" value="${ mem_id }" />
-		<input type="hidden" name="sbr_noticeyn" value="N"/>
-			<div>
-				<span> 제목 </span>
-				<input type="text" name="sbr_title" />
-			</div>
-			<div>
-						<input type="checkbox" id="sbr_scryn" name="sbr_scryn" /><span>비밀글</span>
-						<input type="text" id="sbr_pw" name="sbr_pw" style="display: none" />
-			</div>			
-						<jsp:include page="../daumOpenEditor.jsp" flush="false"></jsp:include>
-			<fieldset id="file_attach_list">
-				<legend>첨부파일</legend>
-				<input type="file" id="file" name="sbr_name"/>
-				<input type="hidden" id="filesize" name="sbr_size" />
-			</fieldset>
-	</form>
+	<h3>문의 게시글 작성하기</h3>
+	<div class="editor_div">
+		<form id="boardWrite" action="./boardWrite.do" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="mem_id" value="${ mem_id }" />
+			<input type="hidden" name="sbr_noticeyn" value="N"/>
+				<div class="title_area">
+					<div>제목</div>
+					<div><input type="text" name="sbr_title" /></div>
+				</div>
+				<div class="attach_area">
+					<div>첨부파일</div>
+					<div>
+						<input type="file" id="file" name="sbr_name"/>
+						<input type="hidden" id="filesize" name="sbr_size" />
+					</div>
+				</div>
+				<div class="secretYn_area">
+					<input type="checkbox" id="sbr_scryn" name="sbr_scryn" /><span>비밀글</span>
+					<input type="text" id="sbr_pw" name="sbr_pw" style="display: none" />
+				</div>			
+				<jsp:include page="../daumOpenEditor.jsp" flush="false"></jsp:include>
+		</form>
+	</div>
 <script type="text/javascript">
 		var config = {
 			txHost : '', /* 런타임 시 리소스들을 로딩할 때 필요한 부분으로, 경로가 변경되면 이 부분 수정이 필요. ex) http://xxx.xxx.com */
@@ -96,14 +102,6 @@
 			txDecoPath : "daumOpenEditor/images/deco/contents/", /*본문에 사용되는 이미지 디렉터리, 서비스에서 사용할 때는 완성된 컨텐츠로 배포되기 위해 절대경로로 수정한다. */
 			canvas : {
 				exitEditor : {
-				/*
-				desc:'빠져 나오시려면 shift+b를 누르세요.',
-				hotKey: {
-				    shiftKey:true,
-				    keyCode:66
-				},
-				nextElement: document.getElementsByTagName('button')[0]
-				 */
 				},
 				styles : {
 					color : "#123456", /* 기본 글자색 */
@@ -191,9 +189,12 @@
         return true;
 	}
 </script>
-<div><button onclick='saveContent()'>등록</button></div>
-<input type="button" value="목록으로" onclick="back()" />
+	<div class="btn_area">
+		<button onclick='saveContent()'>등록</button>
+		<input type="button" value="목록으로" onclick="back()" />
+	</div>
 </div>
+
 <div id = "footer">
 	<jsp:include page="../footer.jsp" flush="false"/>
 </div>
