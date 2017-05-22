@@ -14,7 +14,7 @@ public class SystemBoardDto {
 	private String sbr_noticeYN;
 	private String sbr_regDate;
 	
-	private SbAttachDto sbAttach;
+	private PagingProDto paging;
 	
 	public SystemBoardDto(){}
 
@@ -106,12 +106,12 @@ public class SystemBoardDto {
 		this.sbr_regDate = sbr_regDate;
 	}
 
-	public SbAttachDto getSbAttach() {
-		return sbAttach;
+	public PagingProDto getPaging() {
+		return paging;
 	}
 
-	public void setSbAttach(SbAttachDto sbAttach) {
-		this.sbAttach = sbAttach;
+	public void setPaging(PagingProDto paging) {
+		this.paging = paging;
 	}
 
 	@Override
@@ -121,8 +121,7 @@ public class SystemBoardDto {
 				+ ", sbr_refer=" + sbr_refer + ", sbr_step=" + sbr_step
 				+ ", sbr_depth=" + sbr_depth + ", sbr_scrYN=" + sbr_scrYN
 				+ ", sbr_pw=" + sbr_pw + ", sbr_noticeYN=" + sbr_noticeYN
-				+ ", sbr_regDate=" + sbr_regDate + ", sbAttach=" + sbAttach
-				+ "]";
+				+ ", sbr_regDate=" + sbr_regDate + ", paging=" + paging + "]";
 	}
 
 }

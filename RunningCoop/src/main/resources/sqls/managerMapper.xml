@@ -2,6 +2,55 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pm.rc.manager">
 
+	<!-- 관리자 로그인 -->
+	<select id="adminLogin" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT MEM_ID, MEM_NAME 
+		FROM RC_MEMBER
+		WHERE MEM_ID = #{mem_id} AND MEM_PW = #{mem_pw}
+	</select>
+
+	<!-- 	회원목록 페이징 처리  -->
+	<select id="allMemberSelect" resultType="MemberDto" parameterType="ManagePagingDto">
+	SELECT *
+		FROM ( SELECT ROWNUM RNUM, P.*
+		      FROM (
+					SELECT MEM_ID, MEM_NAME, MEM_EMAIL, MEM_PHONE, TO_CHAR(MEM_REGDATE, 'YYYY/MM/DD') MEM_REGDATE
+					FROM RC_MEMBER
+					WHERE MEM_DELYN = 'N' AND MEM_LEVEL = 'N'
+					ORDER BY MEM_REGDATE
+		      ) P
+		    )	
+		WHERE RNUM BETWEEN #{start} AND #{last}	
+	</select>
+	
+	<select id="allMemberSelectCount" resultType="java.lang.Integer">
+	SELECT NVL(COUNT(*),0)
+	FROM RC_MEMBER
+	WHERE MEM_DELYN = 'N' AND MEM_LEVEL = 'N'
+	</select>
+	<!-- 	페이징처리 끝 -->
+	
+	<select id="allMemberSelectSearch" parameterType="java.util.Map" resultType="MemberDto">
+		SELECT MEM_ID, MEM_NAME, MEM_EMAIL, MEM_PHONE, TO_CHAR(MEM_REGDATE, 'YYYY/MM/DD') MEM_REGDATE
+		FROM RC_MEMBER
+		WHERE MEM_DELYN = 'N' AND MEM_LEVEL = 'N'
+		AND MEM_ID LIKE '%${mem_id}%' OR MEM_NAME LIKE '%${mem_id}%'
+		ORDER BY MEM_REGDATE
+	</select>
+	
+	<!-- 회원정보 조회 -->
+	<select id="sysMemView" parameterType="java.lang.String" resultType="MemberDto">
+		SELECT MEM_ID, MEM_PW, MEM_NAME, MEM_EMAIL, MEM_PHONE
+		FROM RC_MEMBER
+		WHERE MEM_ID = #{mem_id}
+	</select>
+	
+	<!-- 회원정보 수정 -->
+	<update id="sysMemModify" parameterType="MemberDto">
+		UPDATE RC_MEMBER SET MEM_NAME = #{mem_name}, MEM_PW = #{mem_pw}, MEM_EMAIL = #{mem_email}, MEM_PHONE = #{mem_phone}
+		WHERE MEM_ID = #{mem_id}
+	</update>
+	
 	<select id="grApplySelect" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT G.GR_ID, G.GR_NAME, M.MEM_NAME,TO_CHAR(G.GR_REGDATE, 'YYYYMMDD') GR_REGDATE
 		FROM RC_GROUP G, RC_MEMBER M
@@ -13,10 +62,12 @@
 		</if>
 	</select>
 	
-	<update id="grAppModify" parameterType="java.lang.String">
-	UPDATE RC_GROUP SET GR_APPYN = 'Y'
-	WHERE GR_ID = #{gr_id}
-	</update>
+	<select id="grApplyInfoView" parameterType="java.lang.String" resultType="java.util.Map">
+	SELECT  G.GR_NAME, M.MEM_NAME, G.GR_GOAL, TO_CHAR(G.GR_REGDATE, 'YYYY/MM/DD') GR_REGDATE
+	FROM RC_GROUP G, RC_MEMBER M
+  	WHERE G.GR_ID = #{gr_id} AND M.MEM_ID = 
+    (SELECT GM.MEM_ID FROM RC_GROUPMEM GM WHERE GM.GR_ID = G.GR_ID AND GM.GR_LEVEL = 'GM')
+	</select>
 	
 	<delete id="grDelete" parameterType="java.lang.String">
 	DELETE FROM RC_GROUP	
@@ -28,12 +79,10 @@
 	WHERE GR_ID = #{gr_id}
 	</delete>
 	
-	<select id="grApplySelectGroup" parameterType="java.lang.String" resultType="java.util.Map">
-	SELECT  G.GR_NAME, M.MEM_NAME, G.GR_GOAL, TO_CHAR(G.GR_REGDATE, 'YYYY/MM/DD') GR_REGDATE
-	FROM RC_GROUP G, RC_MEMBER M
-  	WHERE G.GR_ID = #{gr_id} AND M.MEM_ID = 
-    (SELECT GM.MEM_ID FROM RC_GROUPMEM GM WHERE GM.GR_ID = G.GR_ID AND GM.GR_LEVEL = 'GM')
-	</select>
+	<update id="grAppModify" parameterType="java.lang.String">
+	UPDATE RC_GROUP SET GR_APPYN = 'Y'
+	WHERE GR_ID = #{gr_id}
+	</update>
 	
 	<insert id="noticeInsert_1" parameterType="java.util.Map">
 		INSERT INTO RC_SYSATTACH (SATT_SEQ, SBR_UUID, SATT_NAME, SATT_SIZE, SATT_RNAME, SATT_PATH)
@@ -57,6 +106,14 @@
 		WHERE SBR_UUID = #{sbr_uuid}
 	</update>
 	
+	<!-- 수정용 게시글 화면 -->
+	<select id="editViewSelect" parameterType="java.lang.String" resultType="java.util.Map">
+		SELECT SB.SBR_UUID, SB.MEM_ID, M.MEM_NAME, TO_CHAR(SB.SBR_REGDATE, 'YYYY/MM/DD') SBR_REGDATE,
+		SB.SBR_TITLE, SB.SBR_CONTENT, SB.SBR_SCRYN, SB.SBR_PW
+		FROM RC_MEMBER M, RC_SYSBOARD SB
+		WHERE M.MEM_ID = SB.MEM_ID AND SB.SBR_UUID = #{sbr_uuid}
+	</select>
+	
 	<insert id="qnaReplyInsert_1" parameterType="java.util.Map">
 		INSERT INTO RC_SYSATTACH (SATT_SEQ, SBR_UUID, SATT_NAME, SATT_SIZE, SATT_RNAME, SATT_PATH)
 		VALUES
@@ -72,47 +129,84 @@
 		(SELECT SBR_DEPTH+1 FROM RC_SYSBOARD WHERE SBR_UUID = #{Rsbr_uuid}))
 	</insert>
 	
-<!-- 	회원목록 페이징 처리  -->
-	<select id="allMemberSelect" resultType="MemberDto" parameterType="ManagePagingDto">
-	SELECT *
+	<!-- 공지게시판 페이징 처리 시작 -->
+	<select id="noticeListSelect" parameterType="SystemBoardDto" resultType="java.util.Map">
+		SELECT *
 		FROM ( SELECT ROWNUM RNUM, P.*
 		      FROM (
-					SELECT MEM_ID, MEM_NAME, MEM_EMAIL, MEM_PHONE, TO_CHAR(MEM_REGDATE, 'YYYY/MM/DD') MEM_REGDATE
-					FROM RC_MEMBER
-					WHERE MEM_DELYN = 'N' AND MEM_LEVEL = 'N'
-					ORDER BY MEM_REGDATE
-		      ) P
+					SELECT SB.SBR_UUID,
+					SB.SBR_TITLE, M.MEM_NAME, TO_CHAR(SB.SBR_REGDATE, 'YYYY/MM/DD')SBR_REGDATE
+					FROM RC_SYSBOARD SB, RC_MEMBER M
+					WHERE SB.MEM_ID = M.MEM_ID
+					AND
+					SB.SBR_NOTICEYN = 'Y' AND SB.SBR_DELYN = 'N'
+					<if test="sbr_title != null">
+						AND SB.SBR_TITLE LIKE '%${sbr_title}%'
+					</if>
+					ORDER BY SBR_REFER DESC, SBR_STEP
+				  ) P
 		    )	
-		WHERE RNUM BETWEEN #{start} AND #{last}	
+		WHERE RNUM BETWEEN #{paging.start} AND #{paging.last}
 	</select>
 	
-	<select id="allMemberSelectCount" resultType="java.lang.Integer">
-	SELECT NVL(COUNT(*),0)
-	FROM RC_MEMBER
-	WHERE MEM_DELYN = 'N' AND MEM_LEVEL = 'N'
+	<select id="noticeListSelectCount" parameterType="SystemBoardDto" resultType="java.lang.Integer">
+		SELECT NVL(COUNT(*),0)
+			FROM RC_SYSBOARD SB, RC_MEMBER M
+			WHERE SB.MEM_ID = M.MEM_ID
+			AND SB.SBR_NOTICEYN = 'Y' AND SB.SBR_DELYN = 'N'
+			<if test="sbr_title != null">
+			AND SB.SBR_TITLE LIKE '%${sbr_title}%'
+			</if>
 	</select>
 	
-<!-- 	페이징처리 끝 -->
-	
-	<select id="allMemberSelectSearch" parameterType="java.util.Map" resultType="MemberDto">
-		SELECT MEM_ID, MEM_NAME, MEM_EMAIL, MEM_PHONE, TO_CHAR(MEM_REGDATE, 'YYYY/MM/DD') MEM_REGDATE
-		FROM RC_MEMBER
-		WHERE MEM_DELYN = 'N' AND MEM_LEVEL = 'N'
-		AND MEM_ID LIKE '%${mem_id}%' OR MEM_NAME LIKE '%${mem_id}%'
-		ORDER BY MEM_REGDATE
+	<!-- 문의 게시글 목록 출력 -->
+	<select id="qnaListSelect" parameterType="SystemBoardDto" resultType="java.util.Map">
+		SELECT *
+		FROM ( SELECT ROWNUM RNUM, P.*
+		      FROM (
+					SELECT SB.SBR_UUID,
+					SB.SBR_TITLE, M.MEM_NAME, TO_CHAR(SB.SBR_REGDATE, 'YYYY/MM/DD')SBR_REGDATE
+					FROM RC_SYSBOARD SB, RC_MEMBER M
+					WHERE SB.MEM_ID = M.MEM_ID
+					AND
+					SB.SBR_NOTICEYN = 'N' AND SB.SBR_DELYN = 'N'
+					<if test="sbr_title != null">
+						AND SB.SBR_TITLE LIKE '%${sbr_title}%'
+					</if>
+					ORDER BY SBR_REFER DESC, SBR_STEP
+				  ) P
+		    )	
+		WHERE RNUM BETWEEN #{paging.start} AND #{paging.last}
 	</select>
 	
-	<!-- 회원정보 조회 -->
-	<select id="sysMemView" parameterType="java.lang.String" resultType="MemberDto">
-		SELECT MEM_ID, MEM_PW, MEM_NAME, MEM_EMAIL, MEM_PHONE
-		FROM RC_MEMBER
-		WHERE MEM_ID = #{mem_id}
+	<select id="qnaListSelectCount" resultType="java.lang.Integer">
+		SELECT NVL(COUNT(*),0)
+			FROM RC_SYSBOARD SB, RC_MEMBER M
+			WHERE SB.MEM_ID = M.MEM_ID 
+			AND SBR_DELYN = 'N' AND SBR_NOTICEYN = 'N'
+			<if test="sbr_title != null">
+				AND SB.SBR_TITLE LIKE '%${sbr_title}%'
+			</if>
 	</select>
 	
-	<!-- 회원정보 수정 -->
-	<update id="sysMemModify" parameterType="MemberDto">
-		UPDATE RC_MEMBER SET MEM_NAME = #{mem_name}, MEM_PW = #{mem_pw}, MEM_EMAIL = #{mem_email}, MEM_PHONE = #{mem_phone}
-		WHERE MEM_ID = #{mem_id}
+	<!-- 수정용 게시글 화면 -->
+	<select id="sysBoardViewSelect" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT SB.SBR_UUID, SB.MEM_ID, M.MEM_NAME, TO_CHAR(SB.SBR_REGDATE, 'YYYY/MM/DD') SBR_REGDATE,
+		SB.SBR_TITLE, SB.SBR_CONTENT, SB.SBR_SCRYN, SB.SBR_PW
+		FROM RC_MEMBER M, RC_SYSBOARD SB
+		WHERE M.MEM_ID = SB.MEM_ID AND SB.SBR_UUID = #{sbr_uuid}
+	</select>
+	
+	<!-- 게시글 첨부파일 보기 -->
+	<select id="sysAttachSelect" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT SA.SATT_SEQ, SA.SATT_NAME, SA.SATT_SIZE, SA.SATT_RNAME, SA.SATT_PATH FROM RC_SYSATTACH SA
+		WHERE SA.SBR_UUID = #{sbr_uuid}
+	</select>
+	
+	<!-- 게시글 삭제 -->
+	<update id="sysBoardDelete" parameterType="java.lang.String">
+		UPDATE RC_SYSBOARD SET SBR_DELYN = 'Y'
+		WHERE SBR_UUID = #{ sbr_uuid }
 	</update>
 	
 </mapper>

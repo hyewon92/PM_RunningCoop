@@ -8,7 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.pm.rc.dto.ManagePagingDto;
+import com.pm.rc.dto.PagingProDto;
 import com.pm.rc.dto.SbAttachDto;
 import com.pm.rc.dto.SystemBoardDto;
 
@@ -28,7 +28,7 @@ public class SysBoardDaoImpl implements SysBoardDao {
 	}
 
 	@Override
-	public List<Map<String, String>> noticeListSelectPaing(ManagePagingDto maPaging) {
+	public List<Map<String, String>> noticeListSelectPaing(PagingProDto maPaging) {
 		List<Map<String, String>> list;
 		list = sqlSession.selectList(NAMESPACE+"noticeListSelectPaging",maPaging);
 		return list;
@@ -54,7 +54,7 @@ public class SysBoardDaoImpl implements SysBoardDao {
 	}
 	
 	@Override
-	public List<Map<String, String>> qnaListSelectPaing(ManagePagingDto maPaing) {
+	public List<Map<String, String>> qnaListSelectPaing(PagingProDto maPaing) {
 		List<Map<String, String>> list;
 		list = sqlSession.selectList(NAMESPACE+"qnaListSelectPaing", maPaing);
 		return list;

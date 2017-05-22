@@ -8,8 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pm.rc.dto.GroupDto;
-import com.pm.rc.dto.ManagePagingDto;
+import com.pm.rc.dto.PagingProDto;
 import com.pm.rc.dto.MemberDto;
+import com.pm.rc.dto.SystemBoardDto;
 import com.pm.rc.model.dao.ManagerDao;
 
 @Service
@@ -19,19 +20,18 @@ public class ManagerServiceimpl implements ManagerService {
 	private ManagerDao managerdao;
 	
 	@Override
+	public boolean adminLogin(Map<String, String> map){
+		return managerdao.adminLogin(map);
+	}
+	
+	@Override
 	public List<GroupDto> grApplySelect(String gr_name) {
 		return managerdao.grApplySelect(gr_name);
 	}
 	
 	@Override
-	public List<GroupDto> grApplySelectGroup(String gr_id) {
-		return managerdao.grApplySelectGroup(gr_id);
-	}
-
-	@Override
-	public List<GroupDto> grApplySelectGr(String gr_name) {
-		
-		return managerdao.grApplySelectGr(gr_name);
+	public List<GroupDto> grApplyInfoView(String gr_id) {
+		return managerdao.grApplyInfoView(gr_id);
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class ManagerServiceimpl implements ManagerService {
 	}
 
 	@Override
-	public List<MemberDto> allMemberSelect(ManagePagingDto maPaging) {
+	public List<MemberDto> allMemberSelect(PagingProDto maPaging) {
 		return managerdao.allMemberSelect(maPaging);
 	}
 	
@@ -111,6 +111,46 @@ public class ManagerServiceimpl implements ManagerService {
 		}
 		isc = managerdao.qnaReplyInsert_2(map);
 		return isc;
+	}
+
+	@Override
+	public List<Map<String, String>> noticeListSelect(SystemBoardDto dto) {
+		return managerdao.noticeListSelect(dto);
+	}
+
+	@Override
+	public int noticeListSelectCount(SystemBoardDto dto) {
+		return managerdao.noticeListSelectCount(dto);
+	}
+
+	@Override
+	public List<Map<String, String>> qnaListSelect(SystemBoardDto dto) {
+		return managerdao.noticeListSelect(dto);
+	}
+
+	@Override
+	public int qnaListSelectCount(SystemBoardDto dto) {
+		return managerdao.qnaListSelectCount(dto);
+	}
+
+	@Override
+	public Map<String, String> sysBoardViewSelect(Map<String, String> map) {
+		return managerdao.sysBoardViewSelect(map);
+	}
+
+	@Override
+	public Map<String, String> sysAttachSelect(Map<String, String> map) {
+		return managerdao.sysAttachSelect(map);
+	}
+
+	@Override
+	public Map<String, String> editBoardViewSelect(Map<String, String> map) {
+		return managerdao.editBoardViewSelect(map);
+	}
+
+	@Override
+	public boolean sysBoardDelete(String sbr_uuid) {
+		return managerdao.sysBoardDelete(sbr_uuid);
 	}
 
 }

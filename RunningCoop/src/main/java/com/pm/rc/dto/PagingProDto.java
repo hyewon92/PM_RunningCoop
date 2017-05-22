@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 // 1. PagingDto
-public class ManagePagingDto {
+public class PagingProDto {
 	
 	Logger logger = LoggerFactory.getLogger(ProjectPagingDto.class);
 
@@ -26,7 +26,7 @@ public class ManagePagingDto {
 	}
 	
 //	public PagingDto(String string, String string2, String string3, String string4) {}
-	public ManagePagingDto(String index, String pageStartNum, String listCnt) {
+	public PagingProDto(String index, String pageStartNum, String listCnt) {
 		logger.info("========================================================페이징DTO 생성자 호출 시간 : "+(new Date())+"========================================================");
 		if(index != null){
 			this.index = Integer.parseInt(index);

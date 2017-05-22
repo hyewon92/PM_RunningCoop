@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+    	<w2:type>DEFAULT</w2:type>
+        <w2:buildDate/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+            <w2:dataCollection baseNode="map">
+            	<w2:dataList baseNode="list" repeatNode="map"
+            		id="dc_qnaPostList" saveRemovedData="true">
+            		<w2:columnInfo>
+            			<w2:column id="RNUM" name="번호"
+            				dataType="number">
+            			</w2:column>
+            			<w2:column id="SBR_UUID" name="name2"
+            				dataType="text">
+            			</w2:column>
+            		</w2:columnInfo>
+            	</w2:dataList>
+            </w2:dataCollection>
+            <w2:workflowCollection>
+            </w2:workflowCollection>
+        </xf:model>
+        <script type="text/javascript"><![CDATA[
+        ]]></script>
+    </head>
+    <body>
+    	<xf:group style="padding : 10px;" id="" class="">
+    		<w2:textbox label="관리자 - 문의 게시판"
+    			style="margin-bottom : 10px;text-align: center;" id=""
+    			tagname="h3">
+    		</w2:textbox>
+    		<w2:gridView id="" ignoreToggleOnDisabled="false"
+    			useShiftKey="true" style=""
+    			useFilterList="false" scrollByColumn="false"
+    			scrollByColumnAdaptive="false" summaryAuto="false"
+    			fixedColumnWithHidden="true" summaryOnlyAuto="false" dataList=""
+    			ignoreCellClick="false">
+    		</w2:gridView>
+    	</xf:group>
+    </body>
+</html>

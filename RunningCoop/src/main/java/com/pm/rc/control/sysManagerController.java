@@ -24,8 +24,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.pm.rc.dto.GroupDto;
-import com.pm.rc.dto.ManagePagingDto;
+import com.pm.rc.dto.PagingProDto;
 import com.pm.rc.dto.MemberDto;
+import com.pm.rc.dto.SystemBoardDto;
 import com.pm.rc.model.service.ManagerService;
 import com.pm.rc.model.service.UserSysBoardService;
 
@@ -34,9 +35,6 @@ public class sysManagerController {
 
 	@Autowired
 	private ManagerService service;
-
-	@Autowired
-	private UserSysBoardService sservice;
 
 	Logger logger = LoggerFactory.getLogger(sysManagerController.class);
 
@@ -93,11 +91,16 @@ public class sysManagerController {
 	// 공지 게시판 관리 페이지 이동
 	@RequestMapping(value="/sysNoticeMgr.do", method={RequestMethod.GET,RequestMethod.POST})
 	public String sysBoardManager(Model model, HttpServletRequest req){
-		ManagePagingDto maPaging = new ManagePagingDto(req.getParameter("index"), req.getParameter("pageStartNum"), req.getParameter("listCnt"));
+		SystemBoardDto dto = new SystemBoardDto();
+		PagingProDto paging = new PagingProDto(req.getParameter("index"), req.getParameter("pageStartNum"), req.getParameter("listCnt"));
+		dto.setPaging(paging);
+		
+		logger.info("========================= 관리자 - 공지게시판 관리 페이지 이동 ===============================");
+		
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 
-		list = sservice.noticeListSelectPaing(maPaging);
-		maPaging.setTotal(sservice.noticeListSelectCount());
+		list = service.noticeListSelect(dto);
+		maPaging.setTotal(service.noticeListSelectCount(dto));
 
 		model.addAttribute("list", list);
 		model.addAttribute("paging",maPaging);
@@ -372,7 +375,7 @@ public class sysManagerController {
 	// 문의 게시판 관리 페이지 이동
 	@RequestMapping(value="/sysQnaMgr.do", method={RequestMethod.GET,RequestMethod.POST})
 	public String sysQnaManager(HttpServletRequest req, Model model){
-		ManagePagingDto maPaing = new ManagePagingDto(req.getParameter("index"), 
+		PagingProDto maPaing = new PagingProDto(req.getParameter("index"), 
 													  req.getParameter("pageStartNum"), req.getParameter("listCnt"));
 		
 		
@@ -578,7 +581,7 @@ public class sysManagerController {
 	// 회원 관리 페이지 이동
 	@RequestMapping(value="/sysMemMgr.do", method={RequestMethod.GET,RequestMethod.POST})
 	public String sysMemberMgr(Model model , HttpServletRequest req){
-		ManagePagingDto maPaging = new ManagePagingDto(req.getParameter("index"),
+		PagingProDto maPaging = new PagingProDto(req.getParameter("index"),
 													   req.getParameter("pageStartNum"),
 													   req.getParameter("listCnt"));
 		

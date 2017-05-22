@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.pm.rc.dto.ManagePagingDto;
+import com.pm.rc.dto.PagingProDto;
 import com.pm.rc.model.service.UserSysBoardService;
 
 @Controller
@@ -37,7 +37,7 @@ public class SysBoardController {
 	// 공지 게시글 목록
 	@RequestMapping(value = "/noticeList.do", method = {RequestMethod.GET,RequestMethod.POST})
 	public String noticeList(Model model, HttpSession session, HttpServletRequest req){
-		ManagePagingDto mpaging = new ManagePagingDto(req.getParameter("index"), 
+		PagingProDto mpaging = new PagingProDto(req.getParameter("index"), 
 														req.getParameter("pageStartNum"), 
 														req.getParameter("listCnt"));
 
@@ -149,7 +149,7 @@ public class SysBoardController {
 	// 문의 게시판 목록 출력
 	@RequestMapping(value="/qnaList.do", method = {RequestMethod.GET,RequestMethod.POST})
 	public String qnaList(Model model, HttpServletRequest req){
-		ManagePagingDto maPaing = new ManagePagingDto(req.getParameter("index"), 
+		PagingProDto maPaing = new PagingProDto(req.getParameter("index"), 
 														req.getParameter("pageStartNum"), req.getParameter("listCnt"));
 		logger.info("================== 문의 게시판으로 이동 ==================");
 

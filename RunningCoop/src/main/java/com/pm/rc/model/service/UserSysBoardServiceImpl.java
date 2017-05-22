@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pm.rc.dto.ManagePagingDto;
+import com.pm.rc.dto.PagingProDto;
 import com.pm.rc.model.dao.SysBoardDao;
 
 @Service
@@ -22,7 +22,7 @@ public class UserSysBoardServiceImpl implements UserSysBoardService {
 	}
 
 	@Override
-	public List<Map<String, String>> noticeListSelectPaing(ManagePagingDto maPaging) {
+	public List<Map<String, String>> noticeListSelectPaing(PagingProDto maPaging) {
 		return sysBoardDao.noticeListSelectPaing(maPaging);
 	}
 	
@@ -42,7 +42,7 @@ public class UserSysBoardServiceImpl implements UserSysBoardService {
 	}
 	
 	@Override
-	public List<Map<String, String>> qnaListSelectPaing(ManagePagingDto maPaing) {
+	public List<Map<String, String>> qnaListSelectPaing(PagingProDto maPaing) {
 		return sysBoardDao.qnaListSelectPaing(maPaing);
 	}
 	
