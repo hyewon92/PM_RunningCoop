@@ -1,7 +1,6 @@
 package com.pm.rc.control;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -9,28 +8,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.PagingProDto;
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.SystemBoardDto;
 import com.pm.rc.model.service.ManagerService;
-import com.pm.rc.model.service.UserSysBoardService;
 
 @RestController
 public class sysManagerController {
@@ -295,49 +287,52 @@ public class sysManagerController {
 
 	// 공지 게시글 수정(질문)
 	@RequestMapping(value="/sysboardEdit.do", method=RequestMethod.POST)
-	public String noticeEdit(MultipartHttpServletRequest multipartRequest){
-		String sbr_uuid = multipartRequest.getParameter("sbr_uuid");
-		String sbr_title = multipartRequest.getParameter("sbr_title");
-		String sbr_content = multipartRequest.getParameter("sbr_content");
+	public Map<String, Boolean> noticeEdit(@RequestBody(required = false) Map param){
+		String sParam1 = (String)param.get("sbr_uuid");
+		String sParam2 = (String)param.get("sbr_title");
+		String sParam3 = (String)param.get("sbr_content");
 
 		logger.info("=============== 공지 게시판 : 게시글 수정 =========================");
-		logger.info("수정할 게시글 아이디 : "+sbr_uuid);
-		logger.info("수정할 게시글 제목 : "+sbr_title);
-		logger.info("수정할 게시글 내용 : "+sbr_content);
+		logger.info("수정할 게시글 아이디 : "+sParam1);
+		logger.info("수정할 게시글 제목 : "+sParam2);
+		logger.info("수정할 게시글 내용 : "+sParam3);
 		logger.info("===========================================================");
 
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("sbr_uuid", sbr_uuid);
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		
+		Map<String, String> sMap = new HashMap<String, String>();
+		sMap.put("sbr_uuid", sParam1);
 
-		MultipartFile file = multipartRequest.getFile("satt_name");
+		String sParam4 = (String)param.get("satt_name");
+		String sParam5 = (String)param.get("satt_size");
 
-		logger.info(file.getOriginalFilename());
+		logger.info(sParam4);
 
-		if (!file.getOriginalFilename().equals("")){
+		if (!sParam4.equals("")){
 			String savePath = "C:\\RC_fileSave\\";
 
 			// 기존 파일 삭제
 			Map<String, String> originFile = new HashMap<String, String>();
-			originFile = service.sysAttachSelect(map);
+			originFile = service.sysAttachSelect(sMap);
 
-			File delFile = new File(originFile.get("SATT_PATH")+originFile.get("SATT_RNAME"));
-			delFile.delete();
+		//	File delFile = new File(originFile.get("SATT_PATH")+originFile.get("SATT_RNAME"));
+		//	delFile.delete();
 
 			// 새 파일 등록
 			String fuuid = createUUID();
 			int indexNum = fuuid.lastIndexOf("-");
 
-			String oldFileName = file.getOriginalFilename();
-			String satt_size = ""+file.getSize();
+			String oldFileName = sParam4;
+			String satt_size = ""+sParam5;
 
 			String newFileName = fuuid.substring(indexNum+1) + oldFileName;
 
 			// 첨부파일 실제경로 저장
-			try {
+/*			try {
 				file.transferTo(new File(savePath + newFileName));
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
-			}
+			}*/
 
 			logger.info("=============== 공지게시판 첨부파일 추가 ===================");
 			logger.info("첨부파일 명 : "+oldFileName);
@@ -346,19 +341,19 @@ public class sysManagerController {
 			logger.info("첨부파일 실제이름 : "+newFileName);
 			logger.info("====================================================");
 
-			map.put("satt_name", oldFileName);
-			map.put("satt_rname", newFileName);
-			map.put("satt_size", satt_size);
-			map.put("satt_path", savePath);
+			sMap.put("satt_name", oldFileName);
+			sMap.put("satt_rname", newFileName);
+			sMap.put("satt_size", satt_size);
+			sMap.put("satt_path", savePath);
 
 		}
 
-		map.put("sbr_title", sbr_title);
-		map.put("sbr_content", sbr_content);
+		sMap.put("sbr_title", sParam2);
+		sMap.put("sbr_content", sParam3);
 
 		boolean isc = false;
 
-		isc = service.noticeModify(map);
+		isc = service.noticeModify(sMap);
 		
 		map.put("result", isc);
 
@@ -368,7 +363,7 @@ public class sysManagerController {
 			System.out.println("공지게시판 게시글 수정 실패");
 		}
 
-		return "redirect:/viewNotice.do?sbr_uuid="+sbr_uuid;
+		return map;
 	}
 
 	// 공지 게시글 보기
@@ -545,12 +540,12 @@ public class sysManagerController {
 	
 	// 문의 게시판 답글 작성 처리(질문)
 	@RequestMapping(value="/qnaRepleWrite.do", method=RequestMethod.POST)
-	public String WriteQnaReple(MultipartHttpServletRequest multiRequest){
+	public String WriteQnaReple(@RequestBody(required = false) Map param){
 		
-		String Rsbr_uuid = multiRequest.getParameter("Rsbr_uuid");
-		String sbr_title = multiRequest.getParameter("sbr_title");
-		String mem_id = multiRequest.getParameter("mem_id");
-		String sbr_content = multiRequest.getParameter("sbr_content");
+		String sParam1 = (String)param.get("Rsbr_uuid");
+		String sParam2 = (String)param.get("sbr_title");
+		String sParam3 = (String)param.get("mem_id");
+		String sParam4 = (String)param.get("sbr_content");
 		
 		//UUID 생성 메소드
 		String uuid = createUUID();
@@ -559,33 +554,36 @@ public class sysManagerController {
 		
 		logger.info("===================== 문의 게시판 답글 작성 =======================");
 		logger.info("작성할 게시글 uuid : "+sbr_uuid);
-		logger.info("답글 작성할 게시글 uuid : "+Rsbr_uuid);
-		logger.info("게시글 제목 : "+sbr_title);
-		logger.info("관리자 아이디 : "+mem_id);
-		logger.info("게시글 내용 : "+sbr_content);
+		logger.info("답글 작성할 게시글 uuid : "+sParam1);
+		logger.info("게시글 제목 : "+sParam2);
+		logger.info("관리자 아이디 : "+sParam3);
+		logger.info("게시글 내용 : "+sParam4);
 		logger.info("===========================================================");
 		
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
 		
-		MultipartFile file = multiRequest.getFile("satt_name");
+		Map<String, String> sMap = new HashMap<String, String>();
+		
+		String sParam5 = (String)param.get("satt-_name");
+		String sParam6 = (String)param.get("satt_size");
 
-		if (file != null){
+		if (sParam4 != null){
 			String savePath = "C:\\RC_fileSave\\";
 
 			String fuuid = createUUID();
 			int indexNum = fuuid.lastIndexOf("-");
 
-			String oldFileName = file.getOriginalFilename();
-			String satt_size = ""+file.getSize();
+			String oldFileName = sParam5;
+			String satt_size = ""+sParam6;
 
 			String newFileName = fuuid.substring(indexNum+1) + oldFileName;
 
 			// 첨부파일 실제경로 저장
-			try {
+/*			try {
 				file.transferTo(new File(savePath + newFileName));
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
-			}
+			}*/
 
 			logger.info("=============== 공지게시판 첨부파일 추가 ===================");
 			logger.info("첨부파일 명 : "+oldFileName);
@@ -594,22 +592,23 @@ public class sysManagerController {
 			logger.info("첨부파일 실제이름 : "+newFileName);
 			logger.info("====================================================");
 
-			map.put("satt_name", oldFileName);
-			map.put("satt_rname", newFileName);
-			map.put("satt_size", satt_size);
-			map.put("satt_path", savePath);
+			sMap.put("satt_name", oldFileName);
+			sMap.put("satt_rname", newFileName);
+			sMap.put("satt_size", satt_size);
+			sMap.put("satt_path", savePath);
 
 		}
 		
-		map.put("sbr_uuid", sbr_uuid);
-		map.put("sbr_title", sbr_title);
-		map.put("Rsbr_uuid", Rsbr_uuid);
-		map.put("sbr_content", sbr_content);
-		map.put("mem_id", mem_id);
+		sMap.put("sbr_uuid", sbr_uuid);
+		sMap.put("sbr_title", sParam2);
+		sMap.put("Rsbr_uuid", sParam1);
+		sMap.put("sbr_content", sParam4);
+		sMap.put("mem_id", sParam3);
 		
 		boolean isc = false;
 		
-		isc = service.qnaReplyInsert(map);
+		isc = service.qnaReplyInsert(sMap);
+		map.put("result", isc);
 		
 		if(isc){
 			System.out.println("문의 게시판 답글 작성 성공");
