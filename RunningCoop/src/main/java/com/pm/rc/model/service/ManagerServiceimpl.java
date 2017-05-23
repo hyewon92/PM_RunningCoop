@@ -125,7 +125,7 @@ public class ManagerServiceimpl implements ManagerService {
 
 	@Override
 	public List<Map<String, String>> qnaListSelect(SystemBoardDto dto) {
-		return managerdao.noticeListSelect(dto);
+		return managerdao.qnaListSelect(dto);
 	}
 
 	@Override
