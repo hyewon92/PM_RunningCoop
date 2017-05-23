@@ -11,7 +11,7 @@
             </xf:instance>
             <w2:dataCollection baseNode="map">
             	<w2:dataList baseNode="list" repeatNode="map"
-            		id="dc_noticePost" saveRemovedData="true">
+            		id="dc_noticePostList" saveRemovedData="true">
             		<w2:columnInfo>
             			<w2:column id="SBR_UUID" name="SBR_UUID"
             				dataType="text">
@@ -43,7 +43,7 @@
             			<w2:column id="SBR_NOTICEYN" name="SBR_NOTICEYN"
             				dataType="text">
             			</w2:column>
-            			<w2:column id="SBR_REGDATE" name="SBR_REGDATE"
+            			<w2:column id="SBR_REGDATE" name="작성일"
             				dataType="text">
             			</w2:column>
             		</w2:columnInfo>
@@ -57,19 +57,119 @@
     </head>
     <body>
     	<xf:group style="padding: 10px;" id="" class="">
-    		<xf:group style="padding: 5px;margin-bottom: 20px;" id=""
-    			class="">
-    			<w2:textbox label="공지 게시판" style="" id=""></w2:textbox>
+    		<xf:group style="padding-bottom: 30px;" id="" class="">
+    			<w2:textbox label="공지게시판"
+    				style="width: 150px;height: 23px;font-size:13pt;" id="">
+    			</w2:textbox>
     		</xf:group>
     		<xf:group style="" id="" class="">
     			<w2:gridView id="" ignoreToggleOnDisabled="false"
-    				useShiftKey="true" style="height: 220px;"
-    				useFilterList="false" scrollByColumn="false"
-    				scrollByColumnAdaptive="false" summaryAuto="false"
-    				fixedColumnWithHidden="true" summaryOnlyAuto="false" dataList=""
+    				useShiftKey="true" style="" useFilterList="false"
+    				scrollByColumn="false" scrollByColumnAdaptive="false"
+    				summaryAuto="false" fixedColumnWithHidden="true"
+    				summaryOnlyAuto="false" dataList="dc_noticePostList"
     				ignoreCellClick="false">
+    				<w2:caption style="" id="caption1"
+    					value="this is a grid caption.">
+    				</w2:caption>
+    				<w2:header style="" id="header1">
+    					<w2:row style="" id="row1">
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="column21" blockSelect="false"
+    							displayMode="label" value="SBR_UUID">
+    						</w2:column>
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="column19" blockSelect="false"
+    							displayMode="label" value="작성자">
+    						</w2:column>
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="column17" blockSelect="false"
+    							displayMode="label" value="제목">
+    						</w2:column>
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="column15" blockSelect="false"
+    							displayMode="label" value="SBR_CONTENT">
+    						</w2:column>
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="column13" blockSelect="false"
+    							displayMode="label" value="SBR_REFER">
+    						</w2:column>
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="column11" blockSelect="false"
+    							displayMode="label" value="SBR_STEP">
+    						</w2:column>
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="column9" blockSelect="false"
+    							displayMode="label" value="SBR_DEPTH">
+    						</w2:column>
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="column7" blockSelect="false"
+    							displayMode="label" value="SBR_SCRYN">
+    						</w2:column>
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="column5" blockSelect="false"
+    							displayMode="label" value="SBR_PW">
+    						</w2:column>
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="column3" blockSelect="false"
+    							displayMode="label" value="SBR_NOTICEYN">
+    						</w2:column>
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="column1" blockSelect="false"
+    							displayMode="label" value="작성일">
+    						</w2:column>
+    					</w2:row>
+    				</w2:header>
+    				<w2:gBody style="" id="gBody1">
+    					<w2:row style="" id="row2">
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="SBR_UUID" blockSelect="false"
+    							displayMode="label">
+    						</w2:column>
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="MEM_ID" blockSelect="false"
+    							displayMode="label">
+    						</w2:column>
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="SBR_TITLE" blockSelect="false"
+    							displayMode="label">
+    						</w2:column>
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="SBR_CONTENT" blockSelect="false"
+    							displayMode="label">
+    						</w2:column>
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="SBR_REFER" blockSelect="false"
+    							displayMode="label">
+    						</w2:column>
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="SBR_STEP" blockSelect="false"
+    							displayMode="label">
+    						</w2:column>
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="SBR_DEPTH" blockSelect="false"
+    							displayMode="label">
+    						</w2:column>
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="SBR_SCRYN" blockSelect="false"
+    							displayMode="label">
+    						</w2:column>
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="SBR_PW" blockSelect="false"
+    							displayMode="label">
+    						</w2:column>
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="SBR_NOTICEYN" blockSelect="false"
+    							displayMode="label">
+    						</w2:column>
+    						<w2:column width="70" inputType="text"
+    							style="height:20px" id="SBR_REGDATE" blockSelect="false"
+    							displayMode="label">
+    						</w2:column>
+    					</w2:row>
+    				</w2:gBody>
     			</w2:gridView>
-    		</xf:group></xf:group>
-    	
+    		</xf:group>
+    	</xf:group>
     </body>
 </html>
