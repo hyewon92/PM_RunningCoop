@@ -758,6 +758,8 @@ public class sysManagerController {
 		return "redirect:/main.do";
 	}
 
+	
+
 	// UUID 생성 메소드
 	public String createUUID(){
 		return UUID.randomUUID().toString();
