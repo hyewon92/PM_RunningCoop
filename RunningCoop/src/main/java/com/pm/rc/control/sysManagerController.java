@@ -195,10 +195,10 @@ public class sysManagerController {
 
 	// 공지 게시글 작성(질문)
 	@RequestMapping(value="/noticeWrite.do", method=RequestMethod.POST)
-	public String NoticeWriete(@RequestBody(required = false) Map param){
-		String sbr_title = multipartRequest.getParameter("sbr_title");
-		String sbr_content = multipartRequest.getParameter("sbr_content");
-		String mem_id = multipartRequest.getParameter("mem_id");
+	public Map<String, Boolean> NoticeWriete(@RequestBody(required = false) Map param){
+		String sParam1 = (String)param.get("sbr_title");
+		String sParam2 = (String)param.get("sbr_content");
+		String sParam3 = (String)param.get("mem_id");
 
 		//UUID 생성 메소드
 		String uuid = createUUID();
@@ -207,54 +207,60 @@ public class sysManagerController {
 
 		logger.info("===================== 공지 게시글 작성 =======================");
 		logger.info("작성할 게시글 uuid : "+sbr_uuid);
-		logger.info("게시글 제목 : "+sbr_title);
-		logger.info("관리자 아이디 : "+mem_id);
-		logger.info("게시글 내용 : "+sbr_content);
+		logger.info("게시글 제목 : "+sParam1);
+		logger.info("관리자 아이디 : "+sParam3);
+		logger.info("게시글 내용 : "+sParam2);
 		logger.info("========================================================");
 
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("sbr_uuid", sbr_uuid);
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		
+		Map<String, String> sMap = new HashMap<String, String>();
+		sMap.put("sbr_uuid", sbr_uuid);
 
-		MultipartFile file = multipartRequest.getFile("satt_name");
+	//	MultipartFile file = multipartRequest.getFile("satt_name");
+		String sParam4 = (String)param.get("satt_name");
+		String sParam5 = (String)param.get("satt_size");
 
-		if (file != null){
+		if (sParam4 != null){
 			String savePath = "C:\\RC_fileSave\\";
 
 			String fuuid = createUUID();
 			int indexNum = fuuid.lastIndexOf("-");
 
-			String oldFileName = file.getOriginalFilename();
-			String satt_size = ""+file.getSize();
+			String oldFileName = sParam4;
+			String satt_size =sParam5;
 
 			String newFileName = fuuid.substring(indexNum+1) + oldFileName;
 
 			// 첨부파일 실제경로 저장
-			try {
+/*			try {
 				file.transferTo(new File(savePath + newFileName));
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
-			}
+			}*/
 
 			logger.info("=============== 공지게시판 첨부파일 추가 ===================");
-			logger.info("첨부파일 명 : "+oldFileName);
-			logger.info("첨부파일 크기 : "+satt_size);
+			logger.info("첨부파일 명 : "+newFileName);
+			logger.info("첨부파일 크기 : "+sParam5);
 			logger.info("첨부파일 경로 : "+savePath);
-			logger.info("첨부파일 실제이름 : "+newFileName);
+			logger.info("첨부파일 실제이름 : "+sParam4);
 			logger.info("====================================================");
 
-			map.put("satt_name", oldFileName);
-			map.put("satt_rname", newFileName);
-			map.put("satt_size", satt_size);
-			map.put("satt_path", savePath);
+			sMap.put("satt_name", oldFileName);
+			sMap.put("satt_rname", newFileName);
+			sMap.put("satt_size", satt_size);
+			sMap.put("satt_path", savePath);
 
 		}
 
-		map.put("sbr_title", sbr_title);
-		map.put("sbr_content", sbr_content);
-		map.put("mem_id", mem_id);
+		sMap.put("sbr_title", sParam1);
+		sMap.put("sbr_content", sParam2);
+		sMap.put("mem_id", sParam3);
 
 		boolean isc = false;
-		isc = service.noticeInsert(map);
+		isc = service.noticeInsert(sMap);
+		
+		map.put("result", isc);
 
 		if(isc){
 			System.out.println("공지게시판 게시글 등록 완료");
@@ -262,7 +268,7 @@ public class sysManagerController {
 			System.out.println("공지게시판 게시글 등록 실패");
 		}
 
-		return "redirect:/sysNoticeMgr.do";
+		return map;
 	}
 
 	// 공지 게시글 수정 폼 이동
@@ -353,6 +359,8 @@ public class sysManagerController {
 		boolean isc = false;
 
 		isc = service.noticeModify(map);
+		
+		map.put("result", isc);
 
 		if(isc == true){
 			System.out.println("공지게시판 게시글 수정 성공");
