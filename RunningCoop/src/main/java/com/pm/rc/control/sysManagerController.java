@@ -136,7 +136,6 @@ public class sysManagerController {
 		pgDto.setTotal(service.noticeListSelectCount(dto));
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println(list);
 		/*list = service.noticeListSelect(dto);
 		pgDto.setTotal(service.noticeListSelectCount(dto));
 		*/
@@ -765,5 +764,3 @@ public class sysManagerController {
 	}
 
 }
-
-
