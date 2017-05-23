@@ -37,6 +37,8 @@ public class PagingProDto {
 		if(listCnt != null){
 			this.listCnt = Integer.parseInt(listCnt);
 		}
+		
+		System.out.println("@@@"+index);
 	}
 	
 	public int getStart() {

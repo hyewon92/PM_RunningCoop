@@ -13,19 +13,19 @@
         		<w2:dataList baseNode="list" repeatNode="map"
         			id="dc_qnaPostList" saveRemovedData="true">
         			<w2:columnInfo>
-        				<w2:column id="list.RNUM" name="번호"
+        				<w2:column id="RNUM" name="번호"
         					dataType="number">
         				</w2:column>
-        				<w2:column id="list.SBR_UUID" name="게시글번호"
+        				<w2:column id="SBR_UUID" name="게시글번호"
         					dataType="text">
         				</w2:column>
-        				<w2:column id="list.SBR_TITLE" name="게시글제목"
+        				<w2:column id="SBR_TITLE" name="게시글제목"
         					dataType="text">
         				</w2:column>
-        				<w2:column id="list.MEM_NAME" name="작성자"
+        				<w2:column id="MEM_NAME" name="작성자"
         					dataType="text">
         				</w2:column>
-        				<w2:column id="list.SBR_REGDATE" name="작성일"
+        				<w2:column id="SBR_REGDATE" name="작성일"
         					dataType="text">
         				</w2:column>
         			</w2:columnInfo>
@@ -48,22 +48,29 @@
         					dataType="text">
         				</w2:key>
         			</w2:keyInfo>
+        			<w2:data use="true">
+        				<SBR_TITLE></SBR_TITLE>
+        				<index><![CDATA[0]]></index>
+        				<pageCnt></pageCnt>
+        				<listCnt><![CDATA[]]></listCnt>
+        				<pageStartNum><![CDATA[1]]></pageStartNum>
+        			</w2:data>
         		</w2:dataMap>
-        		<w2:dataMap baseNode="map" id="dc_pagingInfo">
+        		<w2:dataMap baseNode="map" id="dc_PagingInfo">
         			<w2:keyInfo>
-        				<w2:key id="index" name="페이지번호"
+        				<w2:key id="listCnt" name="name1"
         					dataType="text">
         				</w2:key>
-        				<w2:key id="listCnt" name="게시글수"
+        				<w2:key id="pageCnt" name="name2"
         					dataType="text">
         				</w2:key>
-        				<w2:key id="startNum" name="시작번호"
+        				<w2:key id="pageStartNum" name="name3"
         					dataType="text">
         				</w2:key>
-        				<w2:key id="pageCnt" name="페이지수"
+        				<w2:key id="index" name="name4"
         					dataType="text">
         				</w2:key>
-        				<w2:key id="total" name="총게시글수"
+        				<w2:key id="total" name="name5"
         					dataType="text">
         				</w2:key>
         			</w2:keyInfo>
@@ -71,18 +78,50 @@
         	</w2:dataCollection>
         	<w2:workflowCollection></w2:workflowCollection>
         	<xf:submission id="sub_PostListSelect"
-        		ref="data:json,dc_qnaSearch" target="data:json,dc_qnaPostList"
-        		action="/sysQnaMgr.do" method="post"
+        		ref="data:json,dc_qnaSearchParam" target='data:json,[{"id":"dc_qnaPostList","key":"result1"},{"id":"dc_PagingInfo","key":"result2"}]'
+        		action="/RunningCoop/sysQnaMgr.do" method="post"
         		mediatype="application/json" encoding="UTF-8" instance=""
-        		replace="" errorHandler="" customHandler="" mode="synchronous"
-        		processMsg="데이터로딩중..." ev:submit="" ev:submitdone=""
+        		replace="" errorHandler="" customHandler="" mode="asynchronous"
+        		processMsg="데이터로딩중..." ev:submit="" ev:submitdone="scwin.sub_PostListSelect_submitdone"
         		ev:submiterror="">
         	</xf:submission>
         </xf:model>
         <script type="text/javascript"><![CDATA[
-        scwin.init() = function(){
-        	$w.executeSubmission( "sub_PostListSelect" );
-        };]]></script>
+    scwin.init = function(){
+    	scwin.selectPostList();
+    };
+    
+    scwin.selectPostList = function(){
+//	    if(isFirst === true){
+//	}
+	//dc_qnaSearchParam.set( "index" , 1 );
+    	$w.executeSubmission( "sub_PostListSelect" );
+    }
+       	
+    //sbm_select 실행 후
+	scwin.sub_PostListSelect_submitdone = function(e) {
+		scwin.setPageInfo();
+	};
+		
+	//PageList의 페이지 정보 셋팅
+	scwin.setPageInfo = function() {
+	
+		var pageCnt = dc_PagingInfo.get( "pageCnt" );
+		qnaPageList.setCount( pageCnt, false );
+		
+	};
+	
+	scwin.qnaPageList_onviewchange = function(info) {
+	
+		var newPage = info.newSelectedIndex-1;
+		var startNum = dc_qnaPostList.getCellData( 0 , "RNUM" );
+		
+		dc_qnaSearchParam.set( "index" , newPage+"" );
+		dc_qnaSearchParam.set( "pageStartNum", startNum+"" );
+		
+		scwin.selectPostList();
+	};
+	]]></script>
     </head>
     <body>
     	<xf:group style="padding : 10px;" id="" class="">
@@ -96,12 +135,25 @@
     				allOption="" optionOrder="false" disabled="false" id=""
     				direction="auto" chooseOption="" displayMode="label"
     				appearance="minimal" disabledClass="w2selectbox_disabled"
-    				style="width: 150px;height: 25px;" ref="data:dc_qnaSearchParam.listCnt">
+    				style="width: 150px;height: 25px;"
+    				ref="data:dc_qnaSearchParam.listCnt">
     				<xf:choices>
-    					<xf:itemset nodeset="data:dc_listCnt">
-    						<xf:label ref="listCnt"></xf:label>
-    						<xf:value ref="listCnt"></xf:value>
-    					</xf:itemset>
+    					<xf:item>
+    						<xf:label><![CDATA[5개씩보기]]></xf:label>
+    						<xf:value><![CDATA[5]]></xf:value>
+    					</xf:item>
+    					<xf:item>
+    						<xf:label><![CDATA[10개씩보기]]></xf:label>
+    						<xf:value><![CDATA[10]]></xf:value>
+    					</xf:item>
+    					<xf:item>
+    						<xf:label><![CDATA[15개씩보기]]></xf:label>
+    						<xf:value><![CDATA[15]]></xf:value>
+    					</xf:item>
+    					<xf:item>
+    						<xf:label><![CDATA[20개씩 보기]]></xf:label>
+    						<xf:value><![CDATA[20]]></xf:value>
+    					</xf:item>
     				</xf:choices>
     			</xf:select1>
     		</xf:group>
@@ -109,16 +161,15 @@
     			id="" class="">
     			<xf:input id=""
     				style="width: 200px;height: 25px;margin-right : 10px;"
-    				ref="data:dc_qnaSearch.SBR_TITLE">
+    				ref="data:dc_qnaSearchParam.SBR_TITLE">
     			</xf:input>
     			<xf:trigger type="button"
     				style="width: 80px;height: 23px;" id="">
     				<xf:label><![CDATA[검색]]></xf:label>
     			</xf:trigger>
     		</xf:group>
-
-    		<w2:gridView id="" ignoreToggleOnDisabled="false"
-    			useShiftKey="true" style="margin-bottom : 10px;"
+    		<w2:gridView id="qnaPostList" ignoreToggleOnDisabled="false"
+    			useShiftKey="true" style="height: 150px;"
     			useFilterList="false" scrollByColumn="false"
     			scrollByColumnAdaptive="false" summaryAuto="false"
     			fixedColumnWithHidden="true" summaryOnlyAuto="false"
@@ -128,19 +179,23 @@
     			</w2:caption>
     			<w2:header style="" id="header1">
     				<w2:row style="" id="row1">
-    					<w2:column width="10%" inputType="text"
+    					<w2:column width="70" inputType="text"
     						style="height:20px" id="column9" blockSelect="false"
     						displayMode="label" value="번호">
     					</w2:column>
-    					<w2:column width="50%" inputType="text"
+    					<w2:column width="70" inputType="text"
+    						style="height:20px" id="column7" blockSelect="false"
+    						displayMode="label" value="게시글번호">
+    					</w2:column>
+    					<w2:column width="70" inputType="text"
     						style="height:20px" id="column5" blockSelect="false"
     						displayMode="label" value="게시글제목">
     					</w2:column>
-    					<w2:column width="20%" inputType="text"
+    					<w2:column width="70" inputType="text"
     						style="height:20px" id="column3" blockSelect="false"
     						displayMode="label" value="작성자">
     					</w2:column>
-    					<w2:column width="20%" inputType="text"
+    					<w2:column width="70" inputType="text"
     						style="height:20px" id="column1" blockSelect="false"
     						displayMode="label" value="작성일">
     					</w2:column>
@@ -148,27 +203,31 @@
     			</w2:header>
     			<w2:gBody style="" id="gBody1">
     				<w2:row style="" id="row2">
-    					<w2:column width="10%" inputType="text"
+    					<w2:column width="70" inputType="text"
     						style="height:20px" id="RNUM" blockSelect="false"
     						displayMode="label">
     					</w2:column>
-    					<w2:column width="50%" inputType="text"
+    					<w2:column width="70" inputType="text"
+    						style="height:20px" id="SBR_UUID" blockSelect="false"
+    						displayMode="label">
+    					</w2:column>
+    					<w2:column width="70" inputType="text"
     						style="height:20px" id="SBR_TITLE" blockSelect="false"
     						displayMode="label">
     					</w2:column>
-    					<w2:column width="20%" inputType="text"
+    					<w2:column width="70" inputType="text"
     						style="height:20px" id="MEM_NAME" blockSelect="false"
     						displayMode="label">
     					</w2:column>
-    					<w2:column width="20%" inputType="text"
+    					<w2:column width="70" inputType="text"
     						style="height:20px" id="SBR_REGDATE" blockSelect="false"
     						displayMode="label">
     					</w2:column>
     				</w2:row>
     			</w2:gBody>
     		</w2:gridView>
-    		<w2:pageList pageSize="10" displayButtonType="display" id=""
-    			displayFormat="#" style="width: 350px;height: 21px;">
+    		<w2:pageList pageSize="10" displayButtonType="display" id="qnaPageList"
+    			displayFormat="#" style="width: 350px;height: 21px;" ev:onclick="" ev:onviewchange="scwin.qnaPageList_onviewchange">
     		</w2:pageList>
 
 
