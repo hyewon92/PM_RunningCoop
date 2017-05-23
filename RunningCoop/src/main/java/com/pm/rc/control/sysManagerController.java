@@ -431,6 +431,32 @@ public class sysManagerController {
 		}*/
 
 	}
+	
+	// 문의 게시판 관리 페이지 이동
+		@RequestMapping(value="/sysQnaMgrTest.do", method={RequestMethod.GET,RequestMethod.POST})
+		public Map<String, Object> sysQnaManagerTest(@RequestBody(required = false) PagingProDto dto){
+			/*
+			String sParam1 = (String)param.get("index");
+			String sParam2 = (String)param.get("pageStartNum");
+			String sParam3 = (String)param.get("listCnt");
+			*/
+			PagingProDto maPaging = new PagingProDto(sParam1, sParam2, sParam3);
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			logger.info("====================== 문의 게시판 관리 페이지 이동 ========================");
+
+			List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+			SystemBoardDto sbDto = new SystemBoardDto();	//param값 넣기
+			
+			list = service.qnaListSelect(sbDto);
+			maPaging.setTotal(service.qnaListSelectCount(sbDto));
+
+			map.put("result1", list);
+			map.put("result2", maPaging);
+
+			return map;
+		}
 
 	// 문의 게시판 관리 페이지 이동
 	@RequestMapping(value="/sysQnaMgr.do", method={RequestMethod.GET,RequestMethod.POST})
@@ -447,6 +473,7 @@ public class sysManagerController {
 
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		SystemBoardDto sbDto = new SystemBoardDto();	//param값 넣기
+		sbDto.setPaging(maPaging);
 		
 		list = service.qnaListSelect(sbDto);
 		maPaging.setTotal(service.qnaListSelectCount(sbDto));

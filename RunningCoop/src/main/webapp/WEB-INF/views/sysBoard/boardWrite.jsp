@@ -14,7 +14,7 @@
 		$("#sbr_scryn").click(function() {
 			var chkyn = $(this).is(":checked");
 			if (chkyn == true) {
-				$("#sbr_pw").css("display", "block");
+				$("#sbr_pw").css("display", "inline-block");
 			} else if (chkyn == false) {
 				$("#sbr_pw").css("display", "none");
 			}
@@ -71,21 +71,23 @@
 		<form id="boardWrite" action="./boardWrite.do" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="mem_id" value="${ mem_id }" />
 			<input type="hidden" name="sbr_noticeyn" value="N"/>
-				<div class="title_area">
+				<div class="qnatitle_area">
 					<div>제목</div>
-					<div><input type="text" name="sbr_title" /></div>
+					<div><input type="text" name="sbr_title" />
+						
+					</div>
 				</div>
-				<div class="attach_area">
+				<div class="qnaattach_area">
 					<div>첨부파일</div>
 					<div>
 						<input type="file" id="file" name="sbr_name"/>
 						<input type="hidden" id="filesize" name="sbr_size" />
 					</div>
+					<div class="qnascr_area">
+						<input type="checkbox" id="sbr_scryn" name="sbr_scryn" /><span>비밀글</span>
+						<input type="text" id="sbr_pw" name="sbr_pw" style="display: none" />
+					</div>
 				</div>
-				<div class="secretYn_area">
-					<input type="checkbox" id="sbr_scryn" name="sbr_scryn" /><span>비밀글</span>
-					<input type="text" id="sbr_pw" name="sbr_pw" style="display: none" />
-				</div>			
 				<jsp:include page="../daumOpenEditor.jsp" flush="false"></jsp:include>
 		</form>
 	</div>

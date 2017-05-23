@@ -140,7 +140,7 @@ public class SysBoardController {
 			if(list != null){
 				model.addAttribute("attach", list);
 			}
-			page = "sysBoard/BoardView";
+			page = "sysBoard/boardView";
 		}
 
 		return page;

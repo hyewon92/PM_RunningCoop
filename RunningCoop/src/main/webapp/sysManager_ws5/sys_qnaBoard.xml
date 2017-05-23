@@ -13,26 +13,57 @@
         		<w2:dataList baseNode="list" repeatNode="map"
         			id="dc_qnaPostList" saveRemovedData="true">
         			<w2:columnInfo>
-        				<w2:column id="RNUM" name="번호"
+        				<w2:column id="list.RNUM" name="번호"
         					dataType="number">
         				</w2:column>
-        				<w2:column id="SBR_UUID" name="게시글번호"
+        				<w2:column id="list.SBR_UUID" name="게시글번호"
         					dataType="text">
         				</w2:column>
-        				<w2:column id="SBR_TITLE" name="게시글제목"
+        				<w2:column id="list.SBR_TITLE" name="게시글제목"
         					dataType="text">
         				</w2:column>
-        				<w2:column id="MEM_NAME" name="작성자"
+        				<w2:column id="list.MEM_NAME" name="작성자"
         					dataType="text">
         				</w2:column>
-        				<w2:column id="SBR_REGDATE" name="작성일"
+        				<w2:column id="list.SBR_REGDATE" name="작성일"
         					dataType="text">
         				</w2:column>
         			</w2:columnInfo>
         		</w2:dataList>
-        		<w2:dataMap baseNode="map" id="dc_qnaSearch">
+        		<w2:dataMap baseNode="map" id="dc_qnaSearchParam">
         			<w2:keyInfo>
         				<w2:key id="SBR_TITLE" name="게시글제목"
+        					dataType="text">
+        				</w2:key>
+        				<w2:key id="index" name="페이지번호"
+        					dataType="text">
+        				</w2:key>
+        				<w2:key id="pageCnt" name="페이지수"
+        					dataType="text">
+        				</w2:key>
+        				<w2:key id="listCnt" name="게시글 수"
+        					dataType="text">
+        				</w2:key>
+        				<w2:key id="pageStartNum" name="시작게시글번호"
+        					dataType="text">
+        				</w2:key>
+        			</w2:keyInfo>
+        		</w2:dataMap>
+        		<w2:dataMap baseNode="map" id="dc_pagingInfo">
+        			<w2:keyInfo>
+        				<w2:key id="index" name="페이지번호"
+        					dataType="text">
+        				</w2:key>
+        				<w2:key id="listCnt" name="게시글수"
+        					dataType="text">
+        				</w2:key>
+        				<w2:key id="startNum" name="시작번호"
+        					dataType="text">
+        				</w2:key>
+        				<w2:key id="pageCnt" name="페이지수"
+        					dataType="text">
+        				</w2:key>
+        				<w2:key id="total" name="총게시글수"
         					dataType="text">
         				</w2:key>
         			</w2:keyInfo>
@@ -58,39 +89,34 @@
     		<w2:textbox label="관리자 - 문의 게시판"
     			style="margin-bottom : 10px;text-align: center;" id=""
     			tagname="h3">
-    		</w2:textbox><xf:group style="text-align: right;margin-bottom : 10px;" id="" class="">
+    		</w2:textbox>
+    		<xf:group style="text-align: right;margin-bottom : 10px;"
+    			id="" class="">
     			<xf:select1 selectedData="true" submenuSize="auto"
     				allOption="" optionOrder="false" disabled="false" id=""
     				direction="auto" chooseOption="" displayMode="label"
     				appearance="minimal" disabledClass="w2selectbox_disabled"
-    				style="width: 150px;height: 25px;">
+    				style="width: 150px;height: 25px;" ref="data:dc_qnaSearchParam.listCnt">
     				<xf:choices>
-    					<xf:item>
-    						<xf:label><![CDATA[5]]></xf:label>
-    						<xf:value><![CDATA[5]]></xf:value>
-    					</xf:item>
-    					<xf:item>
-    						<xf:label><![CDATA[10]]></xf:label>
-    						<xf:value><![CDATA[10]]></xf:value>
-    					</xf:item>
-    					<xf:item>
-    						<xf:label><![CDATA[15]]></xf:label>
-    						<xf:value><![CDATA[15]]></xf:value>
-    					</xf:item>
-    					<xf:item>
-    						<xf:label><![CDATA[20]]></xf:label>
-    						<xf:value><![CDATA[20]]></xf:value>
-    					</xf:item>
+    					<xf:itemset nodeset="data:dc_listCnt">
+    						<xf:label ref="listCnt"></xf:label>
+    						<xf:value ref="listCnt"></xf:value>
+    					</xf:itemset>
     				</xf:choices>
     			</xf:select1>
-</xf:group><xf:group style="text-align: left;margin-bottom : 10px;" id="" class="">
-    			<xf:input id="" style="width: 200px;height: 25px;margin-right : 10px;" ref="data:dc_qnaSearch.SBR_TITLE">
+    		</xf:group>
+    		<xf:group style="text-align: left;margin-bottom : 10px;"
+    			id="" class="">
+    			<xf:input id=""
+    				style="width: 200px;height: 25px;margin-right : 10px;"
+    				ref="data:dc_qnaSearch.SBR_TITLE">
     			</xf:input>
-    			<xf:trigger type="button" style="width: 80px;height: 23px;" id="">
+    			<xf:trigger type="button"
+    				style="width: 80px;height: 23px;" id="">
     				<xf:label><![CDATA[검색]]></xf:label>
     			</xf:trigger>
     		</xf:group>
-    		
+
     		<w2:gridView id="" ignoreToggleOnDisabled="false"
     			useShiftKey="true" style="margin-bottom : 10px;"
     			useFilterList="false" scrollByColumn="false"
@@ -141,6 +167,9 @@
     				</w2:row>
     			</w2:gBody>
     		</w2:gridView>
+    		<w2:pageList pageSize="10" displayButtonType="display" id=""
+    			displayFormat="#" style="width: 350px;height: 21px;">
+    		</w2:pageList>
 
 
 
