@@ -137,6 +137,9 @@ public class sysManagerController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println(list);
+		/*list = service.noticeListSelect(dto);
+		pgDto.setTotal(service.noticeListSelectCount(dto));
+		*/
 		map.put("result1", list);
 		map.put("result2", pgDto);
 
