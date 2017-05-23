@@ -449,7 +449,8 @@ public class sysManagerController {
 		logger.info("====================== 문의 게시판 관리 페이지 이동 ========================");
 
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-		SystemBoardDto sbDto = new SystemBoardDto();	//param값 넣기
+		SystemBoardDto sbDto = new SystemBoardDto();
+		sbDto.setPaging(maPaging);
 		
 		list = service.qnaListSelect(sbDto);
 		maPaging.setTotal(service.qnaListSelectCount(sbDto));
@@ -480,6 +481,7 @@ public class sysManagerController {
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		
 		SystemBoardDto sbDto = new SystemBoardDto();
+		sbDto.setPaging(pgDto);
 		sbDto.setSbr_title(sParam1);
 		
 		
