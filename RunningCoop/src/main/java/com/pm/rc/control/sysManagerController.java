@@ -147,9 +147,9 @@ public class sysManagerController {
 	
 	// 공지 게시판 게시글 검색
 	@RequestMapping(value="/sysNoticeSearch.do", method=RequestMethod.POST)
-	public Map<String, Object> sysNoticeSearch(@RequestBody(required = false) Map param){
+	public Map<String, Object> sysNoticeSearch(@RequestBody(required = false) Map<String, Object> reqParam){
 		logger.info("공지 게시판 관리 페이지 이동");
-		
+		Map<String, Object> param = (Map<String, Object>)reqParam.get("dc_noticePostParam");
 		String sParam1= (String)param.get("sbr_title");
 		String sParam2 = (String)param.get("index");
 		String sParam3 = (String)param.get("pageStartNum");
@@ -456,7 +456,9 @@ public class sysManagerController {
 		
 		list = service.qnaListSelect(sbDto);
 		maPaging.setTotal(service.qnaListSelectCount(sbDto));
-
+		
+		System.out.println("관리자문의게시판:"+maPaging.getPageCnt());
+		
 		map.put("result1", list);
 		map.put("result2", maPaging);
 
@@ -465,9 +467,9 @@ public class sysManagerController {
 	
 	// 문의 게시판 게시글 검색 리스트 조회
 	@RequestMapping(value="/sysQnaSearch.do", method=RequestMethod.POST)
-	public Map<String, Object> sysQnaSearch(@RequestBody(required = false) Map param){
-		
-		String sParam1 = (String)param.get("sbr_title");
+	public Map<String, Object> sysQnaSearch(@RequestBody(required = false) Map<String, Object> reqparam){
+		Map<String, Object> param = (Map<String, Object>)reqparam.get("dc_qnaSearchParam");
+		String sParam1 = (String)param.get("SBR_TITLE");
 		String sParam2 = (String)param.get("index");
 		String sParam3 = (String)param.get("pageStartNum");
 		String sParam4 = (String)param.get("listCnt");
@@ -757,6 +759,8 @@ public class sysManagerController {
 		
 		return "redirect:/main.do";
 	}
+
+	
 
 	// UUID 생성 메소드
 	public String createUUID(){
