@@ -136,9 +136,7 @@ public class sysManagerController {
 		pgDto.setTotal(service.noticeListSelectCount(dto));
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		list = service.noticeListSelect(dto);
-		pgDto.setTotal(service.noticeListSelectCount(dto));
-		
+		System.out.println(list);
 		map.put("result1", list);
 		map.put("result2", pgDto);
 
@@ -147,9 +145,9 @@ public class sysManagerController {
 	
 	// 공지 게시판 게시글 검색
 	@RequestMapping(value="/sysNoticeSearch.do", method=RequestMethod.POST)
-	public Map<String, Object> sysNoticeSearch(@RequestBody(required = false) Map param){
+	public Map<String, Object> sysNoticeSearch(@RequestBody(required = false) Map<String, Object> reqParam){
 		logger.info("공지 게시판 관리 페이지 이동");
-		
+		Map<String, Object> param = (Map<String, Object>)reqParam.get("dc_noticePostParam");
 		String sParam1= (String)param.get("sbr_title");
 		String sParam2 = (String)param.get("index");
 		String sParam3 = (String)param.get("pageStartNum");
@@ -437,11 +435,13 @@ public class sysManagerController {
 
 	// 문의 게시판 관리 페이지 이동
 	@RequestMapping(value="/sysQnaMgr.do", method={RequestMethod.GET,RequestMethod.POST})
-	public Map<String, Object> sysQnaManager(@RequestBody(required = false) Map param){
-		
+	public Map<String, Object> sysQnaManager(@RequestBody(required = false) Map<String, Object> reqParam){
+		Map<String, Object> param = (Map<String, Object>) reqParam.get("dc_qnaSearchParam");
 		String sParam1 = (String)param.get("index");
 		String sParam2 = (String)param.get("pageStartNum");
 		String sParam3 = (String)param.get("listCnt");
+		
+		System.out.println(param);
 		PagingProDto maPaging = new PagingProDto(sParam1, sParam2, sParam3);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -762,3 +762,5 @@ public class sysManagerController {
 	}
 
 }
+
+
