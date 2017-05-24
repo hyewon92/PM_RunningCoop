@@ -33,6 +33,7 @@ public class sysManagerController {
 	Logger logger = LoggerFactory.getLogger(sysManagerController.class);
 
 	//시스템관리자 로그인
+	@RequestMapping(value="/adminLogin.do", method=RequestMethod.POST)
 	public Map<String, Boolean> adminLogin(@RequestBody(required = false) Map param){
 		logger.info("시스템 관리자 로그인");
 		String sParam1 =(String)param.get("mem_id");
@@ -119,10 +120,11 @@ public class sysManagerController {
 
 	// 공지 게시판 관리 페이지 이동
 	@RequestMapping(value="/sysNoticeMgr.do", method={RequestMethod.GET,RequestMethod.POST})
-	public Map<String, Object> sysBoardManager(@RequestBody(required = false) Map param){
+	public Map<String, Object> sysBoardManager(@RequestBody(required = false) Map<String, Object> reqParam){
 		logger.info("공지 게시판 관리 페이지 이동");
+		Map<String, Object> param =(Map<String, Object>) reqParam.get("dc_noticePostParam");
 		SystemBoardDto dto = new SystemBoardDto();
-		String sParam1 = (String)param.get("index");
+		String sParam1 = (String) param.get("index");
 		String sParam2 = (String)param.get("pageStartNum");
 		String sParam3 = (String)param.get("listCnt");
 		PagingProDto pgDto = new PagingProDto(sParam1, sParam2, sParam3);
@@ -139,6 +141,7 @@ public class sysManagerController {
 		/*list = service.noticeListSelect(dto);
 		pgDto.setTotal(service.noticeListSelectCount(dto));
 		*/
+		System.out.println();
 		map.put("result1", list);
 		map.put("result2", pgDto);
 
@@ -500,8 +503,8 @@ public class sysManagerController {
 	
 	// 문의 게시판 게시글 조회
 	@RequestMapping(value="/viewQna.do", method=RequestMethod.GET)
-	public Map<String, Map<String, String>> sysQnaView(@RequestBody(required = false) Map param){
-		
+	public Map<String, Map<String, String>> sysQnaView(@RequestBody(required = false) Map<String, Object> reqParam){
+		Map<String, Object> param = (Map<String, Object>)reqParam.get("dc_qnaViewParam");
 		String sParam = (String)param.get("sbr_uuid");
 		
 		logger.info("================== 문의 게시글 보기 ==================");
