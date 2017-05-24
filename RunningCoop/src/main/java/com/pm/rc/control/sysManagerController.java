@@ -33,6 +33,7 @@ public class sysManagerController {
 	Logger logger = LoggerFactory.getLogger(sysManagerController.class);
 
 	//시스템관리자 로그인
+	@RequestMapping(value="/adminLogin.do", method=RequestMethod.POST)
 	public Map<String, Boolean> adminLogin(@RequestBody(required = false) Map param){
 		logger.info("시스템 관리자 로그인");
 		String sParam1 =(String)param.get("mem_id");
@@ -43,7 +44,7 @@ public class sysManagerController {
 		pMap.put("mem_id", sParam1);
 		pMap.put("mem_pw", sParam2);
 		
-		isc = service.adminLogin(pMap);
+//		isc = service.adminLogin(pMap);
 		
 		Map<String, Boolean> map = new HashMap<String, Boolean>();
 		map.put("result", isc);
@@ -62,7 +63,7 @@ public class sysManagerController {
 		if(sParam == null){
 			lists = service.grApplySelect(null);
 		}else{
-			lists = service.grApplySelect(sParam);
+//			lists = service.grApplySelect(sParam);
 		}
 		map.put("result", lists);
 		return map;

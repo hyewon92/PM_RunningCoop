@@ -39,6 +39,20 @@ var openwin;
 			}
 		});
 	}
+	function doSearch(){
+		var type = $("#search_select_type option:selected").val();
+		var work = $("#search_word_02").val();
+
+		if(type == "choice"){
+			alert("검색 타입을 선택해주세요!");
+		} else if (type == "group"){
+			$("#gr_name").val(work);
+			$("#groupSearch").submit();	
+		} else {
+			$("#pr_name").val(work);
+			$("#projectSearch").submit();
+		}
+	}	
 </script>
 </head>
 <body>
@@ -70,6 +84,7 @@ var openwin;
 			<input type='hidden' name='index' id='index' value='${paging.index}'>
 			<input type='hidden' name='pageStartNum' id='pageStartNum' value='${paging.pageStartNum}'>
 			<input type='hidden' name='listCnt' id='listCnt' value='${paging.listCnt}'>
+			<input type="hidden" name="gr_name" id="gr_name" value="${gr_name}">
 		</form>
 	</div>
 	
@@ -85,7 +100,7 @@ var openwin;
 			<c:forEach var="dtos" items="${lists}" varStatus="vs">
 				<tr>
 					<td>${ vs.count}</td>
-					<td id="grname">${dtos.gr_name}</td>
+					<td id="gr_name">${dtos.gr_name}</td>
 					<td>${dtos.memberdto.mem_name}</td>
 					<td>${dtos.gr_regDate }</td>
 					<c:if test="${ fn:contains(dtos.gr_joinYN, 'Y') == true }">
@@ -99,6 +114,7 @@ var openwin;
 		</table>
 		<div class="center">
 			<ul class="pagination">
+				<li><input type="hidden" value="${gr_name}" name="gr_name">
 				<!--맨 첫페이지 이동 -->
 				<li><a href='#' onclick='pagePre(${paging.pageCnt+1},${paging.pageCnt});'>&laquo;</a></li>
 				<!--이전 페이지 이동 -->
@@ -120,7 +136,7 @@ var openwin;
 	<div class="hide_form">
 		<form id="groupSearch" action="./allGrSelect.do" method="post">
 			<div class="ui-widget">
-				<input type="text" name="gr_name" id="gr_name" class="searchbox"/>
+				<input type="text" name="gr_name" id="gr_name" class="searchbox" value="${gr_name}"/>
 			</div>
 		</form>
 		<form id="projectSearch" action="./allPrSelect.do" method="post">

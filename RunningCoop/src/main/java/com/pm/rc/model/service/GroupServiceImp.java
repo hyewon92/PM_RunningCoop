@@ -252,6 +252,15 @@ public class GroupServiceImp implements GroupService{
 		return n;
 	}
 
+	@Override
+	@Transactional
+	public boolean waitGrSelectDelete(String gr_id) {
+		boolean isc = false;
+		isc = groupdao.groupDelete12(gr_id);
+		isc = groupdao.groupDelete13(gr_id);
+		return isc;
+	}
+
 
 
 }
