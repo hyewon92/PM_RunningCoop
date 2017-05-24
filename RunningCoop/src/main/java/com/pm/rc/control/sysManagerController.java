@@ -44,7 +44,7 @@ public class sysManagerController {
 		pMap.put("mem_id", sParam1);
 		pMap.put("mem_pw", sParam2);
 		
-		isc = service.adminLogin(pMap);
+//		isc = service.adminLogin(pMap);
 		
 		Map<String, Boolean> map = new HashMap<String, Boolean>();
 		map.put("result", isc);
@@ -63,7 +63,7 @@ public class sysManagerController {
 		if(sParam == null){
 			lists = service.grApplySelect(null);
 		}else{
-			lists = service.grApplySelect(sParam);
+//			lists = service.grApplySelect(sParam);
 		}
 		map.put("result", lists);
 		return map;

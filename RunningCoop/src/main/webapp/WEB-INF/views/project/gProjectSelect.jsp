@@ -62,7 +62,8 @@
 			chart.render();
 	}
 	
-	function detailPro(val){
+	function detailPro(val, event){
+		event.stopPropagation();
 		$.ajax({
 			type : "POST",
 			url : "./detailPro.do",
@@ -120,7 +121,8 @@
 		location.href = "./goProject.do?pr_id="+val;
 	}
 	
-	function leaveProject(val){
+	function leaveProject(val, event){
+		event.stopPropagation();
 		$.ajax({
 			type : "POST",
 			url : "./leaveProject.do",
@@ -145,7 +147,7 @@
 </div>
 <div id = "container">
 	<button class="body_btn pr_create" onclick="createGPro()">프로젝트 생성</button>
-	<input type="button" value="개인프로젝트로 가기" onclick="location.href='./iProSelect.do'"/>
+	<input type="button" class="body_btn go_iProject_select" value="개인프로젝트로 가기" onclick="location.href='./iProSelect.do'"/>
 	
 	<div class="pr_detail_view">
 		<table class="pr_detail_table">
@@ -183,9 +185,13 @@
 			</c:when>
 			<c:otherwise>
 				<c:forEach var="list" items="${ list }">
-					<div class="pr_list">
+					<div class="pr_list" onclick="goToProject('${ list.pr_id }')">
 						<div class="pr_btn info_div">
-						<img alt="프로젝트 정보" class="pr_detail" src="images/project/pr_information.png" onclick="detailPro('${ list.pr_id }')"/>
+							<img alt="프로젝트 정보" class="pr_detail" src="images/project/pr_information.png" onclick="detailPro('${ list.pr_id }', event)"/>
+							<img alt="프로젝트 탈퇴" class="gPr_leave" src="images/project/wcom_delete_btn.png" onclick="leaveProject('${ list.pr_id }', event)"/>
+						</div>
+						<div class="pr_btn name_div">
+							<span>${ list.pr_name }</span>
 						</div>
 						<div class="pr_btn rate_div">
 							<div id="${ list.pr_id }_chart" class="pr_rate" title="${ list.pr_proRate }"></div>
@@ -195,9 +201,6 @@
 						<c:if test="${ fn:startsWith(list.pr_endDate, '-') == true }">${ fn:replace(list.pr_endDate, '-', '+') }</c:if>
 						<c:if test="${ fn:startsWith(list.pr_endDate, '-') == false }">-${ list.pr_endDate }</c:if>
 							</span>
-						</div>
-						<div class="pr_btn name_div" onclick="goToProject('${ list.pr_id }')">
-							<span>${ list.pr_name }</span>
 						</div>
 					</div>
 				</c:forEach>

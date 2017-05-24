@@ -19,9 +19,11 @@
 			
 			if(scryn == 'Y'){
 				var pw = prompt("비밀번호를 입력해주세요", "");
-				$("input[name=sbr_uuid]").val(uuid);
-				$("input[name=sbr_pw]").val(pw);
-				$("#scrView").submit();
+				if(pw != null){
+					$("input[name=sbr_uuid]").val(uuid);
+					$("input[name=sbr_pw]").val(pw);
+					$("#scrView").submit();
+				}
 			} else {
 				location.href = "./boardView.do?sbr_uuid="+uuid;
 			}

@@ -1233,6 +1233,7 @@ public class ProjectController {
 		
 		model.addAttribute("list", list);
 		model.addAttribute("paging", prPaging);
+		model.addAttribute("pr_name", pr_name);
 		
 		return "project/prSearchList";
 	}

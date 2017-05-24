@@ -11,8 +11,8 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script type="text/javascript">
-	function back(){
-		history.back();
+	function back() {
+		location.href="./qnaList.do";
 	}
 	
 	function Edit(){
