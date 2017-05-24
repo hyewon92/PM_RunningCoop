@@ -147,6 +147,9 @@ background-repeat: no-repeat;
 	box-shadow : 2px 2px 5px #C8C8C8;
 }
 </style>
+<%
+	String userId = (String) session.getAttribute("mem_id");
+%>
 
 <script type="text/javascript">
 /* window.onload = function(){
@@ -227,6 +230,23 @@ function showProDetail(nodes){
 		modal : true
 	});
 }
+
+function gropuWaitDelete(waitGrid){
+	$.ajax({
+		type : "POST",
+		url : "./waitGrSelect.do",
+		data : "gr_id="+waitGrid,
+		async : false,
+		success : function(msg){
+			alert("그룹신청 취소완료");
+			location.href="./myGrSelect.do?mem_id=<%=userId%>";
+		},
+		error : function(request, status, error ) {   // 오류가 발생했을 때 호출된다. 
+			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			alert('관리자에게 문의하세요.');
+		}
+	});
+}
 // 	$("table[name=groupimg]").each(function(){
 // 		var result = Math.floor(Math.random() * 14);
 // 		$(this).css({"background":"url(./grImgs/img"+result+".png)", 'background-repeat' : 'no-repeat', 'background-position':'center center'}); 
@@ -279,6 +299,7 @@ function showProDetail(nodes){
 
 	<div>
 		<input type = "button" class="body_btn gr_create_form_btn" value = "그룹생성" onclick = "openChild()">
+		<input type="button" class="body_btn go_iProject_select" value="개인프로젝트로 가기" onclick="location.href='./iProSelect.do'"/>
 	</div>
 	
 	<div class="container">
@@ -326,10 +347,10 @@ function showProDetail(nodes){
 				    	<c:forEach var = "waitg" items="${watiLists}" >
 				     	<div class="group-box">
 						<div class="group-image-box">
-							<img src="./grImgs/img${waitg.gr_img}.png" class="group-image">
-							<a href="#" onclick="gropuChildOpen(event);"><div class="detail-group-btn">!
-							<input type="hidden" value='${waitg.gr_id}'/ class="gr_input_id"></div></a>
-							<a href="#"><div class="delete-group-btn">x</div></a>
+							<img src="./grImgs/img${waitg.gr_img}.png" class="group-image"/>
+							<div class="detail-group-btn" onclick="gropuChildOpen(event)">!
+							<input type="hidden" value='${waitg.gr_id}'/ class="gr_input_id"></div>
+							<div class="delete-group-btn" onclick="gropuWaitDelete('${waitg.gr_id}')">x</div>
 						</div>
 						<div>
 							<div class="group-name">
@@ -345,30 +366,30 @@ function showProDetail(nodes){
 				    </c:otherwise>
 				</c:choose>
 			</div>
-		<div style="clear:both;" class="group-title">승인 대기 그룹 (${fn:length(waitg2)})</div>
+<%-- 		<div style="clear:both;" class="group-title">승인 대기 그룹 (${fn:length(waitg2)})</div> --%>
 		
-		<c:choose>
-		    <c:when test="${fn:length(waitg2) > 0}">
-		    	<c:forEach var = "waitg" items="${watiLists}" >
-		     	<div class="group-box">
-				<div class="group-image-box">
-					<img src="./grImgs/img${waitg.gr_img}.png" class="group-image">
-					<a href="#"><div class="detail-group-btn">!</div></a>
-					<a href=""><div class="delete-group-btn">x</div></a>
-				</div>
-				<div>
-					<div class="group-name">
-						${waitg.gr_name}
-					</div>
-				</div>
-				</div>
-				</c:forEach> 
-		    </c:when>
+<%-- 		<c:choose> --%>
+<%-- 		    <c:when test="${fn:length(waitg2) > 0}"> --%>
+<%-- 		    	<c:forEach var = "waitg" items="${watiLists}" > --%>
+<!-- 		     	<div class="group-box"> -->
+<!-- 				<div class="group-image-box"> -->
+<%-- 					<img src="./grImgs/img${waitg.gr_img}.png" class="group-image"> --%>
+<!-- 					<a href="#"><div class="detail-group-btn">!</div></a> -->
+<!-- 					<a href=""><div class="delete-group-btn">x</div></a> -->
+<!-- 				</div> -->
+<!-- 				<div> -->
+<!-- 					<div class="group-name"> -->
+<%-- 						${waitg.gr_name} --%>
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 				</div> -->
+<%-- 				</c:forEach>  --%>
+<%-- 		    </c:when> --%>
 		
-		    <c:otherwise>
-		        <div>승인 대기 그룹이 없습니다.</div>
-		    </c:otherwise>
-		</c:choose>
+<%-- 		    <c:otherwise> --%>
+<!-- 		        <div>승인 대기 그룹이 없습니다.</div> -->
+<%-- 		    </c:otherwise> --%>
+<%-- 		</c:choose> --%>
 			
 		</div>
 	</div>
