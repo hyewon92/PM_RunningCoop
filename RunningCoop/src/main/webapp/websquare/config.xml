@@ -82,7 +82,7 @@
         공통 외부 js 모듈을 읽어 들인다.
     -->
     <engine>
-        <module src="" />
+        <!-- <module src="" /> -->
     </engine>
     
     <!--
@@ -119,8 +119,8 @@
     <submission>
         <processMsg value=""/>
         <showSubmissionTime value="true"/>
-        <errorHandler value="eduCommon._sbm_errorHandler"/>
-        <preSubmitFunction value="eduCommon._sbm_preSubmitFunction"/>
+        <errorHandler value=""/>
+        <preSubmitFunction value=""/>
         <callbackSubmitFunction value=""/>
         <!-- parameter이름=value 형태로 보내고자 할때 보낼 parameter이름 -->
         <requestID value=""/>

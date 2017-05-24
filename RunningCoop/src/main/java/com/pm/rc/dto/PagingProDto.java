@@ -37,6 +37,7 @@ public class PagingProDto {
 		if(listCnt != null){
 			this.listCnt = Integer.parseInt(listCnt);
 		}
+		
 	}
 	
 	public int getStart() {
