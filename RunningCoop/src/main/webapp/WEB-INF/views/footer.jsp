@@ -26,6 +26,12 @@
 %>
 <script type="text/javascript">
    $(function(){
+	   var gr_id = "<%=gr_id%>";
+       
+       if(gr_id == "null"){
+      	 $(".groupMenu").css("display", "none");
+       }
+	   
          $("#gr_name").autocomplete({
             source: function(request , response){
                $.ajax({
@@ -81,6 +87,8 @@
          selectDoingPro();
          selectTodoPro();
          selectDonePro();
+         
+         
 
    });
    
@@ -146,6 +154,15 @@
   		}
   	}
   	
+  	function goGrBoard(session){
+  		var gr_id = session;
+  		if(gr_id == "null"){
+  			alert("그룹 선택 후 이용 바랍니다!");
+  		} else {
+	  		location.href="./grBoradList.do?gr_id="+gr_id;
+  		}
+  	}
+  	
 </script>
 </head>
 <body>
@@ -163,8 +180,10 @@
 		<li class="menu_logo"><span class="top_menu">그룹</span></li>
 		<li class="bottom-menu">
 			<ul class="groupMenu">
+				<li><a href="#" onclick="goGrBoard('<%=gr_id%>')">그룹 게시판</a></li>
+				<li><a href="#" onclick="location.href='./grmodify.do?gr_id=<%=gr_id%>'">그룹 관리</a></li>
 				<li><a href="#" onclick="location.href='./grBoradList.do?gr_id=<%=gr_id%>'">그룹 게시판</a></li>
-				<li><a href="#" onclick="location.href='./grselect.do?gr_id=<%=gr_id%>'">그룹 관리</a></li>
+				<li><a href="#" onclick="location.href='./grmodify.do?gr_id=<%=gr_id%>'">그룹 관리</a></li>
 				<li><a href="#" onclick="goSocket('<%=gr_id%>')">그룹 채팅</a></li>
 			</ul>
 			
