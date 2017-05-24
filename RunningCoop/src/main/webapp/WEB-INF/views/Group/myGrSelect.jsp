@@ -279,6 +279,7 @@ function showProDetail(nodes){
 
 	<div>
 		<input type = "button" class="body_btn gr_create_form_btn" value = "그룹생성" onclick = "openChild()">
+		<input type="button" class="body_btn go_iProject_select" value="개인프로젝트로 가기" onclick="location.href='./iProSelect.do'"/>
 	</div>
 	
 	<div class="container">

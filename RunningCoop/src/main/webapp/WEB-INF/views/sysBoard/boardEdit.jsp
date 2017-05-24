@@ -26,7 +26,7 @@ tr, th, td {
 
 <script type="text/javascript">
 	function back() {
-		history.back();
+		location.href="./qnaList.do";
 	}
 	
 	/* 비밀글 체크 시 비밀번호 입력가능한 인풋박스 출력 script */
@@ -44,8 +44,10 @@ tr, th, td {
 		$("#sbr_scryn").click(function() {
 			var chkyn = $(this).is(":checked");
 			if (chkyn == true) {
+				$("#scryn").val("Y");
 				$("#sbr_pw").css("display", "inline");
 			} else if (chkyn == false) {
+				$("#scryn").val("N");
 				$("#sbr_pw").css("display", "none");
 			}
 		});
@@ -68,103 +70,103 @@ tr, th, td {
 <div id = "header">
 	<jsp:include page="../header.jsp" flush="false"/>
 </div>
+
 <div id = "container">
-	<c:set var="view" value="${ view }" />
-	<form id="boardEdit" action="./boardEdit.do" method="post" enctype="multipart/form-data">
-	
-		<div>
-		<input type="hidden" name="sbr_uuid" value="${ view.get('SBR_UUID') }"/>
-			<span>제목</span>
-			<input type="text" name="sbr_title" value="${ view.get('SBR_TITLE') }" />
+	<h3>문의 게시글 수정하기</h3>
+	<div class="editor_div">
+		<c:set var="view" value="${ view }" />
+		<form name="boardEdit" id="boardEdit" action="./boardEdit.do" method="post" enctype="multipart/form-data">
+		<div class="editTitle_area">
+				<input type="hidden" name="sbr_uuid" value="${ view.get('SBR_UUID') }"/>
+				<div>제목</div>
+				<div><input type="text" name="sbr_title" value="${ view.get('SBR_TITLE') }" /></div>
 		</div>
-		<div>
-			<input type="hidden" id="scryn" value="${ view.get('SBR_SCRYN') }"/>
-			<input type="checkbox" id="sbr_scryn" name="sbr_scryn" /><span>비밀글</span>
-			<input type="text" id="sbr_pw" name="sbr_pw" value="${ view.get('SBR_PW') }" style="display: none" />
-		</div>
-		<div>
-			<textarea id="content" name="sbr_content"></textarea>
-		</div>
-		<div>
-			<fieldset>
-				<legend>첨부파일</legend>
+		<div class="editAttach_area">
+			<div><span>첨부파일</span></div>
+			<div>
 				<c:set var="attach" value="${ attach }" />
-					<p>기존파일 : 
-						${ attach.get("SATT_NAME") }(${ attach.get("SATT_SIZE")/1024 }KB)
-					</p>
-					<p> 새로운 파일
-					<input type="hidden" id="filesize" name="satt_size" value=""/>
-					<input type="file" id="file" name="satt_name"/>
-					</p> 
-			</fieldset>
+				<c:if test="${ fn:length( attach.get('SATT_NAME')) != 0 }">
+					<span>기존파일 : ${ attach.get("SATT_NAME") }(${ attach.get("SATT_SIZE")/1024 }KB)</span>
+				</c:if>&nbsp;&nbsp;
+				<input type="file" id="file" name="satt_name"/>
+			</div>
 		</div>
-		<script>
-			var config = {
-				initializedId : "",
-				wrapper : "tx_trex_container",
-				form : 'boardEdit',
-				txIconPath : "daumOpenEditor/images/icon/editor/",
-				txDecoPath : "daumOpenEditor/images/deco/contents/",
-				events : {
-					preventUnload : false
-				},
-				sidebar : {
-					attachbox : {
-						show : true
-					}
-				}
-			};
-
-			EditorCreator.convert(document.getElementById("content"),
-					'daumOpenEditor/pages/template/daumOpenEditor.jsp',
-					function() {
-						var content = '${ view.get("SBR_CONTENT") }';
-						EditorJSLoader.ready(function(Editor) {
-							new Editor(config);
-							Editor.modify({
-								content : content
-							});
-						});
-					});
-		</script>
-		
-		
-	</form>
-	
-	
-	<script type="text/javascript">
-		/* 예제용 함수 */
-		function saveContent() {
-			Editor.save(); // 이 함수를 호출하여 글을 등록하면 된다.
-		}
-
-		function validForm(editor) {
-			var validator = new Trex.Validator();
-			var content = editor.getContent();
-			if (!validator.exists(content)) {
-				alert('내용을 입력하세요');
-				return false;
-			}
-
-			return true;
-		}
-
-		function setForm(editor) {
-			var i, input;
-	        var form = editor.getForm();
-	        var content = editor.getContent();
-
-	        var field = document.getElementById("content");
-	        field.value = content;
-
-			return true;
-		}
-	</script>
-	<div>
-		<button onclick='saveContent()'>등록</button>
+		<div class="editscr_area">
+			<div><span><input type="checkbox" id="sbr_scryn" />비밀글</span></div>
+			<div>
+				<input type="hidden" id="scryn" name="scryn" value="${ view.get('SBR_SCRYN') }"/>
+				<input type="password" id="sbr_pw" name="sbr_pw" value="${ view.get('SBR_PW') }" style="display: none" />
+			</div>
+		</div>
+		<textarea id="content" name="sbr_content"></textarea>
+		</form>
 	</div>
-	<input type="button" value="목록으로" onclick="back()" />
+	
+<script>
+	var config = {
+		initializedId : "",
+		wrapper : "tx_trex_container",
+		form : 'boardEdit',
+		txIconPath : "daumOpenEditor/images/icon/editor/",
+		txDecoPath : "daumOpenEditor/images/deco/contents/",
+		events : {
+			preventUnload : false
+		},
+		sidebar : {
+			attachbox : {
+				show : true
+			}
+		}
+	};
+
+	EditorCreator.convert(document.getElementById("content"),
+			'daumOpenEditor/pages/template/daumOpenEditor.jsp',
+			function() {
+				var content = '${ view.get("SBR_CONTENT") }';
+				EditorJSLoader.ready(function(Editor) {
+					new Editor(config);
+					Editor.modify({
+						content : content
+					});
+				});
+			});
+</script>
+	
+<script type="text/javascript">
+	/* 예제용 함수 */
+	function saveContent() {
+		Editor.save(); // 이 함수를 호출하여 글을 등록하면 된다.
+	}
+
+	function validForm(editor) {
+		var validator = new Trex.Validator();
+		var content = editor.getContent();
+		if (!validator.exists(content)) {
+			alert('내용을 입력하세요');
+			return false;
+		}
+
+		return true;
+	}
+
+	function setForm(editor) {
+		var i, input;
+        var form = editor.getForm();
+        var content = editor.getContent();
+
+        var field = document.getElementById("content");
+        field.value = content;
+
+		return true;
+	}
+</script>
+
+	<div class="btn_area">
+		<button class="body_btn edit_submit_btn" onclick='saveContent()'>등록</button>
+		<input type="button" class="body_btn edit_collback_btn" value="목록으로" onclick="back()" />
+	</div>
 </div>
+
 <div id = "footer">
 	<jsp:include page="../footer.jsp" flush="false"/>
 </div>

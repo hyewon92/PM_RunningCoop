@@ -500,8 +500,8 @@ public class sysManagerController {
 	
 	// 문의 게시판 게시글 조회
 	@RequestMapping(value="/viewQna.do", method=RequestMethod.GET)
-	public Map<String, Map<String, String>> sysQnaView(@RequestBody(required = false) Map param){
-		
+	public Map<String, Map<String, String>> sysQnaView(@RequestBody(required = false) Map<String, Object> reqParam){
+		Map<String, Object> param = (Map<String, Object>)reqParam.get("dc_qnaViewParam");
 		String sParam = (String)param.get("sbr_uuid");
 		
 		logger.info("================== 문의 게시글 보기 ==================");

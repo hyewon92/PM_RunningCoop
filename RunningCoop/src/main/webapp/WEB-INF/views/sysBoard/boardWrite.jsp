@@ -35,7 +35,7 @@
 	
 	/* 목록으로 돌아가는 script */
 	function back() {
-		history.back();
+		location.href="./qnaList.do";
 	}
 	
 </script>
@@ -73,15 +73,12 @@
 			<input type="hidden" name="sbr_noticeyn" value="N"/>
 				<div class="qnatitle_area">
 					<div>제목</div>
-					<div><input type="text" name="sbr_title" />
-						
-					</div>
+					<div><input type="text" name="sbr_title" />	</div>
 				</div>
 				<div class="qnaattach_area">
 					<div>첨부파일</div>
 					<div>
-						<input type="file" id="file" name="sbr_name"/>
-						<input type="hidden" id="filesize" name="sbr_size" />
+						<input type="file" id="file" name="satt_name"/>
 					</div>
 					<div class="qnascr_area">
 						<input type="checkbox" id="sbr_scryn" name="sbr_scryn" /><span>비밀글</span>
@@ -192,8 +189,8 @@
 	}
 </script>
 	<div class="btn_area">
-		<button onclick='saveContent()'>등록</button>
-		<input type="button" value="목록으로" onclick="back()" />
+		<button class="body_btn write_submit_btn" onclick='saveContent()'>등록</button>
+		<input type="button" class="body_btn write_collback_btn" value="목록으로" onclick="back()" />
 	</div>
 </div>
 
