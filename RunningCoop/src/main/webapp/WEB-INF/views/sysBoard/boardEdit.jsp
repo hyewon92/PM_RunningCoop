@@ -13,20 +13,9 @@
 <script src="daumOpenEditor/js/editor_creator.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
-<style type="text/css">
-table {
-	border-collapse: collapse;
-}
-
-tr, th, td {
-	border: 1px solid black;
-	display : 
-}
-</style>
-
 <script type="text/javascript">
 	function back() {
-		location.href="./qnaList.do";
+		history.back();
 	}
 	
 	/* 비밀글 체크 시 비밀번호 입력가능한 인풋박스 출력 script */
@@ -75,7 +64,7 @@ tr, th, td {
 	<h3>문의 게시글 수정하기</h3>
 	<div class="editor_div">
 		<c:set var="view" value="${ view }" />
-		<form name="boardEdit" id="boardEdit" action="./boardEdit.do" method="post" enctype="multipart/form-data">
+		<form id="boardEdit" action="./boardEdit.do" method="post" enctype="multipart/form-data">
 		<div class="editTitle_area">
 				<input type="hidden" name="sbr_uuid" value="${ view.get('SBR_UUID') }"/>
 				<div>제목</div>
