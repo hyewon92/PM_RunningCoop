@@ -122,15 +122,15 @@
 	</delete>
 	
 	<insert id="grInsert1" parameterType="java.util.Map" >
-		INSERT INTO RC_GROUP (GR_ID, GR_NAME, GR_GOAL)
+	INSERT INTO RC_GROUP (GR_ID, GR_NAME, GR_GOAL,GR_IMG,GR_SEARCHYN,GR_JOINYN)
 		VALUES
-		(#{gr_id}, #{gr_name}, #{gr_goal})
+		(#{gr_id}, #{gr_name}, #{gr_goal}, #{gr_img}, #{gr_searchyn}, #{gr_joinyn})
 	</insert>
 
 	<insert id="grInsert2" parameterType="java.util.Map">
-		INSERT INTO RC_GROUPMEM (GR_ID, MEM_ID, GR_LEVEL)
+	INSERT INTO RC_GROUPMEM (GR_ID, MEM_ID, GR_LEVEL)
 		VALUES
-		(#{gr_id}, #{mem_id}, 'GM')
+	(#{gr_id}, #{mem_id}, 'GM')
 	</insert>
 	
 	

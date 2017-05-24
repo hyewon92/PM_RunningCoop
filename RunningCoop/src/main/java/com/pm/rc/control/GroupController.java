@@ -151,19 +151,18 @@ public class GroupController implements ServletConfigAware {
 		return "Group/grSeachList";
 	}
 	// 멤버 관리 화면
-	@RequestMapping(value="/memModi.do" , method=RequestMethod.GET)
-	public String grMemSelect(String gr_id , Model model) {
+	@RequestMapping(value="/memModi.do" , method={RequestMethod.GET,RequestMethod.POST})
+	@ResponseBody
+	public List<MemberDto> grMemSelect(String gr_id) {
 		System.out.println("------------------"+gr_id);
 		logger.info("그룹멤버리스트 출력");
 		List<MemberDto> lists = service.grMemSelect(gr_id);
-		model.addAttribute("memList",lists);
+//		model.addAttribute("memList",lists);
+//		model.addAttribute("grid",gr_id);
+//		List<MemberDto> lists2 = service.grWaitList(gr_id);
+//		model.addAttribute("grWait" , lists2);
 		
-		model.addAttribute("grid",gr_id);
-		
-		List<MemberDto> lists2 = service.grWaitList(gr_id);
-		model.addAttribute("grWait" , lists2);
-		
-		return "Group/memModify";
+		return lists;
 	}	
 
 	// 그룹 가입신청화면으로 연결
@@ -256,10 +255,18 @@ public class GroupController implements ServletConfigAware {
 	      System.out.println(id_3);
 	      String gr_id = id_1+id_2+id_3;
 	      
+	      System.out.println("================================");
+	      System.out.println(req.getParameter("gr_joinyn")+"|||||"+req.getParameter("gr_searchyn")+"||"+req.getParameter("gr_img"));
+	      System.out.println(gr_id);
+	      System.out.println("================================");
+	      
 	      map.put("gr_id", gr_id);
 	      map.put("gr_name", req.getParameter("gr_name"));
 	      map.put("gr_goal", req.getParameter("gr_goal"));
 	      map.put("mem_id", req.getParameter("mem_id"));
+	      map.put("gr_img",req.getParameter("gr_img"));
+	      map.put("gr_searchyn",req.getParameter("gr_searchyn"));
+	      map.put("gr_joinyn",req.getParameter("gr_joinyn"));
 	      
 	      boolean n = service.grInsert(map);
 	   
