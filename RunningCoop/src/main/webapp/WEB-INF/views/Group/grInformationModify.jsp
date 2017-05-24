@@ -73,7 +73,7 @@ cursor: pointer;}
 <div id="container">
 	<form class="grModify" action="./realGrmodify.do" method="post">
 		<table id="grdate">
-			<c:forEach var="grSelect" items="${grSelect }">
+			<c:set var="grSelect" value="${grSelect}"/>
 					<td><input type="text" value="${grSelect.GR_ID}" name="gr_id" style="display: none;"> </td>
 				<tr>
 					<td><input type="text" value="${grSelect.GR_ID}" readonly="readonly"> </td>
@@ -125,7 +125,6 @@ cursor: pointer;}
 		<td><p style="border: 1px solid black; width: 65px;" onclick="location.href='./memModi.do?gr_id=${grSelect.GR_ID}'" id="memModi">멤버관리</p ></td>
 		<td><input type="button" onclick="location.href='./gbListSelect.do?gr_id=${grSelect.GR_ID}'">게시판관리</td>
 		</tr>
-			</c:forEach>
 		</table>
 		</form>
 </div>

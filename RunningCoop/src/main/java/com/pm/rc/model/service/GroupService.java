@@ -38,6 +38,14 @@ public interface GroupService {
 	public List<GroupDto> waitGrSelect(Map<String, String> map);
 	
 	/**
+	 * 생성한 승인대기 그룹 삭제 기능 
+	 * @param gr_id
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean waitGrSelectDelete (String gr_id);
+	
+	/**
 	 * 그룹 검색 조회(그룹명)
 	 * @param gr_name 그룹명
 	 * @return List&lt;GroupDto&gt;

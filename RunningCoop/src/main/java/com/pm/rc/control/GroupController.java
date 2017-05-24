@@ -52,6 +52,7 @@ public class GroupController implements ServletConfigAware {
 	@Autowired
 	private GroupService service;
 	// ManaGer 서비스
+	
 	@Autowired
 	private ManagerService managserService;
 	// Mail 서비스
@@ -82,8 +83,8 @@ public class GroupController implements ServletConfigAware {
 		return "Group/myGrSelect";
 	}
 	//그룹선택하여 정보 확인 및 그룹관리 화면
-	@RequestMapping(value="/grselect.do" ,  method=RequestMethod.POST)
-	@ResponseBody
+	@RequestMapping(value="/grselect.do", method={RequestMethod.POST,RequestMethod.GET})
+	@ResponseBody	
 	public Map<String, String> grDetailSelect(Model model, HttpServletRequest request){
 		Map<String,String> map = new HashMap<String, String>();
 		map.put("gr_id", request.getParameter("gr_id"));
@@ -93,13 +94,25 @@ public class GroupController implements ServletConfigAware {
 		
 		return map2;
 	}
+	
+	// 승인대기 그룹 삭제후 다시 승인대기 그룹 뿌려주는 메소드
+	@RequestMapping(value="/waitGrSelect.do", method={RequestMethod.POST,RequestMethod.GET})
+	@ResponseBody
+	public boolean waitGrSelect(Model model , HttpServletRequest req){
+		String gr_id = req.getParameter("gr_id");
+		boolean isc = false;
+		isc = service.waitGrSelectDelete(gr_id);
+			return isc;
+	}
 	//그룹관리 화면
 	@RequestMapping(value="/grmodify.do" , method=RequestMethod.GET)
 	public String 	grmodifyMove(Model model, HttpServletRequest requestl){
 		Map<String,String> map = new HashMap<String, String>();
 		map.put("gr_id", requestl.getParameter("gr_id"));
 		logger.info("그룹상세정보 띄우기");
+//		List<Map<String, String>> lists = service.grDetailSelect(map);
 		Map<String, String> lists = service.grDetailSelect(map);
+		System.out.println(lists.get("GR_ID")+"ffffffffffffffffffffffffffff");
 		model.addAttribute("grSelect" , lists);
 		return "Group/grInformationModify";
 	}
@@ -429,4 +442,5 @@ public class GroupController implements ServletConfigAware {
 //		System.out.println("asdfasdfasdf"+lists.get(0).getGr_img());
 	return n;	
 	}
+	
 }

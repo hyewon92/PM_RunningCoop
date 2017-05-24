@@ -164,7 +164,7 @@
 		<li class="bottom-menu">
 			<ul class="groupMenu">
 				<li><a href="#" onclick="location.href='./grBoradList.do?gr_id=<%=gr_id%>'">그룹 게시판</a></li>
-				<li><a href="#" onclick="location.href='./grselect.do?gr_id=<%=gr_id%>'">그룹 관리</a></li>
+				<li><a href="#" onclick="location.href='./grmodify.do?gr_id=<%=gr_id%>'">그룹 관리</a></li>
 				<li><a href="#" onclick="goSocket('<%=gr_id%>')">그룹 채팅</a></li>
 			</ul>
 			

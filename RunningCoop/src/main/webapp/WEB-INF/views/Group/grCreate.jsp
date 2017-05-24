@@ -63,14 +63,37 @@
 <body>
 	<form class="createBox" action="./groupCreate.do" method="post">
 	<table>
-	<tr><td>그룹이름:</td><td><input type="text"  name="gr_name" id="grname"></td><td><input type="button" value="중복확인" onclick="grNameCheck()"></td></tr>
-	<tr><td>그룹담당자아이디:</td><td><input type="text" name="mem_id" value="<%=mem_id%>" readonly="readonly"></td></tr>
-	<tr><td>그룹이미지</td><td> <select id="imsg">
-					</select> <input type="hidden" id="imgname" value="" ></td>
-					<td><img id="imgbox" alt="" src="./grImgs/img1.png">
-					</tr>
-	<tr><td>그룹목적</td>	<td><textarea rows="15" cols="27" name="gr_goal" id="grgoal"></textarea></tr>
-		<tr><td><input type="submit" value="그룹생성"></td><td><input type="button" onclick="closee()" value="취소"></td></tr>
+	<tr>
+	<td>그룹이름:</td>
+	<td><input type="text"  name="gr_name" id="grname"></td>
+	<td><input type="button" value="중복확인" onclick="grNameCheck()"></td>
+	</tr>
+	<tr>
+	<td>그룹담당자아이디:</td>
+	<td><input type="text" name="mem_id" value="<%=mem_id%>" readonly="readonly"></td>
+	</tr>
+	<tr>
+	<td>그룹이미지</td>
+	<td><select id="imsg"></select>
+	<input type="hidden" id="imgname" value="" ></td>
+	<td><img id="imgbox" alt="" src="./grImgs/img1.png"></td>
+	</tr>
+	<tr>
+	<td>그룹검색거부</td>
+	<td><input type="radio"> <input type="radio"></td>
+	</tr>
+	<tr>
+	<td>그룹가입신청거부</td>
+	<td><input type="radio"> <input type="radio"></td>
+	</tr>
+	<tr>
+	<td>그룹목적</td>
+	<td><textarea rows="15" cols="27" name="gr_goal" id="grgoal"></textarea></td>
+	</tr>
+	<tr>
+	<td><input type="submit" value="그룹생성"></td>
+	<td><input type="button" onclick="closee()" value="취소"></td>
+	</tr>
 	</table>
 	</form>
 </body>

@@ -75,7 +75,7 @@ function doSearch(){
 		alert("검색 타입을 선택해주세요!");
 	} else if (type == "group"){
 		$("#gr_name").val(work);
-		$("#groupSearch").submit();
+		$("#groupSearch").submit();	
 	} else {
 		$("#pr_name").val(work);
 		$("#projectSearch").submit();
@@ -112,6 +112,7 @@ function doSearch(){
 			<input type='hidden' name='index' id='index' value='${paging.index}'>
 			<input type='hidden' name='pageStartNum' id='pageStartNum' value='${paging.pageStartNum}'>
 			<input type='hidden' name='listCnt' id='listCnt' value='${paging.listCnt}'>
+			<input type="hidden" name="pr_name" id="pr_name" value="${pr_name}">
 		</form>
 	</div>
 	
