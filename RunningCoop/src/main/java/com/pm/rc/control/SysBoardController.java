@@ -205,14 +205,16 @@ public class SysBoardController {
 		map.put("sbr_uuid", sbr_uuid);
 
 		MultipartFile file = multipartRequest.getFile("satt_name");
+		
+		System.out.println(file);
 
-		if (file != null){
+		String oldFileName = file.getOriginalFilename();
+		if (oldFileName.length()>0){
 			String savePath = "C:\\RC_fileSave\\";
 
 			String fuuid = createUUID();
 			int indexNum = fuuid.lastIndexOf("-");
 
-			String oldFileName = file.getOriginalFilename();
 			String satt_size = ""+file.getSize();
 
 			String newFileName = fuuid.substring(indexNum+1) + oldFileName;
@@ -356,10 +358,13 @@ public class SysBoardController {
 		
 		// 비밀글 여부
 		String scrpw = multipartRequest.getParameter("sbr_pw");
-		String sbr_scryn = "Y";
-		
-		map.put("sbr_scryn", sbr_scryn);
-		map.put("sbr_pw", scrpw);
+		String scryn = multipartRequest.getParameter("scryn");
+		if(scryn.equals("Y")){
+			map.put("sbr_scryn", scryn);
+			map.put("sbr_pw", scrpw);
+		} else {
+			map.put("sbr_scryn", scryn);
+		}
 		
 		// 서비스 실행
 		boolean isc = false;
@@ -372,7 +377,7 @@ public class SysBoardController {
 			System.out.println("문의게시판 게시글 수정 실패");
 		}
 
-		return "redirect:/viewNotice.do?sbr_uuid="+sbr_uuid;
+		return "redirect:/boardView.do?sbr_uuid="+sbr_uuid;
 	}
 
 	// 게시글 삭제

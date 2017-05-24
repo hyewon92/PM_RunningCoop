@@ -38,6 +38,23 @@
 	box-shadow : 1px 1px 5px #C8C8C8;
 }
 
+.go_iProject_select{
+	padding: 3px 10px;
+    background-color: #377d37;
+    border-color: #4cae4c;
+    color: #fff;
+    font-size: 12pt;
+    font-weight: bold;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    position: absolute;
+    right: 10px;
+}
+
+.go_iProject_select:HOVER {
+	box-shadow : 1px 1px 5px #C8C8C8;
+}
+
 .pr_detail_view{
 	width : 500px;
 	height : 400px;
@@ -47,18 +64,28 @@
 }
 
 .pr_detail {
-    margin-left: 85%;
-    margin-top: 3px;
+    vertical-align: middle;
+    width: 20px;
+    margin-right: 3px;
 }
 
 .pr_detail:HOVER {
 	opacity : 0.5;
 }
 
-.pr_btn {
-	width : 100%;
+.gPr_leave {
+    vertical-align: middle;
+    margin-right: 5px;
 }
 
+.gPr_leave:HOVER{
+	opacity : 0.5;
+}
+
+.pr_btn {
+    width: 100%;
+    text-align: right;
+}
 .info_div {
 	height : 10%
 }
