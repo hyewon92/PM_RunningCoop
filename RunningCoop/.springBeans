@@ -10,7 +10,6 @@
 		<config>src/main/webapp/WEB-INF/spring/appServlet/Servlet-context.xml</config>
 		<config>src/main/webapp/WEB-INF/spring/appServlet/applicationContext.xml</config>
 		<config>src/main/webapp/WEB-INF/spring/appServlet/aop-context.xml</config>
-		<config>src/main/webapp/WEB-INF/spring/appServlet/common-context.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

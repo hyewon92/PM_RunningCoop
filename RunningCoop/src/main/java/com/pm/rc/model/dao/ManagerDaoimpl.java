@@ -117,7 +117,7 @@ public class ManagerDaoimpl implements ManagerDao {
 	
 	@Override
 	public Map<String, String> editBoardViewSelect(Map<String, String> map) {
-		return sqlSession.selectOne(NAMESPACE+"editBoardViewSelect", map);
+		return sqlSession.selectOne(NAMESPACE+"editViewSelect", map);
 	}
 
 	@Override

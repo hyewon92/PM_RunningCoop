@@ -53,7 +53,7 @@
 						${ view.get("SBR_TITLE") }
 					</th>
 				<tr>
-					<th>작성자 :</th>
+					<th>작성자</th>
 					<td>${ view.get("MEM_NAME") }</td>
 					<th>작성일</th>
 					<td>${ view.get("SBR_REGDATE") }</td>
