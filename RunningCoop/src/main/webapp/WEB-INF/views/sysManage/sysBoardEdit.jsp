@@ -7,22 +7,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>게시글 수정 화면</title>
+<title>Running Co-op :: 시스템 관리자 - 게시글 수정</title>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <link rel="stylesheet" href="daumOpenEditor/css/editor.css" type="text/css"/>
 <script src="daumOpenEditor/js/editor_loader.js" type="text/javascript" charset="utf-8"></script>
 <script src="daumOpenEditor/js/editor_creator.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-
-<style type="text/css">
-table {
-	border-collapse: collapse;
-}
-
-tr, th, td {
-	border: 1px solid black;
-}
-</style>
 
 <script type="text/javascript">
 	function back() {
@@ -34,95 +24,94 @@ tr, th, td {
 	<div id="sys_header">
 		<jsp:include page="../sysHeader.jsp" flush="false" />
 	</div>
+	
 	<div id="sys_container">
-		<div id="mgr_Container">
-						<h3>공지 게시글 수정</h3> <c:set var="view" value="${ view }" />
-						
-						<form id="noticeEdit" action="./sysboardEdit.do" method="post"
-							enctype="multipart/form-data">
-							<div>
-								<input type="hidden" name="sbr_uuid"
-									value="${ view.get('SBR_UUID') }" /> <span>제목</span> <input
-									type="text" name="sbr_title" value="${ view.get('SBR_TITLE') }" />
-							</div>
-							<div>
-								<textarea name="sbr_content" id="content"></textarea>
-							</div>
-							<div>
-								<fieldset>
-									<legend>첨부파일</legend>
-									<c:set var="attach" value="${ attach }" />
-									<p>기존파일 : ${ attach.get("SATT_NAME") }(${ attach.get("SATT_SIZE")/1024 }KB)
-									</p>
-									<p>
-										새로운 파일 <input type="hidden" id="filesize" name="satt_size"
-											value="" /> <input type="file" id="file" name="satt_name" />
-									</p>
-								</fieldset>
-							</div>
-						</form>
-						<div>
-							<button onclick='saveContent()'>등록</button>
-						</div> <input type="button" value="이전으로" onclick="back()" />
+		<h3>게시글 수정</h3>
+		<div class="editor_div">
+			<c:set var="view" value="${ view }" />
+				<form id="noticeEdit" action="./sysboardEdit.do" method="post" enctype="multipart/form-data">
+				<div class="editTitle_area">
+					<input type="hidden" name="sbr_uuid" value="${ view.get('SBR_UUID') }" />
+					<div>제목</div>
+					<div><input type="text" name="sbr_title" value="${ view.get('SBR_TITLE') }" /></div>
+				</div>
+				<div class="editAttach_area">
+					<div><span>첨부파일</span></div>
+					<div>
+						<c:set var="attach" value="${ attach }" />
+						<c:if test="${ fn:length( attach.get('SATT_NAME')) != 0 }">
+							<span>기존파일 : ${ attach.get("SATT_NAME") }(${ attach.get("SATT_SIZE")/1024 }KB)</span>
+						</c:if>&nbsp;&nbsp;
+						<input type="file" id="file" name="satt_name"/>
+					</div>
+				</div>
+				<textarea name="sbr_content" id="content"></textarea>
+				</form>
 		</div>
-		<!-- 다음 에디터 함수 -->
-		<script type="text/javascript">
-			var config = {
-				initializedId : "",
-				wrapper : "tx_trex_container",
-				form : "noticeEdit",
-				txIconPath : "daumOpenEditor/images/icon/editor/",
-				txDecoPath : "daumOpenEditor/images/deco/contents/",
-				events : {
-					preventUnload : false
-				},
-				sidebar : {
-					attachbox : {
-						show : true
-					}
-				}
-			};
-
-			EditorCreator.convert(document.getElementById("content"),
-					'daumOpenEditor/pages/template/daumOpenEditor.jsp',
-					function() {
-						var content = '${ view.get("SBR_CONTENT") }';
-						EditorJSLoader.ready(function(Editor) {
-							new Editor(config);
-							Editor.modify({
-								content : content
-							});
-						});
-					});
-		</script>
-		<script type="text/javascript">
-			function saveContent() {
-				Editor.save(); // 이 함수를 호출하여 글을 등록하면 된다.
-			}
-
-			function validForm(editor) {
-				var validator = new Trex.Validator();
-				var content = editor.getContent();
-				if (!validator.exists(content)) {
-					alert('내용을 입력하세요');
-					return false;
-				}
-
-				return true;
-			}
-
-			function setForm(editor) {
-				var i, input;
-		        var form = editor.getForm();
-		        var content = editor.getContent();
-
-		        var field = document.getElementById("content");
-		        field.value = content;
-
-				return true;
-			}
-		</script>
+		<div>
+			<button class="body_btn edit_submit_btn" onclick='saveContent()'>등록</button>
+			<input type="button" class="body_btn edit_collback_btn" value="이전으로" onclick="back()" />
+		</div> 
 	</div>
+	
+<!-- 다음 에디터 함수 -->
+<script type="text/javascript">
+	var config = {
+		initializedId : "",
+		wrapper : "tx_trex_container",
+		form : "noticeEdit",
+		txIconPath : "daumOpenEditor/images/icon/editor/",
+		txDecoPath : "daumOpenEditor/images/deco/contents/",
+		events : {
+			preventUnload : false
+		},
+		sidebar : {
+			attachbox : {
+				show : true
+			}
+		}
+	};
+
+	EditorCreator.convert(document.getElementById("content"),
+			'daumOpenEditor/pages/template/daumOpenEditor.jsp',
+			function() {
+				var content = '${ view.get("SBR_CONTENT") }';
+				EditorJSLoader.ready(function(Editor) {
+					new Editor(config);
+					Editor.modify({
+						content : content
+					});
+				});
+			});
+</script>
+<script type="text/javascript">
+	function saveContent() {
+		Editor.save(); // 이 함수를 호출하여 글을 등록하면 된다.
+	}
+
+	function validForm(editor) {
+		var validator = new Trex.Validator();
+		var content = editor.getContent();
+		if (!validator.exists(content)) {
+			alert('내용을 입력하세요');
+			return false;
+		}
+
+		return true;
+	}
+
+	function setForm(editor) {
+		var i, input;
+        var form = editor.getForm();
+        var content = editor.getContent();
+
+        var field = document.getElementById("content");
+        field.value = content;
+
+		return true;
+	}
+</script>
+
 	<div id="sys_footer">
 		<jsp:include page="../sysFooter.jsp" flush="false"/>
 	</div>

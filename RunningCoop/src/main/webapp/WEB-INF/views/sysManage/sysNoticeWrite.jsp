@@ -4,31 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>시스템 공지 게시판 관리 페이지</title>
+<title>Running Co-op :: 관리자 - 공지 작성</title>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <link rel="stylesheet" href="daumOpenEditor/css/editor.css" type="text/css"/>
 <script src="daumOpenEditor/js/editor_loader.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-<style type="text/css">
-.formTable {
-	width: 100%;
-	display: table;
-}
-
-.tableBody {
-	display: table-row-group;
-}
-
-.tableRow {
-	border: 1px solid black;
-	display: table-row;
-}
-
-.tableCol {
-	border: 1px solid black;
-	display: table-cell;
-}
-</style>
 <script type="text/javascript">
 	$(document).ready(function() {
 		/* file의 크기를 구하는 script */
@@ -55,29 +35,32 @@
 	<div id="sys_header">
 		<jsp:include page="../sysHeader.jsp" flush="false" />
 	</div>
+	
 	<div id="sys_container">
-		<div id="mgr_Container">
-						<h3>공지 게시판 게시글 작성 페이지</h3>
-						<form id="noticeWrite" action="./noticeWrite.do" method="post"
-							enctype="multipart/form-data">
-							<input type="hidden" name="mem_id" value="<%=mem_id %>" />
-							<div>
-								<span> 제목 </span><input type="text" name="sbr_title" />
-							</div>
-							<jsp:include page="../daumOpenEditor.jsp" flush="false"></jsp:include>
-							<fieldset id="file_attach_list">
-								<legend>첨부파일</legend>
-								<input type="file" id="file" name="sbr_name" /> 
-								<input type="hidden" id="filesize" name="sbr_size" />
-							</fieldset>
-						</form>
-						<div>
-						<button onclick='saveContent()'>등록</button>
-						</div>
-						<input type="button" value="목록으로" onclick="back()" />
+		<h3>공지 게시글 작성</h3>
+		<div class="editor_div">
+			<form id="noticeWrite" action="./noticeWrite.do" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="mem_id" value="<%=mem_id %>" />
+				<div class="noticetitle_area">
+					<div>제목</div>
+					<div><input type="text" name="sbr_title"/></div>
+				</div>
+				<div class="noticeAttach_area">
+					<div>첨부파일</div>
+					<div>
+						<input type="file" id="file" name="sbr_name" /> 
+					</div>
+				</div>
+				<jsp:include page="../daumOpenEditor.jsp" flush="false"></jsp:include>
+			</form>
+		</div>
+		<div class="btn_area">
+			<button class="body_btn notice_submit_btn" onclick='saveContent()'>등록</button>
+			<input type="button" class="body_btn adm_notice_back" value="목록으로" onclick="back()" />
 		</div>
 		<!-- 다음 에디터 함수 -->
-		<script type="text/javascript">
+
+<script type="text/javascript">
 	var config = {
 		txHost: '', /* 런타임 시 리소스들을 로딩할 때 필요한 부분으로, 경로가 변경되면 이 부분 수정이 필요. ex) http://xxx.xxx.com */
 		txPath: '', /* 런타임 시 리소스들을 로딩할 때 필요한 부분으로, 경로가 변경되면 이 부분 수정이 필요. ex) /xxx/xxx/ */
@@ -150,6 +133,7 @@
 	}
 </script>
 	</div>
+	
 	<div id="sys_footer">
 		<jsp:include page="../sysFooter.jsp" flush="false"/>
 	</div>
