@@ -9,7 +9,6 @@
 <script type="text/javascript" src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="js/account/account.js"></script>
 <link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/body/user_account.css">
 <style type="text/css">
 @import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
@@ -36,21 +35,22 @@
 	<div class = "mainContain">
 		<!-- 로그인 -->
 		<div class = "accountBox">
-		<form class = "loginBox" action="./ckLogin.do" method="post">
+		<form class = "loginBox">
 			<div class = "login">
 				<div class = "idPart">
 					<input type = "text" class = "id" id = "loginId" name = "mem_id" placeholder = "아이디" value = "">
 				</div>
 				<div class = "pwPart">
-					<input type = "password" class = "pw" id = "loginPw" name = "mem_pw" placeholder = "비밀번호" value = "" onKeypress="if(event.keyCode==13) $('.loginBox').submit();">
+					<input type = "password" class = "pw" id = "loginPw" name = "mem_pw" placeholder = "비밀번호" value = "" onKeypress="if(event.keyCode==13) $('#loginBtn').click();">
 				</div>
+				<div class = "loginFail"></div>
 			</div>
 			<div class = "enter">
-				<input type = "submit" class = "accountBtn" id = "loginBtn" value = "로그인" style = "width: 300px; height: 40px; font-size:14pt; border-radius: 4px; background-color: #5cb85c; color: #fff;">
+				<input type = "button" class = "accountBtn" id = "loginBtn" value = "로그인" style = "width: 300px; height: 40px; font-size:14pt; border-radius: 4px; background-color: #5cb85c; color: #fff;" onclick = "doLogin()">
 			</div>
 		</form>
-		<span style = "font-size: 8pt; color: black; text-decoration: underline;" onclick = "searchAccount()">아이디/비밀번호찾기</span>
-		<span style = "font-size: 8pt; color: black; text-decoration: underline;" onclick = "joinAccount()">회원가입</span>
+		<span class="search_userInfo" style = "font-size: 8pt; color: black; text-decoration: underline;" onclick = "searchAccount()">아이디/비밀번호찾기</span>
+		<span class="search_userInfo" style = "font-size: 8pt; color: black; text-decoration: underline;" onclick = "joinAccount()">회원가입</span>
 		</div>
 		
 		<!-- 회원가입 -->
@@ -68,7 +68,7 @@
 								<div class = "rowGroup">
 					 				<div class = "join_row">
 					 					<span class = "ps_box int_id">
-					 						<input type = "text" class = "int" id = "id" name = "mem_id" placeholder = "아이디(영소문자, 숫자 포함 8~12자)" style = "width: 50%; float:left;";> 
+					 						<input type = "text" class = "int" id = "id" name = "mem_id" placeholder = "아이디(영소문자, 숫자 포함 8~12자)" style = "width: 50%; float:left;"> 
 					 						<input type = "button" class = "accountBtn" id = "idChk" value = "중복확인" onclick = "id_chk()" style = "float:right; margin-right:5px;">
 											<span id = "resultIdChk"></span>
 					 					</span>
