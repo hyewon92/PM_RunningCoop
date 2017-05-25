@@ -33,8 +33,11 @@
 					if(schedule[i].pr_id != null){
 						title = pr_name+":"+sch_title;
 					}
-				$("#dayList").css("display", "block");
+				$("#calendar").css({"float":"left", "margin":"initial", "margin-left":"40px"});
 				$("#dayDetail").css("display", "none");
+				$(".scheduleBox").css("display", "none");
+				$(".scheduleModiBox").css("display", "none");
+				$("#dayList").css("display", "block");
 				$(".listBox").append("<span class = 'listChk' onclick = 'showDetail("+sch_seq+",\""+val1+"\",\""+val2+"\",\""+val3+"\")'>"+title+"</span><br>");
 			}
 		}
@@ -76,11 +79,11 @@
 		}else{
 			$("#sch_title").text(schedule.dto.projectDto.pr_name+":"+sch_title);
 		}
-		 
-/*		$(".scheduleBox").css("display", "none");*/
-		$("#dayDetail").css("display", "block");
+ 		$("#calendar").css({"float":"left", "margin":"initial", "margin-left":"40px"});
+		$(".scheduleBox").css("display", "none");
 		$(".scheduleModiBox").css("display", "none");
-	/*	$(".listBox").css("display", "block");*/
+		$("#dayList").css("display", "block");
+		$("#dayDetail").css("display", "block");
 	}
 	
 	//일정 삭제
@@ -93,7 +96,6 @@
 	
 	//일정 수정 폼 활성화
 	function goModify(){
-		alert($("#sch_startDate").text());
 		$("#sch_upSeq").val($("#sch_seq").val());
 		$("#sch_upStartDate").val($("#sch_startDate").text().substring(3,13));
 		$("#sch_upStartTime").val($("#sch_startDate").text().substring(14));
@@ -102,6 +104,7 @@
 		$("#sch_upTitle").val($("#sch_title").text());
 		$("#sch_upContent").val($("#sch_content").text());
 		
+		$("#calendar").css({"float":"left", "margin":"initial", "margin-left":"40px"});
 		$(".scheduleModiBox").css("display", "block");
 		$(".scheduleBox").css("display", "none");
 		$("#dayList").css("display", "none");
@@ -112,10 +115,12 @@
 	function openWriteForm(val1, val2, val3){
 		var array = [val1, val2, val3];
 		var day = array.join("-");
-		
+		$("#calendar").css({"float":"left", "margin":"initial", "margin-left":"40px"});
 		$(".scheduleModiBox").css("display", "none");
-		$(".scheduleDetailBox").css("display", "none");
 		$(".scheduleBox").css("display", "block");
+		$("#dayDetail").css("display", "none");
+		$("#dayList").css("display", "none")
+		;
 		$("#sch_newStartDate").val(day);
 		$("#sch_newEndDate").val(day);
 	}
@@ -133,7 +138,7 @@
 			$("#newStartTotal").val(newStartTotal);
 			var newEndTotal = $("#sch_newEndDate").val()+" "+$("#sch_newEndTime").val();
 			$("#newEndTotal").val(newEndTotal);
-			if($("#sch_title").val().length == 0){
+			if($("#sch_newTitle").val().length == 0){
 				alert("일정 제목을 입력해주세요");
 				return false;
 			}

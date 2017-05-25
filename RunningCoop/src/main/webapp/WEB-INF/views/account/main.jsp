@@ -36,17 +36,18 @@
 	<div class = "mainContain">
 		<!-- 로그인 -->
 		<div class = "accountBox">
-		<form class = "loginBox" action="./ckLogin.do" method="post">
+		<form class = "loginBox">
 			<div class = "login">
 				<div class = "idPart">
 					<input type = "text" class = "id" id = "loginId" name = "mem_id" placeholder = "아이디" value = "">
 				</div>
 				<div class = "pwPart">
-					<input type = "password" class = "pw" id = "loginPw" name = "mem_pw" placeholder = "비밀번호" value = "" onKeypress="if(event.keyCode==13) $('.loginBox').submit();">
+					<input type = "password" class = "pw" id = "loginPw" name = "mem_pw" placeholder = "비밀번호" value = "" onKeypress="if(event.keyCode==13) $('#loginBtn').click();">
 				</div>
+				<div class = "loginFail"></div>
 			</div>
 			<div class = "enter">
-				<input type = "submit" class = "accountBtn" id = "loginBtn" value = "로그인" style = "width: 300px; height: 40px; font-size:14pt; border-radius: 4px; background-color: #5cb85c; color: #fff;">
+				<input type = "button" class = "accountBtn" id = "loginBtn" value = "로그인" style = "width: 300px; height: 40px; font-size:14pt; border-radius: 4px; background-color: #5cb85c; color: #fff;" onclick = "doLogin()">
 			</div>
 		</form>
 		<span style = "font-size: 8pt; color: black; text-decoration: underline;" onclick = "searchAccount()">아이디/비밀번호찾기</span>
