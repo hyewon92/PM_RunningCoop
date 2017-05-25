@@ -89,7 +89,7 @@ public class AccountController {
 	@RequestMapping(value = "/enterMgr.do")
 	public String enterMgr(){
 		logger.info("enterMgr실행");
-		return "redirect:/grApply.do";
+		return "sysManage/grApply";
 	}
 	
 	//아이디 찾기(화면이동)
