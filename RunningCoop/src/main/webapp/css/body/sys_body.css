@@ -1,5 +1,7 @@
 @import url(admin/admin_grApply.css);
 @import url(admin/admin_sysBoard.css);
+@import url(admin/admin_Login.css);
+@import url(admin/admin_memMgr.css);
 
 body {
 	overflow: auto;

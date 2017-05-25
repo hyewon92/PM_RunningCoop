@@ -40,6 +40,7 @@
 			<mvc:exclude-mapping path="/groupGoGo.do"/>
 			<mvc:exclude-mapping path="/rcAdmin.do"/>
 			<mvc:exclude-mapping path="/socketOpen.do"/>
+			<mvc:exclude-mapping path="/adminLogin.do"/>
 			<bean class="com.pm.rc.interceptor.LoginCheckInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors> 

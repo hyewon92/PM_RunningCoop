@@ -110,9 +110,9 @@
 				} else {
 					for(var i = 0; i < msg.length; i++){
 						if(msg[i].MEM_ID == '<%=mem_id%>'){
-							$(".mem_list").append("<p>(PM)"+msg[i].MEM_NAME+"</p>");
+							$(".mem_list").append("<p style='line-height: 20px; margin: 3px;'>(PM)"+msg[i].MEM_NAME+"</p>");
 						} else {
-							$(".mem_list").append("<p><input type='checkbox' name='mem_id' value=\""+msg[i].MEM_ID+"\">"+msg[i].MEM_NAME+"</p>");
+							$(".mem_list").append("<p style='line-height: 20px; margin: 3px;'><input type='checkbox' name='mem_id' value=\""+msg[i].MEM_ID+"\">"+msg[i].MEM_NAME+"</p>");
 						}
 					}
 				}
@@ -244,25 +244,26 @@
 				data : "mem_id="+mem_id,
 				async : false,
 				success : function(msg){
-					$("#member_Information").children().remove();
-					$("#member_Information").append("<p> 회원 아이디 : "+msg.MEM_ID+"</p>");
-					$("#member_Information").append("<p> 회원 이름 : "+msg.MEM_NAME+"</p>");
-					$("#member_Information").append("<p> 회원 이메일 : "+msg.MEM_EMAIL+"</p>");
-					$("#member_Information").append("<p> 회원 전화번호 : "+msg.MEM_PHONE+"</p>");
+					$(".mem_info_table").children("td").text("");
+					$("#memInfo_mem_id").text(msg.MEM_ID);
+					$("#memInfo_mem_name").text(msg.MEM_NAME);
+					$("#memInfo_mem_email").text(msg.MEM_EMAIL);
+					$("#memInfo_mem_phone").text(msg.MEM_PHONE);
 					inputbox.attr("checked", false);
 				}
 			})
 			
+			/* 회원의 참여 프로젝트리스트 불러오기 */
 			$.ajax({
 				type : "POST",
 				url : "./view_MemberInfo_2.do",
 				data : "mem_id="+mem_id,
 				async : false,
 				success : function(msg){
-					$("#member_Information").append("<h4>참여 프로젝트 : </h4>")
 					if (msg.length == 0){
-						$("#member_Information").append("<p> 참여한 프로젝트가 없습니다. </p>")
+						$("#memInfo_mem_project").text("참여한 프로젝트가 없습니다.")
 					} else {
+						var text = "";
 						for(var i = 0; i < msg.length; i++){
 							
 							var pr_name = msg[i].PR_NAME;
@@ -277,34 +278,51 @@
 								pr_condition = '진행완료';
 							}
 							
-							$("#member_Information").append("<p><a>"+pr_name+"</a>("+pr_condition+")")
+							text += "<span><a href='#' onclick='projectDetail('"+pr_id+"')'>"+pr_name+"</a>("+pr_condition+")</span></br>";
 						}
+							$("#memInfo_mem_project").html(text);
+							
+							$("#member_Information").css("display","block");
+							$("#member_Information").dialog({
+								title : "회원 정보 보기",
+								height : 400,
+								width : 500,
+								position : {my : "center", at : "center"},
+								resizable : false,
+								modal : true
+							});
 					}
 				}
 			})
+			
 		}
 	}
 	
 	<% String gr_id = (String)session.getAttribute("gr_id"); %>
 	// 프로젝트 해체 기능
 	function project_delete(){
-		var pr_id = $("#pr_id").val();
 		
-		$.ajax({
-			type : "POST",
-			url : "./project_Delete.do",
-			data : "pr_id="+pr_id,
-			async : false,
-			success : function(msg){
-				if(msg == "success"){
-					alert("프로젝트 삭제 성공");
-					location.href= "./gProSelect.do?gr_id="+"<%=gr_id%>";
-				} else {
-					alert("프로젝트 삭제 실패");
-					location.reload();
+		var deleteYn = confirm("프로젝트를 삭제하시겠습니까?");
+		
+		if(deleteYn){
+			var pr_id = $("#pr_id").val();
+			
+			$.ajax({
+				type : "POST",
+				url : "./project_Delete.do",
+				data : "pr_id="+pr_id,
+				async : false,
+				success : function(msg){
+					if(msg == "success"){
+						alert("프로젝트 삭제 성공");
+						location.href= "./gProSelect.do?gr_id="+"<%=gr_id%>";
+					} else {
+						alert("프로젝트 삭제 실패");
+						location.reload();
+					}
 				}
-			}
-		})
+			})
+		}
 	}
 	
 </script>
@@ -368,18 +386,49 @@
 			<input type="button" value="수정" class="body_btn pr_info_edit_btn" onclick="projectEdit()"/>
 		</div>
 		<div class = "mem_manage">
-			<div class = "mem_manage_con" id = "mem_list">
-				프로젝트 멤버 리스트<br/><br/>
-				<div class="mem_list"></div>
+			<div class = "member_manage_area">
+				<h4>프로젝트 멤버 관리</h4>
+				<div class = "mem_manage_list">
+					<div>프로젝트 멤버 리스트</div>
+					<div class="mem_list"></div>
+					<div class="pro_mem_con">
+						<input type="button" value="멤버 삭제" onclick="delete_mem()"/>
+						<input type="button" value="담당자 위임" onclick="commission_mem()"/>
+					</div>
+				</div>
+				<div class = "mem_invite_list">
+					<div>초대가능한 멤버 리스트</div>
+					<div id = "invitable_Memlist">
+					</div>
+				</div>
+				<div class="invite_mem_con">
+					<input type="button" value="멤버 초대" onclick="invite_memList()"/><br/>
+					<input type="button" value="멤버 정보 보기" onclick="view_meminfo()"/>
+				</div>
+				<div id = "member_Information" style="display: none;">
+					<table class="mem_info_table">
+						<tr>
+							<th>회원 아이디</th>
+							<td id="memInfo_mem_id"></td>
+						</tr>
+						<tr>
+							<th>회원 이름</th>
+							<td id="memInfo_mem_name"></td>
+						</tr>
+						<tr>
+							<th>회원 이메일</th>
+							<td id="memInfo_mem_email"></td>
+						</tr>
+						<tr>
+							<th>회원 전화번호</th>
+							<td id="memInfo_mem_phone"></td>
+						</tr>
+						<tr>
+							<th>참여 프로젝트</th>
+							<td id="memInfo_mem_project"></td>
+					</table>
+				</div>
 			</div>
-			<div class="mem_manage_con" id = "mem_control" >
-				<input type="button" value="멤버 초대" onclick="invite_memList()"/><br>
-				<input type="button" value="멤버 삭제" onclick="delete_mem()"/><br>
-				<input type="button" value="담당자 위임" onclick="commission_mem()"/><br>
-				<input type="button" value="멤버 정보 보기" onclick="view_meminfo()"/>
-			</div>
-			<div id = "invitable_Memlist"></div>
-			<div id = "member_Information"></div>
 		</div>
 		<div class = "calendar_manage">
 			<div>
