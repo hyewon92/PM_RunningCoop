@@ -13,12 +13,14 @@
 <link rel="stylesheet" href="css/body/user_account.css" type="text/css"/>
 <style type="text/css">
 	#calendar{
-	    float: left;
-	    margin-left: 50px;
+	    /*  float: left;
+	   	margin-left: 50px; */
+	  	
+	  	margin: auto;
 	    display:block;
 	    .border-box;
 	    background:white;
-	    width:650px;
+	    width:650px; 
 	    border:solid 1px #CCC;
 	    margin-bottom:10px;
 	}
@@ -45,11 +47,22 @@
 	
 	#calendar td {
 		background:white;
+		width: 92px;
 		height: 80px;
+		padding: 0px;
 		vertical-align: top;
 		text-align: left;
 		font-size: 10pt;
 		border: 1px solid transparent;
+	}
+	
+	.calendar_list{
+		font-size: 8pt;
+		width: 88px;
+		height: 50px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 	}
 	
 	a {
@@ -75,22 +88,12 @@
 		background: white;
 	}
 	
-	/* .scheduleDetailBox {
-		border: 1px solid gray;
-		border-collapse: collapse;
-		display : none;
-	} */
-	
 	.scheduleBox, .scheduleModiBox {
-/* 		border: 1px solid gray;
-		border-collapse: collapse; */
 		width: 300px;
 		display: none;
 	}
 	
 	#dayList{
-/* 		border-collapse: collapse;
-		width: 200px; */
 		width: 300px;
 		display: inline-block;
 		float: left;
@@ -101,6 +104,15 @@
 		display : none;
 		width: 300px;
 		float: right;
+	}
+	
+	.scheduleBtn{
+		border-radius: 4px; 
+		border: 1px solid transparent; 
+		background-color: #5cb85c; 
+		color: #fff;
+		margin-top: 5px;
+		margin-bottom: 3px;
 	}
 </style>
 
@@ -142,19 +154,18 @@
 		for(ScheduleDto dto:lists){
 			System.out.println(dto);
 			String title = dto.getSch_title();
-			String event = "<span class = 'listChk' onclick = 'showDetail("+dto.getSch_seq()+",\""+s_year+"\",\""+s_month+"\",\""+s_day+"\")'>[조회]</span><br>";
 			
 			int startDate = Integer.parseInt(dto.getSch_startDate().substring(6, 8));
 			int endDate = Integer.parseInt(dto.getSch_endDate().substring(6, 8));
 			if(dto.getSch_startDate().substring(0, 6).equals(date)&&dto.getSch_endDate().substring(0, 6).equals(date)&&startDate<=day&&day<=endDate){
-				System.out.println(dto.getSch_startDate()+":"+dto.getSch_title());
-				if(dto.getSch_prosYN().equals("Y")){
-					title = dto.getProjectDto().getPr_name()+":"+title;
-				}
-				if(title.length()>6){
+/* 				if(title.length()>6){
 					title = title.substring(0, 6)+"..";
+				} */
+				if(dto.getSch_prosYN().equals("Y")){
+					title = "<img src = 'images/pIcon.png' alt = '프로젝트일정' style = 'width: 15px; height: 15px;'>"+ dto.getProjectDto().getPr_name()+":"+title;
 				}
-				result += title+event+"\n";
+				String event = "<span class = 'listChk' onclick = 'showDetail("+dto.getSch_seq()+",\""+s_year+"\",\""+s_month+"\",\""+s_day+"\")'>"+title+"</span><br>";
+				result += event+"\n";
 			}
 		}
 		return result;
@@ -228,6 +239,7 @@
 			<th>목</th>
 			<th>금</th>
 			<th>토</th>
+		</tr>
 		<tr>
 			<%
 				//매 달 1일 시작 전 공백 채우기
@@ -242,7 +254,7 @@
 				<% String s_i = dateForm(String.valueOf(i)); %> 
 				<%=schWrite(year, s_month, s_i)%>
 				<span class = "dailyList" onclick = "dailyList('<%=year%>', '<%=s_month%>', '<%=s_i%>')"><%=i %></span>
-				<div id="list"><%=schListView(year, month, i, lists) %></div></td>
+				<div class="calendar_list"><%=schListView(year, month, i, lists) %></div></td>
 			<%
 					//토요일이 되면 줄바꿈
 					if((i+dayOfWeek-1)%7==0){
@@ -268,6 +280,9 @@
 		<div class="scheduleDetailBox">
 			<!-- 지정일 리스트 -->
 			<div class = "rowGroup" id = "dayList">
+				<div class = "join_row" style = "text-align: left; background-color: #5cb85c">
+					<span style = "font-weight: bold; color: white;">일정 리스트</span>
+				</div>
 				<div class = "join_row" style = "border-bottom: none;">
 					<div class = "listBox">
 					</div>
@@ -292,65 +307,81 @@
 							<td class = "join_row" id="sch_content" style = "width:100%;"></td>
 						</tr>
 					</table>
-					<div>
-						<input type="button" value="수정" onclick="goModify()"> 
-						<input type="button" value="삭제" onclick="goDelete()">
+					<div style = "float: right;">
+						<img src = 'images/project/wcom_edit_btn.png' alt = '일정수정' style = 'width: 15px; height: 15px; margin-right:10px;' onclick="goModify()"> 
+						<img src = 'images/schDelete.png' alt = '일정삭제' style = 'width: 15px; height: 15px; margin-right:10px;' onclick="goDelete()">
 					</div>
 				</div>
 			</div>
 		</div>
 		
 		
-	<!-- 일정 수정 부분 -->
-	<form class=" row Group scheduleModiBox" action="./modifySchedule.do" method="post">
-		<div>
-			<input type = "hidden" id = "sch_upSeq" name = "sch_seq"> 
-			<input type = "hidden" name = "mem_id" value = <%=mem_id%>>
-			<div style = "padding-bottom: 5px;">
-				<span style = "font-size:10pt; display: inline-block; float: left; margin-right: 3px;">시작 </span>
-				<input type = "date" class = "join_row" id = "sch_upStartDate" style = "width:130px; height: 30px; display: inline-block; padding: 0px;">
-				<input type = "time" class = "join_row" id = "sch_upStartTime" style = "width:130px; height: 30px; display: inline-block; padding: 0px;">
-				<input type = "hidden" name = "sch_startDate"> ~ 
+		<!-- 일정 수정 부분 -->
+		<form class=" rowGroup scheduleModiBox" action="./modifySchedule.do" method="post">
+			<div>
+				<input type = "hidden" id = "sch_upSeq" name = "sch_seq"> 
+				<input type = "hidden" name = "mem_id" value = <%=mem_id%>>
+				<div class = "join_row" style = "text-align: left; background-color: #5cb85c">
+					<span style = "font-weight: bold; color: white;">일정 수정</span>
+				</div>
+				<div class = "join_row" style = "width: 100%;">
+					<span style = "font-size:10pt; display: inline-block; float: left; margin-right: 3px;">시작 </span><br>
+					<input type = "date" class = "join_row" id = "sch_upStartDate" style = "width:130px; height: 30px; display: inline-block; padding: 0px;">
+					<input type = "time" class = "join_row" id = "sch_upStartTime" style = "width:130px; height: 30px; display: inline-block; padding: 0px;">
+					<input type = "hidden" id = "upStartTotal" name = "sch_startDate"> 
+				</div>
+				<div class = "join_row" style = "width: 100%;">
+					<span style = "font-size:10pt; display: inline-block; float: left;">종료</span><br>
+					<input type = "date" class = "join_row" id = "sch_upEndDate" style = "width:130px; height: 30px; display: inline-block; padding: 0px;">
+					<input type = "time" class = "join_row" id = "sch_upEndTime" style = "width:130px; height: 30px; display: inline-block; padding: 0px;">
+					<input type = "hidden" id = "upEndTotal" name = "sch_endDate"> 
+				</div>
+				<div class = "join_row" style = "width: 100%;">
+				<span style = "font-size:10pt; display: inline-block; float: left;">제목</span><input type = "text" id = "sch_upTitle" name = "sch_title" style = "width:250px; height: 30px;"> 
+				</div>
+				<div class = "join_row" style = "width: 100%;">
+				<span style = "font-size:10pt; display: inline-block; float: left;">내용</span><input type = "text" id = "sch_upContent" name="sch_content" style = "width:250px; height: 30px;"> 
+				</div>
 			</div>
-			<div style = "padding-bottom: 5px;">
-				<span style = "font-size:10pt; display: inline-block; float: left;">종료</span>
-				<input type = "date" class = "join_row" id = "sch_upEndDate" style = "width:130px; height: 30px; display: inline-block; padding: 0px;">
-				<input type = "time" class = "join_row" id = "sch_upEndTime" style = "width:130px; height: 30px; display: inline-block; padding: 0px;">
-				<input type = "hidden" id = "upEndTotal" name = "sch_endDate"> 
+			<div>
+				<input type="submit" class = "scheduleBtn" value="수정">
 			</div>
-			<div style = "padding-bottom: 5px;">
-			<span style = "font-size:10pt; display: inline-block; float: left;">제목</span><input type = "text" id = "sch_upTitle" name = "sch_title" style = "width:250px; height: 30px;"> 
+		</form>	
+		
+		<!-- 일정 등록 부분 -->
+		<form class=" rowGroup scheduleBox" action="./insertSchedule.do" method="post">
+			<div>
+				<input type = "hidden" name = "mem_id" value = <%=mem_id%>> 
+				<div class = "join_row" style = "text-align: left; background-color: #5cb85c">
+					<span style = "font-weight: bold; color: white;">일정 등록</span>
+				</div>
+				<div class = "join_row" style = "width: 100%;">
+					<span style = "font-size:10pt; display: inline-block; float: left; margin-right: 3px;">시작 </span><br>
+					<input type = "date" class = "join_row" id = "sch_newStartDate" style = "width:130px; height: 30px; display: inline-block; padding: 0px;">
+					<input type = "time" class = "join_row" id = "sch_newStartTime" style = "width:130px; height: 30px; display: inline-block; padding: 0px;">
+					<input type = "hidden" id = "newStartTotal" name = "sch_startDate">
+				</div>
+				<div class = "join_row" style = "width: 100%;">
+					<span style = "font-size:10pt; display: inline-block; float: left;">종료</span><br>
+					<input type = "date" class = "join_row" id = "sch_newEndDate" style = "width:130px; height: 30px; display: inline-block; padding: 0px;">
+					<input type = "time" class = "join_row" id = "sch_newEndTime" style = "width:130px; height: 30px; display: inline-block; padding: 0px;">
+					<input type = "hidden" id = "newEndTotal" name = "sch_endDate"> 
+				</div>
+				<div class = "join_row" style = "width: 100%;">
+				<span style = "font-size:10pt; display: inline-block; float: left;">제목</span><input type = "text" id = "sch_newTitle" name = "sch_title" style = "width:250px; height: 30px;"> 
+				</div>
+				<div class = "join_row" style = "width: 100%;">
+				<span style = "font-size:10pt; display: inline-block; float: left;">내용</span><input type = "text" id = "sch_newContent" name="sch_content" style = "width:250px; height: 30px;"> 
 			</div>
-			<div><span style = "font-size:10pt; display: inline-block; float: left;">내용</span><input type = "text" id = "sch_upContent" name="sch_content" style = "width:250px; height: 30px;"> </div>
-		</div>
-		<div>
-			<input type="submit" value="수정">
-		</div>
-	</form>	
-	
-	
-	
+			<div>
+				<input type="submit" class = "scheduleBtn" value="등록">
+			</div>
+		</form>
 	
 	
 	</div>
 
-	<!-- 일정 등록 부분 -->
-	<form class="scheduleBox" action="./insertSchedule.do" method="post">
-		<div>
-			<input type = "hidden" name = "mem_id" value = <%=mem_id%>> 
-			시작 <input type = "date" id = "sch_newStartDate"> 
-			<input type = "time" id = "sch_newStartTime"> 
-			<input type = "hidden" id = "newStartTotal" name = "sch_startDate"> ~ 
-			종료<input type = "date" id = "sch_newEndDate"> 
-			<input type = "time" id = "sch_newEndTime">
-			<input type = "hidden" id = "newEndTotal" name = "sch_endDate"> <br>
-			제목:<input type = "text" name = "sch_title"><br> 
-			내용:<input type = "text" name = "sch_content">
-		</div>
-		<div>
-			<input type="submit" value="등록">
-		</div>
-	</form>
+</div>
 <div id = "footer">
 	<jsp:include page="../footer.jsp" flush="false"/>
 </div>

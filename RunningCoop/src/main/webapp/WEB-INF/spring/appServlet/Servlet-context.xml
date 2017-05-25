@@ -14,7 +14,7 @@
 	<!-- 3. annotation으로 Controller탐색 -->
 	<mvc:annotation-driven />
 	<!-- intercepter설정(controller실행 전이나 후에 실행 될 intercepter 로직 class 지정 -->
-	<!-- <mvc:interceptors>
+	 <mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/*.do"/>
 			<mvc:exclude-mapping path="/loginAfter.do"/>
@@ -22,6 +22,7 @@
 			<mvc:exclude-mapping path="/memIdSelect.do"/>
 			<mvc:exclude-mapping path="/memEmailSelect.do"/>
 			<mvc:exclude-mapping path="/ckLogin.do"/>
+			<mvc:exclude-mapping path="/enterMgr.do"/>
 			<mvc:exclude-mapping path="/searchAccount.do"/>
 			<mvc:exclude-mapping path="/searchId.do"/>
 			<mvc:exclude-mapping path="/searchPw.do"/>
@@ -41,7 +42,7 @@
 			<mvc:exclude-mapping path="/socketOpen.do"/>
 			<bean class="com.pm.rc.interceptor.LoginCheckInterceptor" />
 		</mvc:interceptor>
-	</mvc:interceptors> -->
+	</mvc:interceptors> 
 
 	<!-- 9. 화면 resolver 설정 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

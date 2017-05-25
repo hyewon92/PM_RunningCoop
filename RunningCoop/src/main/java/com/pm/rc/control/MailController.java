@@ -36,15 +36,13 @@ public class MailController {
 	@Autowired
 	private AccountService accountService;
 	
-	@RequestMapping(value = "/searchPwMail.do", method = RequestMethod.GET)
-	public String pwMail(Model model){
-		return "account/pwMail";	//메일form jsp
-	}
-	
 	//비밀번호 발급 mailSending
 	@RequestMapping(value = "/pwMailSending.do")
-	public String pwMailSending(Model model, HttpServletRequest req){
+	@ResponseBody
+	public Map<String, Boolean> pwMailSending(Model model, HttpServletRequest req){
 		logger.info("mailSending 실행");
+		
+		Map<String, Boolean> resultMap = new HashMap<String, Boolean>();
 		
 		//임시비밀번호 생성
 		String random = UUID.randomUUID().toString().replace("-", "");
@@ -61,23 +59,11 @@ public class MailController {
 		map.put("mem_pw", mem_pw);
 		map.put("mem_email", toMail);
 		boolean isc = accountService.memPwModify(map);
-		if(isc==false){
-			return "account/error/error";
-		}else{
-			try{
-				MimeMessage message = mailSender.createMimeMessage();
-				MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-				messageHelper.setFrom(setFrom);
-				messageHelper.setTo(toMail);
-				messageHelper.setSubject(title);
-				messageHelper.setText(content);
-				mailSender.send(message);
-			}catch(Exception e){
-				System.out.println(e);
-			}
-			return "redirect:/searchPwMail.do";
+		if(isc==true){
+			useMailSender(toMail, title, content);
 		}
-		
+		resultMap.put("pwMail", isc);
+		return resultMap;
 	}
 	
 	//본인인증 mailSending
@@ -97,7 +83,31 @@ public class MailController {
 		//회원(수신자)정보
 		String title = "<RunningCoop> "+mem_name+"님 본인인증 번호입니다";
 		String content = "인증번호: "+random+"\n 시간 내에 입력 해주시기 바랍니다.(시간 초과 시 초기화 됨)";
+
+		useMailSender(toMail, title, content);
+	}
+	
+	
+	//그룹초대
+	@RequestMapping(value="/groupSend.do")
+	public String groupSend (){
+		return "Group/groupMailSend";
+	}
+	@RequestMapping(value="/goGroupMail.do" )
+	public String goGroupMail(String toSend , Model model){
+		//회원(수신자)정보
+				String toMail = toSend;
+				String title = "<RunningCoop>으로 초대합니다";
+				String content = "그룹 ID 로 초대합니다";
+
+				useMailSender(toMail, title, content);
+				String result = "ture";
+				model.addAttribute("rst",result);
 		
+	 	return "Group/groupMailSend";
+	}
+	
+	public void useMailSender(String toMail, String title, String content){
 		try{
 			MimeMessage message = mailSender.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
@@ -110,33 +120,5 @@ public class MailController {
 			System.out.println(e);
 		}
 	}
-	
-	@RequestMapping(value="/groupSend.do")
-	public String groupSend (){
-		return "Group/groupMailSend";
-	}
-	@RequestMapping(value="/goGroupMail.do" )
-	public String goGroupMail(String toSend , Model model){
-		//회원(수신자)정보
-				String toMail = toSend;
-				String title = "<RunningCoop>으로 초대합니다";
-				String content = "그룹 ID 로 초대합니다";
-				try{
-					MimeMessage message = mailSender.createMimeMessage();
-					MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-					messageHelper.setFrom(setFrom);
-					messageHelper.setTo(toMail);
-					messageHelper.setSubject(title);
-					messageHelper.setText(content);
-					mailSender.send(message);
-				}catch(Exception e){
-					System.out.println(e);
-				}
-				String result = "ture";
-				model.addAttribute("rst",result);
-		
-	 	return "Group/groupMailSend";
-	}
-	
 	
 }

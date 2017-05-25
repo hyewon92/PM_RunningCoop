@@ -81,7 +81,7 @@
 				alert("숫자형식으로 3~4자씩 최대 11자리 입력해주세요");
 				return false;
 			}
-			if(!$("#upPw").val()||!$("#upPw2").val()||!$("#upName").val()||!$("upEmail").val()||!$("#upPhone").val()){
+			if(!$("#upPw").val()||!$("#upPw2").val()||!$("#upName").val()||!$("#upEmail").val()||!$("#upPhone").val()){
 				alert("모두 입력해주세요");
 				return false;
 			}
@@ -103,6 +103,14 @@
 		$(".modifyBox").css("display", "block");	
 		$(".leaveBox").css("display", "none");	
 	}
+	
+	function goListPm(){
+		location.href = "./viewListPm.do";
+	}
+	
+	function goListGm(){
+		location.href = "./viewListGm.do";
+	}
 </script>
 </head>
 <body>
@@ -121,7 +129,7 @@
 				<div class = "rowGroup" style = "border-bottom: none;">
 					<div class = "join_row" style = "margin-bottom: 5px;"><span class = "upSpan">아이디: </span><input type = "text" class = "int" id = "upId" name = "mem_id" value = "${dto.getMem_id()}" readonly="readonly" style = "width:80%; font-size:12pt;"></div>
 					<div class = "join_row" style = "margin-bottom: 5px;"><span class = "upSpan">비밀번호: </span><input type = "password" class = "int" id = "upPw" name = "mem_pw" value = "${dto.getMem_pw() }"  style = "width:50%; font-size:12pt;"></div>
-					<div class = "join_row" style = "margin-bottom: 5px;"><span class = "upSpan">비밀번호 재확인: </span><input type = "password" class = "int" id = "upPw2" style = "width:50%; font-size:12pt;"><input type = "button" value = "확인" onclick = "pw_chk()" ></div>
+					<div class = "join_row" style = "margin-bottom: 5px;"><span class = "upSpan">비밀번호 재확인: </span><input type = "password" class = "int" id = "upPw2" style = "width:50%; font-size:12pt;"><input type = "button" class = "accountBtn" value = "확인" onclick = "pw_chk()" ></div>
 				</div>
 				<div class = "rowGroup" style = "border-bottom: none;">
 					<div class = "join_row" style = "margin-bottom: 5px;"><span class = "upSpan">이름: </span><input type = "text" class = "int" id = "upName" name = "mem_name" value = "${dto.getMem_name() }" style = "width:80%; font-size:12pt;"></div>
@@ -133,7 +141,7 @@
 					<input type = "submit" class = "accountBtn" id = "modifyInfo" value = "수정" style = "width: 450px; height: 40px; font-size:14pt; border-radius: 4px; background-color: #5cb85c; color: #fff;">
 				</div>
 			</form>
-			<form class = "leaveBox" action="./memInfoModify.do" method="post">
+			<form class = "leaveBox" action="./leaveService.do" method="post">
 				<div class = "rowGroup" style = "margin-top: 15%; padding: 20px;">
 					<div style = "overflow: hidden">
 						<img alt="본인인증안내" src="images/exclamation.png" style = "width: 30px; height: 30px;">
@@ -143,7 +151,7 @@
 					<input type = "button" class = "leaveBtn" value = "그룹관리자 위임하기" onclick = "goListGm()">
 				</div>
 				<div class = "enter">
-					<input type = "submit" class = "accountBtn" id = "modifyInfo" value = "탈퇴하기" onclick = "location.href='./leaveService.do'" style = "width: 450px; height: 40px; margin-top:10%; font-size:14pt; border-radius: 4px; background-color: #5cb85c; color: #fff;">
+					<input type = "submit" class = "accountBtn" id = "leaveService" value = "탈퇴하기" style = "width: 450px; height: 40px; margin-top:10%; font-size:14pt; border-radius: 4px; background-color: #5cb85c; color: #fff;">
 				</div>
 			</form>
 		</div>
