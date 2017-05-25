@@ -62,9 +62,6 @@ cursor: pointer;}
 </script>
 </head>
 <body>
-<div id = "header">
-	<jsp:include page="../header.jsp" flush="false"/>
-</div>
 <div id="container">
 		<h1>그룹 멤버 리스트</h1>
 	<table>
@@ -96,8 +93,5 @@ cursor: pointer;}
 		<h1>그룹 해체</h1>
 		<input type="button" value="그룹 해체" onclick="groupBye()">
 </div>
-	<div id = "footer">
-		<jsp:include page="../footer.jsp" flush="false"/>
-	</div>
 </body>
 </html>

@@ -86,6 +86,13 @@ public class sysManagerController {
 
 			return "Group/grCreateInformation";
 		}
+		
+		@RequestMapping(value="/groupInfo.do", method=RequestMethod.POST)
+		@ResponseBody
+		public List<GroupDto> groupSelectInfoChild (String gr_id){
+			List<GroupDto> lists = service.grApplyInfoView(gr_id);
+			return lists;
+		}
 
 		// 공지 게시판 관리 페이지 이동
 		@RequestMapping(value="/sysNoticeMgr.do", method={RequestMethod.GET,RequestMethod.POST})

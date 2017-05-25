@@ -157,21 +157,20 @@ public class GroupController implements ServletConfigAware {
 	}
 	// 멤버 관리 화면
 	@RequestMapping(value="/memModi.do" , method={RequestMethod.GET,RequestMethod.POST})
-	@ResponseBody
-	public List<MemberDto> grMemSelect(String gr_id) {
+	public String grMemSelect(String gr_id,Model model) {
 		System.out.println("------------------"+gr_id);
 		logger.info("그룹멤버리스트 출력");
 		List<MemberDto> lists = service.grMemSelect(gr_id);
-//		model.addAttribute("memList",lists);
-//		model.addAttribute("grid",gr_id);
-//		List<MemberDto> lists2 = service.grWaitList(gr_id);
-//		model.addAttribute("grWait" , lists2);
+		model.addAttribute("memList",lists);
+		model.addAttribute("grid",gr_id);
+		List<MemberDto> lists2 = service.grWaitList(gr_id);
+		model.addAttribute("grWait" , lists2);
 		
-		return lists;
+		return "Group/memModify";	
 	}	
 
 	// 그룹 가입신청화면으로 연결
-@RequestMapping(value="/grListChild.do" , method=RequestMethod.GET)
+	@RequestMapping(value="/grListChild.do" , method=RequestMethod.GET)
 	public String test (HttpServletRequest req , Model model){
 		logger.info("그룹리스트 에서 ");
 		model.addAttribute("grid", req.getParameter("gr_id"));
@@ -243,7 +242,7 @@ public class GroupController implements ServletConfigAware {
 	//그룹 생성으로 연결합니다
 	@RequestMapping(value="/showGrCreate.do")
 	public String groupCreateChilde(){
-		return "Group/grCreate";
+		return "redirect:/myGrSelect.do";
 	}
 	
 	// 그룹 생성시작

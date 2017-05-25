@@ -25,7 +25,7 @@ String gr_id = (String)session.getAttribute("gr_id");
 <script type="text/javascript">
 var openwin;
 	function openChild(val){
-		var grid = 	$("#selectGrid").val();
+		var grid = 	$(val).text();
 		alert(grid);
 		var userid = "<%=mem_id%>";
 			$.ajax({
@@ -107,9 +107,12 @@ var openwin;
 					<td id="gr_name">${dtos.gr_name}</td>
 					<td>${dtos.memberdto.mem_name}</td>
 					<td>${dtos.gr_regDate }</td>
-					<td>${dtos.gr_id }<input type="hidden" value="${dtos.gr_id }" id="selectGrid"></td>
+					<td>${dtos.gr_id }</td>
 					<c:if test="${ fn:contains(dtos.gr_joinYN, 'Y') == true }">
-						<td><input type="button" value="가입신청" onclick="openChild(this)"/></td>
+						<td>
+						<input type="hidden" value="${dtos.gr_id }">
+						<input type="button" value="가입신청" onclick="openChild(this)"/>
+						</td>
 					</c:if>
 					<c:if test="${ fn:contains(dtos.gr_joinYN, 'N') == true }">
 						<td>가입불가</td>

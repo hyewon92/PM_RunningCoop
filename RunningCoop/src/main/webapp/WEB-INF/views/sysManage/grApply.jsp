@@ -6,11 +6,13 @@
 <html>
 <head>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript">
 	function cheakAll(all) {
 		var box = document.getElementsByName("gr_id");
-
+		alert(all);
 		for (var i = 0; i < box.length; i++) {
 			box[i].checked = all;
 		}
@@ -18,21 +20,69 @@
 	
 	function doApply() {
 		$("#groupApply").submit(function() {
+			
+			var box = document.getElementsByName("gr_id");
+			var chk = 0;
+			for (var i = 0; i < box.length; i++) {
+				if(box[i].checked==true){
+					chk = chk + 1 ;
+				}
+			}
+			if(chk==0){
+				alert("1개 이상 선택하시오");				
+				return false;	
+			}else{
 			$(this).attr("action", "grApplyYse.do");
+			}
 		});
 	}
 	
 	function doReject() {
 		$("#groupApply").submit(function() {
+			
+			var box = document.getElementsByName("gr_id");
+			var chk = 0;
+			for (var i = 0; i < box.length; i++) {
+				if(box[i].checked==true){
+					chk = chk + 1 ;
+				}
+			}
+			if(chk==0){
+				alert("1개 이상 선택하시오");				
+				return false;	
+			}else{
 			$(this).attr("action", "grApplyNo.do");
+			}
 		});
 	}
 	
 	function groupDetaildOpen(grid) {
 		var gr_id = $(grid).parent().siblings().eq(0).find("input[name=gr_id]").val();
+			$.ajax({
+				type : "POST",
+				url : "./groupInfo.do",
+				data : "gr_id="+gr_id,
+				async : false,
+				success : function(data){
+					$("#gr_name").text(data[0].GR_NAME);
+					$("#mem_name").text(data[0].MEM_NAME);
+					$("#gr_goal").text(data[0].GR_GOAL);
+					$("#gr_regdate").text(data[0].GR_REGDATE);
+					
+					$(".pr_detail_view").css("display", "block");
+					$(".pr_detail_view").dialog({
+						title : "개인 프로젝트 생성",
+						height : 300,
+						width : 700,
+						position : {my : "center", at : "center"},
+						resizable : false,
+						modal : true,
+					});
+				}
+			});
 
-		window.open("./groupInfoChild.do?gr_id=" + gr_id, "InfoChild",
-				"width=570, height=350, resizable = no, scrollbars = no");
+// 		window.open("./groupInfoChild.do?gr_id=" + gr_id, "InfoChild",
+// 				"width=570, height=350, resizable = no, scrollbars = no");
 	}
 </script>
 <style type="text/css">
@@ -48,7 +98,9 @@
 		<jsp:include page="../sysHeader.jsp" flush="false" />
 	</div>
 	<div id="sys_container">
+
 		<div id="mgr_Container">
+			<h1>그룹 승인 관리</h1>
 			<form id="groupApply" action="" method="post">
 				<table>
 					<tr>
@@ -80,6 +132,26 @@
 					<input type="submit" value="그룹검색" />
 				</div>
 			</form>
+		</div>
+		<div class="pr_detail_view">
+			<table class="pr_detail_table">
+				<tr>
+					<td>그룹명</td>
+					<td id="gr_name"></td>
+				</tr>
+				<tr>
+					<td>그룹관리자</td>
+					<td id="mem_name"></td>
+				</tr>
+				<tr>
+					<td>그룹생성목적</td>
+					<td id="gr_goal"></td>
+				</tr>
+				<tr>
+					<td>신청일자</td>
+					<td id="gr_regdate"></td>
+				</tr>			
+			</table>
 		</div>
 	</div>
 	
