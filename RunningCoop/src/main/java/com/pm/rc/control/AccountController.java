@@ -39,7 +39,8 @@ public class AccountController {
 
 	//로그인 체크
 	@RequestMapping(value = "/ckLogin.do", method = RequestMethod.POST)
-	public String ckLogin(HttpServletRequest req, HttpSession session){
+	@ResponseBody
+	public Map<String, String> ckLogin(HttpServletRequest req, HttpSession session){
 		logger.info("ckLogin실행");
 		String mem_id = (String)req.getParameter("mem_id");
 		String mem_pw = (String)req.getParameter("mem_pw");
@@ -48,7 +49,27 @@ public class AccountController {
 		map.put("mem_pw", mem_pw);
 		MemberDto dto = new MemberDto();
 		dto = accountService.loginPro(map);
-		if(dto == null){
+		
+		String result = null;
+		if(dto != null){
+			if(dto.getMem_level().equals("Y")){
+				session.setAttribute("mem_id", dto.getMem_id());
+				session.setAttribute("mem_name", dto.getMem_name());
+				session.setAttribute("mem_level", dto.getMem_level());
+				result = "mgr";
+			//	return "sysManage/grApply";
+			} else{
+				session.setAttribute("mem_id", dto.getMem_id());
+				session.setAttribute("mem_name", dto.getMem_name());
+				result = "user";
+			//	return "redirect:/myGrSelect.do?mem_id="+dto.getMem_id();
+			}
+		}
+		
+		Map<String, String> resultMap = new HashMap<String, String>();
+		resultMap.put("login", result);
+		return resultMap;
+/*		if(dto == null){
 			return "account/error/error";
 		}else{
 			if(dto.getMem_level().equals("Y")){
@@ -61,26 +82,16 @@ public class AccountController {
 				session.setAttribute("mem_name", dto.getMem_name());
 				return "redirect:/myGrSelect.do?mem_id="+dto.getMem_id();
 			}
-		}
-	}
-
-
-		/*//그룹 검색 쿼리 추가해야 함
-		if(dto == null){
-			return "account/error/error";
-		}else{
-			if(dto.getMem_level().equals("Y")){
-				session.setAttribute("mem_id", dto.getMem_id());
-				session.setAttribute("mem_name", dto.getMem_name());
-				session.setAttribute("mem_level", dto.getMem_level());
-				return "sysManage/grApply";
-			} else {
-				session.setAttribute("mem_id", dto.getMem_id());
-				session.setAttribute("mem_name", dto.getMem_name());
-				return "account/loginAfter";
-			}
 		}*/
-
+	}
+	
+	//시스템관리자 접속
+	@RequestMapping(value = "/enterMgr.do")
+	public String enterMgr(){
+		logger.info("enterMgr실행");
+		return "redirect:/grApply.do";
+	}
+	
 	//아이디 찾기(화면이동)
 	@RequestMapping(value = "/searchAccount.do")
 	public String searchAccount(){
@@ -103,23 +114,7 @@ public class AccountController {
 		resultMap.put("resultId", id);
 		return resultMap;
 	}
-
-	//비밀번호찾기(화면 이동)
-	@RequestMapping(value = "/searchPw.do")
-	public String searchPw(){
-		logger.info("searchPw 실행");
-		return "account/searchPw";
-	}
-
-	//비밀번호찾기
-	@RequestMapping(value = "/resultPw.do", method = RequestMethod.POST)
-	public String resultPw(HttpServletRequest req){
-		logger.info("resultPw 실행");
-		String title = req.getParameter("mem_id");
-		String toMail = req.getParameter("mem_email");
-		return "redirect:/pwMailSending.do?title="+title+"&toMail="+toMail;
-	}
-
+	
 	//로그아웃
 	@RequestMapping(value = "/ckLogout.do", method = RequestMethod.GET)
 	public String ckLogout(HttpSession session){
