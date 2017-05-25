@@ -270,5 +270,10 @@ public class GroupDaoImp implements GroupDao{
 		int n = sqlSession.selectOne(NAMESPACE+"groupImg",gr_id);
 		return n;
 	}
+	
+	@Override
+	public Map<String, String> groupManagerSearch(Map<String, String> map){
+		return sqlSession.selectOne(NAMESPACE+"groupManagerSearch", map);
+	};
 
 }

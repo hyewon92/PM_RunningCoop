@@ -22,4 +22,10 @@ public class SubFunctionController {
 
 		return "redirect:/myGrSelect.do?mem_id="+mem_id;
 	}
+	
+	// 개발자 정보 보기 화면으로 이동
+	@RequestMapping(value="/developerInfo.do")
+	public String goDeveloperInfo(){
+		return "developerInfo";
+	}
 }

@@ -251,4 +251,8 @@
 	<select id="groupImg" parameterType="java.lang.String" resultType="java.lang.Integer">
 	SELECT GR_IMG FROM RC_GROUP WHERE GR_ID = #{gr_id}
 	</select>
+	
+	<select id="groupManagerSearch" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT GR_LEVEL FROM RC_GROUPMEM WHERE GR_ID = #{gr_id} AND MEM_ID = #{ mem_id }
+	</select>
 </mapper>

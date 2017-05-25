@@ -32,6 +32,7 @@ import com.pm.rc.dto.ProjectPagingDto;
 import com.pm.rc.dto.WorkCommentDto;
 import com.pm.rc.dto.WorkDetailDto;
 import com.pm.rc.dto.WorkListDto;
+import com.pm.rc.model.service.GroupService;
 import com.pm.rc.model.service.ProjectService;
 import com.pm.rc.model.service.WorkListService;
 
@@ -45,6 +46,9 @@ public class ProjectController {
 
 	@Autowired
 	private WorkListService wService;
+	
+	@Autowired
+	private GroupService gService;
 
 	// 메인화면에서 그룹 프로젝트 선택
 	@RequestMapping(value="/gProSelect.do", method=RequestMethod.GET)
@@ -57,20 +61,28 @@ public class ProjectController {
 
 		session.setAttribute("gr_id", gr_id);
 
-		List<ProjectDto> list = null;
+		List<ProjectDto> list = new ArrayList<ProjectDto>();
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("mem_id", mem_id);
 		map.put("gr_id", gr_id);
 
 		list = service.groupProSelect(map);
+		
+		Map<String, String> gr_level = new HashMap<String, String>();
+		gr_level = gService.groupManagerSearch(map);
+		
 		model.addAttribute("list", list);
+		
+		session.setAttribute("gr_level", gr_level.get("GR_LEVEL"));
+		
 		return "project/gProjectSelect";
 	}
 
 	// 메인화면에서 개인 프로젝트 선택
 	@RequestMapping(value="/iProSelect.do", method=RequestMethod.GET)
 	public String myProjectList(Model model, HttpServletRequest request, HttpSession session){
-
+		
+		session.removeAttribute("gr_level");
 		session.removeAttribute("pr_level");
 		session.removeAttribute("gr_id");
 
