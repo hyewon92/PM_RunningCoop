@@ -258,4 +258,11 @@ public interface GroupService {
 	 */
 	public int groupImg (String gr_id);
 	
+	/**
+	 * 그룹 내 사용자 권한 조회
+	 * @param mem_id
+	 * @return
+	 */
+	public Map<String, String> groupManagerSearch(Map<String, String> map);
+	
 }

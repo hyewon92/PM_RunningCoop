@@ -83,9 +83,9 @@
 					</tr>
 				</c:when>
 				<c:otherwise>
-					<c:forEach var="list" items="${ list }" varStatus="vs">
+					<c:forEach var="list" items="${ list }">
 						<tr>
-							<td>${vs.count}</td>
+							<td>${ list.get("RNUM") }</td>
 							<td><span class = "sbr_title">
 								<input type="hidden" name = "uuid" value = "${ list.get('SBR_UUID') }"/>
 								<input type="hidden" name = "scryn" value="${ list.get('SBR_SCRYN') }"/>

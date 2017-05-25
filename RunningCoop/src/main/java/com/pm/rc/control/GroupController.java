@@ -70,18 +70,23 @@ public class GroupController implements ServletConfigAware {
 	// 그룹선택 초기 화면 
 	@RequestMapping(value= "/myGrSelect.do" , method=RequestMethod.GET)
 	public String myGrSelect(Model model, HttpServletRequest request ,HttpSession session){
+		
+		session.removeAttribute("gr_level");
+		session.removeAttribute("gr_id");
+		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("mem_id", request.getParameter("mem_id"));
-		System.out.println("여기는되나");
-		logger.info("그룹선택 작동됨");
+		logger.info("=================== 그룹 선택 화면 이동 =======================");
+		
 		List<GroupDto> lists = service.myGrSelect(map);
 		List<GroupDto> watiLists = service.waitGrSelect(map);
 		
 		model.addAttribute("lists" , lists);
 		model.addAttribute("watiLists" , watiLists);
-		session.removeAttribute("gr_id");
+		
 		return "Group/myGrSelect";
 	}
+	
 	//그룹선택하여 정보 확인 및 그룹관리 화면
 	@RequestMapping(value="/grselect.do", method={RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody	

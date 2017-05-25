@@ -3,6 +3,7 @@ package com.pm.rc.model.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.xmlbeans.impl.xb.xsdschema.GroupDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -260,6 +261,11 @@ public class GroupServiceImp implements GroupService{
 		isc = groupdao.groupDelete13(gr_id);
 		return isc;
 	}
+	
+	@Override
+	public Map<String, String> groupManagerSearch(Map<String, String> map){
+		return groupdao.groupManagerSearch(map);
+	};
 
 
 
