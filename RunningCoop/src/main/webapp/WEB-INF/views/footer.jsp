@@ -23,10 +23,16 @@
 	String userName = (String) session.getAttribute("mem_name");
 	String userId = (String) session.getAttribute("mem_id");
 	String gr_id = (String)session.getAttribute("gr_id");
+	String gr_level = (String)session.getAttribute("gr_level");
 %>
 <script type="text/javascript">
    $(function(){
 	   var gr_id = "<%=gr_id%>";
+	   var gr_level = "<%=gr_level%>";
+	   
+	   if(gr_level != "GM"){
+		   $(".manage_Group").css("display", "none");
+	   }
        
        if(gr_id == "null"){
       	 $(".groupMenu").css("display", "none");
@@ -181,18 +187,14 @@
 		<li class="bottom-menu">
 			<ul class="groupMenu">
 				<li><a href="#" onclick="goGrBoard('<%=gr_id%>')">그룹 게시판</a></li>
-				<li><a href="#" onclick="location.href='./grmodify.do?gr_id=<%=gr_id%>'">그룹 관리</a></li>
-				<li><a href="#" onclick="location.href='./grBoradList.do?gr_id=<%=gr_id%>'">그룹 게시판</a></li>
-				<li><a href="#" onclick="location.href='./grmodify.do?gr_id=<%=gr_id%>'">그룹 관리</a></li>
 				<li><a href="#" onclick="goSocket('<%=gr_id%>')">그룹 채팅</a></li>
+				<li><a href="#" class="manage_Group" onclick="location.href='./grmodify.do?gr_id=<%=gr_id%>'">그룹 관리</a></li>
 			</ul>
-			
-			
-	 		 
 		</li>
 		<li class="footer-menu"><a href="#" class="top_menu" onclick="location.href = './go_SearchForm.do'">검색하기</a></li>
 		<li class="footer-menu"><a href="#" class="top_menu" onclick="location.href = './noticeList.do'">공지게시판</a></li>
 		<li class="footer-menu"><a href="#" class="top_menu" onclick="location.href = './qnaList.do'">문의게시판</a></li>
+		<li class="footer-menu"><a href="#" class="top_menu" onclick="location.href = './developerInfo.do'">개발자정보</a></li>
 	</ul>
 
 </body>

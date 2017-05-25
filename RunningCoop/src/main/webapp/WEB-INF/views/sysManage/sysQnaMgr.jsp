@@ -77,7 +77,6 @@ function checkDelete(){
 		</div>
 		
 		<div class="adm_qna_btn_area">
-			<input type="button" class="body_btn adm_qna_write_btn" value="게시글 등록" />
 			<input type="button" class="body_btn adm_qna_delete_btn" value="선택 삭제" onclick="checkDelete()"/>
 		</div>
 		
