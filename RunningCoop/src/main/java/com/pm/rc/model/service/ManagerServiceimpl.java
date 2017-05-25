@@ -25,8 +25,8 @@ public class ManagerServiceimpl implements ManagerService {
 	}
 	
 	@Override
-	public List<GroupDto> grApplySelect(Map<String, Object> map) {
-		return managerdao.grApplySelect(map);
+	public List<GroupDto> grApplySelect(String	gr_name) {
+		return managerdao.grApplySelect(gr_name);
 	}
 	
 	@Override
@@ -153,9 +153,9 @@ public class ManagerServiceimpl implements ManagerService {
 		return managerdao.sysBoardDelete(sbr_uuid);
 	}
 
-	@Override
+	/*@Override
 	public List<MemberDto> allMemberSelectWeb(Map<String, Object> map) {
 		return managerdao.allMemberSelectWeb(map);
-	}
+	}*/
 
 }
