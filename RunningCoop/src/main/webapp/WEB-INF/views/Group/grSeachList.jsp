@@ -18,11 +18,15 @@
 cursor: pointer;
 }
 </style>
-<% String mem_id = (String)session.getAttribute("mem_id"); %>
+<%
+String mem_id = (String)session.getAttribute("mem_id"); 
+String gr_id = (String)session.getAttribute("gr_id");
+	%>
 <script type="text/javascript">
 var openwin;
 	function openChild(val){
-		var grid = $(val).prev().text();
+		var grid = 	$("#selectGrid").val();
+		alert(grid);
 		var userid = "<%=mem_id%>";
 			$.ajax({
 			type : "POST",
@@ -103,6 +107,7 @@ var openwin;
 					<td id="gr_name">${dtos.gr_name}</td>
 					<td>${dtos.memberdto.mem_name}</td>
 					<td>${dtos.gr_regDate }</td>
+					<td>${dtos.gr_id }<input type="hidden" value="${dtos.gr_id }" id="selectGrid"></td>
 					<c:if test="${ fn:contains(dtos.gr_joinYN, 'Y') == true }">
 						<td><input type="button" value="가입신청" onclick="openChild(this)"/></td>
 					</c:if>
