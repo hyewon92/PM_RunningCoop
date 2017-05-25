@@ -7,42 +7,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>시스템 공지 게시판 관리 페이지</title>
+<title>Running Co-op :: 시스템 관리자 - 회원 관리</title>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
-<%@include file="/WEB-INF/views/Group/bootstrap.jsp"%>
 <script src="./js/paging.js"></script>
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery-latest.js"></script>
-<style type="text/css">
-#insert_Container {
-	position: fixed;
-	top: 250px;
-	left: 300px;
-	z-index: 1;
-	background-color: white;
-	display: none;
-}
-
-#mgr_table{
-	width : 1000px;
-	height : 580px;
-	border-collapse: collapse;
-}
-
-#mem_mgr_div{
-	width : 850px;
-	height : 580px;
-	overflow: scroll;
-}
-
-#mem_mgr_table{
-	border-collapse: collapse;
-}
-
-tr, th, td {
-	border : 1px solid black;
-}
-</style>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 	function selectMem(id) {
 		$.ajax({
@@ -57,12 +25,21 @@ tr, th, td {
 				var mem_email = msg.info.mem_email;
 				var mem_phone = msg.info.mem_phone;
 				
-				$("#upMem_id").val(mem_id);
-				$("#upMem_pw").val(mem_pw);
-				$("#upMem_name").val(mem_name);
-				$("#upMem_email").val(mem_email);
-				$("#upMem_phone").val(mem_phone);
+				$("#upMem_id").text(mem_id);
+				$("#upMem_pw").text(mem_pw);
+				$("#upMem_name").text(mem_name);
+				$("#upMem_email").text(mem_email);
+				$("#upMem_phone").text(mem_phone);
+				
 				$("#insert_Container").css("display", "block");
+				$("#insert_Container").dialog({
+					title : "회원 정보 수정",
+					height : 400,
+					width : 500,
+					position : {my : "center", at : "center"},
+					resizable : false,
+					modal : true
+				});
 			}
 		});
 	}
@@ -109,77 +86,98 @@ tr, th, td {
 	<div id="sys_header">
 		<jsp:include page="../sysHeader.jsp" flush="false" />
 	</div>
-	<div class="sys_container">
+	
+	<div id="sys_container">
+		<h3>회원 관리</h3>
+		
 		<div id="insert_Container">
 			<form id= "memModify" action = "./sysMemModify.do" method = "POST">
-				<fieldset>
-					<legend>회원 수정 양식</legend>
-					아이디 : <input type="text" id = "upMem_id" class = "upData" name="mem_id" /><br/>
-					비밀번호 : <input type="password" id = "upMem_pw" class = "upData" name="mem_pw" /><br/> 
-					이름 : <input type="text" id = "upMem_name" class = "upData" name="mem_name" /><br/> 
-					이메일 : <input type="text" id = "upMem_email" class = "upData" name="mem_email" /><br/>
-					전화번호 : <input type="text" id = "upMem_phone" class = "upData" name="mem_phone" /><br/> 
+				<table class = "adm_memEdit_table">
+					<tr>
+						<th>아이디</th>
+						<td id="upMem_id"></td>
+					</tr>
+					<tr>
+						<th>비밀번호</th>
+						<td id="upMem_pw"></td>
+					</tr>
+					<tr>
+						<th>이름</th>
+						<td id="upMem_name"></td>
+					</tr>
+					<tr>
+						<th>이메일</th>
+						<td id="upMem_email"></td>
+					</tr>
+					<tr>
+						<th>전화번호</th>
+						<td id="upMem_phone"></td>
+					</tr>
+				</table>
 					<input type="submit" value="수정"/> 
 					<input type="button" value="취소" onclick="hideInsertForm()" />
-				</fieldset>
 			</form>
 		</div>
-		<div id="mgr_Container">
-						<div id="mem_mgr_div">
-							<h3>회원 목록</h3>
-									<div id='select'>
-										<span> <select class='btn btn-primary' id='listCount' name='listCount'
-											onchange='listCnt();'>
-												<option>선택</option>
-												<option value='5' >5</option>
-												<option value='10'>10</option>
-												<option value='15'>15</option>
-												<option value='20'>20</option>
-										</select>
-										</span>
-									</div>
-						<form action="./sysMemMgr.do" method="post" id='frmPaging'>			 
-						<table class="table table-bordered">
-							<tr>
-								<td colspan="6">
-								<input type="button" value="회원 등록" 	onclick="viewInsertForm()" />
-								</td>
-							</tr>
-							<tr>
-								<th>아이디</th>
-								<th>이름</th>
-								<th>이메일</th>
-								<th>휴대폰 번호</th>
-								<th>가입일자</th>
-								<th>수정</th>
-							</tr>
-							<c:choose>
-								<c:when test="${ fn:length(list) == 0 }">
-									<tr>
-										<td colspan="6">조회 가능한 게시글이 없습니다</td>
-									</tr>
-								</c:when>
-								<c:otherwise>
-									<c:forEach var="list" items="${ list }" >
-										<tr>
-											<td><span onclick="">${ list.mem_id }</span></td>
-											<td>${ list.mem_name }</td>
-											<td>${ list.mem_email }</td>
-											<td>${ list.mem_phone }</td>
-											<td>${ list.mem_regDate }</td>
-											<td><input type = "button" value = "수정" onclick="selectMem('${list.mem_id}')"/></td>
-										</tr>
-									</c:forEach>
-								</c:otherwise>
-							</c:choose>
-						</table>
-			<!-- 5. paging view -->
-			<!--출력할 페이지번호, 출력할 페이지 시작 번호, 출력할 리스트 갯수 -->
-			<input type='hidden' name='index' id='index' value='${paging.index}'>
-			<input type='hidden' name='pageStartNum' id='pageStartNum' value='${paging.pageStartNum}'>
-			<input type='hidden' name='listCnt' id='listCnt' value='${paging.listCnt}'>		
+
+		<div class="adm_search_area">
+			<form action="./sysMemSearch.do" method="post">
+				<input type="text" name="mem_name" />
+				<input type="submit" class="body_btn mem_search" value="검색" />
+			</form>
+		</div>
 		
-		<div class="center">
+		<div id="div_select_area">
+			<select class="adm_listSelect" id='listCount' name='listCount' onchange='listCnt();'>
+					<option>선택</option>
+					<option value='5' >5</option>
+					<option value='10'>10</option>
+					<option value='15'>15</option>
+					<option value='20'>20</option>
+			</select>
+		
+			<form action="./sysMemMgr.do" method="post" id='frmPaging'>
+				<input type='hidden' name='index' id='index' value='${paging.index}'>
+				<input type='hidden' name='pageStartNum' id='pageStartNum' value='${paging.pageStartNum}'>
+				<input type='hidden' name='listCnt' id='listCnt' value='${paging.listCnt}'>
+			</form>		 
+		</div>
+		
+		<div id="mgr_Container">
+			<div id="mem_mgr_div">
+				<table class="adm_memList_table">
+					<tr>
+						<th style="width: 5%;">번호</th>
+						<th style="width: 15%;">아이디</th>
+						<th style="width: 15%;">이름</th>
+						<th style="width: 20%;">이메일</th>
+						<th style="width: 20%;">휴대폰 번호</th>
+						<th style="width: 20%;">가입일자</th>
+						<th style="width: 5%;">수정</th>
+					</tr>
+					<c:choose>
+						<c:when test="${ fn:length(list) == 0 }">
+							<tr>
+								<td colspan="7">조회 가능한 게시글이 없습니다</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="list" items="${ list }" >
+								<tr>
+									<td></td>
+									<td>${ list.mem_id }</td>
+									<td>${ list.mem_name }</td>
+									<td>${ list.mem_email }</td>
+									<td>${ list.mem_phone }</td>
+									<td>${ list.mem_regDate }</td>
+									<td><input type = "button" value = "수정" onclick="selectMem('${list.mem_id}')"/></td>
+								</tr>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</table>
+			</div>
+			
+			<div class="pagenum_div">
 				<ul class="pagination">
 					<!--맨 첫페이지 이동 -->
 					<li><a href='#' onclick='pagePre(${paging.pageCnt+1},${paging.pageCnt});'>&laquo;</a></li>
@@ -198,14 +196,9 @@ tr, th, td {
 					
 				</ul>
 			</div>
-				</form>	
-						<form action="./sysMemSearch.do" method="post">
-							<input type="text" name="mem_name" />
-							<input type="submit" value="검색" />
-						</form>
-					</div>
 		</div>
 	</div>
+	
 	<div id="sys_footer">
 		<jsp:include page="../sysFooter.jsp" flush="false"/>
 	</div>
