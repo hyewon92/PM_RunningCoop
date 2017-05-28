@@ -171,6 +171,34 @@ background-repeat: no-repeat;
 } */
 $(function(){
 	$('#watingGroups').hide();
+// 	var resutl = "${result}";
+// 	if(resutl=="true"){
+// 		alert("그룹가입신청 완료");
+// 		close();
+// 		}
+	$(".createBox").submit(function(event){
+		var chk = $("#chk").attr('name');
+		if($("#grname").val()==""||$("#grgoal").val()==""||chk=="nochk"){
+			alert("모두 입력해주세요");
+			return false;
+		}else{
+			return true;
+		}
+	});
+	$("#imgname").val("1");
+	for(var i =1; i<15; i++){
+		var imgNum = "이미지" + i;
+		$('#imsg').append($('<option>').attr('value',imgNum).text(imgNum));
+	};
+	
+	$('#imsg').change(function(){
+		
+		var imgln = $(this).val().length;
+		var GroupImgs = $(this).val().substring(3, imgln );
+		$("#imgname").val(GroupImgs);
+		
+		$("#imgbox").attr("src","./grImgs/img"+GroupImgs+".png");
+	})
 })
 
 // function openChild(){
@@ -186,7 +214,7 @@ function openWatingGroup(){
 function goProject(grid){
 	
 	location.href="./gProSelect.do?gr_id="+grid;
-}
+} 
 
 function gropuChildOpen(event){
 	var grid= $(event.target).find('.gr_input_id').val();
@@ -262,6 +290,28 @@ function createPro(){
 		modal : true,
 	});
 	
+}
+
+function grNameCheck(){
+	var chgrName = $("#grname").val();
+	$.ajax({
+		type : "POST",
+		url  : "./grNameCk.do",
+		data : "gr_name="+chgrName,
+		async: false,
+		success : function(data){
+			if(data==1){
+				$("#chkReturn").text("이미 사용중인 이름입니다.");
+				$("#chkReturn2").css('display','');
+				$("#grname").val("");
+			}else{
+				$("#chkReturn").text("해당 이름으로 사용하셔도 됩니다.");
+				$("#chkReturn2").css('display','');
+				$("#chk").attr('name','yeschk');
+			}
+		}
+	});
+	return data;
 }
 // 	$("table[name=groupimg]").each(function(){
 // 		var result = Math.floor(Math.random() * 14);

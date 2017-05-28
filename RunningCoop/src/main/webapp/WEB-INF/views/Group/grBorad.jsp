@@ -45,7 +45,18 @@
 	<jsp:include page="../header.jsp" flush="false"/>
 </div>
 <div id = "container">
-	<table>
+<h3>그룹 게시판</h3>
+<div class="pr_search_area">
+		<form action="./qnaSList.do" method="POST">
+			<input type="text" name="sbr_title" /> 
+			<input type="submit" value="검색" class="body_btn pr_search_btn"/>
+		</form>
+	</div>
+		<div class="user_control_div">
+		<input type="button" id="write" class="body_btn qna_writeForm_btn" value="게시글작성" onClick="writer()" />
+	</div>
+<div class="notice_board_list">
+	<table class="noticeTable">
 			<tr>
 				<th>번호</th>
 				<th>제목</th>
@@ -73,18 +84,7 @@
 			</c:otherwise>
 		</c:choose>
 		</table>
-		<form action="./qnaSList.do" method="POST">
-			<input type="textbox" name="sbr_title" /> <input type="submit"
-				value="검색" />
-		</form>
-		<form id="scrView" action="./scrBoardView.do" method="POST">
-			<input type="hidden" name="sbr_uuid" value="">
-			<input type="hidden" name="sbr_pw" value="">
-		</form>
-		<br>
-		<br>
-	
-		<input type="button" id="write" value="게시글작성" onClick="writer()" />
+		</div>
 </div>
 <div id = "footer">
 	<jsp:include page="../footer.jsp" flush="false" />

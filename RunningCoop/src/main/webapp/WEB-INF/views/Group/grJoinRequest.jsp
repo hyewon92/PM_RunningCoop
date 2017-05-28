@@ -19,9 +19,6 @@ $(function(){
 </script>
 </head>
 <body>
-<div id="header">
-	<jsp:include page="../header.jsp" flush="false"/>
-</div>
 <div id="container">
 	<%
 		String a=(String)request.getAttribute("grid");
@@ -33,9 +30,6 @@ $(function(){
 	<p><textarea rows="10" cols="10" name="wait_content"></textarea></p>
 	<input type="submit" value="가입신청">
 	</form>
-</div>
-<div id="footer">
-	<jsp:include page="../footer.jsp" flush="false"/>
 </div>
 </body>
 </html>

@@ -139,11 +139,11 @@ public class GroupController implements ServletConfigAware {
 	
 	// 그룹으로 검색하여 페이징처리 그리고 그룹 검색하는 곳
 	@RequestMapping(value="/allGrSelect.do", method={RequestMethod.POST ,RequestMethod.GET})
-	public String allGrSelect (Model model , HttpServletRequest request) {
+	public String allGrSelect (Model model , HttpServletRequest request,String gr_name) {
 		PagingDto paging = new PagingDto(request.getParameter("index"),
 									     request.getParameter("pageStartNum"),
 									     request.getParameter("listCnt"),
-									     request.getParameter("gr_name"));
+									     gr_name);
 		
 		List<GroupDto> lists = service.selectPaging(paging);
 		paging.setTotal(service.selectTotalPaging(request.getParameter("gr_name")));
@@ -178,17 +178,18 @@ public class GroupController implements ServletConfigAware {
 	}
 	
 	// 그룹 가입신청 시작
-	@RequestMapping(value="/grWaitInsert.do" , method=RequestMethod.POST)
-	public String grWaitInsert(String mem_id , String gr_id , String wait_content, Model model){
+	@RequestMapping(value="/grWaitInsert.do" , method={RequestMethod.POST,RequestMethod.GET})
+	public String grWaitInsert(String memid , String grid , String wait_content, String gr_name, Model model){
 		logger.info("그룹가입신척 시작");
+		System.out.println(memid+"멤아디"+grid+"지알아디"+wait_content+"자기소개"+"gr_name"+gr_name);
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("mem_id", mem_id);
-		map.put("gr_id", gr_id);
+		map.put("mem_id", memid);
+		map.put("gr_id", grid);
 		map.put("wait_content", wait_content);
 		boolean n = service.grWaitInsert(map);
 		model.addAttribute("result", n);
 		if(n=true){
-			return "Group/grJoinRequest";
+			return "redirect:/allGrSelect.do?gr_name="+gr_name;
 		}else{
 			return "account/error/error";
 		}
@@ -276,7 +277,7 @@ public class GroupController implements ServletConfigAware {
 	   
 			model.addAttribute("result", n);
 			if(n=true){
-				return "Group/grCreate";
+				return "redirect:/myGrSelect.do";
 			}else{
 				return "account/error/error";
 			}

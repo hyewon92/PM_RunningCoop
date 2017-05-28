@@ -169,7 +169,7 @@ cursor: pointer;}
 	<jsp:include page="../header.jsp" flush="false"/>
 </div>
 <div id="container">
-<h1>그룹정보 수정</h1>
+<h3>그룹 관리 페이지</h3>
 <div id = "con_side">
 		<input type="button" value="그룹정보 수정" class="gPr_manage_btn" onclick="view_info_manage()"/>
 		<input type="button" value="그룹 인원 관리" class="gPr_manage_btn" onclick="view_mem_manage()"/>
@@ -178,51 +178,52 @@ cursor: pointer;}
 	</div>
 	<div id="con_body">
 	<div class="info_manage">
+	<h4>그룹정보 수정</h4>
 	<form class="grModify" action="./realGrmodify.do" method="post">
-		<table id="grdate">
+		<table class="project_manage_table">
 			<c:set var="grSelect" value="${grSelect}"/>
-				<tr>
-				<td><input type="text" value="${grSelect.GR_ID}" id="memgrid" name="gr_id" style="display: none;"> </td>
+				<tr style="display: none;">
+				<td><input type="hidden" value="${grSelect.GR_ID}" id="memgrid" name="gr_id" ></td>
 				</tr>	
 				<tr>
-					<td>그룹아이디</td>
+					<th>그룹아이디</th>
 					<td><input type="text" value="${grSelect.GR_ID}" readonly="readonly"> </td>
 				</tr>
 				<tr>
-					<td>그룹이름</td>
+					<th>그룹이름</th>
 					<td>${grSelect.GR_NAME }</td>
 				</tr>
 				<tr>
-					<td>그룹담당자</td>
+					<th>그룹담당자</th>
 					<td>${grSelect.MEM_NAME }</td>
 					<td><input type="button" value="관리자위임" onclick="groupManagerCh()"></td>
 				</tr>
 				<tr>
-					<td>그룹인원수</td>
+					<th>그룹인원수</th>
 					<td>${grSelect.GR_MEMCNT }</td>
 				</tr>
 				<tr>
-					<td>그룹활동목적</td>
+					<th>그룹활동목적</th>
 					<td>${grSelect.GR_GOAL }</td>
 					<td><input type="text" value="" name="gr_goal" id="grGoal"></td>
 				</tr>
 				<tr>
-					<td>그룹검색여부</td>
+					<th>그룹검색여부</th>
 					<td id="grsearchyn">${grSelect.GR_SEARCHYN }</td>
 					<td><span><input type="radio" name="gr_searchyn" id="grsearchy" value="Y">예</span><input type="radio" name="gr_searchyn" id="grsearchy2" value="N">아니오</td>
 				</tr>
 				<tr>
-					<td>그룹가입신청여부</td>
+					<th>그룹가입신청여부</th>
 					<td id="grjoinyn">${grSelect.GR_JOINYN }</td>
 					<td><span><input type="radio" name="gr_joinyn" value="Y" id="grjoinyn">예</span><input type="radio" name="gr_joinyn" id="grjoinyn2" value="N">아니오</td>
 				</tr>
 				<tr>
-					<td>그룹생성일자</td>
+					<th>그룹생성일자</th>
 					<td>${grSelect.GR_REGDATE }</td>
 				</tr>
 				<tr>
+					<th>그룹이미지</th>
 					<td id="gr_imgNum" style="display: none;">${grSelect.GR_IMG}</td>
-					<td>그룹이미지</td>
 					<td><select id="imsg"></select><input type="hidden" id="imgname" value="" ></td>
 					<td><img id="imgbox" alt="" src="./grImgs/img${grSelect.GR_IMG}.png"></td>
 					</tr>

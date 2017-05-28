@@ -24,8 +24,9 @@ String gr_id = (String)session.getAttribute("gr_id");
 	%>
 <script type="text/javascript">
 var openwin;
+var serarchWord = "";
 	function openChild(val){
-		var grid = 	$(val).text();
+		var grid = 	$(val).next().val();
 		alert(grid);
 		var userid = "<%=mem_id%>";
 			$.ajax({
@@ -46,7 +47,7 @@ var openwin;
 	function doSearch(){
 		var type = $("#search_select_type option:selected").val();
 		var work = $("#search_word_02").val();
-
+		serarchWord = $("#search_word_02").val();
 		if(type == "choice"){
 			alert("검색 타입을 선택해주세요!");
 		} else if (type == "group"){
@@ -57,6 +58,26 @@ var openwin;
 			$("#projectSearch").submit();
 		}
 	}	
+	
+	function createPro(text){
+		var grid = $(text).prev().val();
+		var gr_name = $(text).next().val();
+		
+		$("#grName").text(gr_name);
+// 		$("#grid").val(grid);
+		alert(grid+"grid"+gr_name+"grname");
+		$("input[name=grid]").val(grid);
+		
+		$("#create_Form").dialog({
+			title : "개인 프로젝트 생성",
+			height : 600,
+			width : 700,
+			position : {my : "center", at : "center"},
+			resizable : false,
+			modal : true,
+		});
+		
+	}
 </script>
 </head>
 <body>
@@ -111,7 +132,8 @@ var openwin;
 					<c:if test="${ fn:contains(dtos.gr_joinYN, 'Y') == true }">
 						<td>
 						<input type="hidden" value="${dtos.gr_id }">
-						<input type="button" value="가입신청" onclick="openChild(this)"/>
+						<input type="button" value="가입신청" onclick="createPro(this)"/>
+						<input type="hidden" value="${dtos.gr_name}">
 						</td>
 					</c:if>
 					<c:if test="${ fn:contains(dtos.gr_joinYN, 'N') == true }">
@@ -153,6 +175,34 @@ var openwin;
 			</div>
 		</form>
 	</div>	
+	
+	<div id="create_Form">
+	<form action="./grWaitInsert.do" method="post">
+	<table>
+		<tr>
+		<td><input type="hidden" value="${gr_name}" name="gr_name">
+		<td>아이디 :</td>
+		<td id="mem_id">"<%=mem_id%>"</td>
+		<td><input type="hidden" value="<%=mem_id%>" name="memid">
+		</tr>
+		<tr>
+		<td>그룹이름 :</td>
+		<td id="grName"></td>
+		<td><input type="text" value="" name="grid">
+		</tr>
+		<tr>
+		<td colspan="2">자기소개 </td>
+		</tr>
+		<tr>
+		<td colspan="2">
+		<textarea rows="5" cols="0" name="wait_content">
+		</textarea>
+		</td>
+		</tr>
+	</table>
+	<input type="submit" value="가입신청">
+	</form>
+	</div>
 </div>
 	
 <div id = "footer">

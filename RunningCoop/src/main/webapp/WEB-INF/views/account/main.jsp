@@ -8,7 +8,7 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="js/account/account.js"></script>
-<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/main.css" type="text/css">
 <style type="text/css">
 @import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
 

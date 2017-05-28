@@ -74,7 +74,7 @@
 	<tr>
 	<td>그룹이름:</td>
 	<td><input type="text"  name="gr_name" id="grname"></td>
-	<td><input type="button" value="중복확인" onclick="grNameCheck()" id="chk" name="nochk"></td>
+	<td><input type="button" value="중복확인" onclick="grNameChecks()" id="chk" name="nochk"></td>
 	</tr>
 	<tr style="display: none;" id="chkReturn2"><td></td><td  id="chkReturn"></td></tr>
 	<tr>

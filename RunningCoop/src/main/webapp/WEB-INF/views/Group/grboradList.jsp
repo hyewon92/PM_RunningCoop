@@ -19,8 +19,9 @@
 <link rel="stylesheet" href="css/main.css" type="text/css">
 </head>
 <body>
+<div class="notice_board_list">
 <form action="./bordeMultDelet.do" method="get">
-	<table>
+	<table class="noticeTable">
 		<tr>
 		<td><input type="submit" value="선택삭제"></td>
 		</tr>
@@ -42,5 +43,6 @@
 	</c:forEach>
 	</table>
 </form>
+</div>
 </body>
 </html>

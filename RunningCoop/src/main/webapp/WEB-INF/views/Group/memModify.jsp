@@ -62,8 +62,12 @@ cursor: pointer;}
 </script>
 </head>
 <body>
-<div id="container">
-		<h1>그룹 멤버 리스트</h1>
+<div class="mem_manage">
+<div class="member_manage_area">
+
+	<h4>그룹 인원 관리</h4>
+	<div class="mem_manage_list">
+
 	<table>
 		<tr>
 		<td>아이디</td>
@@ -77,7 +81,8 @@ cursor: pointer;}
 				<td><img onclick="memDelete(this)" alt="cancle" src="./images/cancel.png"> </td>			
 			</tr>
 		</c:forEach>
-	</table>	
+	</table>
+		</div>	
 		<h1 id="groupMemAdd" onclick="groupMemAdd()">그룹초대</h1>		
 		<h1>가입 신청 리스트</h1>
 	<table>
@@ -92,6 +97,7 @@ cursor: pointer;}
 	</table>	
 		<h1>그룹 해체</h1>
 		<input type="button" value="그룹 해체" onclick="groupBye()">
+		</div>
 </div>
 </body>
 </html>
