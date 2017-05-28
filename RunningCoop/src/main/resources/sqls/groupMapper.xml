@@ -256,4 +256,21 @@
 	<select id="groupManagerSearch" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT GR_LEVEL FROM RC_GROUPMEM WHERE GR_ID = #{gr_id} AND MEM_ID = #{ mem_id }
 	</select>
+	
+<!-- 	그룹게시판 게시글 등록 -->
+	<insert id="grBoardInsert" parameterType="java.util.Map">
+	INSERT INTO RC_GRBOARD
+	(BR_UUID, MEM_ID, BR_TITLE, BR_CONTENT, BR_NOTICEYN , GR_ID, BR_REFER, BR_REGDATE)
+	VALUES (#{br_uuid},#{mem_id},#{br_title},#{br_content},'N',#{gr_id},
+	(SELECT NVL(MAX(BR_REFER)+1, 1) FROM RC_GRBOARD),SYSDATE)
+	</insert>
+	
+	<select id="grBoardViewSelect" parameterType="java.lang.String" resultType="java.util.Map">
+	SELECT GB.BR_UUID, GB.MEM_ID, M.MEM_NAME, TO_CHAR(GB.BR_REGDATE,
+	'YYYY/MM/DD') SBR_REGDATE, GB.BR_TITLE, GB.BR_CONTENT, GB.BR_REFER
+	FROM RC_GRBOARD GB, RC_MEMBER M
+	WHERE M.MEM_ID = GB.MEM_ID AND
+	BR_UUID = #{br_uuid}
+	</select>
+	
 </mapper>

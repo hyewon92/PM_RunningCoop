@@ -306,5 +306,21 @@ public interface GroupDao {
 	 * @return
 	 */
 	public Map<String, String> groupManagerSearch(Map<String, String> map);
+	
+	/**
+	 * 그룹게시판 게시글 등록
+	 * @param dto GroupBoardDto객체
+	 * @return boolean
+	 * @author 김혜원
+	 * */
+	public boolean grBoardInsert(Map<String, Object> map);
+	
+	/**
+	 * 그룹게시판 게시글 조회
+	 * @param map value: gr_id, br_uuid, GroupBoardDto
+	 * @return map
+	 * @author 라한솔
+	 * */
+	public Map<String, String> gbViewSelect(Map<String, String> map);
 }
 

@@ -1,5 +1,7 @@
 package com.pm.rc.control;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ServletConfigAware;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.pm.rc.dto.GroupBoardDto;
 import com.pm.rc.dto.GroupDto;
@@ -436,11 +440,11 @@ public class GroupController implements ServletConfigAware {
 	}
 	
 	@RequestMapping(value="/grBoradList.do" , method=RequestMethod.GET)
-	public String grBoradList(String gr_id, Model model){
+	public String grBoradList(Model model,HttpSession session){
 		logger.info("=========그룹게시판 목록 시작 ========");
-		String gr = gr_id;
+		String gr = (String)session.getAttribute("gr_id");
 		System.out.println("그룹아이디 받아옴 값="+gr);
-		List<Map<String, String>> lists = service.grBoradList(gr_id);
+		List<Map<String, String>> lists = service.grBoradList(gr);
 		model.addAttribute("grlists", lists);		
 		return "Group/grBorad";
 	}
@@ -454,5 +458,116 @@ public class GroupController implements ServletConfigAware {
 //		System.out.println("asdfasdfasdf"+lists.get(0).getGr_img());
 	return n;	
 	}
+	
+	// 그룹게시판 글 작성
+	@RequestMapping(value="/grBoradWriteForm.do" , method={RequestMethod.POST, RequestMethod.GET})
+	public String grBoradWriteForm(){
+		logger.info("================== 게시글 작성 페이지 이동 ==================");
+		return "Group/grBoradWrite";
+	}
+	
+	// 게시글 작성 폼
+		@RequestMapping(value="/grboardWrite.do", method = RequestMethod.POST)
+		public String doWriteForm(MultipartHttpServletRequest multipartRequest, HttpSession session){
+			String br_title = multipartRequest.getParameter("br_title");
+			String br_content = multipartRequest.getParameter("br_content");
+			String mem_id = (String) session.getAttribute("mem_id");
+			String gr_id = (String)session.getAttribute("gr_id");
+			//UUID 생성 메소드
+			String uuid = createUUID();
+			int indexnum = uuid.lastIndexOf("-");
+			String br_uuid = uuid.substring(indexnum+1);
+
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("br_uuid", br_uuid);
+
+			MultipartFile file = multipartRequest.getFile("gatt_name");
+			
+			System.out.println(file);
+
+			String oldFileName = file.getOriginalFilename();
+			if (oldFileName.length()>0){
+				String gatt_path = "C:\\RC_fileSave\\";
+
+				String fuuid = createUUID();
+				int indexNum = fuuid.lastIndexOf("-");
+
+				String gatt_size = ""+file.getSize();
+
+				String newFileName = fuuid.substring(indexNum+1) + oldFileName;
+
+				// 첨부파일 실제경로 저장
+				try {
+					file.transferTo(new File(gatt_path + newFileName));
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+
+				logger.info("=============== 공지게시판 첨부파일 추가 ===================");
+				logger.info("첨부파일 명 : "+oldFileName);
+				logger.info("첨부파일 크기 : "+gatt_size);
+				logger.info("첨부파일 경로 : "+gatt_path);
+				logger.info("첨부파일 실제이름 : "+newFileName);
+				logger.info("====================================================");
+
+
+				map.put("gatt_name", oldFileName);
+				map.put("gatt_rname", newFileName);
+				map.put("satt_size", gatt_size);
+				map.put("gatt_path", gatt_path);
+
+			}
+
+			map.put("br_title", br_title);
+			map.put("br_content", br_content);
+			map.put("mem_id", mem_id);
+			map.put("gr_id", gr_id);
+
+			boolean isc = false;
+			isc = service.grBoardInsert(map);
+
+			if(isc == true){
+				System.out.println("문의게시판 게시글 등록 성공");
+			} else {
+				System.out.println("문의게시판 게시글 등록 실패");
+			}
+
+			return "redirect:/grBoradList.do";
+		}
+		
+		// 공개 게시글 보기 페이지
+		@RequestMapping(value="/grBoardView.do", method = RequestMethod.GET)
+		public String boardView(Model model, HttpServletRequest request, HttpSession session){
+
+			String br_uuid = request.getParameter("br_uuid");
+			String sessionId = (String) session.getAttribute("mem_id");
+			Map<String, String> uuid = new HashMap<String, String>();
+			uuid.put("br_uuid", br_uuid);
+
+			Map<String, String> view = new HashMap<String, String>();
+			view = service.gbViewSelect(uuid);
+
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("br_uuid", br_uuid);
+
+			logger.info("================== 공지 게시글 보기 ==================");
+			logger.info("현재 접속 중인 세션 : "+sessionId);
+			logger.info("조회할 게시글 번호 : "+br_uuid);
+			logger.info("================================================");
+
+			Map<String, String> list = null;
+//			list = service.sysAttachSelect(map);
+			
+			model.addAttribute("view", view);
+			model.addAttribute("mem_id", sessionId);
+
+//			if(list != null){
+//				model.addAttribute("attach", list);
+//			}
+
+			return "sysBoard/boardView";
+		}
+		
+	
 	
 }

@@ -19,24 +19,16 @@
 </style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
-	$(function(){
-		$(".sbr_title").on("click", function(){
-			var scryn = $(this).children("input[name=scryn]").val();
-			var uuid = $(this).children("input[name=uuid]").val();
-			
-			if(scryn == 'Y'){
-				var pw = prompt("비밀번호를 입력해주세요", "");
-				$("input[name=sbr_uuid]").val(uuid);
-				$("input[name=sbr_pw]").val(pw);
-				$("#scrView").submit();
-			} else {
-				location.href = "./boardView.do?sbr_uuid="+uuid;
-			}
-		});
+$(function(){
+	$(".br_title").on("click", function(){
+		var uuid = $(this).children("input[name=uuid]").val();
+		
+			location.href = "./grBoardView.do?br_uuid="+uuid;
 	});
-	
+});
+
 	function writer(){
-		location.href = "./writeForm.do";
+		location.href = "./grBoradWriteForm.do";
 	}
 </script>
 </head>
@@ -48,7 +40,7 @@
 <h3>그룹 게시판</h3>
 <div class="pr_search_area">
 		<form action="./qnaSList.do" method="POST">
-			<input type="text" name="sbr_title" /> 
+			<input type="text" name="br_title" /> 
 			<input type="submit" value="검색" class="body_btn pr_search_btn"/>
 		</form>
 	</div>
@@ -73,12 +65,12 @@
 				<c:forEach var="list" items="${grlists}" varStatus="vs">
 					<tr>
 						<td>${vs.count}</td>
-						<td><span class = "sbr_title">
+						<td><span class = "br_title">
 							<input type="hidden" name = "uuid" value = "${ list.get('BR_UUID') }"/>
 							<input type="hidden" name = "scryn" value="${ list.get('BR_TITLE') }"/>
-							${ list.get("MEM_NAME") }</span></td>
+							${ list.get("BR_TITLE") }</span></td>
+						<td>${ list.get("MEM_NAME") }</td>
 						<td>${ list.get("BR_REGDATE") }</td>
-						<td>${ list.get("BR_NOTICEYN") }</td>
 					</tr>
 				</c:forEach>
 			</c:otherwise>

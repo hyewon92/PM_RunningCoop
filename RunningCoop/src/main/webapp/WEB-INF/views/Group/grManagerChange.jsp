@@ -16,14 +16,10 @@
 	String mem_id2 = (String)session.getAttribute("mem_id");
 %>
 <script type="text/javascript">
-	alert("<%=gr_id%>");
 </script>
 
 </head>
 <body>
-<div id="header">
-	<jsp:include page="../header.jsp" flush="false"/>
-</div>
 <div id="container">
 	<form action="./grMgChange.do" method="get">
 	<table>
@@ -41,9 +37,6 @@
 		</c:forEach>
 	</table>
 	</form>
-</div>
-<div id="footer">
-	<jsp:include page="../footer.jsp" flush="false"/>
 </div>
 </body>
 </html>

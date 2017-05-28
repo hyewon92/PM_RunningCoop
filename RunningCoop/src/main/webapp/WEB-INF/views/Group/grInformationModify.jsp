@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<!DOCTYPE html >
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <%String gr_id = (String)session.getAttribute("gr_id");%>
@@ -150,11 +150,15 @@ $(function(){
 })
 function groupManagerCh(){
 	var mem = "<%=mem_id%>";
-	alert(mem);
 	window.open("./createGrManagerCh.do?mem_id=<%=mem_id%>", "GroupManagerCh", "width=570, height=350, resizable = no, scrollbars = no");
 }
 //여기 까지 기존스크립트
 
+
+function test(){
+	var gg = "<%=Newgr_id%>";
+	location.href = "./memModi.do?gr_id="+gg;
+}
 </script>
 <style type="text/css">
 #memModi{
@@ -232,15 +236,20 @@ cursor: pointer;}
 						<input type="submit" value="정보수정">
 					</td>
 				</tr>
+				<tr>
+				<td>
+				<input type="button" onclick="test()">
+				</td>
+				</tr>
 		</table>
 		</form>
 		</div>
 			<div class="mem_manage">
-				<iframe width = "100%" height = "595px"  src = "./memModi.do?gr_id=<%=Newgr_id%>" frameborder=0;>
+				<iframe width = "100%" height = "595px"  src = "./memModi.do?gr_id=<%=Newgr_id%>" >여기
 				</iframe>
 			</div>
 			<div class = "calendar_manage">
-				<iframe width = "100%" height = "595px"  src = "./gbListSelect.do?gr_id=<%=Newgr_id%>" frameborder=0;>
+				<iframe width = "100%" height = "595px"  src = "./gbListSelect.do?gr_id=<%=Newgr_id%>" >여기
 				</iframe>
 		</div>
 		</div>

@@ -148,10 +148,10 @@ public interface GroupService {
 	/**
 	 * 그룹게시판 게시글 조회
 	 * @param map value: gr_id, br_uuid, GroupBoardDto
-	 * @return GroupBoardDto
-	 * @author 김혜원
+	 * @return map
+	 * @author 라한솔
 	 * */
-	public GroupBoardDto gbViewSelect(Map<String, Object> map);
+	public Map<String, String> gbViewSelect(Map<String, String> map);
 	
 	/**
 	 * 그룹게시판 게시글 등록
@@ -159,7 +159,7 @@ public interface GroupService {
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean gboardInsert(GroupBoardDto dto);
+	public boolean grBoardInsert(Map<String, Object> map);
 	
 	/**
 	 * 그룹게시판 게시글 수정

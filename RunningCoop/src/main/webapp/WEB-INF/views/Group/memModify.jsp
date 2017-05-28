@@ -3,24 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<% request.setCharacterEncoding("UTF-8"); %>
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-
-<style type="text/css">
-#groupMemAdd{
-width : 200px;
-cursor: pointer;}
-img{
-width: 20px;
-cursor: pointer;}
-</style>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 	function accept1(memid){
 		alert("${ grid }");
@@ -60,13 +49,21 @@ cursor: pointer;}
 		}
 	}
 </script>
+<style type="text/css">
+#groupMemAdd{
+width : 200px;
+cursor: pointer;}
+img{
+width: 20px;
+cursor: pointer;}
+</style>
 </head>
 <body>
 <div class="mem_manage">
 <div class="member_manage_area">
 
 	<h4>그룹 인원 관리</h4>
-	<div class="mem_manage_list">
+	<div class="">
 
 	<table>
 		<tr>
@@ -74,7 +71,7 @@ cursor: pointer;}
 		<td>이  름</td>
 		</tr>
 		<c:forEach var="memls" items="${memList}">
-			<tr>
+			<tr> 
 				<td>${memls.mem_id}</td>
 				<td>${memls.mem_name}</td>
 				<td style="display: none;">${grid}</td>

@@ -9,16 +9,7 @@
 <script src="daumOpenEditor/js/editor_loader.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
-	/* 비밀글 체크 시 비밀번호 입력가능한 인풋박스 출력 script */
 	$(document).ready(function() {
-		$("#sbr_scryn").click(function() {
-			var chkyn = $(this).is(":checked");
-			if (chkyn == true) {
-				$("#sbr_pw").css("display", "block");
-			} else if (chkyn == false) {
-				$("#sbr_pw").css("display", "none");
-			}
-		});
 		
 		/* file의 크기를 구하는 script */
 	$("#file").bind('change', function() {
@@ -65,22 +56,18 @@
 	<jsp:include page="../header.jsp" flush="false"/>
 </div>
 <div id = "container">
-	<form id="boardWrite" action="./boardWrite.do" method="post" enctype="multipart/form-data">
+	<form id="boardWrite" action="./grboardWrite.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="mem_id" value="${ mem_id }" />
-		<input type="hidden" name="sbr_noticeyn" value="N"/>
+		<input type="hidden" name="br_noticeYN" value="N"/>
 			<div>
 				<span> 제목 </span>
-				<input type="text" name="sbr_title" />
+				<input type="text" name="br_title" />
 			</div>
-			<div>
-						<input type="checkbox" id="sbr_scryn" name="sbr_scryn" /><span>비밀글</span>
-						<input type="text" id="sbr_pw" name="sbr_pw" style="display: none" />
-			</div>			
 						<jsp:include page="../daumOpenEditor.jsp" flush="false"></jsp:include>
 			<fieldset id="file_attach_list">
 				<legend>첨부파일</legend>
-				<input type="file" id="file" name="sbr_name"/>
-				<input type="hidden" id="filesize" name="sbr_size" />
+				<input type="file" id="file" name="gatt_name"/>
+				<input type="hidden" id="filesize" name="gatt_size" />
 			</fieldset>
 	</form>
 <script type="text/javascript">

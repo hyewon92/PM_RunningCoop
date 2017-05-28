@@ -118,15 +118,13 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public GroupBoardDto gbViewSelect(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<String, String> gbViewSelect(Map<String, String> map) {
+		return groupdao.gbViewSelect(map);
 	}
 
 	@Override
-	public boolean gboardInsert(GroupBoardDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean grBoardInsert(Map<String, Object> map) {
+	return groupdao.grBoardInsert(map);
 	}
 
 	@Override

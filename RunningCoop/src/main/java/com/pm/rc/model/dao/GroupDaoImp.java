@@ -1,5 +1,6 @@
  package com.pm.rc.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -274,6 +275,19 @@ public class GroupDaoImp implements GroupDao{
 	@Override
 	public Map<String, String> groupManagerSearch(Map<String, String> map){
 		return sqlSession.selectOne(NAMESPACE+"groupManagerSearch", map);
+	}
+
+	@Override
+	public boolean grBoardInsert(Map<String, Object> map) {
+		int n = sqlSession.insert(NAMESPACE+"grBoardInsert",map);
+		return n>0? true:false;
+	}
+
+	@Override
+	public Map<String, String> gbViewSelect(Map<String, String> map) {
+		Map<String, String> view = new HashMap<String, String>();
+		view = sqlSession.selectOne(NAMESPACE+"grBoardViewSelect",map);
+		return view;
 	};
 
 }
