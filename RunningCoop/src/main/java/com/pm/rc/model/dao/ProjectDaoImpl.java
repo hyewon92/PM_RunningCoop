@@ -128,25 +128,25 @@ public class ProjectDaoImpl implements ProjectDao {
 	}
 	
 	@Override
-	public List<Map<String, String>> myGPrSearchSelect(Map<String, String> map) {
+	public List<Map<String, String>> myGPrSearchSelect(ProjectDto dto) {
 		logger.info("============== 나의 그룹 프로젝트 리스트 조회 dao 시작 ==============");
-		return sqlSession.selectList(NAMESPACE+"myGPrSearchSelect", map);
+		return sqlSession.selectList(NAMESPACE+"myGPrSearchSelect", dto);
 	}
 	
 	@Override
-	public int myGpSearchTotalcount(ProjectPagingDto dto){
+	public int myGpSearchTotalcount(ProjectDto dto){
 		logger.info("============== 나의 그룹 프로젝트 갯수 조회 dao 시작 ==============");
 		return sqlSession.selectOne(NAMESPACE+"myGpSearchTotalcount", dto);
 	}
 
 	@Override
-	public List<Map<String, String>> myIPrSearchSelect(Map<String, String> map) {
+	public List<Map<String, String>> myIPrSearchSelect(ProjectDto dto) {
 		logger.info("============== 나의 개인 프로젝트 리스트 조회 dao 시작 ==============");
-		return sqlSession.selectList(NAMESPACE+"myIPrSearchSelect", map);
+		return sqlSession.selectList(NAMESPACE+"myIPrSearchSelect", dto);
 	}
 	
 	@Override
-	public int myIpSearchTotalcount(ProjectPagingDto dto){
+	public int myIpSearchTotalcount(ProjectDto dto){
 		logger.info("============== 나의 개인 프로젝트 갯수 조회 dao 시작 ==============");
 		return sqlSession.selectOne(NAMESPACE+"myIpSearchTotalcount", dto);
 	}
