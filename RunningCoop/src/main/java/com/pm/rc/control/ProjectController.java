@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.pm.rc.dto.GbAttachDto;
 import com.pm.rc.dto.MemberDto;
+import com.pm.rc.dto.PagingProDto;
 import com.pm.rc.dto.ProjectDto;
 import com.pm.rc.dto.ProjectPagingDto;
 import com.pm.rc.dto.WorkCommentDto;
@@ -1255,41 +1256,48 @@ public class ProjectController {
 	public String myPrSelect(HttpServletRequest request, HttpSession session, Model model){
 		String mem_id = (String)session.getAttribute("mem_id");
 		String pr_name = request.getParameter("pr_name");
-		/*String pr_condition = request.getParameter("pr_condition");*/
+		String pr_condition = request.getParameter("pr_condition");
 		
-		ProjectPagingDto gPrPaging = new ProjectPagingDto(request.getParameter("gIndex"),
+		PagingProDto gPaging = new PagingProDto(request.getParameter("gIndex"),
 				 request.getParameter("gPageStartNum"),
-				 request.getParameter("gListCnt"),
-				 mem_id, pr_name);
-		ProjectPagingDto iPrPaging = new ProjectPagingDto(request.getParameter("iIndex"),
+				 request.getParameter("gListCnt"));
+		
+		PagingProDto iPaging = new PagingProDto(request.getParameter("iIndex"),
 				request.getParameter("iPageStartNum"),
-				request.getParameter("iListCnt"),
-				mem_id, pr_name);
+				request.getParameter("iListCnt"));
 		
 		logger.info("================== 나의 프로젝트 검색 목록 조회 ===================");
 		logger.info("조회할 프로젝트 명 : "+pr_name);
 		logger.info("프로젝트를 조회할 멤버 아이디 : "+mem_id);
-		/*logger.info("조회할 프로젝트 상태 : "+pr_condition);*/
+		logger.info("조회할 프로젝트 상태 : "+pr_condition);
 		logger.info("=========================================================");
 		
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("mem_id", mem_id);
-		map.put("pr_name", pr_name);
-		/*map.put("pr_condition", pr_condition);*/
+		ProjectDto gPrPaging = new ProjectDto();
+		ProjectDto iPrPaging = new ProjectDto();
+		
+		gPrPaging.setPaging(gPaging);
+		gPrPaging.setPr_name(pr_name);
+		gPrPaging.setPr_condition(pr_condition);
+		gPrPaging.setMem_id(mem_id);
+		
+		iPrPaging.setPaging(iPaging);
+		iPrPaging.setPr_name(pr_name);
+		iPrPaging.setPr_condition(pr_condition);
+		iPrPaging.setMem_id(mem_id);
 		
 		List<Map<String, String>> glist = new ArrayList<Map<String, String>>();
 		List<Map<String, String>> ilist = new ArrayList<Map<String, String>>();
 		
-		glist = service.myGPrSearchSelect(map);
-		gPrPaging.setTotal(service.myGpSearchTotalcount(gPrPaging));
-		ilist = service.myIPrSearchSelect(map);
-		iPrPaging.setTotal(service.myIpSearchTotalcount(iPrPaging));
+		glist = service.myGPrSearchSelect(gPrPaging);
+		gPaging.setTotal(service.myGpSearchTotalcount(gPrPaging));
+		ilist = service.myIPrSearchSelect(iPrPaging);
+		iPaging.setTotal(service.myIpSearchTotalcount(iPrPaging));
 		
 		model.addAttribute("glist", glist);
 		model.addAttribute("ilist", ilist);
-		/*model.addAttribute("pr_condition", pr_condition);*/
-		model.addAttribute("gPaging", gPrPaging);
-		model.addAttribute("iPaging", iPrPaging);
+		model.addAttribute("pr_condition", pr_condition);
+		model.addAttribute("gPaging", gPaging);
+		model.addAttribute("iPaging", iPaging);
 		
 		return "project/myPrSearchList";
 	}

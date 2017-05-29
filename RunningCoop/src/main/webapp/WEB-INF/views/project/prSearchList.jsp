@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>프로젝트 검색 목록</title>
+<title>Running Co-op :: 전체 프로젝트 검색</title>
 
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>

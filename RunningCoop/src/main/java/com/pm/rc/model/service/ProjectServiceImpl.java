@@ -122,22 +122,22 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 	
 	@Override
-	public List<Map<String, String>> myGPrSearchSelect(Map<String, String> map) {
-		return dao.myGPrSearchSelect(map);
+	public List<Map<String, String>> myGPrSearchSelect(ProjectDto dto) {
+		return dao.myGPrSearchSelect(dto);
 	}
 	
 	@Override
-	public int myGpSearchTotalcount(ProjectPagingDto dto){
+	public int myGpSearchTotalcount(ProjectDto dto){
 		return dao.myGpSearchTotalcount(dto);
 	}
 
 	@Override
-	public List<Map<String, String>> myIPrSearchSelect(Map<String, String> map) {
-		return dao.myIPrSearchSelect(map);
+	public List<Map<String, String>> myIPrSearchSelect(ProjectDto dto) {
+		return dao.myIPrSearchSelect(dto);
 	}
 	
 	@Override
-	public int myIpSearchTotalcount(ProjectPagingDto dto){
+	public int myIpSearchTotalcount(ProjectDto dto){
 		return dao.myIpSearchTotalcount(dto);
 	}
 
