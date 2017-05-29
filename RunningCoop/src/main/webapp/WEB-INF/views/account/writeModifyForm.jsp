@@ -105,11 +105,11 @@
 	}
 	
 	function goListPm(){
-		location.href = "./viewListPm.do";
+		window.open("./viewListPm.do");
 	}
 	
 	function goListGm(){
-		location.href = "./viewListGm.do";
+		window.open("./viewListGm.do");
 	}
 </script>
 </head>

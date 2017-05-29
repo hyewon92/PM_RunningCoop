@@ -7,15 +7,6 @@
 /**
  * 로그인
  * */
-/*	$(function(){
-		$(".loginBox").submit(function(){
-			if($("#loginId").val()==""||$("#loginPw").val()==""){
-				alert("아이디와 비밀번호 모두 입력해주세요");
-				return false;
-			}
-		});
-	});*/
-	
 	function doLogin(){
 		if($("#loginId").val()==""||$("#loginPw").val()==""){
 			alert("아이디와 비밀번호 모두 입력해주세요");
@@ -30,9 +21,36 @@
 					if(!result.login){
 						$(".loginFail").append("<p style = 'font-size:8pt; color:red;'>로그인에 실패했습니다. 아이디 또는 비밀번호를 확인해주세요</p>");
 					}else if(result.login=="mgr"){
-						location.href = "./enterMgr.do";
+						alert("관리자 계정은 관리자 페이지에서 로그인 해주세요.");
 					}else{
 						location.href = "./myGrSelect.do?mem_id="+$("#loginId").val();
+					}
+				}
+			});
+		}
+	}
+	
+	/**
+	 * 관리자 로그인
+	 * */
+	
+	function doMgrLogin(){
+		if($("#loginId").val()==""||$("#loginPw").val()==""){
+			alert("아이디와 비밀번호 모두 입력해주세요");
+		}else{
+			var loginForm = $(".loginBox").serialize();
+			$.ajax({
+				type: "POST",
+				url: "./ckLogin.do",
+				data: loginForm,
+				async: false,
+				success:function(result){
+					if(!result.login){
+						$(".loginFail").append("<p style = 'font-size:8pt; color:red;'>로그인에 실패했습니다. 아이디 또는 비밀번호를 확인해주세요</p>");
+					}else if(result.login=="user"){
+						alert("일반 회원 계정은 서비스 메인 페이지에서 로그인 해주세요.");
+					}else{
+						location.href = "./enterMgr.do";
 					}
 				}
 			});

@@ -57,32 +57,15 @@ public class AccountController {
 				session.setAttribute("mem_name", dto.getMem_name());
 				session.setAttribute("mem_level", dto.getMem_level());
 				result = "mgr";
-			//	return "sysManage/grApply";
 			} else{
 				session.setAttribute("mem_id", dto.getMem_id());
 				session.setAttribute("mem_name", dto.getMem_name());
 				result = "user";
-			//	return "redirect:/myGrSelect.do?mem_id="+dto.getMem_id();
 			}
 		}
-		
 		Map<String, String> resultMap = new HashMap<String, String>();
 		resultMap.put("login", result);
 		return resultMap;
-/*		if(dto == null){
-			return "account/error/error";
-		}else{
-			if(dto.getMem_level().equals("Y")){
-				session.setAttribute("mem_id", dto.getMem_id());
-				session.setAttribute("mem_name", dto.getMem_name());
-				session.setAttribute("mem_level", dto.getMem_level());
-				return "sysManage/grApply";
-			} else{
-				session.setAttribute("mem_id", dto.getMem_id());
-				session.setAttribute("mem_name", dto.getMem_name());
-				return "redirect:/myGrSelect.do?mem_id="+dto.getMem_id();
-			}
-		}*/
 	}
 	
 	//시스템관리자 접속

@@ -36,7 +36,7 @@
 				</div>
 			</div>
 			<div class = "enter">
-				<input type = "button" class="accountBtn" id = "loginBtn" value="로그인" onclick="doLogin()" style="width: 300px; height: 40px; font-size: 14pt; border-radius: 4px; background-color: #5cb85c; color: #fff;">
+				<input type = "button" class="accountBtn" id = "loginBtn" value="로그인" onclick="doMgrLogin()" style="width: 300px; height: 40px; font-size: 14pt; border-radius: 4px; background-color: #5cb85c; color: #fff;">
 			</div>
 		</form>
 		</div>
