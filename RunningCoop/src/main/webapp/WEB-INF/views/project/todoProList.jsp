@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>진행 예정인 프로젝트 목록 조회 페이지</title>
+<title>Running Co-op :: 진행 예정인 프로젝트 목록</title>
 
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
@@ -90,7 +90,7 @@
 		
 		<div class="pr_search_area">
 			<form action="./myPrSelect.do" method="post">
-				<input type="hidden" name="pr_condition" value="C" />
+				<input type="hidden" name="pr_condition" value="T" />
 				<input type="text" name="pr_name" />
 				<input type="submit" class="body_btn pr_search_btn" value="검색" />
 			</form>
@@ -118,11 +118,11 @@
 		<div id="individual_project_list">
 			<table class="projectTable">
 				<tr>
-					<th style="width: 8%;">번호</th>
-					<th style="width: 8%;">소속</th>
-					<th style="width: 54%;">프로젝트명</th>
-					<th style="width: 15%;">PM명</th>
-					<th style="width: 15%;">비고</th>
+						<th style="width: 10%;">번호</th>
+						<th style="width: 15%;">소속</th>
+						<th style="width: 50%;">프로젝트명</th>
+						<th style="width: 15%;">PM명</th>
+						<th style="width: 10%;">진행률</th>
 				</tr>
 				<tr>
 					<td colspan="5" style="background-color : #E8E8E8;">개인프로젝트</td>
@@ -140,7 +140,7 @@
 								<td>개인</td>
 								<td><span class="pr_name">${ ilist.PR_NAME }</span></td>
 								<td>${ ilist.MEM_NAME }</td>
-								<td></td>
+								<td>${ ilist.PR_PRORATE }%</td>
 							</tr>
 						</c:forEach>
 					</c:otherwise>
@@ -172,11 +172,11 @@
 		<div id="group_project_list" style="display:none;">
 				<table class="projectTable">
 					<tr>
-						<th style="width: 8%;">번호</th>
-						<th style="width: 8%;">소속</th>
-						<th style="width: 54%;">프로젝트명</th>
+						<th style="width: 10%;">번호</th>
+						<th style="width: 15%;">소속</th>
+						<th style="width: 50%;">프로젝트명</th>
 						<th style="width: 15%;">PM명</th>
-						<th style="width: 15%;">비고</th>
+						<th style="width: 10%;">진행률</th>
 					</tr>
 					<tr>
 						<td colspan="5" style="background : #E8E8E8;">그룹 프로젝트</td>
@@ -191,10 +191,10 @@
 							<c:forEach var="glist" items="${ gPrList }" varStatus="vs">
 								<tr onclick="view_Detail('${ glist.PR_ID }')">
 									<td>${ vs.count }</td>
-									<td>그룹</td>
+									<td>${ glist.GR_NAME }</td>
 									<td><span class="pr_name">${ glist.PR_NAME }</span></td>
 									<td>${ glist.MEM_NAME }</td>
-									<td>${ glist.GR_NAME }</td>
+									<td>${ glist.PR_PRORATE }%</td>
 								</tr>
 							</c:forEach>
 						</c:otherwise>

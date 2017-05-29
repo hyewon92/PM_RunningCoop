@@ -14,6 +14,9 @@ public class ProjectDto {
 	private String pr_regDate;
 	private String pr_condition;
 	private String pr_delYN;
+	private String mem_id; // 실제 DB에는 존재하지 않는 컬럼이나 프로젝트 검색 시 해당 변수가 필요하여 추가함.
+	
+	private PagingProDto paging;
 	
 	public ProjectDto(){}
 
@@ -111,6 +114,22 @@ public class ProjectDto {
 
 	public void setPr_delYN(String pr_delYN) {
 		this.pr_delYN = pr_delYN;
+	}
+
+	public String getMem_id() {
+		return mem_id;
+	}
+
+	public void setMem_id(String mem_id) {
+		this.mem_id = mem_id;
+	}
+
+	public PagingProDto getPaging() {
+		return paging;
+	}
+
+	public void setPaging(PagingProDto paging) {
+		this.paging = paging;
 	}
 
 	@Override

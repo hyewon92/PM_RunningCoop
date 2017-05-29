@@ -156,14 +156,14 @@ public interface ProjectService {
 	 * @return List&lt;ProjectDto&gt;
 	 * @author 김혜원
 	 * */
-	public List<Map<String, String>> myGPrSearchSelect(Map<String, String> map);
+	public List<Map<String, String>> myGPrSearchSelect(ProjectDto dto);
 	
 	/**
 	 * 페이징 - 내 프로젝트 목록에서 그룹 프로젝트 조회 시 총 건수
 	 * @param map
 	 * @return
 	 */
-	public int myGpSearchTotalcount(ProjectPagingDto dto);
+	public int myGpSearchTotalcount(ProjectDto dto);
 	
 	/**
 	 * 프로젝트명으로 검색 (내 프로젝트 목록에서 개인 프로젝트 검색)
@@ -171,14 +171,14 @@ public interface ProjectService {
 	 * @return List&lt;ProjectDto&gt;
 	 * @author 김혜원
 	 * */
-	public List<Map<String, String>> myIPrSearchSelect(Map<String, String> map);
+	public List<Map<String, String>> myIPrSearchSelect(ProjectDto dto);
 	
 	/**
 	 * 페이징 - 내 프로젝트 목록에서 개인 프로젝트 조회 시 총 건수
 	 * @param map
 	 * @return
 	 */
-	public int myIpSearchTotalcount(ProjectPagingDto dto);
+	public int myIpSearchTotalcount(ProjectDto dto);
 
 	/**
 	 * 프로젝트 상세정보 조회
