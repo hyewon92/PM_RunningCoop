@@ -3,13 +3,13 @@
  * @author 김혜원
  */
 
-//지정일 일정 조회
-	function dailyList(val1, val2, val3, val4){
-			$(".listBox").children().remove();
+	//지정일 일정 조회
+ 	function dailyList(val1, val2, val3, val4){	//년,월,일,pr_id
+ 		$(".listBox").children().remove();
 		$.ajax({
 			type : "POST",
 			url : "./teamDailySchSelect.do",
-			data: "date="+val1+"-"+val2+"-"+val3+"&pr_id="+val4,
+			data: "pr_id="+val4+"&date="+val1+"-"+val2+"-"+val3,
 			async: false,
 			success: function(msg){
 				showDailyList(msg, val1, val2, val3, val4)
@@ -18,7 +18,7 @@
 	}
 	
 	//지정일 일정 출력
-	function showDailyList(schedule, val1, val2, val3, val4){
+	function showDailyList(schedule, val1, val2, val3, val4){	//map, 년, 월, 일, pr_id
 		if(schedule.length == 0){
 			$(".listBox").append("<p>해당 일에 등록된 일정이 없습니다.</p>");
 		}else{
@@ -30,25 +30,25 @@
 					var sch_seq = schedule[i].sch_seq;
 					var sch_title = schedule[i].sch_title;
 					var title = sch_title;
-					if(schedule[i].pr_id != null){
-						title = pr_name+":"+sch_title;
-					}
-				$(".listBox").css("display", "block");
-				$(".detailBox").css("display", "none");
+				$("#calendar").css({"float":"left", "margin":"initial", "margin-left":"10px"});
+				$("#dayDetail").css("display", "none");
+				$(".scheduleBox").css("display", "none");
+				$(".scheduleModiBox").css("display", "none");
+				$("#dayList").css("display", "block");
 				$(".listBox").append("<span class = 'listChk' onclick = 'showDetail("+sch_seq+",\""+val1+"\",\""+val2+"\",\""+val3+"\",\""+val4+"\")'>"+title+"</span><br>");
 			}
 		}
 	}
 
 	//일정 상세정보 조회
-	function showDetail(val1, val2, val3, val4, val5){
+	function showDetail(seq, val1, val2, val3, val4){	//seq, 년/월/일, pr_id
 		$.ajax({
 			type : "POST",
 			url : "./detailTeamSchedule.do",
-			data: "sch_seq="+val1,
+			data: "sch_seq="+seq,
 			async: false,
 			success: function(msg){
-				dailyList(val2, val3, val4, val5);
+				dailyList(val1, val2, val3, val4);
 				showSchDetail(msg)
 			},
 			error:function(){
@@ -61,7 +61,6 @@
 	function showSchDetail(schedule){
 		var sch_seq = schedule.dto.sch_seq;
 		var pr_id = schedule.dto.pr_id;
-		var pr_name = schedule.dto.projectDto.pr_name;
 		var sch_startDate = schedule.dto.sch_startDate;
 		var sch_endDate = schedule.dto.sch_endDate;
 		var sch_title = schedule.dto.sch_title;
@@ -70,28 +69,31 @@
 		$("#sch_seq").val(sch_seq);
 		$("#sch_startDate").text("시작:"+sch_startDate);
 		$("#sch_endDate").text("종료:"+sch_endDate);
-		$("#sch_title").text(pr_name+":"+sch_title);
 		$("#sch_content").text(sch_content);
 			
+ 		if(pr_id == null){
+			$("#sch_title").text(sch_title);
+		}else{
+			$("#sch_title").text(schedule.dto.projectDto.pr_name+":"+sch_title);
+		}
+ 		$("#calendar").css({"float":"left", "margin":"initial", "margin-left":"10px"});
 		$(".scheduleBox").css("display", "none");
-		$(".detailBox").css("display", "block");
 		$(".scheduleModiBox").css("display", "none");
-		$(".listBox").css("display", "block");
+		$("#dayList").css("display", "block");
+		$("#dayDetail").css("display", "block");
 	}
 	
 	//일정 삭제
 	function goDelete(){
 		var sch_seq = $("#sch_seq").val();
-		var pr_id = $("#pr_id").val();
 		if(confirm("정말로 삭제하시겠습니까?")){
-			location.href = "./deleteTeamSchedule.do?pr_id="+pr_id+"&sch_seq="+sch_seq;
+			location.href = "./deleteTeamSchedule.do?sch_seq="+sch_seq;
 		}
 	}
 	
 	//일정 수정 폼 활성화
 	function goModify(){
 		$("#sch_upSeq").val($("#sch_seq").val());
-		$("#upPr_id").val($("#pr_id").val());
 		$("#sch_upStartDate").val($("#sch_startDate").text().substring(3,13));
 		$("#sch_upStartTime").val($("#sch_startDate").text().substring(14));
 		$("#sch_upEndDate").val($("#sch_endDate").text().substring(3,13));
@@ -99,25 +101,28 @@
 		$("#sch_upTitle").val($("#sch_title").text());
 		$("#sch_upContent").val($("#sch_content").text());
 		
+		$("#calendar").css({"float":"left", "margin":"initial", "margin-left":"10px"});
 		$(".scheduleModiBox").css("display", "block");
 		$(".scheduleBox").css("display", "none");
-		$(".scheduleDetailBox").css("display", "none");
+		$("#dayList").css("display", "none");
+		$("#dayDetail").css("display", "none");
 	}
 	
 	//일정 등록 폼 활성화
 	function openWriteForm(val1, val2, val3){
 		var array = [val1, val2, val3];
 		var day = array.join("-");
-		
+		$("#calendar").css({"float":"left", "margin":"initial", "margin-left":"10px"});
 		$(".scheduleModiBox").css("display", "none");
-		$(".scheduleDetailBox").css("display", "none");
 		$(".scheduleBox").css("display", "block");
+		$("#dayDetail").css("display", "none");
+		$("#dayList").css("display", "none")
+		;
 		$("#sch_newStartDate").val(day);
 		$("#sch_newEndDate").val(day);
 	}
 	
 	$(function(){
-		
 		//일정 등록
 		$(".scheduleBox").submit(function(){
 			if($("#sch_newStartTime").val().length == 0){
@@ -130,7 +135,7 @@
 			$("#newStartTotal").val(newStartTotal);
 			var newEndTotal = $("#sch_newEndDate").val()+" "+$("#sch_newEndTime").val();
 			$("#newEndTotal").val(newEndTotal);
-			if($("#sch_title").val().length == 0){
+			if($("#sch_newTitle").val().length == 0){
 				alert("일정 제목을 입력해주세요");
 				return false;
 			}

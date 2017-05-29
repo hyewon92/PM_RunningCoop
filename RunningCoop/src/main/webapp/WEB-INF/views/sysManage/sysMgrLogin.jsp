@@ -32,7 +32,7 @@
 					<input type = "text" class="id" id = "loginId" name = "mem_id" placeholder = "아이디">
 				</div>
 				<div class = "pwPart">
-					<input type = "password" class="pw" id = "loginPw" name = "mem_pw" placeholder = "비밀번호" onKeypress="if(event.keyCode==13) $('.loginBox').submit();">
+					<input type = "password" class="pw" id = "loginPw" name = "mem_pw" placeholder = "비밀번호" onKeypress="if(event.keyCode==13) $('#loginBtn').click();">
 				</div>
 			</div>
 			<div class = "enter">

@@ -27,13 +27,11 @@
 				data: loginForm,
 				async: false,
 				success:function(result){
-					alert(result.login);
 					if(!result.login){
 						$(".loginFail").append("<p style = 'font-size:8pt; color:red;'>로그인에 실패했습니다. 아이디 또는 비밀번호를 확인해주세요</p>");
 					}else if(result.login=="mgr"){
 						location.href = "./enterMgr.do";
 					}else{
-						alert("사용자");
 						location.href = "./myGrSelect.do?mem_id="+$("#loginId").val();
 					}
 				}

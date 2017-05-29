@@ -8,14 +8,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>개인 일정 관리</title>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <link rel="stylesheet" href="css/body/user_account.css" type="text/css"/>
 <style type="text/css">
 	#calendar{
-	    /*  float: left;
-	   	margin-left: 50px; */
-	  	
 	  	margin: auto;
 	    display:block;
 	    .border-box;
@@ -76,8 +73,9 @@
 	}
 	
 	.arrow {
-		width: 30px;
-		height: 30px;
+		padding-top: 17px;
+		width: 15px;
+		height: 15px;
 	}
 	
 	b {
@@ -218,11 +216,11 @@
 	<!-- 달력 출력 -->
 	<table id="calendar">
 		<caption class = "calendar_header">
-			<a href="./viewSchedule.do?year=<%=year-1%>&month=<%=month%>"><img alt="이전 년도 이동" class="arrow" src="images/bigLeft.png"></a> 
-			<a href="./viewSchedule.do?year=<%=year%>&month=<%=month-1%>"><img alt="이전 월 이동" class="arrow" src="images/left.png"></a> 
+			<a href="./viewSchedule.do?year=<%=year-1%>&month=<%=month%>"><img alt="이전 년도 이동" class="arrow" src="images/beforeY.png"></a> 
+			<a href="./viewSchedule.do?year=<%=year%>&month=<%=month-1%>"><img alt="이전 월 이동" class="arrow" src="images/beforeM.png"></a> 
 			<b><%=year %>년<%=month %>월</b> 
-			<a href="./viewSchedule.do?year=<%=year%>&month=<%=month+1%>"><img alt="이전 월 이동" class="arrow" src="images/right.png"></a> 
-			<a href="./viewSchedule.do?year=<%=year+1%>&month=<%=month%>"><img alt="이전 월 이동" class="arrow" src="images/bigRight.png"></a>
+			<a href="./viewSchedule.do?year=<%=year%>&month=<%=month+1%>"><img alt="이전 월 이동" class="arrow" src="images/nextM.png"></a> 
+			<a href="./viewSchedule.do?year=<%=year+1%>&month=<%=month%>"><img alt="이전 월 이동" class="arrow" src="images/nextY.png"></a>
 		</caption>
 		<col width="14.28%">
 		<col width="14.28%">

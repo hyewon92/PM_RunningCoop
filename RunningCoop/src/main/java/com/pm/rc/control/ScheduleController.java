@@ -139,7 +139,7 @@ public class ScheduleController {
 	@RequestMapping(value = "/teamDailySchSelect.do")
 	@ResponseBody
 	public List<ScheduleDto> teamDailySchSelect(String date, String pr_id){
-		logger.info("DailySchSelect실행");
+		logger.info("teamDailySchSelect실행");
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("pr_id", pr_id);
 		map.put("date", date);

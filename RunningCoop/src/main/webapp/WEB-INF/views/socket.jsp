@@ -66,7 +66,7 @@
 	
 	.chat{
 		width: 340px;
-		height: 40px;
+		height: 35px;
 		padding: 5px;
 		float:left; 
 		margin-top:4px; 
@@ -162,7 +162,7 @@
             $(".chat_div").show();
             $(".chat").focus();
             
-            ws = new WebSocket("ws://192.168.0.14:8095/RunningCoop/wsChat.do");
+            ws = new WebSocket("ws://192.168.1.14:8091/RunningCoop/wsChat.do");
             
             ws.onopen = function() {
                ws.send("#$nick_"+nick);
@@ -178,6 +178,7 @@
 /*             		for(var i = 1; i*10 < msg.length; i++){
             			msg.replace(msg.charAt(i*10),msg.charAt(i*10)+"\n");
             		} */
+            		msg = msg.substring(3);
             		$(".receive_msg").append($("<div class = 'sendTxt'>").append($("<span class ='sender_img'>").text(msg))).append("<br><br>");
             	}else{
             		$(".receive_msg").append($("<div class = 'receiveTxt'>").append($("<span class = 'receiver_img'>").text(msg))).append("<br><br>");

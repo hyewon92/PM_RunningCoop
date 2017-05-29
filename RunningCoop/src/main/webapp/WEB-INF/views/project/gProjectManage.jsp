@@ -432,7 +432,7 @@
 		</div>
 		<div class = "calendar_manage">
 			<div>
-				<iframe width = "100%" height = "595px"  src = "./viewTeamSchedule.do?pr_id=${ pr_id }">
+				<iframe width = "100%" height = "650px" frameborder = "0" framespacing = "0"  src = "./viewTeamSchedule.do?pr_id=${ pr_id }">
 				</iframe>
 			</div>
 		</div>

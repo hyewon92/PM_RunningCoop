@@ -104,7 +104,7 @@ public class MySocketHandler extends TextWebSocketHandler implements ServletConf
 					String otherMemSession = (String)sessionMap.get("mem_id");
 					if(myGrSession.equals(otherGrSession)){
 						if(msg2.equals(otherMemSession)){
-							String newMsg = "[나] \n"+msg.replace(msg.substring(0, msg.trim().indexOf(":")+1),"");
+							String newMsg = "[나]"+msg.replace(msg.substring(0, msg.trim().indexOf(":")+1),"");
 							System.out.println("newMsg:"+newMsg);
 							//txt = "<font color='pink' size='2px' style = 'float : right;'>"+newMsg+"</font>" ;
 							txt = newMsg;
