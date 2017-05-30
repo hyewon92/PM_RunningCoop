@@ -73,13 +73,13 @@ public class GroupController implements ServletConfigAware {
 	
 	// 그룹선택 초기 화면 
 	@RequestMapping(value= "/myGrSelect.do" , method=RequestMethod.GET)
-	public String myGrSelect(Model model, HttpServletRequest request ,HttpSession session){
+	public String myGrSelect(Model model, HttpSession session){
 		
 		session.removeAttribute("gr_level");
 		session.removeAttribute("gr_id");
 		
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("mem_id", request.getParameter("mem_id"));
+		map.put("mem_id", (String)session.getAttribute("mem_id"));
 		logger.info("=================== 그룹 선택 화면 이동 =======================");
 		
 		List<GroupDto> lists = service.myGrSelect(map);
@@ -115,7 +115,7 @@ public class GroupController implements ServletConfigAware {
 	}
 	//그룹관리 화면
 	@RequestMapping(value="/grmodify.do" , method=RequestMethod.GET)
-	public String 	grmodifyMove(Model model, HttpServletRequest requestl){
+	public String 	grmodifyMove(Model model, HttpServletRequest requestl, HttpSession session){
 		Map<String,String> map = new HashMap<String, String>();
 		map.put("gr_id", requestl.getParameter("gr_id"));
 		logger.info("그룹상세정보 띄우기");
@@ -123,6 +123,13 @@ public class GroupController implements ServletConfigAware {
 		Map<String, String> lists = service.grDetailSelect(map);
 		System.out.println(lists.get("GR_ID")+"ffffffffffffffffffffffffffff");
 		model.addAttribute("grSelect" , lists);
+		
+		//회원탈퇴할때 바로 그룹삭제하기 위해 세션에 그룹아이디 넣기(세션값에 값이 없을 경우)
+		String ss_gr_id = (String)session.getAttribute("gr_id");
+		if(ss_gr_id == null){
+			session.setAttribute("gr_id", requestl.getParameter("gr_id"));
+		}
+		
 		return "Group/grInformationModify";
 	}
 	//그룹 정보 수정 하는 곳
@@ -308,7 +315,7 @@ public class GroupController implements ServletConfigAware {
 		boolean isc = false;
 		isc = service.groupDelete(gr_id);
 			if(isc=true){
-				return "account/loginAfter";
+				return "redirect:/myGrSelect.do";
 			}else{
 				return "account/error/error";
 			}
@@ -565,8 +572,34 @@ public class GroupController implements ServletConfigAware {
 //				model.addAttribute("attach", list);
 //			}
 
-			return "sysBoard/boardView";
+			return "Group/grBoardView";
 		}
+		
+
+		// 수정페이지 이동
+		@RequestMapping(value="/grboardEditMove.do", method = RequestMethod.GET)
+		public String boardEditPageMove(HttpServletRequest request, Model model){
+			String br_uuid = request.getParameter("br_uuid");
+			
+			logger.info("===================== 문의 게시글 수정 폼 이동 ======================");
+			logger.info("수정할 게시글 아이디 : "+br_uuid);
+			logger.info("============================================================");
+
+			Map<String, String> map = new HashMap<String, String>();
+//			map.put("sbr_uuid", sbr_uuid);
+
+			Map<String, String> view = new HashMap<String, String>();
+//			view = service.editBoardViewSelect(map);
+
+			Map<String, String> attach = null;
+//			attach = service.sysAttachSelect(map);
+
+			model.addAttribute("view", view);
+			model.addAttribute("attach", attach);
+
+			return "sysBoard/boardEdit";
+		}
+	
 		
 	
 	
