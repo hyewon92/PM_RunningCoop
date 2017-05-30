@@ -58,7 +58,7 @@
 					<th style = "width: 10%;">위임하기</th>
 				</tr>
 		 		<c:choose>
-					<c:when test="${fn:length(gmSearchList)==0}">
+					<c:when test="${fn:length(pmSearchList)==0}">
 						<tr>
 							<td colspan="5">해당 프로젝트가 없습니다</td>
 						</tr>
@@ -70,7 +70,7 @@
 								<td>${ pmList.get("PR_NAME")}</td>
 								<td>${ pmList.get("PR_LEVEL")}</td>
 								<td>${ pmList.get("GR_ID")}</td>
-								<td><input type = "button" value = "위임하기" style = "width: 80px; height: 30px; font-size:10pt; border-radius: 4px; background-color: #5cb85c; color: #fff; border: 0px;" onclick="location.href='./goProManage.do?pr_id=${gmList.get('PR_ID')}'"></td>
+								<td><input type = "button" value = "위임하기" style = "width: 80px; height: 30px; font-size:10pt; border-radius: 4px; background-color: #5cb85c; color: #fff; border: 0px;" onclick="location.href='./goProManage.do?pr_id=${pmList.get('PR_ID')}&gr_id=${pmList.get('GR_ID')}'"></td>
 							</tr>
 						</c:forEach>
 		 			</c:otherwise>

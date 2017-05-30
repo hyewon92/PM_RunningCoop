@@ -796,10 +796,15 @@ public class ProjectController {
 		model.addAttribute("detail", map);
 
 		String gr_id = (String)session.getAttribute("gr_id");
+		String gr_id2 =request.getParameter("gr_id");
+		logger.info("=======gr_id: "+gr_id2);
 
-		if (gr_id == null){
+		if (gr_id == null  &&  gr_id2 == null){
 			return "project/mProjectManage";
-		} else {
+		} else if(gr_id == null){
+			session.setAttribute("gr_id", gr_id2);
+			return "project/gProjectManage";
+		}else{
 			return "project/gProjectManage";
 		}
 	}

@@ -23,7 +23,7 @@
 					}else if(result.login=="mgr"){
 						alert("관리자 계정은 관리자 페이지에서 로그인 해주세요.");
 					}else{
-						location.href = "./myGrSelect.do?mem_id="+$("#loginId").val();
+						location.href = "./myGrSelect.do";
 					}
 				}
 			});

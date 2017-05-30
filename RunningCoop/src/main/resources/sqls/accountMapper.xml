@@ -57,7 +57,7 @@
 		RC_GROUPMEM GM,
 		RC_GROUP G
 		WHERE GM.GR_ID = G.GR_ID AND GM.MEM_ID = #{mem_id} AND
-		GM.GR_LEVEL = 'GM'
+		GM.GR_LEVEL = 'GM' AND G.GR_DELYN = 'N'
 	</select>
 	
 	<!-- 탙퇴하기 전 PM으로 소속된 프로젝트 조회 -->
@@ -67,7 +67,9 @@
 		AND PM.MEM_ID = #{mem_id} 
 		AND P.PR_ID = GP.PR_ID 
 		AND PM.PR_LEVEL = 'PM' 
-		AND P.PR_CONDITION <> 'C']]>
+		AND P.PR_CONDITION <> 'C'
+		AND P.PR_DELYN = 'N'
+		]]>
 	</select> 
 	
 	<!-- 그룹 프로젝트 탈퇴 처리 -->
