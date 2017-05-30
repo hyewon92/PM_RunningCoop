@@ -213,21 +213,33 @@
 		})
 	}
 	
+	function new_commentLength(val){
+		var value = $(val).val();
+		if(value.length > 200){
+			alert("댓글은 200자를 넘을 수 없습니다!");
+			$(val).val(value.substring(0,199));
+		}
+	}
+	
 	/* 업무 상세 페이지 - 업무 코멘트 추가 기능 */
 	function wcom_Insert(){
 		var wk_id = $("#wk_id").val();
 		var wcom_content = $("#new_wcom_content").val();
-		$("#new_wcom_content").val("");
-		
-		$.ajax({
-			type : "POST",
-			url : "./wcominsert.do",
-			data : {"wk_id": wk_id, "wcom_content": wcom_content},
-			async : false,
-			success : function(nodes){
-				showcommentList(nodes)
-			}
-		})
+		if(wcom_content.length <= 200){
+			$("#new_wcom_content").val("");
+			
+			$.ajax({
+				type : "POST",
+				url : "./wcominsert.do",
+				data : {"wk_id": wk_id, "wcom_content": wcom_content},
+				async : false,
+				success : function(nodes){
+					showcommentList(nodes)
+				}
+			})
+		} else {
+			alert("댓글은 200자를 초과할 수 없습니다!");
+		}
 	}
 	
 	/* 업무 상세 페이지 - 업무 코멘트 수정 폼 출력 */

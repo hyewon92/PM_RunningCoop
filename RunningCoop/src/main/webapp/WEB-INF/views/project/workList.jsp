@@ -267,7 +267,7 @@
 						<div id="wk_Comment_List">
 						</div>
 						<div id="new_comment_insert">
-							<input type="text" id="new_wcom_content" value="" />
+							<input type="text" id="new_wcom_content" onkeyup="new_commentLength(this)"/>
 							<input type="button" class="body_btn comment_insert_btn" value="등록" onclick="wcom_Insert()" />
 						</div>
 					</div>
