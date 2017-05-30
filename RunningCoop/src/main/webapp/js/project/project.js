@@ -55,6 +55,8 @@
 	
 	/* 업무 추가 폼 표시 */
 	function workInsert(){
+		$("#work_reset").click();
+		document.getElementById("new_workEnddate").valueAsDate = new Date();
 		$(".work_Edit_Form").css("display", "none");
 		$(".workInsert_Form").css("display", "block");
 		$("#promem_insert_table").children("tbody").children().remove();
@@ -87,6 +89,14 @@
 			resizable : false,
 			modal : true,
 		});
+	}
+	
+	function wk_title_length(val){
+		var value = $(val).val();
+		if(value.length >= 25){
+			alert("25자 이상 작성할 수 없습니다!");
+			$(val).val(value.substring(0, 24));
+		}
 	}
 	
 	/* 업무 삭제 기능 */

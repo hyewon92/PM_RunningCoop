@@ -120,7 +120,7 @@
 		</div>
 
 		<div class="adm_search_area">
-			<form action="./sysMemSearch.do" method="post">
+			<form action="./sysMemMgr.do" method="post">
 				<input type="text" name="mem_name" />
 				<input type="submit" class="body_btn mem_search" value="검색" />
 			</form>
@@ -163,12 +163,12 @@
 						<c:otherwise>
 							<c:forEach var="list" items="${ list }" >
 								<tr>
-									<td></td>
-									<td>${ list.mem_id }</td>
-									<td>${ list.mem_name }</td>
-									<td>${ list.mem_email }</td>
-									<td>${ list.mem_phone }</td>
-									<td>${ list.mem_regDate }</td>
+									<td>${ list.RNUM }</td>
+									<td>${ list.MEM_ID }</td>
+									<td>${ list.MEM_NAME }</td>
+									<td>${ list.MEM_EMAIL }</td>
+									<td>${ list.MEM_PHONE }</td>
+									<td>${ list.MEM_REGDATE }</td>
 									<td><input type = "button" value = "수정" onclick="selectMem('${list.mem_id}')"/></td>
 								</tr>
 							</c:forEach>

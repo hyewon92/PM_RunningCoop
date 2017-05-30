@@ -13,23 +13,8 @@
 </div>
 
 <div id="container">
-	<h3>개발자 정보</h3>
 	
-	<div class="developer_1">
-		<table>
-			<tr>
-				<th>이름</th>
-				<td>김혜원</td>
-			</tr>
-			<tr>
-				<th>역할</th>
-				<td>PM</td>
-			</tr>
-			<tr>
-				<th>맡은 역할</th>
-				<td>개발, 기획</td>
-			</tr>
-		</table>		
+	<div class="devel_img_div">
 	</div>
 
 </div>

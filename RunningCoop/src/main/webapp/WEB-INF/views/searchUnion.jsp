@@ -30,6 +30,8 @@
 	<jsp:include page="header.jsp" flush="false"/>
 </div>
 <div id = "container">
+
+	<div id = "search_union_background">
 	
 	<div class="search_union_div">
 		<select id="select_type">
@@ -52,6 +54,8 @@
 				<input type="text" name="pr_name" id="pr_name" />
 			</div>
 		</form>
+	</div>
+	
 	</div>
 	
 </div>

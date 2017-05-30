@@ -7,11 +7,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>그룹 프로젝트 선택화면</title>
+<title>Running Co-op :: 그룹 프로젝트</title>
 
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.js"></script>
 <script type="text/javascript" src="js/canvasjs.min.js"></script>
 
 <script type="text/javascript">
@@ -107,6 +106,8 @@
 	}
 	
 	function createGPro(){
+		$("#reset_create").click();
+		document.getElementById("new_startdate").valueAsDate = new Date();
 		$("#create_Form").dialog({
 			title : "그룹 프로젝트 생성",
 			height : 400,
@@ -138,6 +139,14 @@
 				}
 			}
 		})
+	}
+	
+	function pr_name_length(val){
+		var value = $(val).val();
+		if(value.length >= 25){
+			alert("25자 이상 작성할 수 없습니다!");
+			$(val).val(value.substring(0, 24));
+		}
 	}
 </script>
 </head>
@@ -218,19 +227,19 @@
 				<tr>
 					<th>프로젝트 명</th>
 					<td>
-						<input type="text" name="pr_name"/>
+						<input type="text" name="pr_name" required="required" onkeyup="pr_name_length(this)"/>
 					</td>
 				</tr>
 				<tr>
 					<th>프로젝트 시작일자</th>
 					<td>
-						<input type="date" name="pr_startdate"/>
+						<input type="date" name="pr_startdate" id="new_startdate"/>
 					</td>
 				</tr>
 				<tr>
 					<th>프로젝트 종료일자</th>
 					<td>
-						<input type="date" name="pr_enddate"/>
+						<input type="date" name="pr_enddate" required="required"/>
 					</td>
 				</tr>
 				<tr>
@@ -246,7 +255,8 @@
 					</td>
 				</tr>
 			</table>
-		<input type="submit" value="프로젝트 생성"/>
+		<input type="reset" class="body_btn create_btn" id="reset_create" value="초기화"/>
+		<input type="submit" value="프로젝트 생성" class="body_btn create_btn"/>
 	</form>
 	</div>
 </div>

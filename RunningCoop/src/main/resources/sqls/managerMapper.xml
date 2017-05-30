@@ -10,23 +10,28 @@
 	</select>
 
 	<!-- 	회원목록 페이징 처리  -->
-	<select id="allMemberSelect" resultType="MemberDto" parameterType="PagingProDto">
+	<select id="allMemberSelect" resultType="java.util.Map" parameterType="MemberDto">
 	SELECT *
 		FROM ( SELECT ROWNUM RNUM, P.*
 		      FROM (
 					SELECT MEM_ID, MEM_NAME, MEM_EMAIL, MEM_PHONE, TO_CHAR(MEM_REGDATE, 'YYYY/MM/DD') MEM_REGDATE
 					FROM RC_MEMBER
 					WHERE MEM_DELYN = 'N' AND MEM_LEVEL = 'N'
+					<if test="mem_name != null">
+						AND MEM_NAME LIKE '%${mem_name}%'
+					</if>
 					ORDER BY MEM_REGDATE
-		      ) P
-		    )	
-		WHERE RNUM BETWEEN #{start} AND #{last}	
+		      ) P)	
+		WHERE RNUM BETWEEN #{paging.start} AND #{paging.last}	
 	</select>
 	
-	<select id="allMemberSelectCount" resultType="java.lang.Integer">
+	<select id="allMemberSelectCount" parameterType="MemberDto" resultType="java.lang.Integer">
 	SELECT NVL(COUNT(*),0)
 	FROM RC_MEMBER
 	WHERE MEM_DELYN = 'N' AND MEM_LEVEL = 'N'
+	<if test="mem_name != null">
+		AND MEM_NAME LIKE '%${mem_name}%'
+	</if>
 	</select>
 	<!-- 	페이징처리 끝 -->
 	

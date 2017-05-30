@@ -32,18 +32,18 @@ public class ManagerDaoimpl implements ManagerDao {
 	}
 	
 	@Override
-	public List<MemberDto> allMemberSelect(PagingProDto maPaging) {
-		return sqlSession.selectList(NAMESPACE+"allMemberSelect",maPaging);
+	public List<Map<String, String>> allMemberSelect(MemberDto dto) {
+		return sqlSession.selectList(NAMESPACE+"allMemberSelect", dto);
 	}
 	
 	@Override
-	public int allMemberSelectCount() {
-		return sqlSession.selectOne(NAMESPACE+"allMemberSelectCount");
+	public int allMemberSelectCount(MemberDto dto) {
+		return sqlSession.selectOne(NAMESPACE+"allMemberSelectCount", dto);
 	}
 
 	@Override
-	public List<MemberDto> allMemberSelectSearch(Map<String, String> map) {
-		return sqlSession.selectList(NAMESPACE+"allMemberSelectSearch", map);
+	public List<MemberDto> allMemberSelectSearch(MemberDto dto) {
+		return sqlSession.selectList(NAMESPACE+"allMemberSelect", dto);
 	}
 	
 	@Override

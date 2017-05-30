@@ -165,7 +165,7 @@
 					<table>
 						<tr>
 							<th>업무 명</th>
-							<td><input type="text" name="wk_title" value="" /></td>
+							<td><input type="text" name="wk_title" required="required" onkeyup="wk_title_length(this)"/></td>
 						</tr>
 						<tr>
 							<th>업무 담당자</th>
@@ -173,9 +173,10 @@
 						</tr>
 						<tr>
 							<th>업무 마감기한</th>
-							<td><input type="date" name="wk_endDate" value="" /></td>
+							<td><input type="date" name="wk_endDate" id="new_workEnddate" required="required" /></td>
 						</tr>
 					</table>
+					<input type="reset" class="body_btn workInsert_btn" id="work_reset" value="초기화"/>
 					<input type="submit" class="body_btn workInsert_btn" value="등록" />
 				</form>
 			</div>
