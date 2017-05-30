@@ -57,32 +57,15 @@ public class AccountController {
 				session.setAttribute("mem_name", dto.getMem_name());
 				session.setAttribute("mem_level", dto.getMem_level());
 				result = "mgr";
-			//	return "sysManage/grApply";
 			} else{
 				session.setAttribute("mem_id", dto.getMem_id());
 				session.setAttribute("mem_name", dto.getMem_name());
 				result = "user";
-			//	return "redirect:/myGrSelect.do?mem_id="+dto.getMem_id();
 			}
 		}
-		
 		Map<String, String> resultMap = new HashMap<String, String>();
 		resultMap.put("login", result);
 		return resultMap;
-/*		if(dto == null){
-			return "account/error/error";
-		}else{
-			if(dto.getMem_level().equals("Y")){
-				session.setAttribute("mem_id", dto.getMem_id());
-				session.setAttribute("mem_name", dto.getMem_name());
-				session.setAttribute("mem_level", dto.getMem_level());
-				return "sysManage/grApply";
-			} else{
-				session.setAttribute("mem_id", dto.getMem_id());
-				session.setAttribute("mem_name", dto.getMem_name());
-				return "redirect:/myGrSelect.do?mem_id="+dto.getMem_id();
-			}
-		}*/
 	}
 	
 	//시스템관리자 접속
@@ -268,37 +251,44 @@ public class AccountController {
 	}
 
 	//탈퇴처리
-	@RequestMapping(value = "/leaveService.do")
-	public String leaveService(HttpSession session, HttpServletResponse resp){
-		logger.info("leaveService실행");
-
-		resp.setContentType("text/html;charset:UTF-8");
-		resp.setHeader("Cache-Control", "no-cache");	
+	@RequestMapping(value = "/doLeaveService.do")
+	@ResponseBody
+	public Map<String, Boolean> doLeaveService(HttpSession session){
+		logger.info("doLeaveService실행");
+		
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
 
 		//탈퇴전 gm,pm 재확인
 		String mem_id = (String)session.getAttribute("mem_id");
 		List<Map<String, String>> pmSearchList = accountService.levelPmSelect(mem_id);
 		List<Map<String, String>> gmSearchList = accountService.levelGmSelect(mem_id);
 		if(pmSearchList.size()!=0||gmSearchList.size()!=0){
-			try {
-				resp.getWriter().print("<script>alert('PM/GM으로 소속된 프로젝트가 있습니다. 확인해주세요')</script>");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return "account/goLeave";
+			map.put("result", false);
 		}else{
-			//탈퇴처리
+			map.put("result", true);
+/*			//탈퇴처리
 			boolean isc = accountService.memDelete(mem_id);
 			if(isc == true){
 				session.invalidate();
 				return "account/bye";
 			}else{
 				return "account/error/error";
-			}
+			}*/
 		}
+		return map;
 	}
 
 	//서비스 탈퇴
+	@RequestMapping(value = "/deleteMem.do")
+	@ResponseBody
+	public Map<String, Boolean> deleteMem(HttpSession session){
+		logger.info("deleteMem 실행");
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		String mem_id = (String)session.getAttribute("mem_id");
+		boolean isc = accountService.memDelete(mem_id);
+		map.put("result", isc);
+		return map;
+	}
 
 	/*	//GM위임하기
 	@RequestMapping(value = "/giveGm.do", method = RequestMethod.POST)

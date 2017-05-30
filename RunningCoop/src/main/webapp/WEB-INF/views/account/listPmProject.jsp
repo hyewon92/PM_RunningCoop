@@ -8,6 +8,37 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/main.css" type="text/css">
+<style type="text/css">
+	#projectPmList{
+		clear: both;
+		overflow: auto;
+		padding-top: 20px;
+	}
+	
+	.pmListTable{
+		border-collapse: collapse;
+		margin-top: 15px;
+		width: 90%;
+		margin: auto;		
+	}
+	
+	.pmListTable th{
+		color: white;
+		background: darkgreen;
+		font-weight: bold;
+		text-align: center;
+	}
+	
+	.pmListTable th, td, tr{
+		border-top: 0.5px solid #D8D8D8;
+		border-bottom: 0.5px solid #D8D8D8; 	
+	}
+</style>
+<script type="text/javascript">
+	function closeWindow(){
+		window.close();		
+	}
+</script>
 </head>
 <body>
 
@@ -16,34 +47,37 @@
 	</div>
 
 	<div id = "container">
-		<h1>PM으로 소속된 프로젝트 목록</h1>
-		<table>
-			<tr>
-				<th>프로젝트아이디</th>
-				<th>프로젝트명</th>
-				<th>권한</th>
-				<th>그룹아이디</th>
-				<th>위임하기</th>
-			</tr>
-	 		<c:choose>
-				<c:when test="${fn:length(gmSearchList)==0}">
-					<tr>
-						<td colspan="4">해당 프로젝트가 없습니다</td>
-					</tr>
-				</c:when>
-				<c:otherwise> 
-					<c:forEach var="pmList" items="${pmSearchList}">
+		<h3>PM으로 소속된 프로젝트 목록</h3>
+		<div id = "projectPmList">
+			<table class = "pmListTable">
+				<tr>
+					<th style = "width: 25%;">프로젝트아이디</th>
+					<th style = "width: 30%;">프로젝트명</th>
+					<th style = "width: 10%;">권한</th>
+					<th style = "width: 25%;">그룹아이디</th>
+					<th style = "width: 10%;">위임하기</th>
+				</tr>
+		 		<c:choose>
+					<c:when test="${fn:length(pmSearchList)==0}">
 						<tr>
-							<td>${ pmList.get("PR_ID")}</td>
-							<td>${ pmList.get("PR_NAME")}</td>
-							<td>${ pmList.get("PR_LEVEL")}</td>
-							<td>${ pmList.get("GR_ID")}</td>
-							<td><input type = "button" value = "위임하기" onclick = "location.href='./goProManage.do?pr_id=${ pmList.get('PR_ID')}'"></td>
+							<td colspan="5">해당 프로젝트가 없습니다</td>
 						</tr>
-					</c:forEach>
-	 			</c:otherwise>
-			</c:choose>
-		</table>
+					</c:when>
+					<c:otherwise> 
+						<c:forEach var="pmList" items="${pmSearchList}">
+							<tr>
+								<td>${ pmList.get("PR_ID")}</td>
+								<td>${ pmList.get("PR_NAME")}</td>
+								<td>${ pmList.get("PR_LEVEL")}</td>
+								<td>${ pmList.get("GR_ID")}</td>
+								<td><input type = "button" value = "위임하기" style = "width: 80px; height: 30px; font-size:10pt; border-radius: 4px; background-color: #5cb85c; color: #fff; border: 0px;" onclick="location.href='./goProManage.do?pr_id=${pmList.get('PR_ID')}&gr_id=${pmList.get('GR_ID')}'"></td>
+							</tr>
+						</c:forEach>
+		 			</c:otherwise>
+				</c:choose>
+			</table>
+			<input type = "button" value = "돌아가기" style = "width: 80px; height: 30px; margin-top:20px; font-size:10pt; border-radius: 4px; border: 0px; background-color: #5cb85c; color: #fff;" onclick = "closeWindow();">
+		</div>
 	</div>
 	
 	<div id = "footer">

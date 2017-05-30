@@ -105,11 +105,43 @@
 	}
 	
 	function goListPm(){
-		location.href = "./viewListPm.do";
+		window.open("./viewListPm.do");
 	}
 	
 	function goListGm(){
-		location.href = "./viewListGm.do";
+		window.open("./viewListGm.do");
+	}
+	
+	function doLeave(){
+		$.ajax({
+			type: "GET",
+			url: "./doLeaveService.do",
+			async: false,
+			success: function(msg){
+				if(!msg.result){
+					alert("프로젝트 관리자와 그룹 관리자 권한을 모두 위임해야 탈퇴가 가능합니다");
+				}else{
+					leaveService();
+				}
+			}
+			
+		});
+	}
+	
+	function leaveService(){
+		$.ajax({
+			type: "GET",
+			url: "./deleteMem.do",
+			async: false,
+			success: function(msg){
+				if(!msg.result){
+					alert("탈퇴가 정상적으로 종료되지 못했습니다. 다시 시도해주세요.");
+				}else{
+					alert("탈퇴가 성공적으로 이뤄졌습니다. 감사합니다.");
+					location.href = "./main.do";
+				}
+			}
+		});
 	}
 </script>
 </head>
@@ -141,7 +173,7 @@
 					<input type = "submit" class = "accountBtn" id = "modifyInfo" value = "수정" style = "width: 450px; height: 40px; font-size:14pt; border-radius: 4px; background-color: #5cb85c; color: #fff;">
 				</div>
 			</form>
-			<form class = "leaveBox" action="./leaveService.do" method="post">
+			<div class = "leaveBox">
 				<div class = "rowGroup" style = "margin-top: 15%; padding: 20px;">
 					<div style = "overflow: hidden">
 						<img alt="본인인증안내" src="images/exclamation.png" style = "width: 30px; height: 30px;">
@@ -151,9 +183,9 @@
 					<input type = "button" class = "leaveBtn" value = "그룹관리자 위임하기" onclick = "goListGm()">
 				</div>
 				<div class = "enter">
-					<input type = "submit" class = "accountBtn" id = "leaveService" value = "탈퇴하기" style = "width: 450px; height: 40px; margin-top:10%; font-size:14pt; border-radius: 4px; background-color: #5cb85c; color: #fff;">
+					<input type = "button" class = "accountBtn" id = "leaveService" value = "탈퇴하기" style = "width: 450px; height: 40px; margin-top:10%; font-size:14pt; border-radius: 4px; background-color: #5cb85c; color: #fff;" onclick = "doLeave()">
 				</div>
-			</form>
+			</div>
 		</div>
 	</div>
 	
