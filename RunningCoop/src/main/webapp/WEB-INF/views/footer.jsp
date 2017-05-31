@@ -173,11 +173,39 @@
   	
   	function groupOut(){
   		var rst = confirm("그룹을 탈퇴 하시겠습니까?");
-  		
+  		var mem_id = "<%=userId%>";
   		if(rst == true){
-  			location.href="./groupOut.do?gr_id="+gr_id;
+			$.ajax({
+				type : "POST",
+				url : "./groupOut.do",
+				async : false,
+				success : function(rst){
+					if(rst){
+						
+					}else{
+						leaveService();
+					}
+					
+				}
+			})  		
   		}
   	}
+  	
+	function leaveService(){
+		$.ajax({
+			type: "GET",
+			url: "./deleteMem.do",
+			async: false,
+			success: function(msg){
+				if(!msg.result){
+					alert("탈퇴가 정상적으로 종료되지 못했습니다. 다시 시도해주세요.");
+				}else{
+					alert("탈퇴가 성공적으로 이뤄졌습니다. 감사합니다.");
+					location.href = "./main.do";
+				}
+			}
+		});
+	}
   	
 </script>
 </head>

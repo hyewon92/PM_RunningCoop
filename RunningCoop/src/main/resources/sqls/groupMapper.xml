@@ -273,4 +273,16 @@
 	BR_UUID = #{br_uuid}
 	</select>
 	
+<!-- 	그룹탈퇴 시작 -->
+<!-- 	게시글 삭제 -->
+	<update id="grBoardViewSelect2">
+	UPDATE RC_GRBOARD SET BR_DELYN = 'Y'
+	WHERE MEM_ID = #{mem_id}
+	</update>
+<!-- 	그룹멤버 조정 -->
+	<update id="grBoardViewSelect3">
+	UPDATE RC_GROUP SET GR_MEMCNT =  GR_MEMCNT-1 WHERE GR_ID = #{gr_id}
+	</update>
+	
+	
 </mapper>

@@ -31,6 +31,7 @@ import com.pm.rc.dto.GroupBoardDto;
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.PagingDto;
+import com.pm.rc.model.service.AccountService;
 import com.pm.rc.model.service.GroupService;
 import com.pm.rc.model.service.ManagerService;
 
@@ -64,6 +65,8 @@ public class GroupController implements ServletConfigAware {
 	@Autowired
 	private JavaMailSender mailSend;
 	
+	@Autowired
+	private AccountService accountService;
 	/*
 	 *Application 객체를 사용하기 위해 객체를 담아줌
 	 * */
@@ -724,6 +727,44 @@ public class GroupController implements ServletConfigAware {
 			return "redirect:/grBoradList.do";
 		}
 		
-	
+		//탈퇴처리
+		@RequestMapping(value = "/groupOut.do", method=RequestMethod.POST)
+		@ResponseBody
+		public Map<String, Boolean> grdoLeaveService(HttpSession session){
+			logger.info("groupOut실행");
+			
+			Map<String, Boolean> map = new HashMap<String, Boolean>();
+
+			//탈퇴전 gm,pm 재확인
+			String mem_id = (String)session.getAttribute("mem_id");
+			System.out.println("-------------"+mem_id);
+			List<Map<String, String>> pmSearchList = accountService.levelPmSelect(mem_id);
+			if(pmSearchList.size()!=0){
+				map.put("result", false);
+			}else{
+				map.put("result", true);
+				/*//탈퇴처리
+				boolean isc = accountService.memDelete(mem_id);
+				if(isc == true){
+					session.invalidate();
+					return "account/bye";
+				}else{
+					return "account/error/error";
+				}*/
+			}
+			return map;
+		}
+
+		//서비스 탈퇴
+		@RequestMapping(value = "/groupDeleteMem.do")
+		@ResponseBody
+		public Map<String, Boolean> deleteMem(HttpSession session){
+			logger.info("deleteMem 실행");
+			Map<String, Boolean> map = new HashMap<String, Boolean>();
+			String mem_id = (String)session.getAttribute("mem_id");
+			boolean isc = accountService.memDelete(mem_id);
+			map.put("result", isc);
+			return map;
+		}
 	
 }
