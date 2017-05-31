@@ -8,7 +8,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.pm.rc.dto.PagingProDto;
 import com.pm.rc.dto.SbAttachDto;
 import com.pm.rc.dto.SystemBoardDto;
 
@@ -21,55 +20,23 @@ public class SysBoardDaoImpl implements SysBoardDao {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public List<Map<String, String>> noticeListSelect() {
-		List<Map<String, String>> list;
-		list = sqlSession.selectList(NAMESPACE+"noticeListSelect");
-		return list;
-	}
-
-	@Override
-	public List<Map<String, String>> noticeListSelectPaing(PagingProDto maPaging) {
-		List<Map<String, String>> list;
-		list = sqlSession.selectList(NAMESPACE+"noticeListSelectPaging",maPaging);
-		return list;
+	public List<Map<String, String>> noticeListSelect(SystemBoardDto dto) {
+		return sqlSession.selectList(NAMESPACE+"noticeListSelect", dto);
 	}
 	
 	@Override
-	public int noticeListSelectCount() {
-		return sqlSession.selectOne(NAMESPACE+"noticeListSelectCount");
+	public int noticeListSelectCount(SystemBoardDto dto) {
+		return sqlSession.selectOne(NAMESPACE+"noticeListSelectCount", dto);
 	}
 
 	@Override
-	public List<Map<String, String>> noticeSearchSelect(Map<String, String> map) {
-		List<Map<String, String>> list;
-		list = sqlSession.selectList(NAMESPACE+"noticeSearchSelect", map);
-		return list;
-	}
-
-	@Override
-	public List<Map<String, String>> qnaListSelect() {
-		List<Map<String, String>> list;
-		list = sqlSession.selectList(NAMESPACE+"qnaListSelect");
-		return list;
+	public List<Map<String, String>> qnaListSelect(SystemBoardDto dto) {
+		return sqlSession.selectList(NAMESPACE+"qnaListSelect", dto);
 	}
 	
 	@Override
-	public List<Map<String, String>> qnaListSelectPaing(PagingProDto maPaing) {
-		List<Map<String, String>> list;
-		list = sqlSession.selectList(NAMESPACE+"qnaListSelectPaing", maPaing);
-		return list;
-	}
-	
-	@Override
-	public int qnaListSelectPaingCount() {
-		return sqlSession.selectOne(NAMESPACE+"qnaListSelectPaingCount");
-	}
-
-	@Override
-	public List<Map<String, String>> qnaSearchSelect(Map<String, String> map) {
-		List<Map<String, String>> list;
-		list = sqlSession.selectList(NAMESPACE+"qnaSearchSelect", map);
-		return list;
+	public int qnaListSelectCount(SystemBoardDto dto) {
+		return sqlSession.selectOne(NAMESPACE+"qnaListSelectCount", dto);
 	}
 
 	@Override

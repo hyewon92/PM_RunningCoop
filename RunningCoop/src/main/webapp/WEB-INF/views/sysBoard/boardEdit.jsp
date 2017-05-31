@@ -7,12 +7,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>게시글 수정 화면</title>
+<title>Running Co-op :: 문의글 수정</title>
 <link rel="stylesheet" href="daumOpenEditor/css/editor.css" type="text/css"/>
 <script src="daumOpenEditor/js/editor_loader.js" type="text/javascript" charset="utf-8"></script>
 <script src="daumOpenEditor/js/editor_creator.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
+
 <script type="text/javascript">
 	function back() {
 		history.back();
@@ -52,6 +53,14 @@
 			}
 		});
 	});
+	
+	function edit_sbr_title_length(val){
+		var value = $(val).val();
+		if(value.length > 50){
+			alert("게시글 제목은 50자를 넘을 수 없습니다.");
+			$(val).val(value.substring(0, 49));
+		}
+	}
 </script>
 
 </head>
@@ -68,7 +77,7 @@
 		<div class="editTitle_area">
 				<input type="hidden" name="sbr_uuid" value="${ view.get('SBR_UUID') }"/>
 				<div>제목</div>
-				<div><input type="text" name="sbr_title" value="${ view.get('SBR_TITLE') }" /></div>
+				<div><input type="text" name="sbr_title" value="${ view.get('SBR_TITLE') }" onkeyup="edit_sbr_title_length(this)"/></div>
 		</div>
 		<div class="editAttach_area">
 			<div><span>첨부파일</span></div>
@@ -152,7 +161,7 @@
 
 	<div class="btn_area">
 		<button class="body_btn edit_submit_btn" onclick='saveContent()'>등록</button>
-		<input type="button" class="body_btn edit_collback_btn" value="목록으로" onclick="back()" />
+		<input type="button" class="body_btn edit_collback_btn" value="이전으로" onclick="back()" />
 	</div>
 </div>
 

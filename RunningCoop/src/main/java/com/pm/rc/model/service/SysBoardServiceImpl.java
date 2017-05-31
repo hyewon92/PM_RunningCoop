@@ -7,55 +7,35 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pm.rc.dto.PagingProDto;
+import com.pm.rc.dto.SystemBoardDto;
 import com.pm.rc.model.dao.SysBoardDao;
 
 @Service
-public class UserSysBoardServiceImpl implements UserSysBoardService {
+public class SysBoardServiceImpl implements SysBoardService {
 
 	@Autowired
 	private SysBoardDao sysBoardDao;
 	
 	@Override
-	public List<Map<String, String>> noticeListSelect() {
-		return sysBoardDao.noticeListSelect();
-	}
-
-	@Override
-	public List<Map<String, String>> noticeListSelectPaing(PagingProDto maPaging) {
-		return sysBoardDao.noticeListSelectPaing(maPaging);
+	public List<Map<String, String>> noticeListSelect(SystemBoardDto dto) {
+		return sysBoardDao.noticeListSelect(dto);
 	}
 	
 	@Override
-	public int noticeListSelectCount() {
-		return sysBoardDao.noticeListSelectCount();
+	public int noticeListSelectCount(SystemBoardDto dto) {
+		return sysBoardDao.noticeListSelectCount(dto);
 	}
 
 	@Override
-	public List<Map<String, String>> noticeSearchSelect(Map<String, String> map) {
-		return sysBoardDao.noticeSearchSelect(map);
-	}
-
-	@Override
-	public List<Map<String, String>> qnaListSelect() {
-		return sysBoardDao.qnaListSelect();
+	public List<Map<String, String>> qnaListSelect(SystemBoardDto dto) {
+		return sysBoardDao.qnaListSelect(dto);
 	}
 	
 	@Override
-	public List<Map<String, String>> qnaListSelectPaing(PagingProDto maPaing) {
-		return sysBoardDao.qnaListSelectPaing(maPaing);
+	public int qnaListSelectCount(SystemBoardDto dto) {
+		return sysBoardDao.qnaListSelectCount(dto);
 	}
 	
-	@Override
-	public int qnaListSelectPaingCount() {
-		return sysBoardDao.qnaListSelectPaingCount();
-	}
-
-	@Override
-	public List<Map<String, String>> qnaSearchSelect(Map<String, String> map) {
-		return sysBoardDao.qnaSearchSelect(map);
-	}
-
 	@Override
 	public Map<String, String> sysBoardViewSelect(Map<String, String> map) {
 		String pw = map.get("sbr_pw");

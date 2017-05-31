@@ -5,9 +5,9 @@
 	<!-- 공지게시판 페이징 처리 시작 -->
 	<select id="noticeListSelect" parameterType="SystemBoardDto" resultType="java.util.Map">
 		SELECT *
-		FROM ( SELECT ROWNUM RNUM, P.*
+		FROM ( SELECT ROWNUM RNUMBER, P.*
 		      FROM (
-					SELECT SB.SBR_UUID,
+					SELECT ROWNUM RNUM, SB.SBR_UUID,
 					SB.SBR_TITLE, M.MEM_NAME, TO_CHAR(SB.SBR_REGDATE, 'YYYY/MM/DD')SBR_REGDATE
 					FROM RC_SYSBOARD SB, RC_MEMBER M
 					WHERE SB.MEM_ID = M.MEM_ID
@@ -16,10 +16,10 @@
 					<if test="sbr_title != null">
 						AND SB.SBR_TITLE LIKE '%${sbr_title}%'
 					</if>
-					ORDER BY SBR_REFER DESC, SBR_STEP
+					ORDER BY RNUM DESC, SBR_REFER, SBR_STEP DESC
 				  ) P
 		    )	
-		WHERE RNUM BETWEEN #{paging.start} AND #{paging.last}
+		WHERE RNUMBER BETWEEN #{paging.start} AND #{paging.last}
 	</select>
 
 	<select id="noticeListSelectCount" parameterType="SystemBoardDto" resultType="java.lang.Integer">
@@ -33,90 +33,35 @@
 	</select>
 	<!-- 공지게시판 페이징 처리 끝 -->
 
-	<!-- 공지 게시글 목록 출력 (검색포함) 페이징처리 -->
-	<select id="noticeListSelectPaging" resultType="java.util.Map" parameterType="SystemBoardDto">
-	SELECT *
-		FROM ( SELECT ROWNUM RNUM, P.*
-		      FROM (
-					SELECT SB.SBR_UUID,
-					SB.SBR_TITLE, M.MEM_NAME, TO_CHAR(SB.SBR_REGDATE, 'YYYY/MM/DD')SBR_REGDATE
-					FROM RC_SYSBOARD SB, RC_MEMBER M
-					WHERE SB.MEM_ID = M.MEM_ID
-					AND
-					SB.SBR_NOTICEYN = 'Y' AND SB.SBR_DELYN = 'N'
-					ORDER BY SBR_REFER DESC, SBR_STEP
-				  ) P
-		    )	
-		WHERE RNUM BETWEEN #{start} AND #{last}
-	</select>
-	
-	
-<!-- 	페이징처리끝 -->
-
-	<!-- 공지 게시글 검색 목록 출력 -->
-	<select id="noticeSearchSelect" parameterType="SystemBoardDto" resultType="java.util.Map">
-		SELECT SB.SBR_UUID, SB.SBR_TITLE, M.MEM_NAME, SB.SBR_REGDATE
-		FROM RC_SYSBOARD SB, RC_MEMBER M
-		WHERE SB.MEM_ID = M.MEM_ID AND SB.SBR_NOTICEYN = 'Y' AND SB.SBR_DELYN = 'N'
-		<if test="sbr_title != null">
-			AND SB.SBR_TITLE LIKE '%${sbr_title}%'
-		</if>
-		ORDER BY SBR_REFER DESC, SBR_STEP
-	</select>
-
+	<!-- 문의게시판 목록 페이징 처리 시작  -->
 	<!-- 문의 게시글 목록 출력 -->
-	<select id="qnaListSelect" resultType="java.util.Map">
-		SELECT SB.SBR_UUID,
-		SB.SBR_TITLE, M.MEM_NAME, TO_CHAR(SB.SBR_REGDATE, 'YYYY/MM/DD')
-		SBR_REGDATE, SB.SBR_SCRYN
-		FROM RC_SYSBOARD SB, RC_MEMBER M
-		WHERE
-		SB.MEM_ID = M.MEM_ID AND SBR_DELYN = 'N' AND SBR_NOTICEYN = 'N'
-		ORDER
-		BY SBR_REFER DESC, SBR_STEP
-	</select>
-	
-<!-- 	문의게시판 목록 출력 페이징 처리  -->
-	<select id="qnaListSelectPaing" resultType="java.util.Map" parameterType="SystemBoardDto">
+	<select id="qnaListSelect" parameterType="SystemBoardDto" resultType="java.util.Map">
 		SELECT *
-		FROM ( SELECT ROWNUM RNUM, P.*
+		FROM ( SELECT ROWNUM RNUMBER, P.*
 		      FROM (
-					SELECT SB.SBR_UUID,
+					SELECT ROWNUM RNUM, SB.SBR_UUID,
 					SB.SBR_TITLE, M.MEM_NAME, TO_CHAR(SB.SBR_REGDATE, 'YYYY/MM/DD')
 					SBR_REGDATE, SB.SBR_SCRYN
 					FROM RC_SYSBOARD SB, RC_MEMBER M
-					WHERE
-					SB.MEM_ID = M.MEM_ID AND SBR_DELYN = 'N' AND SBR_NOTICEYN = 'N'
-					ORDER
-					BY SBR_REFER DESC, SBR_STEP
+					WHERE SB.MEM_ID = M.MEM_ID AND SBR_DELYN = 'N' AND SBR_NOTICEYN = 'N'
+					<if test="sbr_title != null">
+						AND SB.SBR_TITLE LIKE '%${sbr_title}%'
+					</if>
+					ORDER BY RNUM DESC, SBR_REFER, SBR_STEP DESC
 				  ) P
 		    )	
-		WHERE RNUM BETWEEN #{start} AND #{last}
+		WHERE RNUMBER BETWEEN #{paging.start} AND #{paging.last}
 	</select>
 	
-	<select id="qnaListSelectPaingCount" resultType="java.lang.Integer">
-	SELECT NVL(COUNT(*),0)
-	FROM RC_SYSBOARD SB, RC_MEMBER M
-	WHERE
-	SB.MEM_ID = M.MEM_ID AND SBR_DELYN = 'N' AND SBR_NOTICEYN = 'N'
-	</select>
-	
-<!-- 	페이징처리끝 -->
-
-	<!-- 문의 게시글 검색 목록 출력 -->
-	<select id="qnaSearchSelect" parameterType="java.lang.String"
-		resultType="java.util.Map">
-		SELECT SB.SBR_UUID,
-		SB.SBR_TITLE, M.MEM_NAME, TO_CHAR(SB.SBR_REGDATE, 'YYYY/MM/DD')
-		SBR_REGDATE, SB.SBR_SCRYN
+	<select id="qnaListSelectCount" resultType="java.lang.Integer">
+		SELECT NVL(COUNT(*),0)
 		FROM RC_SYSBOARD SB, RC_MEMBER M
-		WHERE
-		SB.MEM_ID = M.MEM_ID AND SBR_DELYN = 'N' AND SBR_NOTICEYN = 'N'
+		WHERE SB.MEM_ID = M.MEM_ID AND SBR_DELYN = 'N' AND SBR_NOTICEYN = 'N'
 		<if test="sbr_title != null">
 			AND SB.SBR_TITLE LIKE '%${sbr_title}%'
 		</if>
-		ORDER BY SBR_REFER DESC, SBR_STEP
 	</select>
+	<!-- 문의게시판 페이징 처리 끝 -->
 
 	<!-- 공개 게시글 보기 -->
 	<select id="openViewSelect" parameterType="java.lang.String"

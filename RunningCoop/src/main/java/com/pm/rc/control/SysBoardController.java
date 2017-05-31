@@ -3,6 +3,7 @@ package com.pm.rc.control;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.pm.rc.dto.PagingProDto;
-import com.pm.rc.model.service.UserSysBoardService;
+import com.pm.rc.dto.SystemBoardDto;
+import com.pm.rc.model.service.SysBoardService;
 
 @Controller
 public class SysBoardController {
@@ -32,23 +34,27 @@ public class SysBoardController {
 	Logger logger = LoggerFactory.getLogger(SysBoardController.class);
 
 	@Autowired
-	private UserSysBoardService service;
+	private SysBoardService service;
 
 	// 공지 게시글 목록
 	@RequestMapping(value = "/noticeList.do", method = {RequestMethod.GET,RequestMethod.POST})
 	public String noticeList(Model model, HttpSession session, HttpServletRequest req){
-		PagingProDto mpaging = new PagingProDto(req.getParameter("index"), 
+		PagingProDto paging = new PagingProDto(req.getParameter("index"), 
 														req.getParameter("pageStartNum"), 
 														req.getParameter("listCnt"));
+		
+		SystemBoardDto bDto = new SystemBoardDto();
+		bDto.setPaging(paging);
 
 		logger.info("================== 공지 게시판으로 이동 ==================");
 		
-		List<Map<String, String>> list = service.noticeListSelectPaing(mpaging);
-		mpaging.setTotal(service.noticeListSelectCount());
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		
+		list = service.noticeListSelect(bDto);
+		paging.setTotal(service.noticeListSelectCount(bDto));
 
 		model.addAttribute("list", list);
-		model.addAttribute("paging",mpaging);
+		model.addAttribute("paging",paging);
 
 		return "sysBoard/noticeList";
 	}
@@ -56,19 +62,29 @@ public class SysBoardController {
 	// 공지 게시글 검색 목록
 	@RequestMapping(value = "/noticeSList.do", method = RequestMethod.POST)
 	public String noticeSList(Model model, HttpServletRequest request){
+		
+		PagingProDto paging = new PagingProDto(request.getParameter("index"), 
+				request.getParameter("pageStartNum"), 
+				request.getParameter("listCnt"));
 
 		String sbr_title = request.getParameter("sbr_title");
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("sbr_title", sbr_title);
+		
+		SystemBoardDto bDto = new SystemBoardDto();
+		bDto.setPaging(paging);
+		bDto.setSbr_title(sbr_title);
 
 		logger.info("================== 공지 게시글 검색 ==================");
 		logger.info("검색할 제목 : "+sbr_title);
 		logger.info("================================================");
 
-		List<Map<String, String>> list = null;
-		list = service.noticeSearchSelect(map);
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		list = service.noticeListSelect(bDto);
+		
+		paging.setTotal(service.noticeListSelectCount(bDto));
 
 		model.addAttribute("slist", list);
+		model.addAttribute("paging", paging);
+		model.addAttribute("sbr_title", sbr_title);
 
 		return "sysBoard/noticeSList";
 	}
@@ -149,15 +165,20 @@ public class SysBoardController {
 	// 문의 게시판 목록 출력
 	@RequestMapping(value="/qnaList.do", method = {RequestMethod.GET,RequestMethod.POST})
 	public String qnaList(Model model, HttpServletRequest req){
-		PagingProDto maPaing = new PagingProDto(req.getParameter("index"), 
-														req.getParameter("pageStartNum"), req.getParameter("listCnt"));
+		PagingProDto paging = new PagingProDto(req.getParameter("index"), 
+												req.getParameter("pageStartNum"),
+												req.getParameter("listCnt"));
+		SystemBoardDto bDto = new SystemBoardDto();
+		bDto.setPaging(paging);
+		
 		logger.info("================== 문의 게시판으로 이동 ==================");
 
-		List<Map<String, String>> list = service.qnaListSelectPaing(maPaing);
-		maPaing.setTotal(service.qnaListSelectPaingCount());
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		list = service.qnaListSelect(bDto);
+		paging.setTotal(service.qnaListSelectCount(bDto));
 
 		model.addAttribute("list", list);
-		model.addAttribute("paging", maPaing);
+		model.addAttribute("paging", paging);
 
 		return "sysBoard/qnaList";
 	}
@@ -165,19 +186,29 @@ public class SysBoardController {
 	// 문의 게시글 검색 목록 출력
 	@RequestMapping(value="/qnaSList.do", method = RequestMethod.POST)
 	public String qnaSList(Model model, HttpServletRequest request){
+		
+		PagingProDto paging = new PagingProDto(request.getParameter("index"), 
+												request.getParameter("pageStartNum"),
+												request.getParameter("listCnt"));
 
 		String sbr_title = request.getParameter("sbr_title");
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("sbr_title", sbr_title);
+		
+		SystemBoardDto bDto = new SystemBoardDto();
+		bDto.setPaging(paging);
+		bDto.setSbr_title(sbr_title);
 
 		logger.info("================== 문의 게시글 검색 ==================");
 		logger.info("검색할 제목 : "+sbr_title);
 		logger.info("================================================");
 
-		List<Map<String, String>> list = null;
-		list = service.qnaSearchSelect(map);
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		
+		list = service.qnaListSelect(bDto);
+		paging.setTotal(service.qnaListSelectCount(bDto));
 
 		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+		model.addAttribute("sbr_title", sbr_title);
 
 		return "sysBoard/qnaSList";
 	}

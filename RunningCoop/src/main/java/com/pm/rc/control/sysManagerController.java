@@ -28,7 +28,7 @@ import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.PagingProDto;
 import com.pm.rc.dto.SystemBoardDto;
 import com.pm.rc.model.service.ManagerService;
-import com.pm.rc.model.service.UserSysBoardService;
+import com.pm.rc.model.service.SysBoardService;
 
 @Controller
 public class sysManagerController {

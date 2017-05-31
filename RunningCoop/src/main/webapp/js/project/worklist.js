@@ -88,32 +88,52 @@
 		
 	}
 	
+	function new_wd_title_length(val){
+		var title = $(val).val();
+		if(title.length > 25 ){
+			alert("업무내용은 25자를 넘을 수 없습니다!");
+			$(val).val(title.substring(0,24));
+		}
+	}
+	
 	/* 업무 상세 페이지 - 하위 업무 추가 기능 */
 	function wd_Insert(){
 		var wd_title = $("#insert_wd_title").val();
 		var wd_endDate = $("#insert_wd_endDate").val();
-		var wk_id = $("#wk_id").val();
-		$.ajax({
-			type : "POST",
-			url : "./wdInsert.do",
-			data : {"wd_title":wd_title, "wd_endDate":wd_endDate, "wk_id":wk_id},
-			async : false,
-			success : function(msg){
-				$("#wd_Field").children("p").remove().children("div").remove();
-				showWorkDetail(msg)
-			}
-			
-		});
+		if(wd_title.length == 0 || wd_endDate == ""){
+			alert("업무내용과 마감기한을 확인해주세요!");
+		} else {
+			var wk_id = $("#wk_id").val();
+			$.ajax({
+				type : "POST",
+				url : "./wdInsert.do",
+				data : {"wd_title":wd_title, "wd_endDate":wd_endDate, "wk_id":wk_id},
+				async : false,
+				success : function(msg){
+					$("#wd_Field").children("p").remove().children("div").remove();
+					showWorkDetail(msg)
+				}
+				
+			});
+		}
 	}
 	
 	/* 업무 상세 페이지 - 하위 업무 수정 폼 출력 */
 	function wdEditForm(val, wd_id){
 		$(".tr_edit").remove();
-		$(val).parent().parent().after("<tr class='tr_edit'><td colspan='2'>업무내용<input type='text' id='newWdTitle' style='margin-left:5px;' name='wd_title' value=''/></td>" +
+		$(val).parent().parent().after("<tr class='tr_edit'><td colspan='2'>업무내용<input type='text' id='newWdTitle' style='margin-left:5px;' name='wd_title' onkeyup='edit_wd_title_lenght(this)'/></td>" +
 				"<td colspan='3'>마감일자<input type='date' id='newWdEndDate' style='margin-left:5px;' name='wd_endDate' value=''/></td>" +
 				"<td colspan='2'><input type='button' value='수정' class='body_btn wd_edit_btn' onclick='wdEdit(\""+wd_id+"\")'/>" +
 				"<input type='button' value='취소' class='body_btn wd_edit_cancle_btn' onclick='wdEdit_Cancle()'/></td>" +
 				"</tr>");
+	}
+	
+	function edit_wd_title_lenght(val){
+		var value = $(val).val();
+		if(value.length > 25){
+			alert("업무내용은 25자를 넘을 수 없습니다!");
+			$(val).val(value.substring(0,24));
+		}
 	}
 	
 	/* 업무 상세 페이지 - 하위 업무 수정 기능 */
@@ -123,16 +143,20 @@
 		var wk_id = $("#wk_id").val();
 		var wd_id = val;
 		
-		$.ajax({
-			type : "POST",
-			url : "./wdEdit.do",
-			data : {"wd_title":wd_title, "wd_endDate":wd_endDate, "wd_id":wd_id, "wk_id":wk_id},
-			async : false,
-			success : function(msg){
-				$(".tr_edit").remove();
-				showWorkDetail(msg)
-			}
-		});
+		if(wd_title.length == 0 || wd_endDate == ""){
+			alert("업무내용과 마감기한을 확인해주세요!");
+		} else {
+			$.ajax({
+				type : "POST",
+				url : "./wdEdit.do",
+				data : {"wd_title":wd_title, "wd_endDate":wd_endDate, "wd_id":wd_id, "wk_id":wk_id},
+				async : false,
+				success : function(msg){
+					$(".tr_edit").remove();
+					showWorkDetail(msg);
+				}
+			});
+		}
 	}
 	
 	/* 업무 상세 페이지 - 하위 업무 수정 폼 닫기 */
@@ -225,7 +249,7 @@
 	function wcom_Insert(){
 		var wk_id = $("#wk_id").val();
 		var wcom_content = $("#new_wcom_content").val();
-		if(wcom_content.length <= 200){
+		if(wcom_content.length > 0 && wcom_content.length <= 200){
 			$("#new_wcom_content").val("");
 			
 			$.ajax({
@@ -238,7 +262,7 @@
 				}
 			})
 		} else {
-			alert("댓글은 200자를 초과할 수 없습니다!");
+			alert("댓글 내용을 작성해주세요!");
 		}
 	}
 	

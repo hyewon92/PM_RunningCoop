@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>문의게시판</title>
+<title>Running Co-op :: 문의 게시판</title>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="./js/paging.js"></script>
@@ -23,11 +23,16 @@
 					$("input[name=sbr_uuid]").val(uuid);
 					$("input[name=sbr_pw]").val(pw);
 					$("#scrView").submit();
+				} else {
+					alert("비밀번호를 확인해주세요!");
 				}
 			} else {
 				location.href = "./boardView.do?sbr_uuid="+uuid;
 			}
 		});
+		
+		var listCnt = $("#listCnt").val();
+		$("#listCount").val(listCnt).prop("select", true);
 	});
 	
 	function writer(){
