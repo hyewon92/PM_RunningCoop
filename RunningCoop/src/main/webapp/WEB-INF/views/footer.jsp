@@ -32,6 +32,8 @@
 	   
 	   if(gr_level != "GM"){
 		   $(".manage_Group").css("display", "none");
+	   }else if(gr_level = "GM"){
+		   $(".solo_Group").css("display","none");
 	   }
        
        if(gr_id == "null"){
@@ -169,6 +171,14 @@
   		}
   	}
   	
+  	function groupOut(){
+  		var rst = confirm("그룹을 탈퇴 하시겠습니까?");
+  		
+  		if(rst == true){
+  			location.href="./groupOut.do?gr_id="+gr_id;
+  		}
+  	}
+  	
 </script>
 </head>
 <body>
@@ -188,6 +198,7 @@
 			<ul class="groupMenu">
 				<li><a href="#" onclick="goGrBoard('<%=gr_id%>')">그룹 게시판</a></li>
 				<li><a href="#" onclick="goSocket('<%=gr_id%>')">그룹 채팅</a></li>
+				<li><a href="#" class="solo_Group" onclick="groupOut()">그룹 탈퇴</a></li>
 				<li><a href="#" class="manage_Group" onclick="location.href='./grmodify.do?gr_id=<%=gr_id%>'">그룹 관리</a></li>
 			</ul>
 		</li>

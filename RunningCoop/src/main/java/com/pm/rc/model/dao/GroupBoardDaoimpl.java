@@ -1,5 +1,6 @@
 package com.pm.rc.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -106,6 +107,19 @@ public class GroupBoardDaoimpl implements GroupBoardDao{
 	public boolean bgCommentDelete(String br_uuid) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public Map<String, String> grEditBoardViewSelect(Map<String, String> map) {
+		Map<String, String> view = new HashMap<String, String>();
+		view = sqlSession.selectOne(NAMESPACE+"gBeditViewSelect",map);
+		return view;
+	}
+
+	@Override
+	public boolean grBoardUpdate(Map<String, String> map) {
+		int rst = sqlSession.update(NAMESPACE+"grBoardUpdate",map);
+		return rst>0 ? true : false;
 	}
 
 }

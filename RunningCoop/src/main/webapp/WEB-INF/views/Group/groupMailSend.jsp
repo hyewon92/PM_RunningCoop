@@ -18,9 +18,6 @@
 </script>
 </head>
 <body>
-<div id="header">
-	<jsp:include page="../header.jsp" flush="false"/>
-</div>
 <div id="container">
 	<form action="./goGroupMail.do" method="post">
 	<table>
@@ -29,9 +26,6 @@
 		<tr><td><input type="submit" value="메일보내기"></td></tr>
 	</table>
 	</form>
-</div>
-<div id="footer">
-	<jsp:include page="../footer.jsp" flush="false"/>
 </div>
 </body>
 </html>

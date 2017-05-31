@@ -185,9 +185,14 @@ $(function(){
 		}
 	});
 	$("#imgname").val("1");
-	for(var i =1; i<15; i++){
-		var imgNum = "이미지" + i;
-		$('#imsg').append($('<option>').attr('value',imgNum).text(imgNum));
+	for(var i =1; i<30; i++){
+		if(i<10){
+		var imgNum = "이미지00" + i;
+		$('#imsg').append($('<option>').attr('value',imgNum).text(imgNum));	
+		}else{
+		var imgNum = "이미지0" + i;
+		$('#imsg').append($('<option>').attr('value',imgNum).text(imgNum));		
+		}
 	};
 	
 	$('#imsg').change(function(){
@@ -476,7 +481,7 @@ function grNameCheck(){
 	<td>그룹이미지</td>
 	<td><select id="imsg"></select>
 	<input type="hidden" id="imgname" value="" name="gr_img"></td>
-	<td><img id="imgbox" alt="" src="./grImgs/img1.png"></td>
+	<td><img id="imgbox" alt="" src="./grImgs/img002.png"></td>
 	</tr>
 	<tr>
 	<td>그룹검색거부</td>
