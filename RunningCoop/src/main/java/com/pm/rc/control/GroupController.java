@@ -55,10 +55,11 @@ public class GroupController implements ServletConfigAware {
 	// Group 서비스
 	@Autowired
 	private GroupService service;
-	// ManaGer 서비스
 	
+	// ManaGer 서비스
 	@Autowired
 	private ManagerService managserService;
+	
 	// Mail 서비스
 	@Autowired
 	private JavaMailSender mailSend;
@@ -410,14 +411,20 @@ public class GroupController implements ServletConfigAware {
 	//그룹 관리자 위임
 	@RequestMapping(value="/grMgChange.do", method=RequestMethod.GET)
 	public String grMgChange(HttpServletRequest req, HttpSession session){
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> newmap = new HashMap<String, String>();
+		Map<String, String> oldmap = new HashMap<String, String>();
 		String gr_id = (String)session.getAttribute("gr_id");
 		String mem_id = req.getParameter("mem_id");
 		String mem_id2 = req.getParameter("mem_id2");
+		newmap.put("gr_id", gr_id);
+		newmap.put("mem_id",mem_id);
+		
+		oldmap.put("gr_id",gr_id);
+		oldmap.put("mem_id",mem_id2);
 		
 		boolean isc = false;
-		isc = service.grManagerChange(mem_id);
-		isc = service.grManagerChange2(mem_id2);
+		isc = service.grManagerChange(newmap);
+		isc = service.grManagerChange2(oldmap);
 		
 		if(isc==true){
 			return "redirect:/grmodify.do?gr_id="+gr_id;
@@ -586,20 +593,136 @@ public class GroupController implements ServletConfigAware {
 			logger.info("============================================================");
 
 			Map<String, String> map = new HashMap<String, String>();
-//			map.put("sbr_uuid", sbr_uuid);
+			map.put("br_uuid", br_uuid);
 
 			Map<String, String> view = new HashMap<String, String>();
-//			view = service.editBoardViewSelect(map);
+			view = service.grEditBoardViewSelect(map);
 
-			Map<String, String> attach = null;
+//			Map<String, String> attach = null;
 //			attach = service.sysAttachSelect(map);
 
 			model.addAttribute("view", view);
-			model.addAttribute("attach", attach);
+//			model.addAttribute("attach", attach);
 
-			return "sysBoard/boardEdit";
+			return "Group/grboardEdit";
 		}
 	
+		// 게시글 수정
+		@RequestMapping(value="/grBoardEdit.do", method = RequestMethod.POST)
+		public String BoardEdit(MultipartHttpServletRequest multipartRequest){
+			String br_uuid = multipartRequest.getParameter("br_uuid");
+			String br_title = multipartRequest.getParameter("br_title");
+			String br_content = multipartRequest.getParameter("br_content");
+
+			logger.info("=============== 문의 게시판 : 게시글 수정 =========================");
+			logger.info("수정할 게시글 아이디 : "+br_uuid);
+			logger.info("수정할 게시글 제목 : "+br_title);
+			logger.info("수정할 게시글 내용 : "+br_content);
+			logger.info("===========================================================");
+
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("br_uuid", br_uuid);
+
+//			MultipartFile file = multipartRequest.getFile("satt_name");
+
+//			if (!file.getOriginalFilename().equals("")){
+//				String savePath = "C:\\RC_fileSave\\";
+//
+//				// 기존 파일 삭제
+//				Map<String, String> originFile = new HashMap<String, String>();
+//				originFile = service.sysAttachSelect(map);
+//
+//				File delFile = new File(originFile.get("SATT_PATH")+originFile.get("SATT_RNAME"));
+//				delFile.delete();
+//
+//				// 새 파일 등록
+//				String fuuid = createUUID();
+//				int indexNum = fuuid.lastIndexOf("-");
+//
+//				String oldFileName = file.getOriginalFilename();
+//				String satt_size = ""+file.getSize();
+//
+//				String newFileName = fuuid.substring(indexNum+1) + oldFileName;
+//
+//				// 첨부파일 실제경로 저장
+//				try {
+//					file.transferTo(new File(savePath + newFileName));
+//				} catch (IllegalStateException | IOException e) {
+//					e.printStackTrace();
+//				}
+//
+//				logger.info("=============== 공지게시판 첨부파일 추가 ===================");
+//				logger.info("첨부파일 명 : "+oldFileName);
+//				logger.info("첨부파일 크기 : "+satt_size);
+//				logger.info("첨부파일 경로 : "+savePath);
+//				logger.info("첨부파일 실제이름 : "+newFileName);
+//				logger.info("====================================================");
+//
+//				map.put("satt_name", oldFileName);
+//				map.put("satt_rname", newFileName);
+//				map.put("satt_size", satt_size);
+//				map.put("satt_path", savePath);
+//
+//			}
+
+			map.put("br_title", br_title);
+			map.put("br_content", br_content);
+			
+			// 비밀글 여부
+//			String scrpw = multipartRequest.getParameter("sbr_pw");
+//			String scryn = multipartRequest.getParameter("scryn");
+//			if(scryn.equals("Y")){
+//				map.put("sbr_scryn", scryn);
+//				map.put("sbr_pw", scrpw);
+//			} else {
+//				map.put("sbr_scryn", scryn);
+//			}
+			
+			// 서비스 실행
+			boolean isc = false;
+
+			isc = service.grBoardEdit(map);
+			
+			if(isc == true){
+				System.out.println("문의게시판 게시글 수정 성공");
+			} else {
+				System.out.println("문의게시판 게시글 수정 실패");
+			}
+
+			return "redirect:/grBoardView.do?br_uuid="+br_uuid;
+		}
+		
+		// 게시글 삭제
+		@RequestMapping(value="/grBoardDelete.do", method = RequestMethod.GET)
+		public String BoardDelete(HttpServletRequest request){
+
+			String br_uuid = request.getParameter("br_uuid");
+//			Map<String, String> uuid = new HashMap<String, String>();
+//			uuid.put("br_uuid", br_uuid);
+
+//			Map<String, String> attach = null;
+//			attach = service.sysAttachSelect(uuid);
+//			
+//			if(attach != null){
+//				String savePath = ""+attach.get("SATT_PATH");
+//				String fileName = ""+attach.get("SATT_RNAME");
+//				
+//				File file = new File(savePath+fileName);
+//				
+//				file.delete();
+//			}
+
+			boolean isc = false;
+			isc = service.grBoardDelete2(br_uuid);
+			
+			if(isc == true){
+				System.out.println("문의 게시글 삭제 성공");
+			} else {
+				System.out.println("문의 게시글 삭제 실패");
+			}
+
+			return "redirect:/grBoradList.do";
+		}
 		
 	
 	

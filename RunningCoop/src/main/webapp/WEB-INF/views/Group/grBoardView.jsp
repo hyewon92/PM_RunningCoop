@@ -16,13 +16,13 @@
 	}
 	
 	function Edit(){
-		var sbr_uuid = $("#sbr_uuid").val();
-		location.href = "./boardEditMove.do?sbr_uuid="+sbr_uuid;
+		var br_uuid = $("#br_uuid").val();
+		location.href = "./grboardEditMove.do?br_uuid="+br_uuid;
 	}
 	
 	function Delete(){
-		var sbr_uuid = $("#sbr_uuid").val();
-		location.href = "./boardDelete.do?sbr_uuid="+sbr_uuid;
+		var br_uuid = $("#br_uuid").val();
+		location.href = "./grBoardDelete.do?br_uuid="+br_uuid;
 	}
 	
 	$(function(){
@@ -49,7 +49,7 @@
 			<table class="board_view_table">
 				<tr>
 					<th colspan="4">
-						<input type="hidden" value="${ view.get('BR_UUID')}" id = "sbr_uuid"/>
+						<input type="hidden" value="${ view.get('BR_UUID')}" id = "br_uuid"/>
 						${ view.get("BR_TITLE") }
 					</th>
 				<tr>
@@ -69,7 +69,7 @@
 <!-- 					</td> -->
 <!-- 				</tr> -->
 				<tr>
-					<td colspan="4">${ view.get("BR_CONTENT") }</td>
+					<td colspan="4">${view.get('BR_CONTENT')}</td>
 				</tr>
 			</table>
 			<input type="button" value="게시글 수정" class="body_btn board_edit" id="editBtn" onclick="Edit()" style="display: none"/>

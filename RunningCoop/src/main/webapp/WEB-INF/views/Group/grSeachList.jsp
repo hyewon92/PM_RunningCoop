@@ -26,8 +26,7 @@ String gr_id = (String)session.getAttribute("gr_id");
 var openwin;
 var serarchWord = "";
 	function openChild(val){
-		var grid = 	$(val).next().val();
-		alert(grid);
+		var grid = 	$(val).prev().val();
 		var userid = "<%=mem_id%>";
 			$.ajax({
 			type : "POST",
@@ -38,8 +37,7 @@ var serarchWord = "";
 				if(data==1){
 					alert("이미 가입된 그룹 입니다.");
 				}else{
-					window.name = "grList";
-				    openwin = window.open("./grListChild.do?gr_id="+grid, "childForm", "width=570, height=350, resizable = no, scrollbars = no");
+					createPro(val);
 				}
 			}
 		});
@@ -65,7 +63,6 @@ var serarchWord = "";
 		
 		$("#grName").text(gr_name);
 // 		$("#grid").val(grid);
-		alert(grid+"grid"+gr_name+"grname");
 		$("input[name=grid]").val(grid);
 		
 		$("#create_Form").dialog({
@@ -132,7 +129,7 @@ var serarchWord = "";
 					<c:if test="${ fn:contains(dtos.gr_joinYN, 'Y') == true }">
 						<td>
 						<input type="hidden" value="${dtos.gr_id }">
-						<input type="button" value="가입신청" onclick="createPro(this)"/>
+						<input type="button" value="가입신청" onclick="openChild(this)"/>
 						<input type="hidden" value="${dtos.gr_name}">
 						</td>
 					</c:if>
@@ -180,22 +177,23 @@ var serarchWord = "";
 	<form action="./grWaitInsert.do" method="post">
 	<table>
 		<tr>
-		<td><input type="hidden" value="${gr_name}" name="gr_name">
-		<td>아이디 :</td>
+		<td>아이디 :
+		<input type="hidden" value="${gr_name}" name="gr_name">
+		</td>
 		<td id="mem_id">"<%=mem_id%>"</td>
 		<td><input type="hidden" value="<%=mem_id%>" name="memid">
 		</tr>
 		<tr>
 		<td>그룹이름 :</td>
 		<td id="grName"></td>
-		<td><input type="text" value="" name="grid">
+		<td><input type="hidden" value="" name="grid">
 		</tr>
 		<tr>
 		<td colspan="2">자기소개 </td>
 		</tr>
 		<tr>
 		<td colspan="2">
-		<textarea rows="5" cols="0" name="wait_content">
+		<textarea rows="6" cols="0" name="wait_content">
 		</textarea>
 		</td>
 		</tr>

@@ -16,6 +16,8 @@
 	tr, th, td {
 		border : 1px solid black;
 	}
+	.br_title{
+	cursor: pointer;}
 </style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">

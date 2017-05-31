@@ -1,5 +1,6 @@
 package com.pm.rc.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -215,16 +216,16 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public boolean grManagerChange(String mem_id) {
+	public boolean grManagerChange(Map<String, String> map) {
 		boolean isc = false;
-		isc = groupdao.newGrMgChange(mem_id);
+		isc = groupdao.newGrMgChange(map);
 		return isc;
 	}
 	
 	@Override
-	public boolean grManagerChange2(String mem_id2){
+	public boolean grManagerChange2(Map<String, String> map){
 		boolean isc =false;
-		isc = groupdao.oldGrMaChange(mem_id2);
+		isc = groupdao.oldGrMaChange(map);
 		return isc;
 	}
 
@@ -263,6 +264,25 @@ public class GroupServiceImp implements GroupService{
 	@Override
 	public Map<String, String> groupManagerSearch(Map<String, String> map){
 		return groupdao.groupManagerSearch(map);
+	}
+
+	@Override
+	public Map<String, String> grEditBoardViewSelect(Map<String, String> map) {
+		Map<String, String> view = new HashMap<String, String>();
+		view = groupboarddao.grEditBoardViewSelect(map);
+		return view;
+	}
+
+	@Override
+	public boolean grBoardEdit(Map<String, String> map) {
+		boolean isc = groupboarddao.grBoardUpdate(map);
+		return isc;
+	}
+
+	@Override
+	public boolean grBoardDelete2(String br_uuid) {
+		boolean isc = groupboarddao.gboardDelete(br_uuid);
+		return isc;
 	};
 
 

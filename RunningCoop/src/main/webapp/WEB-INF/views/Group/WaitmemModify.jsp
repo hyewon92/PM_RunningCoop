@@ -3,13 +3,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<% request.setCharacterEncoding("UTF-8"); %>
+<!DOCTYPE html >
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>그룹관리</title>
+<title>Insert title here</title>
+
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<style type="text/css">
+#groupMemAdd{
+width : 200px;
+cursor: pointer;}
+img{
+width: 20px;
+cursor: pointer;}
+</style>
 <script type="text/javascript">
 	function accept1(memid){
 		alert("${ grid }");
@@ -49,34 +60,9 @@
 		}
 	}
 </script>
-<style type="text/css">
-#groupMemAdd{
-width : 200px;
-cursor: pointer;}
-img{
-width: 20px;
-cursor: pointer;}
-</style>
 </head>
 <body>
-<div class="member_manage_area">
-	<h4>그룹 인원 관리</h4>
-	<div class="div_select_area">
-	<table class="mem_manage_list">
-		<tr>
-		<td>아이디</td>
-		<td>이  름</td>
-		</tr>
-		<c:forEach var="memls" items="${memList}">
-			<tr> 
-				<td>${memls.mem_id}</td>
-				<td>${memls.mem_name}</td>
-				<td style="display: none;">${grid}</td>
-				<td><img onclick="memDelete(this)" alt="cancle" src="./images/cancel.png"> </td>			
-			</tr>
-		</c:forEach>
-	</table>
-		</div>	
+<div id="container">
 		<h1 id="groupMemAdd" onclick="groupMemAdd()">그룹초대</h1>		
 		<h1>가입 신청 리스트</h1>
 	<table>
@@ -89,8 +75,6 @@ cursor: pointer;}
 			</tr>					
 		</c:forEach>
 	</table>	
-		<h1>그룹 해체</h1>
-		<input type="button" value="그룹 해체" onclick="groupBye()">
-		</div>
+</div>
 </body>
 </html>

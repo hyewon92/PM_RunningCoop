@@ -19,4 +19,20 @@
 	UPDATE RC_GRBOARD SET BR_DELYN = 'Y'
 	WHERE BR_UUID = #{br_uuid}
 	</update>
+	
+	<!-- 	그룹게시판 게시글 수정 -->	
+	<select id="gBeditViewSelect" parameterType="java.lang.String" resultType="java.util.Map">
+		SELECT GB.BR_UUID, GB.MEM_ID, M.MEM_NAME, TO_CHAR(GB.BR_REGDATE, 'YYYY/MM/DD') BR_REGDATE,
+		GB.BR_TITLE, GB.BR_CONTENT
+		FROM RC_MEMBER M, RC_GRBOARD GB
+		WHERE M.MEM_ID = GB.MEM_ID AND GB.BR_UUID = #{br_uuid}	
+	</select>
+	
+	<!-- 	그룹게시판 게시글 수정시작 -->
+	<update id="grBoardUpdate" parameterType="java.util.Map">
+		UPDATE RC_GRBOARD 
+		SET BR_TITLE = #{br_title}, BR_CONTENT = #{br_content}
+		WHERE BR_UUID = #{br_uuid}
+	</update>
+	
 </mapper>

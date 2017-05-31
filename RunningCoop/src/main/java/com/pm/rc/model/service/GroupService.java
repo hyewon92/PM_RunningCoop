@@ -223,8 +223,8 @@ public interface GroupService {
 	 * @return boolean
 	 * @author 라한솔
 	 */
-	public boolean grManagerChange(String mem_id);
-	public boolean grManagerChange2(String mem_id2);
+	public boolean grManagerChange(Map<String, String> map);
+	public boolean grManagerChange2(Map<String, String> map);
 	
 	/**
 	 * 그룹가입시 중복체크
@@ -265,4 +265,26 @@ public interface GroupService {
 	 */
 	public Map<String, String> groupManagerSearch(Map<String, String> map);
 	
+	/**
+	 * 수정 시 게시글 출력
+	 * @param sbr_uuid 수정할 게시글 uuid
+	 * @return Map 형태로 해당 게시글 반환
+	 */
+	public Map<String, String> grEditBoardViewSelect(Map<String, String> map);
+	
+	/**
+	 * 문의 게시글 수정
+	 * @param dto SystemBoardDto객체
+	 * @return boolean
+	 * @author 김혜원
+	 * */
+	public boolean grBoardEdit(Map<String, String> map);
+	
+	/**
+	 * 그룹게시판 게시글 삭제
+	 * @param String br_uuid
+	 * @return boolean
+	 * @author 라한솔
+	 */
+	public boolean grBoardDelete2(String br_uuid);
 }

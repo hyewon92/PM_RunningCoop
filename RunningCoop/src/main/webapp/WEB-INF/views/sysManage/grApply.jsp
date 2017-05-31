@@ -98,22 +98,24 @@
 		<jsp:include page="../sysHeader.jsp" flush="false" />
 	</div>
 	<div id="sys_container">
-
+		<h3>회원 관리</h3>
+		<div class="adm_search_area">
+			<form action="./grApplySch.do" method="post">
+					<input type="text"  name="gr_name" />
+					<input type="submit"  class="body_btn mem_search" value="그룹검색" />
+			</form>
+		</div>
 		<div id="mgr_Container">
-			<h1>그룹 승인 관리</h1>
+			<div class="mem_mgr_div">
 			<form id="groupApply" action="" method="post">
-				<table>
+					<input type="submit"  class="body_btn mem_search" value="승인" onclick="doApply()">
+					<input type="submit" class="body_btn mem_search" value="거절" onclick="doReject()">
+				<table class="adm_memList_table">
 					<tr>
-						<td colspan="4">
-							<input type="submit" value="승인" onclick="doApply()">
-							<input type="submit" value="거절" onclick="doReject()">
-						</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" onclick="cheakAll(this.checked)"></td>
-						<td>그룹명</td>
-						<td>그룹관리자</td>
-						<td>신청일자</td>
+						<th><input type="checkbox" onclick="cheakAll(this.checked)"></th>
+						<th>그룹명</th>
+						<th>그룹관리자</th>
+						<th>신청일자</th>
 					</tr>
 					<c:forEach var="apply" items="${Apply}">
 						<tr>
@@ -125,15 +127,9 @@
 					</c:forEach>
 				</table>
 			</form>
-	
-			<form action="./grApplySch.do" method="post">
-				<div>
-					<input type="text" name="gr_name" />
-					<input type="submit" value="그룹검색" />
-				</div>
-			</form>
 		</div>
-		<div class="pr_detail_view">
+		</div>
+	<div class="pr_detail_view">
 			<table class="pr_detail_table">
 				<tr>
 					<td>그룹명</td>

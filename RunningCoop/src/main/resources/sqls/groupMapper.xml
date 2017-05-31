@@ -218,13 +218,13 @@
 	</update>
 	
 <!-- 	그룹관리자 신규관리자로 업데이트	 -->
-	<update id="newGrMgChange" parameterType="java.lang.String">
-	UPDATE RC_GROUPMEM SET GR_LEVEL = 'GM' WHERE MEM_ID = #{mem_id} 
+	<update id="newGrMgChange" parameterType="java.util.Map">
+	UPDATE RC_GROUPMEM SET GR_LEVEL = 'GM' WHERE MEM_ID = #{mem_id} AND GR_ID = #{gr_id}
 	</update>
 	
 <!-- 	그룹관리자 예전관리자 업데이트 -->
-	<update id="oldGrMaChange" parameterType="java.lang.String">
-	UPDATE RC_GROUPMEM SET GR_LEVEL = 'GIM' WHERE MEM_ID = #{mem_id2}
+	<update id="oldGrMaChange" parameterType="java.util.Map">
+	UPDATE RC_GROUPMEM SET GR_LEVEL = 'GIM' WHERE MEM_ID = #{mem_id} AND GR_ID = #{gr_id}
 	</update>
 	
 <!-- 	그룹가입신청 시 중복가입 확인 -->
@@ -264,10 +264,10 @@
 	VALUES (#{br_uuid},#{mem_id},#{br_title},#{br_content},'N',#{gr_id},
 	(SELECT NVL(MAX(BR_REFER)+1, 1) FROM RC_GRBOARD),SYSDATE)
 	</insert>
-	
+<!-- 	그룹게시판 게시글 조화 -->	
 	<select id="grBoardViewSelect" parameterType="java.lang.String" resultType="java.util.Map">
 	SELECT GB.BR_UUID, GB.MEM_ID, M.MEM_NAME, TO_CHAR(GB.BR_REGDATE,
-	'YYYY/MM/DD') SBR_REGDATE, GB.BR_TITLE, GB.BR_CONTENT, GB.BR_REFER
+	'YYYY/MM/DD')BR_REGDATE, GB.BR_TITLE, GB.BR_CONTENT, GB.BR_REFER
 	FROM RC_GRBOARD GB, RC_MEMBER M
 	WHERE M.MEM_ID = GB.MEM_ID AND
 	BR_UUID = #{br_uuid}
