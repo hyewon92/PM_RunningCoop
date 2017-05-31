@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>문의게시판 :: 문의글 작성하기</title>
+<title>Running Co-op :: 문의글 작성하기</title>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <link rel="stylesheet" href="daumOpenEditor/css/editor.css" type="text/css"/>
 <script src="daumOpenEditor/js/editor_loader.js" type="text/javascript" charset="utf-8"></script>
@@ -15,8 +15,10 @@
 			var chkyn = $(this).is(":checked");
 			if (chkyn == true) {
 				$("#sbr_pw").css("display", "inline-block");
+				$("#sbr_pw").attr("required", "required");
 			} else if (chkyn == false) {
 				$("#sbr_pw").css("display", "none");
+				$("#sbr_pw").attr("required", "none");
 			}
 		});
 		
@@ -36,6 +38,14 @@
 	/* 목록으로 돌아가는 script */
 	function back() {
 		location.href="./qnaList.do";
+	}
+	
+	function new_sbr_title_length(val){
+		var title = $(val).val();
+		if(title.length >= 50){
+			alert("제목은 50자를 넘을 수 없습니다!");
+			$(val).val(title.substring(0,49));
+		}
 	}
 	
 </script>
@@ -73,7 +83,7 @@
 			<input type="hidden" name="sbr_noticeyn" value="N"/>
 				<div class="qnatitle_area">
 					<div>제목</div>
-					<div><input type="text" name="sbr_title" />	</div>
+					<div><input type="text" name="sbr_title" required="required" onkeyup="new_sbr_title_length(this)"/></div>
 				</div>
 				<div class="qnaattach_area">
 					<div>첨부파일</div>

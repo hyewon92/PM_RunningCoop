@@ -3,45 +3,28 @@ package com.pm.rc.model.service;
 import java.util.List;
 import java.util.Map;
 
-import com.pm.rc.dto.PagingProDto;
+import com.pm.rc.dto.SystemBoardDto;
 
 /**
  * 회원 입장에서 시스템게시판(문의게시판, 공지게시판)관련 기능 인터페이스
  * @author 김혜원
  * */
-public interface UserSysBoardService {
+public interface SysBoardService {
 	
 	/**
 	 * 공지 게시글 목록 출력, 페이징처리
 	 * @return List&lt;SystemBoardDto&gt;
 	 * @author 김혜원
 	 * */
-	public List<Map<String, String>> noticeListSelect();
-	public List<Map<String, String>> noticeListSelectPaing(PagingProDto maPaging);
-	public int noticeListSelectCount();
+	public List<Map<String, String>> noticeListSelect(SystemBoardDto dto);
+	public int noticeListSelectCount(SystemBoardDto dto);
 	
 	/**
-	 * 공지 게시글 검색 목록 출력
-	 * @param map sbr_title을 받은 Map객체를 전송
-	 * @return List&lt;SystemBoardDto&gt;
-	 * @author 김혜원
-	 * */
-	public List<Map<String, String>> noticeSearchSelect(Map<String, String> map);
-	
-	/**
-	 * 문의 게시글 목록 출력
+	 * 문의 게시글 목록 출력, 페이징 처리
 	 * @return 문의 게시글의 목록을 
 	 * */
-	public List<Map<String, String>> qnaListSelect();
-	public List<Map<String, String>> qnaListSelectPaing(PagingProDto maPaing);
-	public int qnaListSelectPaingCount();
-	/**
-	 * 문의 게시글 검색
-	 * @param map : sbr_title을 key로 주고 게시글의 
-	 * @return List&lt;SystemBoardDto&gt;
-	 * @author 김혜원
-	 * */
-	public List<Map<String, String>> qnaSearchSelect(Map<String, String> map);
+	public List<Map<String, String>> qnaListSelect(SystemBoardDto dto);
+	public int qnaListSelectCount(SystemBoardDto dto);
 	
 	/**
 	 * 게시글 보기 서비스

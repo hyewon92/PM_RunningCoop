@@ -3,8 +3,6 @@ package com.pm.rc.model.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.pm.rc.dto.PagingProDto;
-import com.pm.rc.dto.SbAttachDto;
 import com.pm.rc.dto.SystemBoardDto;
 
 /**
@@ -15,35 +13,18 @@ import com.pm.rc.dto.SystemBoardDto;
 public interface SysBoardDao {
 	
 	/**
-	 * 공지게시판 게시글 목록 출력 , 페이징처리 한거
+	 * 공지게시판 게시글 목록 출력 +페이징
 	 * @return 게시글의 목록을 list에 담아 반환
 	 */
-	public List<Map<String, String>> noticeListSelect();
-	public List<Map<String, String>> noticeListSelectPaing(PagingProDto maPaging);
-	public int noticeListSelectCount ();
-	
-	
-	/**
-	 * 공지게시판 게시글 검색 목록 출력
-	 * @param map sbr_title에 해당하는 게시글 제목에 포함되는 단어를 담은 Map객체
-	 * @return 조건에 해당하는 게시글 목록을 list에 담아 반환
-	 */
-	public List<Map<String, String>> noticeSearchSelect(Map<String, String> map);
+	public List<Map<String, String>> noticeListSelect(SystemBoardDto dto);
+	public int noticeListSelectCount (SystemBoardDto dto);
 	
 	/**
 	 * 문의게시판 게시글 목록 출력
 	 * @return 게시글의 목록을 list에 담아 반환
 	 */
-	public List<Map<String, String>> qnaListSelect();
-	public List<Map<String, String>> qnaListSelectPaing(PagingProDto maPaing);
-	public int qnaListSelectPaingCount();
-	
-	/**
-	 * 문의게시판 게시글 검색 목록 출력
-	 * @param map sbr_title에 해당하는 게시글 제목에 포함되는 단어를 담은 Map객체
-	 * @return 조건에 해당하는 게시글 목록을 list에 담아 반환
-	 */
-	public List<Map<String, String>> qnaSearchSelect (Map<String, String> map);
+	public List<Map<String, String>> qnaListSelect(SystemBoardDto dto);
+	public int qnaListSelectCount(SystemBoardDto dto);
 	
 	/**
 	 * 공개 게시글 내용 출력

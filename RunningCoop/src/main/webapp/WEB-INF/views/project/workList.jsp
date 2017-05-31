@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>프로젝트 업무 리스트 화면</title>
+<title>Running Co-op :: 업무 리스트</title>
 
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
@@ -165,7 +165,7 @@
 					<table>
 						<tr>
 							<th>업무 명</th>
-							<td><input type="text" name="wk_title" value="" /></td>
+							<td><input type="text" name="wk_title" required="required" onkeyup="wk_title_length(this)"/></td>
 						</tr>
 						<tr>
 							<th>업무 담당자</th>
@@ -173,9 +173,10 @@
 						</tr>
 						<tr>
 							<th>업무 마감기한</th>
-							<td><input type="date" name="wk_endDate" value="" /></td>
+							<td><input type="date" name="wk_endDate" id="new_workEnddate" required="required" /></td>
 						</tr>
 					</table>
+					<input type="reset" class="body_btn workInsert_btn" id="work_reset" value="초기화"/>
 					<input type="submit" class="body_btn workInsert_btn" value="등록" />
 				</form>
 			</div>
@@ -199,15 +200,15 @@
 				<table>
 					<tr>
 						<th>업무내용</th>
-						<td><input type="text" id="edit_wk_title" name="wk_title" value="" /></td>
+						<td><input type="text" id="edit_wk_title" name="wk_title" required="required" onkeyup="wk_title_length(this)"/></td>
 					</tr>
 					<tr>
 						<th>마감기한</th>
-						<td><input type="date" id="edit_wk_endDate" name="wk_endDate" value="" /></td>
+						<td><input type="date" id="edit_wk_endDate" name="wk_endDate" required="required" /></td>
 					</tr>
 					<tr>
 						<th>담당자</th>
-						<td><input type="text" id="edit_mem_id" name="mem_id" value="" /></td>
+						<td><input type="text" id="edit_mem_id" name="mem_id" required="required" readonly="readonly"/></td>
 					</tr>
 				</table>
 				<input type="submit" class="body_btn work_edit_btn" value="수정" />
@@ -244,9 +245,10 @@
 						</div>
 						<div class="work_Detail_Insert">
 							<span>업무명</span>
-							<input type="text" id="insert_wd_title" name="wd_title" value="" />
+							<input type="text" id="insert_wd_title" name="wd_title" onkeyup="new_wd_title_length(this)"/>
 							<span>마감기한</span>
-							<input type="date" id="insert_wd_endDate" name="wd_endDate" value="" /> <input type="button" class="body_btn wd_insert_btn" value="추가" onclick="wd_Insert()" />
+							<input type="date" id="insert_wd_endDate" name="wd_endDate"/>
+							<input type="button" class="body_btn wd_insert_btn" value="추가" onclick="wd_Insert()" />
 						</div>
 					</div>
 					<div class="work_Attach_View">
@@ -266,7 +268,7 @@
 						<div id="wk_Comment_List">
 						</div>
 						<div id="new_comment_insert">
-							<input type="text" id="new_wcom_content" value="" />
+							<input type="text" id="new_wcom_content" onkeyup="new_commentLength(this)"/>
 							<input type="button" class="body_btn comment_insert_btn" value="등록" onclick="wcom_Insert()" />
 						</div>
 					</div>

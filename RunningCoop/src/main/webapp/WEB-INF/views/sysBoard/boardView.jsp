@@ -7,9 +7,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>시스템게시판 게시글 보기</title>
+<title>Running Co-op :: 게시글 보기</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
+
 <script type="text/javascript">
 	function back() {
 		location.href="./qnaList.do";
@@ -35,6 +36,7 @@
 		}
 	});
 </script>
+
 </head>
 <body>
 <div id = "header">

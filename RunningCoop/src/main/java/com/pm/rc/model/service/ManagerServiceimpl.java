@@ -46,18 +46,18 @@ public class ManagerServiceimpl implements ManagerService {
 	}
 
 	@Override
-	public List<MemberDto> allMemberSelect(PagingProDto maPaging) {
-		return managerdao.allMemberSelect(maPaging);
+	public List<Map<String, String>> allMemberSelect(MemberDto dto) {
+		return managerdao.allMemberSelect(dto);
 	}
 	
 	@Override
-	public int allMemberSelectCount() {
-		return managerdao.allMemberSelectCount();
+	public int allMemberSelectCount(MemberDto dto) {
+		return managerdao.allMemberSelectCount(dto);
 	}
 
 	@Override
-	public List<MemberDto> allMemberSelectSearch(Map<String, String> map) {
-		return managerdao.allMemberSelectSearch(map);
+	public List<MemberDto> allMemberSelectSearch(MemberDto dto) {
+		return managerdao.allMemberSelectSearch(dto);
 	}
 
 	@Override

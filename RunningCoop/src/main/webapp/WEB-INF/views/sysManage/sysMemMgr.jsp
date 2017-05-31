@@ -9,6 +9,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Running Co-op :: 시스템 관리자 - 회원 관리</title>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
+<!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+ <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script> -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="./js/paging.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
@@ -25,13 +30,12 @@
 				var mem_email = msg.info.mem_email;
 				var mem_phone = msg.info.mem_phone;
 				
-				$("#upMem_id").text(mem_id);
-				$("#upMem_pw").text(mem_pw);
-				$("#upMem_name").text(mem_name);
-				$("#upMem_email").text(mem_email);
-				$("#upMem_phone").text(mem_phone);
-				
-				$("#insert_Container").css("display", "block");
+				$("#upMem_id").val(mem_id);
+				$("#upMem_pw").val(mem_pw);
+				$("#upMem_name").val(mem_name);
+				$("#upMem_email").val(mem_email);
+				$("#upMem_phone").val(mem_phone);
+			//	$("#insert_Container").css("display", "block");
 				$("#insert_Container").dialog({
 					title : "회원 정보 수정",
 					height : 400,
@@ -95,23 +99,23 @@
 				<table class = "adm_memEdit_table">
 					<tr>
 						<th>아이디</th>
-						<td id="upMem_id"></td>
+						<td><input type = "text" id = "upMem_id"></td>
 					</tr>
 					<tr>
 						<th>비밀번호</th>
-						<td id="upMem_pw"></td>
+						<td><input type = "text" id = "upMem_pw"></td>
 					</tr>
 					<tr>
 						<th>이름</th>
-						<td id="upMem_name"></td>
+						<td><input type = "text" id = "upMem_name"></td>
 					</tr>
 					<tr>
 						<th>이메일</th>
-						<td id="upMem_email"></td>
+						<td><input type = "text" id = "upMem_email"></td>
 					</tr>
 					<tr>
 						<th>전화번호</th>
-						<td id="upMem_phone"></td>
+						<td><input type = "text" id = "upMem_phone"></td>
 					</tr>
 				</table>
 					<input type="submit" value="수정"/> 
@@ -120,7 +124,7 @@
 		</div>
 
 		<div class="adm_search_area">
-			<form action="./sysMemSearch.do" method="post">
+			<form action="./sysMemMgr.do" method="post">
 				<input type="text" name="mem_name" />
 				<input type="submit" class="body_btn mem_search" value="검색" />
 			</form>
@@ -163,13 +167,13 @@
 						<c:otherwise>
 							<c:forEach var="list" items="${ list }" >
 								<tr>
-									<td></td>
-									<td>${ list.mem_id }</td>
-									<td>${ list.mem_name }</td>
-									<td>${ list.mem_email }</td>
-									<td>${ list.mem_phone }</td>
-									<td>${ list.mem_regDate }</td>
-									<td><input type = "button" value = "수정" onclick="selectMem('${list.mem_id}')"/></td>
+									<td>${ list.RNUM }</td>
+									<td>${ list.MEM_ID }</td>
+									<td>${ list.MEM_NAME }</td>
+									<td>${ list.MEM_EMAIL }</td>
+									<td>${ list.MEM_PHONE }</td>
+									<td>${ list.MEM_REGDATE }</td>
+									<td><input type = "button" value = "수정" onclick="selectMem('${list.MEM_ID}')"/></td>
 								</tr>
 							</c:forEach>
 						</c:otherwise>

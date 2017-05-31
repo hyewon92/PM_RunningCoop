@@ -22,8 +22,8 @@ public interface ManagerDao {
 	 * @return list
 	 * @author 라한솔
 	 */
-	public List<MemberDto> allMemberSelect(PagingProDto maPaging);
-	public int allMemberSelectCount ();
+	public List<Map<String, String>> allMemberSelect(MemberDto dto);
+	public int allMemberSelectCount (MemberDto dto);
 	
 	/**
 	 * 회원 목록 출력 (아이디 검색)
@@ -31,7 +31,7 @@ public interface ManagerDao {
 	 * @return list
 	 * @author 라한솔
 	 */
-	public List<MemberDto> allMemberSelectSearch(Map<String, String> map);
+	public List<MemberDto> allMemberSelectSearch(MemberDto dto);
 	
 	/**
 	 * 회원 정보 조회

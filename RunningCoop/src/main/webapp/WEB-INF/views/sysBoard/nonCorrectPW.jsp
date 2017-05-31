@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>게시글 비밀번호 오류 페이지</title>
+<title>Running Co-op :: 문의게시판</title>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script type="text/javascript">
 	function back(){

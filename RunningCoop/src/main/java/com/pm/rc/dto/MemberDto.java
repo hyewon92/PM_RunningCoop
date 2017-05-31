@@ -12,6 +12,8 @@ public class MemberDto {
 	private String mem_level;
 	private GroupWaitDto groupwaitdto;
 	
+	private PagingProDto paging;
+	
 	public MemberDto(){}
 	
 	public String getMem_id() {
@@ -87,6 +89,14 @@ public class MemberDto {
 	}
 
 	
+	public PagingProDto getPaging() {
+		return paging;
+	}
+
+	public void setPaging(PagingProDto paging) {
+		this.paging = paging;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberDto [mem_id=" + mem_id + ", mem_pw=" + mem_pw

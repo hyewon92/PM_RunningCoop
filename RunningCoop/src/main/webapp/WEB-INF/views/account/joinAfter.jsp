@@ -60,7 +60,7 @@
 					<img alt="그룹가입" src = "images/group.png" style = "width:160px; height: 160px; margin-bottom:30px;">
 				</div>
 				<div style = "margin-bottom: 20px;"><span style = "font-size: 14px;">그룹멤버들과 효율적으로 프로젝트를 관리해보세요!</span></div>
-				<input type = "button" class = "btn"  value = "그룹 가입 신청하기" onclick = "location.href='./groupGoGo.do'">
+				<input type = "button" class = "btn"  value = "그룹 가입 신청하기" onclick = "location.href='./go_SearchForm.do'">
 			</div>
 		</div>
 		<!-- 메인 본문 끝 -->

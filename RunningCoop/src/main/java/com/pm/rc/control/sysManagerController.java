@@ -28,7 +28,7 @@ import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.PagingProDto;
 import com.pm.rc.dto.SystemBoardDto;
 import com.pm.rc.model.service.ManagerService;
-import com.pm.rc.model.service.UserSysBoardService;
+import com.pm.rc.model.service.SysBoardService;
 
 @Controller
 public class sysManagerController {
@@ -595,16 +595,29 @@ public class sysManagerController {
 		// 회원 관리 페이지 이동
 		@RequestMapping(value="/sysMemMgr.do", method={RequestMethod.GET,RequestMethod.POST})
 		public String sysMemberMgr(Model model , HttpServletRequest req){
+			
+			logger.info("========================= 회원 관리 페이지 이동 =======================");
+			
 			PagingProDto maPaging = new PagingProDto(req.getParameter("index"),
 														   req.getParameter("pageStartNum"),
 														   req.getParameter("listCnt"));
 			
-			logger.info("========================= 회원 관리 페이지 이동 =======================");
+			MemberDto mDto = new MemberDto();
+			mDto.setPaging(maPaging);
 			
-			List<MemberDto> list = new ArrayList<MemberDto>();
+			String mem_name = req.getParameter("mem_name");
+			mDto.setMem_name(mem_name);
 			
-			list = service.allMemberSelect(maPaging);
-			maPaging.setTotal(service.allMemberSelectCount());
+			if(mem_name != null){
+				logger.info("===================== 회원 검색 ========================");
+				logger.info("검색할 내용 : "+mem_name);
+				logger.info("====================================================");
+			}
+			
+			List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+			
+			list = service.allMemberSelect(mDto);
+			maPaging.setTotal(service.allMemberSelectCount(mDto));
 			
 			model.addAttribute("list", list);
 			model.addAttribute("paging", maPaging);
@@ -618,18 +631,22 @@ public class sysManagerController {
 			
 			String mem_name = request.getParameter("mem_name");
 			
-			logger.info("===================== 회원 검색 ========================");
-			logger.info("검색할 내용 : "+mem_name);
-			logger.info("====================================================");
+			PagingProDto paging = new PagingProDto(request.getParameter("index"),
+					   								 request.getParameter("pageStartNum"),
+					   								 request.getParameter("listCnt"));
 			
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("mem_id", mem_name);
+			
+			
+			MemberDto mDto = new MemberDto();
+			mDto.setPaging(paging);
+			mDto.setMem_name(mem_name);
 			
 			List<MemberDto> list = new ArrayList<MemberDto>();
 			
-			list = service.allMemberSelectSearch(map);
+			list = service.allMemberSelectSearch(mDto);
 			
 			model.addAttribute("list", list);
+			model.addAttribute("paging", paging);
 			
 			return "sysManage/sysMemMgr";
 		}
