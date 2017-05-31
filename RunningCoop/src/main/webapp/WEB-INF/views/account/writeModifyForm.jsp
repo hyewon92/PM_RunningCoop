@@ -157,6 +157,7 @@
 				<div style = "width:100px; display: inline-block; float: left;"><input type = "button" class = "accountBtn" style = "width:100px; height: 30px; font-size:10pt; background-color: #5cb85c; color: white; border-right-color: white;" value = "개인정보 수정" onclick="showModiBox()"></div>
 				<div style = "width:100px; display: inline-block;"><input type = "button" class = "accountBtn" style = "width:100px; height: 30px; font-size:10pt; background-color: #5cb85c; color: white;" value = "탈퇴하기" onclick = "goLeave()"></div>
 			</div>
+			<!-- 개인정보 수정 -->
 			<form class = "modifyBox" action="./memInfoModify.do" method="post">
 				<div class = "rowGroup" style = "border-bottom: none;">
 					<div class = "join_row" style = "margin-bottom: 5px;"><span class = "upSpan">아이디: </span><input type = "text" class = "int" id = "upId" name = "mem_id" value = "${dto.getMem_id()}" readonly="readonly" style = "width:80%; font-size:12pt;"></div>
@@ -173,6 +174,9 @@
 					<input type = "submit" class = "accountBtn" id = "modifyInfo" value = "수정" style = "width: 450px; height: 40px; font-size:14pt; border-radius: 4px; background-color: #5cb85c; color: #fff;">
 				</div>
 			</form>
+			<!-- 개인정보 수정 끝 -->
+			
+			<!-- 탈퇴하기 -->
 			<div class = "leaveBox">
 				<div class = "rowGroup" style = "margin-top: 15%; padding: 20px;">
 					<div style = "overflow: hidden">
@@ -186,6 +190,8 @@
 					<input type = "button" class = "accountBtn" id = "leaveService" value = "탈퇴하기" style = "width: 450px; height: 40px; margin-top:10%; font-size:14pt; border-radius: 4px; background-color: #5cb85c; color: #fff;" onclick = "doLeave()">
 				</div>
 			</div>
+			<!-- 탈퇴하기 끝 -->
+			
 		</div>
 	</div>
 	

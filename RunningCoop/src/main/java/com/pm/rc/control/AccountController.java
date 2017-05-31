@@ -191,43 +191,6 @@ public class AccountController {
 		   return "account/joinAfter";
 	   }
 
-	//회원가입 후 바로 메인화면 이동
-/*	@RequestMapping(value = "/firstLogin.do")
-	public String firstLogin(){
-		logger.info("firstLogin실행");
-		return "Group/myGrSelect";
-	}
-*/
-	//탈퇴하기(페이지이동)
-	@RequestMapping(value = "/goLeave.do", method = RequestMethod.GET)
-	public String goLeave(HttpSession session, Model model){
-		logger.info("goLeave실행");
-		//		String mem_id = (String)session.getAttribute("mem_id");
-		return "account/goLeave";
-		/*		//pm목록 보는 서비스(PM권한 위임)
-		List<Map<String, String>> pmSearchList = accountService.levelPmSelect(mem_id);
-		//gm목록 보는 서비스(PM권한 위임)
-		List<Map<String, String>> gmSearchList = accountService.levelGmSelect(mem_id);
-		if(pmSearchList.size()!=0){
-			model.addAttribute("pmSearchList", pmSearchList);
-			return "account/listPmGroup";
-		}else{
-			if(gmSearchList.size()!=0){
-				model.addAttribute("gmSearchList", gmSearchList);
-				return "account/listGmProject";
-			}else{
-				//탈퇴처리
-				boolean isc = accountService.memDelete(mem_id);
-				if(isc == true){
-					session.invalidate();
-					return "account/bye";
-				}else{
-					return "account/error/error";
-				}
-			}
-		}*/
-	}
-
 	//탈퇴 전 pm리스트 출력
 	@RequestMapping(value = "/viewListPm.do")
 	public String viewListPm(HttpSession session, Model model){
@@ -289,16 +252,6 @@ public class AccountController {
 		map.put("result", isc);
 		return map;
 	}
-
-	/*	//GM위임하기
-	@RequestMapping(value = "/giveGm.do", method = RequestMethod.POST)
-	public String giveGm(Model model, String gr_id){
-		logger.info("giveGm실행");
-		System.out.println("소속 그룹아이디: "+gr_id);
-		model.addAttribute("gr_id",gr_id);
-		return "account/grMemList";
-	}
-	 */
 	
 	//개인정보 수정(본인확인 페이지) 이동
 	@RequestMapping(value = "/enterModify.do", method = {RequestMethod.POST ,RequestMethod.GET})
@@ -346,7 +299,5 @@ public class AccountController {
 			return "account/error/error";
 		}
 	}
-	
-	
 
 }
