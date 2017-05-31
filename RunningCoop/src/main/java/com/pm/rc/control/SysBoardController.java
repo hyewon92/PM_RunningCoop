@@ -236,10 +236,9 @@ public class SysBoardController {
 		map.put("sbr_uuid", sbr_uuid);
 
 		MultipartFile file = multipartRequest.getFile("satt_name");
-		
-		System.out.println(file);
 
 		String oldFileName = file.getOriginalFilename();
+		
 		if (oldFileName.length()>0){
 			String savePath = "C:\\RC_fileSave\\";
 

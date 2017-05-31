@@ -7,11 +7,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>시스템 문의 게시판 관리 페이지</title>
+<title>Running Co-op :: 시스템 관리자 - 문의 게시판</title>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script src="./js/paging.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
+$(function(){
+	var listCnt = $("#listCnt").val();
+	$("#listCount").val(listCnt).prop("select", true);
+});
+
 function checkAll(bool){
 	var obj = document.getElementsByName("number");
 	for (var i = 0; i < obj.length; i++){
@@ -55,7 +60,7 @@ function checkDelete(){
 		<h3>문의 게시판 관리</h3>
 		
 		<div class="adm_search_area">
-			<form action="./sysQnaSearch.do" method="post">
+			<form action="./sysQnaMgr.do" method="post">
 				<input type="text" name="sbr_title" /> 
 				<input type="submit" class="body_btn qna_search" value="검색" />
 			</form>
@@ -63,16 +68,16 @@ function checkDelete(){
 		 
 		<div id="div_select_area">
 			<select class='adm_listSelect' id='listCount' name='listCount' onchange='listCnt();'>
-					<option>선택</option>
-					<option value='5' >5</option>
-					<option value='10'>10</option>
-					<option value='15'>15</option>
-					<option value='20'>20</option>
+				<option value='15'>15</option>
+				<option value='30'>30</option>
+				<option value='45'>45</option>
+				<option value='60'>60</option>
 			</select>
 			<form action="./sysQnaMgr.do" method="post" id='frmPaging'>			 
 				<input type='hidden' name='index' id='index' value='${paging.index}'>
 				<input type='hidden' name='pageStartNum' id='pageStartNum' value='${paging.pageStartNum}'>
-				<input type='hidden' name='listCnt' id='listCnt' value='${paging.listCnt}'>		
+				<input type='hidden' name='listCnt' id='listCnt' value='${paging.listCnt}'>
+				<input type="hidden" name="sbr_title" value="${ sbr_title }"/>
 			</form>
 		</div>
 		
@@ -101,7 +106,12 @@ function checkDelete(){
 							<tr>
 								<td>${ list.RNUM }</td>
 								<td><input type="checkbox" name="number" value="${ list.SBR_UUID }" /></td>
-								<td><a href="./viewQna.do?sbr_uuid=${ list.SBR_UUID }">${ list.SBR_TITLE }</a></td>
+						<c:if test="${ list.get('SBR_STEP') > 0 }">
+							<td><a href="./viewQna.do?sbr_uuid=${ list.SBR_UUID }"><img alt="reply" src="images/sysBoard/reply.png"/>${ list.SBR_TITLE }</a></td>
+						</c:if>
+						<c:if test="${ list.get('SBR_STEP') == 0 }">
+							<td><a href="./viewQna.do?sbr_uuid=${ list.SBR_UUID }">${ list.SBR_TITLE }</a></td>
+						</c:if>
 								<td>${ list.MEM_NAME }</td>
 								<td>${ list.SBR_REGDATE }</td>
 								<td><input type="button" value="삭제" onclick="location.href='./sysboardDelete.do?noticeyn=N&sbr_uuid=${ list.SBR_UUID }'" /></td>

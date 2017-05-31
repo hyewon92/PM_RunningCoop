@@ -7,21 +7,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Running Co-op :: 진행 완료인 프로젝트 목록</title>
+<title>Running Co-op :: 진행완료인 프로젝트 목록</title>
 
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript" src="js/paging.js"></script>
-
-<style type="text/css">
-.pr_detail_view {
-	display: none;
-}
-
-.pr_name {
-	cursor: pointer;
-}
-</style>
 
 <script type="text/javascript">
 	function view_Detail(val){
@@ -89,7 +79,7 @@
 		<h3>진행 완료인 프로젝트 목록</h3>
 		
 		<div class="pr_search_area">
-			<form action="./myPrSelect.do" method="post">
+			<form action="./goDoneSelect.do" method="post">
 				<input type="hidden" name="pr_condition" value="C" />
 				<input type="text" name="pr_name" />
 				<input type="submit" class="body_btn pr_search_btn" value="검색" />
@@ -100,10 +90,10 @@
 			<input type="radio" name="project_type" value="individual" checked/>개인 프로젝트
 			<input type="radio" name="project_type" value="group"/>그룹 프로젝트&nbsp;&nbsp;
 			<select class='project_list_select' id='listCount' name='listCount' onchange="projectListCnt()">
-					<option value='5'>5</option>
-					<option value='10'>10</option>
 					<option value='15'>15</option>
-					<option value='20'>20</option>
+					<option value='30'>30</option>
+					<option value='45'>45</option>
+					<option value='60'>60</option>
 			</select>
 			<form action="./goDoneSelect.do" method="post" id="frmPaging">
 				<input type='hidden' name='gIndex' id='gIndex' value='${gPaging.index}'>
@@ -112,6 +102,7 @@
 				<input type='hidden' name='iIndex' id='iIndex' value='${iPaging.index}'>
 				<input type='hidden' name='iPageStartNum' id='iPageStartNum' value='${iPaging.pageStartNum}'>
 				<input type='hidden' name='iListCnt' id='iListCnt' value='${iPaging.listCnt}'>
+				<input type="hidden" name="pr_name" value="${ pr_name }"/>
 			</form>
 		</div>
 		
@@ -134,9 +125,9 @@
 						</tr>
 					</c:when>
 					<c:otherwise>
-						<c:forEach var="ilist" items="${ iPrList }" varStatus="vs">
+						<c:forEach var="ilist" items="${ iPrList }">
 							<tr onclick="view_Detail('${ ilist.PR_ID}')">
-								<td>${ vs.count }</td>
+								<td>${ ilist.RNUM }</td>
 								<td>개인</td>
 								<td><span class="pr_name">${ ilist.PR_NAME }</span></td>
 								<td>${ ilist.MEM_NAME }</td>
@@ -188,9 +179,9 @@
 							</tr>
 						</c:when>
 						<c:otherwise>
-							<c:forEach var="glist" items="${ gPrList }" varStatus="vs">
+							<c:forEach var="glist" items="${ gPrList }">
 								<tr onclick="view_Detail('${ glist.PR_ID }')">
-									<td>${ vs.count }</td>
+									<td>${ glist.RNUM }</td>
 									<td>${ glist.GR_NAME }</td>
 									<td><span class="pr_name">${ glist.PR_NAME }</span></td>
 									<td>${ glist.MEM_NAME }</td>

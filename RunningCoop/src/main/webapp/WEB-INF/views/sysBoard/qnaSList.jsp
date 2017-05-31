@@ -58,10 +58,10 @@
 	
 	<div id="div_select_area">
 		<select class='notice_list_select' id='listCount' name='listCount' onchange="listCnt()">
-				<option value='5'>5</option>
-				<option value='10'>10</option>
 				<option value='15'>15</option>
-				<option value='20'>20</option>
+				<option value='30'>30</option>
+				<option value='45'>45</option>
+				<option value='60'>60</option>
 		</select>
 		<form action="./qnaSList.do" method="post" id="frmPaging">
 			<input type='hidden' name='index' id='index' value='${paging.index}'>
@@ -93,10 +93,18 @@
 					<c:forEach var="list" items="${ list }">
 						<tr>
 							<td>${ list.get("RNUM") }</td>
+						<c:if test="${ list.get('SBR_STEP') > 0 }">
+							<td><span class = "sbr_title">
+								<input type="hidden" name = "uuid" value = "${ list.get('SBR_UUID') }"/>
+								<input type="hidden" name = "scryn" value="${ list.get('SBR_SCRYN') }"/>
+								<img alt="reply" src="images/sysBoard/reply.png"/>${ list.get("SBR_TITLE") }</span></td>
+						</c:if>
+						<c:if test="${ list.get('SBR_STEP') == 0 }">
 							<td><span class = "sbr_title">
 								<input type="hidden" name = "uuid" value = "${ list.get('SBR_UUID') }"/>
 								<input type="hidden" name = "scryn" value="${ list.get('SBR_SCRYN') }"/>
 								${ list.get("SBR_TITLE") }</span></td>
+						</c:if>
 							<td>${ list.get("MEM_NAME") }</td>
 							<td>${ list.get("SBR_REGDATE") }</td>
 						</tr>

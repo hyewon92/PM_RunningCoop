@@ -74,7 +74,7 @@
 		var pr_id = $("#pr_id").val();
 		var pr_name = $("input[name=pr_name]:eq(0)").val();
 		var pr_endDate = $("input[name=pr_endDate]:eq(0)").val();
-		var pr_goal = $("input[name=pr_goal]:eq(0)").val();
+		var pr_goal = $("textarea[name=pr_goal]:eq(0)").val();
 		var pr_searchYN = $("input[name=pr_searchYN]:checked").val();
 		var pr_condition = $("select[name=pr_condition] option:selected").val();
 		

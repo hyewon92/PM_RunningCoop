@@ -28,7 +28,6 @@ import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.PagingProDto;
 import com.pm.rc.dto.SystemBoardDto;
 import com.pm.rc.model.service.ManagerService;
-import com.pm.rc.model.service.SysBoardService;
 
 @Controller
 public class sysManagerController {
@@ -99,8 +98,11 @@ public class sysManagerController {
 		public String sysBoardManager(Model model, HttpServletRequest req){
 			PagingProDto pgDto = new PagingProDto(req.getParameter("index"), req.getParameter("pageStartNum"), req.getParameter("listCnt"));
 			
+			String sbr_title = req.getParameter("sbr_title");
+			
 			SystemBoardDto sDto = new SystemBoardDto();
 			sDto.setPaging(pgDto);
+			sDto.setSbr_title(sbr_title);
 			
 			List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 
@@ -109,34 +111,11 @@ public class sysManagerController {
 
 			model.addAttribute("list", list);
 			model.addAttribute("paging",pgDto);
+			model.addAttribute("sbr_title", sbr_title);
 
 			return "sysManage/sysNoticeMgr";
 		}
 		
-		// 공지 게시판 게시글 검색
-		@RequestMapping(value="/sysNoticeSearch.do", method=RequestMethod.POST)
-		public String sysNoticeSearch(HttpServletRequest req, Model model){
-			PagingProDto pgDto = new PagingProDto(req.getParameter("index"), req.getParameter("pageStartNum"), req.getParameter("listCnt"));
-			SystemBoardDto sDto = new SystemBoardDto();
-			
-			sDto.setPaging(pgDto);
-			
-			String sbr_title = req.getParameter("sbr_title");
-			
-			logger.info("=================== 공지 게시판 게시글 검색 =====================");
-			logger.info("검색할 게시글 제목 : "+sbr_title);
-			logger.info("=========================================================");
-			
-			sDto.setSbr_title(sbr_title);
-			
-			List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-			list = service.noticeListSelect(sDto);
-			
-			model.addAttribute("list", list);
-			
-			return "sysManage/sysNoticeMgr";
-		}
-
 		// 공지 게시글 작성페이지 이동
 		@RequestMapping(value="/noticeWriteForm.do", method=RequestMethod.GET)
 		public String NoticeWriteForm(){
@@ -170,13 +149,14 @@ public class sysManagerController {
 
 			MultipartFile file = multipartRequest.getFile("satt_name");
 
-			if (file != null){
+			String oldFileName = file.getOriginalFilename();
+			
+			if (oldFileName.length() > 0){
 				String savePath = "C:\\RC_fileSave\\";
 
 				String fuuid = createUUID();
 				int indexNum = fuuid.lastIndexOf("-");
 
-				String oldFileName = file.getOriginalFilename();
 				String satt_size = ""+file.getSize();
 
 				String newFileName = fuuid.substring(indexNum+1) + oldFileName;
@@ -257,9 +237,9 @@ public class sysManagerController {
 
 			MultipartFile file = multipartRequest.getFile("satt_name");
 
-			logger.info(file.getOriginalFilename());
-
-			if (!file.getOriginalFilename().equals("")){
+			String oldFileName = file.getOriginalFilename();
+			
+			if (oldFileName.length() > 0){
 				String savePath = "C:\\RC_fileSave\\";
 
 				// 기존 파일 삭제
@@ -273,7 +253,6 @@ public class sysManagerController {
 				String fuuid = createUUID();
 				int indexNum = fuuid.lastIndexOf("-");
 
-				String oldFileName = file.getOriginalFilename();
 				String satt_size = ""+file.getSize();
 
 				String newFileName = fuuid.substring(indexNum+1) + oldFileName;
@@ -386,8 +365,11 @@ public class sysManagerController {
 			PagingProDto pgDto = new PagingProDto(req.getParameter("index"), 
 														  req.getParameter("pageStartNum"), req.getParameter("listCnt"));
 			
+			String sbr_title = req.getParameter("sbr_title");
+			
 			SystemBoardDto sDto = new SystemBoardDto();
 			sDto.setPaging(pgDto);
+			sDto.setSbr_title(sbr_title);
 			
 			logger.info("====================== 문의 게시판 관리 페이지 이동 ========================");
 
@@ -398,32 +380,8 @@ public class sysManagerController {
 
 			model.addAttribute("list", list);
 			model.addAttribute("paging", pgDto);
+			model.addAttribute("sbr_title", sbr_title);
 
-			return "sysManage/sysQnaMgr";
-		}
-		
-		// 문의 게시판 게시글 검색 리스트 조회
-		@RequestMapping(value="/sysQnaSearch.do", method=RequestMethod.POST)
-		public String sysQnaSearch(HttpServletRequest request, Model model){
-			PagingProDto pgDto = new PagingProDto(request.getParameter("index"), request.getParameter("pageStartNum"), request.getParameter("listCnt"));
-			SystemBoardDto sDto = new SystemBoardDto();
-			
-			sDto.setPaging(pgDto);
-			
-			String sbr_title = request.getParameter("sbr_title");
-			
-			logger.info("==================== 문의 게시판 게시글 제목 검색 ======================");
-			logger.info("검색할 게시글 제목 : "+sbr_title);
-			logger.info("==============================================================");
-			
-			sDto.setSbr_title(sbr_title);
-			
-			List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-			list = service.qnaListSelect(sDto);
-			
-			model.addAttribute("list", list);
-			model.addAttribute("paging", pgDto);
-			
 			return "sysManage/sysQnaMgr";
 		}
 		
@@ -494,14 +452,15 @@ public class sysManagerController {
 			Map<String, String> map = new HashMap<String, String>();
 			
 			MultipartFile file = multiRequest.getFile("satt_name");
+			
+			String oldFileName = file.getOriginalFilename();
 
-			if (file.getOriginalFilename().length()>0){
+			if (oldFileName.length() > 0){
 				String savePath = "C:\\RC_fileSave\\";
 
 				String fuuid = createUUID();
 				int indexNum = fuuid.lastIndexOf("-");
 
-				String oldFileName = file.getOriginalFilename();
 				String satt_size = ""+file.getSize();
 
 				String newFileName = fuuid.substring(indexNum+1) + oldFileName;
@@ -598,12 +557,12 @@ public class sysManagerController {
 			
 			logger.info("========================= 회원 관리 페이지 이동 =======================");
 			
-			PagingProDto maPaging = new PagingProDto(req.getParameter("index"),
+			PagingProDto paging = new PagingProDto(req.getParameter("index"),
 														   req.getParameter("pageStartNum"),
 														   req.getParameter("listCnt"));
 			
 			MemberDto mDto = new MemberDto();
-			mDto.setPaging(maPaging);
+			mDto.setPaging(paging);
 			
 			String mem_name = req.getParameter("mem_name");
 			mDto.setMem_name(mem_name);
@@ -617,36 +576,11 @@ public class sysManagerController {
 			List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 			
 			list = service.allMemberSelect(mDto);
-			maPaging.setTotal(service.allMemberSelectCount(mDto));
-			
-			model.addAttribute("list", list);
-			model.addAttribute("paging", maPaging);
-			
-			return "sysManage/sysMemMgr";
-		}
-		
-		// 회원 검색
-		@RequestMapping(value="/sysMemSearch.do", method=RequestMethod.POST)
-		public String sysMemberSearch(HttpServletRequest request, Model model){
-			
-			String mem_name = request.getParameter("mem_name");
-			
-			PagingProDto paging = new PagingProDto(request.getParameter("index"),
-					   								 request.getParameter("pageStartNum"),
-					   								 request.getParameter("listCnt"));
-			
-			
-			
-			MemberDto mDto = new MemberDto();
-			mDto.setPaging(paging);
-			mDto.setMem_name(mem_name);
-			
-			List<MemberDto> list = new ArrayList<MemberDto>();
-			
-			list = service.allMemberSelectSearch(mDto);
+			paging.setTotal(service.allMemberSelectCount(mDto));
 			
 			model.addAttribute("list", list);
 			model.addAttribute("paging", paging);
+			model.addAttribute("search_value", mem_name);
 			
 			return "sysManage/sysMemMgr";
 		}

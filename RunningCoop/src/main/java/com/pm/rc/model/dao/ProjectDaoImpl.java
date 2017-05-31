@@ -56,111 +56,87 @@ public class ProjectDaoImpl implements ProjectDao {
 	}
 	
 	@Override
-	public List<Map<String, String>> myDoingGPrListSelect(ProjectPagingDto prPaging) {
+	public List<Map<String, String>> myDoingGPrListSelect(ProjectDto dto) {
 		logger.info("============== 나의 진행중인 그룹 프로젝트 리스트 조회 dao 시작 ==============");
-		return sqlSession.selectList(NAMESPACE+"myDoingGPrListSelect", prPaging);
+		return sqlSession.selectList(NAMESPACE+"myDoingGPrListSelect", dto);
 	}
 	
 	@Override
-	public int myDoingGpTotalcount(String mem_id) {
+	public int myDoingGpTotalcount(ProjectDto dto) {
 		logger.info("============== 나의 진행중인 그룹 프로젝트 갯수 조회 dao 시작 ==============");
-		return sqlSession.selectOne(NAMESPACE+"myDoingGpTotalcount", mem_id);
+		return sqlSession.selectOne(NAMESPACE+"myDoingGpTotalcount", dto);
 	}
 	
 	@Override
-	public List<Map<String, String>> myDoingIPrListSelect(ProjectPagingDto prPaging) {
+	public List<Map<String, String>> myDoingIPrListSelect(ProjectDto dto) {
 		logger.info("============== 나의 진행중인 개인 프로젝트 리스트 조회 dao 시작 ==============");
-		return sqlSession.selectList(NAMESPACE+"myDoingIPrListSelect", prPaging);
+		return sqlSession.selectList(NAMESPACE+"myDoingIPrListSelect", dto);
 	}
 	
 	@Override
-	public int myDoingIpTotalcount(String mem_id){
+	public int myDoingIpTotalcount(ProjectDto dto){
 		logger.info("============== 나의 진행중인 개인 프로젝트 갯수 조회 dao 시작 ==============");
-		return sqlSession.selectOne(NAMESPACE+"myDoingIpTotalcount", mem_id);
+		return sqlSession.selectOne(NAMESPACE+"myDoingIpTotalcount", dto);
 	}
 	
 	@Override
-	public List<Map<String, String>> myTodoGPrListSelect(ProjectPagingDto prPaging) {
+	public List<Map<String, String>> myTodoGPrListSelect(ProjectDto dto) {
 		logger.info("============== 나의 진행예정 그룹 프로젝트 리스트 조회 dao 시작 ==============");
-		return sqlSession.selectList(NAMESPACE+"myTodoGPrListSelect", prPaging);
+		return sqlSession.selectList(NAMESPACE+"myTodoGPrListSelect", dto);
 	}
 	
 	@Override
-	public int myTodoGpTotalcount(String mem_id) {
+	public int myTodoGpTotalcount(ProjectDto dto) {
 		logger.info("============== 나의 진행예정 그룹 프로젝트 갯수 조회 dao 시작 ==============");
-		return sqlSession.selectOne(NAMESPACE+"myTodoGpTotalcount", mem_id);
+		return sqlSession.selectOne(NAMESPACE+"myTodoGpTotalcount", dto);
 	}
 	
 	@Override
-	public List<Map<String, String>> myTodoIPrListSelect(ProjectPagingDto prPaging) {
+	public List<Map<String, String>> myTodoIPrListSelect(ProjectDto dto) {
 		logger.info("============== 나의 진행예정 개인 프로젝트 리스트 조회 dao 시작 ==============");
-		return sqlSession.selectList(NAMESPACE+"myTodoIPrListSelect", prPaging);
+		return sqlSession.selectList(NAMESPACE+"myTodoIPrListSelect", dto);
 	}
 	
 	@Override
-	public int myTodoIpTotalcount(String mem_id){
+	public int myTodoIpTotalcount(ProjectDto dto){
 		logger.info("============== 나의 진행예정 개인 프로젝트 갯수 조회 dao 시작 ==============");
-		return sqlSession.selectOne(NAMESPACE+"myTodoIpTotalcount", mem_id);
+		return sqlSession.selectOne(NAMESPACE+"myTodoIpTotalcount", dto);
 	}
 	
 	@Override
-	public List<Map<String, String>> myDidGPrListSelect(ProjectPagingDto prPaging) {
+	public List<Map<String, String>> myDidGPrListSelect(ProjectDto dto) {
 		logger.info("============== 나의 진행완료 그룹 프로젝트 리스트 조회 dao 시작 ==============");
-		return sqlSession.selectList(NAMESPACE+"myDidGPrListSelect", prPaging);
+		return sqlSession.selectList(NAMESPACE+"myDidGPrListSelect", dto);
 	}
 	
 	@Override
-	public int myDidGpTotalcount(String mem_id) {
+	public int myDidGpTotalcount(ProjectDto dto) {
 		logger.info("============== 나의 진행완료 그룹 프로젝트 갯수 조회 dao 시작 ==============");
-		return sqlSession.selectOne(NAMESPACE+"myDidGpTotalcount",mem_id);
+		return sqlSession.selectOne(NAMESPACE+"myDidGpTotalcount", dto);
 	}
 
 	@Override
-	public List<Map<String, String>> myDidIPrListSelect(ProjectPagingDto prPaging) {
+	public List<Map<String, String>> myDidIPrListSelect(ProjectDto dto) {
 		logger.info("============== 나의 진행완료 개인 프로젝트 리스트 조회 dao 시작 ==============");
-		return sqlSession.selectList(NAMESPACE+"myDidIPrListSelect", prPaging);
+		return sqlSession.selectList(NAMESPACE+"myDidIPrListSelect", dto);
 	}
 	
 	@Override
-	public int myDidIpTotalcount(String mem_id){
+	public int myDidIpTotalcount(ProjectDto dto){
 		logger.info("============== 나의 진행완료 개인 프로젝트 갯수 조회 dao 시작 ==============");
-		return sqlSession.selectOne(NAMESPACE+"myDidIpTotalcount", mem_id);
+		return sqlSession.selectOne(NAMESPACE+"myDidIpTotalcount", dto);
 	}
 	
 	@Override
-	public List<Map<String, String>> myGPrSearchSelect(ProjectDto dto) {
-		logger.info("============== 나의 그룹 프로젝트 리스트 조회 dao 시작 ==============");
-		return sqlSession.selectList(NAMESPACE+"myGPrSearchSelect", dto);
-	}
-	
-	@Override
-	public int myGpSearchTotalcount(ProjectDto dto){
-		logger.info("============== 나의 그룹 프로젝트 갯수 조회 dao 시작 ==============");
-		return sqlSession.selectOne(NAMESPACE+"myGpSearchTotalcount", dto);
-	}
-
-	@Override
-	public List<Map<String, String>> myIPrSearchSelect(ProjectDto dto) {
-		logger.info("============== 나의 개인 프로젝트 리스트 조회 dao 시작 ==============");
-		return sqlSession.selectList(NAMESPACE+"myIPrSearchSelect", dto);
-	}
-	
-	@Override
-	public int myIpSearchTotalcount(ProjectDto dto){
-		logger.info("============== 나의 개인 프로젝트 갯수 조회 dao 시작 ==============");
-		return sqlSession.selectOne(NAMESPACE+"myIpSearchTotalcount", dto);
-	}
-
-	@Override
-	public List<Map<String, String>> allPrSearchSelect(ProjectPagingDto prPaging) {
+	public List<Map<String, String>> allPrSearchSelect(ProjectDto dto) {
 		logger.info("============== 전체 프로젝트 리스트 조회 dao 시작 ==============");
-		return sqlSession.selectList(NAMESPACE+"allPrSearchSelect", prPaging);
+		return sqlSession.selectList(NAMESPACE+"allPrSearchSelect", dto);
 	}
 	
 	@Override
-	public int allPrSearchTotalCount(ProjectPagingDto prPaging) {
+	public int allPrSearchTotalCount(ProjectDto dto) {
 		logger.info("============== 전체 프로젝트 갯수 조회 dao 시작 ==============");
-		return sqlSession.selectOne(NAMESPACE+"allPrSearchTotalCount", prPaging);
+		return sqlSession.selectOne(NAMESPACE+"allPrSearchTotalCount", dto);
 	}
 
 	@Override

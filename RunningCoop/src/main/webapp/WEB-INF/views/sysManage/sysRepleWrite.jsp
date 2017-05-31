@@ -49,8 +49,7 @@
 				<div class="qnaAttach_area">
 					<div>첨부파일</div>
 					<div>
-						<input type="file" id="file" name="sbr_name"/> 
-						<input type="hidden" id="filesize" name="sbr_size"/>
+						<input type="file" id="file" name="satt_name"/> 
 					</div>
 				</div>
 				<jsp:include page="../daumOpenEditor.jsp" flush="false"></jsp:include>

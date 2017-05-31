@@ -52,95 +52,75 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public List<Map<String, String>> myDoingGPrListSelect(ProjectPagingDto prPaging) {
-		return dao.myDoingGPrListSelect(prPaging);
+	public List<Map<String, String>> myDoingGPrListSelect(ProjectDto dto) {
+		return dao.myDoingGPrListSelect(dto);
 	}
 	
 	@Override
-	public int myDoingGpTotalcount(String mem_id) {
-		return dao.myDoingGpTotalcount(mem_id);
+	public int myDoingGpTotalcount(ProjectDto dto) {
+		return dao.myDoingGpTotalcount(dto);
 	}
 	
 	@Override
-	public List<Map<String, String>> myDoingIPrListSelect(ProjectPagingDto prPaging) {
-		return dao.myDoingIPrListSelect(prPaging);
+	public List<Map<String, String>> myDoingIPrListSelect(ProjectDto dto) {
+		return dao.myDoingIPrListSelect(dto);
 	}
 	
 	@Override
-	public int myDoingIpTotalcount(String mem_id){
-		return dao.myDoingIpTotalcount(mem_id);
+	public int myDoingIpTotalcount(ProjectDto dto){
+		return dao.myDoingIpTotalcount(dto);
 	}
 	
 	@Override
-	public List<Map<String, String>> myTodoGPrListSelect(ProjectPagingDto prPaging) {
-		return dao.myTodoGPrListSelect(prPaging);
+	public List<Map<String, String>> myTodoGPrListSelect(ProjectDto dto) {
+		return dao.myTodoGPrListSelect(dto);
 	}
 	
 	@Override
-	public int myTodoGpTotalcount(String mem_id) {
-		return dao.myTodoGpTotalcount(mem_id);
+	public int myTodoGpTotalcount(ProjectDto dto) {
+		return dao.myTodoGpTotalcount(dto);
 	}
 	
 	@Override
-	public List<Map<String, String>> myTodoIPrListSelect(ProjectPagingDto prPaging) {
-		return dao.myTodoIPrListSelect(prPaging);
+	public List<Map<String, String>> myTodoIPrListSelect(ProjectDto dto) {
+		return dao.myTodoIPrListSelect(dto);
 	}
 	
 	@Override
-	public int myTodoIpTotalcount(String mem_id){
-		return dao.myTodoIpTotalcount(mem_id);
+	public int myTodoIpTotalcount(ProjectDto dto){
+		return dao.myTodoIpTotalcount(dto);
 	}
 	
 	@Override
-	public List<Map<String, String>> myDidGPrListSelect(ProjectPagingDto prPaging) {
-		return dao.myDidGPrListSelect(prPaging);
+	public List<Map<String, String>> myDidGPrListSelect(ProjectDto dto) {
+		return dao.myDidGPrListSelect(dto);
 	}
 	
 	@Override
-	public int myDidGpTotalcount(String mem_id) {
-		return dao.myDidGpTotalcount(mem_id);
+	public int myDidGpTotalcount(ProjectDto dto) {
+		return dao.myDidGpTotalcount(dto);
 	}
 
 	@Override
-	public List<Map<String, String>> myDidIPrListSelect(ProjectPagingDto prPaging) {
-		return dao.myDidIPrListSelect(prPaging);
+	public List<Map<String, String>> myDidIPrListSelect(ProjectDto dto) {
+		return dao.myDidIPrListSelect(dto);
 	}
 	
 	@Override
-	public int myDidIpTotalcount(String mem_id){
-		return dao.myDidIpTotalcount(mem_id);
+	public int myDidIpTotalcount(ProjectDto dto){
+		return dao.myDidIpTotalcount(dto);
 	}
 
 	@Override
-	public List<Map<String, String>> allPrSearchSelect(ProjectPagingDto prPaging) {
-		return dao.allPrSearchSelect(prPaging);
+	public List<Map<String, String>> allPrSearchSelect(ProjectDto dto) {
+		return dao.allPrSearchSelect(dto);
 	}
 	
 	@Override
-	public int allPrSearchTotalCount(ProjectPagingDto prPaging) {
-		return dao.allPrSearchTotalCount(prPaging);
+	public int allPrSearchTotalCount(ProjectDto dto) {
+		return dao.allPrSearchTotalCount(dto);
 	}
 	
-	@Override
-	public List<Map<String, String>> myGPrSearchSelect(ProjectDto dto) {
-		return dao.myGPrSearchSelect(dto);
-	}
-	
-	@Override
-	public int myGpSearchTotalcount(ProjectDto dto){
-		return dao.myGpSearchTotalcount(dto);
-	}
-
-	@Override
-	public List<Map<String, String>> myIPrSearchSelect(ProjectDto dto) {
-		return dao.myIPrSearchSelect(dto);
-	}
-	
-	@Override
-	public int myIpSearchTotalcount(ProjectDto dto){
-		return dao.myIpSearchTotalcount(dto);
-	}
-
 	@Override
 	public Map<String, String> prDetailSelect(String pr_id) {
 		prRateEdit(pr_id);

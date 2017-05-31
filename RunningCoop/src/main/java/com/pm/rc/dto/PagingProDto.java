@@ -22,7 +22,7 @@ public class PagingProDto {
 		pageCnt = 5;
 		index = 0;
 		pageStartNum = 1;
-		listCnt = 5;
+		listCnt = 15;
 	}
 	
 //	public PagingDto(String string, String string2, String string3, String string4) {}

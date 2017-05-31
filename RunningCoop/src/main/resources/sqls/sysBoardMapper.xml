@@ -4,21 +4,20 @@
 	
 	<!-- 공지게시판 페이징 처리 시작 -->
 	<select id="noticeListSelect" parameterType="SystemBoardDto" resultType="java.util.Map">
-		SELECT *
-		FROM ( SELECT ROWNUM RNUMBER, P.*
-		      FROM (
-					SELECT ROWNUM RNUM, SB.SBR_UUID,
-					SB.SBR_TITLE, M.MEM_NAME, TO_CHAR(SB.SBR_REGDATE, 'YYYY/MM/DD')SBR_REGDATE
-					FROM RC_SYSBOARD SB, RC_MEMBER M
-					WHERE SB.MEM_ID = M.MEM_ID
-					AND
-					SB.SBR_NOTICEYN = 'Y' AND SB.SBR_DELYN = 'N'
-					<if test="sbr_title != null">
-						AND SB.SBR_TITLE LIKE '%${sbr_title}%'
-					</if>
-					ORDER BY RNUM DESC, SBR_REFER, SBR_STEP DESC
-				  ) P
-		    )	
+		SELECT * FROM 
+			(SELECT ROWNUM RNUMBER, R.* FROM (
+				(SELECT ROWNUM RNUM, P.* FROM
+					(SELECT SB.SBR_UUID, SB.SBR_TITLE, M.MEM_NAME, TO_CHAR(SB.SBR_REGDATE, 'YYYY/MM/DD') SBR_REGDATE,
+						SB.SBR_SCRYN, SBR_STEP
+						FROM RC_SYSBOARD SB, RC_MEMBER M
+						WHERE SB.MEM_ID = M.MEM_ID AND SBR_DELYN = 'N' AND SBR_NOTICEYN = 'Y'
+						<if test="sbr_title != null">
+							AND SB.SBR_TITLE LIKE '%${sbr_title}%'
+						</if>
+						ORDER BY SBR_REFER, SBR_STEP DESC
+				  	) P
+				ORDER BY RNUM DESC) R)
+			)
 		WHERE RNUMBER BETWEEN #{paging.start} AND #{paging.last}
 	</select>
 
@@ -36,20 +35,20 @@
 	<!-- 문의게시판 목록 페이징 처리 시작  -->
 	<!-- 문의 게시글 목록 출력 -->
 	<select id="qnaListSelect" parameterType="SystemBoardDto" resultType="java.util.Map">
-		SELECT *
-		FROM ( SELECT ROWNUM RNUMBER, P.*
-		      FROM (
-					SELECT ROWNUM RNUM, SB.SBR_UUID,
-					SB.SBR_TITLE, M.MEM_NAME, TO_CHAR(SB.SBR_REGDATE, 'YYYY/MM/DD')
-					SBR_REGDATE, SB.SBR_SCRYN
-					FROM RC_SYSBOARD SB, RC_MEMBER M
-					WHERE SB.MEM_ID = M.MEM_ID AND SBR_DELYN = 'N' AND SBR_NOTICEYN = 'N'
-					<if test="sbr_title != null">
-						AND SB.SBR_TITLE LIKE '%${sbr_title}%'
-					</if>
-					ORDER BY RNUM DESC, SBR_REFER, SBR_STEP DESC
-				  ) P
-		    )	
+		SELECT * FROM 
+			(SELECT ROWNUM RNUMBER, R.* FROM (
+				(SELECT ROWNUM RNUM, P.* FROM
+					(SELECT SB.SBR_UUID, SB.SBR_TITLE, M.MEM_NAME, TO_CHAR(SB.SBR_REGDATE, 'YYYY/MM/DD') SBR_REGDATE,
+						SB.SBR_SCRYN, SBR_STEP
+						FROM RC_SYSBOARD SB, RC_MEMBER M
+						WHERE SB.MEM_ID = M.MEM_ID AND SBR_DELYN = 'N' AND SBR_NOTICEYN = 'N'
+						<if test="sbr_title != null">
+							AND SB.SBR_TITLE LIKE '%${sbr_title}%'
+						</if>
+						ORDER BY SBR_REFER, SBR_STEP DESC
+				  	) P
+				ORDER BY RNUM DESC) R)
+			)
 		WHERE RNUMBER BETWEEN #{paging.start} AND #{paging.last}
 	</select>
 	

@@ -13,17 +13,12 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="./js/paging.js"></script>
 
-<style type="text/css">
-	.pr_detail_view{
-		border : 1px dotted green;
-		display : none;
-	}
-	
-	.pr_name {
-		cursor : pointer;
-	}
-</style>
 <script type="text/javascript">
+$(function(){
+	var listCnt = $("#ListCnt").val();
+	$("#listCount").val(listCnt).prop("selected", true);
+});
+
 function detailPro(val){
 	$.ajax({
 		type : "POST",
@@ -103,10 +98,10 @@ function doSearch(){
 	<div id="div_select_area">
 		<select class='project_list_select' id='listCount' name='listCount' onchange='listCnt();'>
 			<option>선택</option>
-			<option value='5' >5</option>
-			<option value='10'>10</option>
 			<option value='15'>15</option>
-			<option value='20'>20</option>
+			<option value='30'>30</option>
+			<option value='45'>45</option>
+			<option value='60'>60</option>
 		</select>
 		<form action="./allPrSelect.do" method="post" id='frmPaging'>
 			<input type='hidden' name='index' id='index' value='${paging.index}'>
@@ -133,7 +128,7 @@ function doSearch(){
 				<c:otherwise>
 					<c:forEach var="list" items="${ list }" varStatus="vs">
 						<tr>
-							<td>${ vs.count }</td>
+							<td>${ list.RNUM }</td>
 							<td>${ list.GRYN }</td>
 							<td><span class="pr_name" onclick="detailPro('${list.PR_ID}')">${ list.PR_NAME }</span></td>
 							<td>${ list.MEM_NAME }</td>

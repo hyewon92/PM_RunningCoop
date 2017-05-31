@@ -37,10 +37,10 @@
 	
 	<div id="div_select_area">
 		<select class='notice_list_select' id='listCount' name='listCount' onchange="listCnt()">
-				<option value='5'>5</option>
-				<option value='10'>10</option>
 				<option value='15'>15</option>
-				<option value='20'>20</option>
+				<option value='30'>30</option>
+				<option value='45'>45</option>
+				<option value='60'>60</option>
 		</select>
 		<form action="./noticeList.do" method="post" id="frmPaging">
 			<input type='hidden' name='index' id='index' value='${paging.index}'>
