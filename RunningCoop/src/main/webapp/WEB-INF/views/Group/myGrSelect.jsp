@@ -284,9 +284,10 @@ function gropuWaitDelete(waitGrid){
 	});
 }
 
-function createPro(){
+function createGr(){
+	$("#resetBtn").click();
 	$("#create_Form").dialog({
-		title : "개인 프로젝트 생성",
+		title : "그룹 생성",
 		height : 600,
 		width : 700,
 		position : {my : "center", at : "center"},
@@ -298,24 +299,28 @@ function createPro(){
 
 function grNameCheck(){
 	var chgrName = $("#grname").val();
-	$.ajax({
-		type : "POST",
-		url  : "./grNameCk.do",
-		data : "gr_name="+chgrName,
-		async: false,
-		success : function(data){
-			if(data==1){
-				$("#chkReturn").text("이미 사용중인 이름입니다.");
-				$("#chkReturn2").css('display','');
-				$("#grname").val("");
-			}else{
-				$("#chkReturn").text("해당 이름으로 사용하셔도 됩니다.");
-				$("#chkReturn2").css('display','');
-				$("#chk").attr('name','yeschk');
+	if(chgrName.length == 0){
+		alert("이름을 입력해주세요.");
+	}else{
+		$.ajax({
+			type : "POST",
+			url  : "./grNameCk.do",
+			data : "gr_name="+chgrName,
+			async: false,
+			success : function(data){
+				if(data==1){
+					$("#chkReturn").text("이미 사용중인 이름입니다.").css("font-size","8pt");
+					$("#chkReturn2").css('display','');
+					$("#grname").val("");
+				}else{
+					$("#chkReturn").text("해당 이름으로 사용하셔도 됩니다.").css("font-size","8pt");
+					$("#chkReturn2").css('display','');
+					$("#chk").attr('name','yeschk');
+				}
 			}
-		}
-	});
-	return data;
+		});
+		return data;
+	}
 }
 // 	$("table[name=groupimg]").each(function(){
 // 		var result = Math.floor(Math.random() * 14);
@@ -368,7 +373,7 @@ function grNameCheck(){
 	<div class="bodyContainer">
 
 	<div>
-		<input type = "button" class="body_btn gr_create_form_btn" value = "그룹생성" onclick = "createPro()">
+		<input type = "button" class="body_btn gr_create_form_btn" value = "그룹생성" onclick = "createGr()">
 		<input type="button" class="body_btn go_iProject_select" value="개인프로젝트로 가기" onclick="location.href='./iProSelect.do'"/>
 	</div>
 	
@@ -381,8 +386,8 @@ function grNameCheck(){
 				    	<c:forEach var = "grdto" items="${lists}" >
 				    	<a href="#" onclick="goProject('${grdto.gr_id}')">
 				     	<div class="group-box">
-						<div class="group-image-box">
-							<img src="./grImgs/img${grdto.gr_img}.png" class="group-image">
+						<div class="group-image-box" style = "background-image: url('./grImgs/img${grdto.gr_img}.png')">
+							<%-- <img src="./grImgs/img${grdto.gr_img}.png" class="group-image"> --%>
 							<div class="detail-group-btn2" onclick="gropuChildOpen(event);">
 							!<input type="hidden" value="${grdto.gr_id}" class="gr_input_id"/>
 							</div>
@@ -416,8 +421,8 @@ function grNameCheck(){
 				    <c:when test="${fn:length(waitg2) > 0}">
 				    	<c:forEach var = "waitg" items="${watiLists}" >
 				     	<div class="group-box">
-						<div class="group-image-box">
-							<img src="./grImgs/img${waitg.gr_img}.png" class="group-image"/>
+						<div class="group-image-box" style = "background-image: url('./grImgs/img${waitg.gr_img}.png'); background-size:100%;">
+							<%-- <img src="./grImgs/img${waitg.gr_img}.png" class="group-image"/> --%>
 							<div class="detail-group-btn" onclick="gropuChildOpen(event)">!
 							<input type="hidden" value='${waitg.gr_id}'/ class="gr_input_id"></div>
 							<div class="delete-group-btn" onclick="gropuWaitDelete('${waitg.gr_id}')">x</div>
@@ -465,42 +470,42 @@ function grNameCheck(){
 	</div>
 	
 	<div id="create_Form">
-	<form class="createBox" action="./groupCreate.do" method="post">
-	<table>
-	<tr>
-	<td>그룹이름:</td>
-	<td><input type="text"  name="gr_name" id="grname"></td>
-	<td><input type="button" value="중복확인" onclick="grNameCheck()" id="chk" name="nochk"></td>
-	</tr>
-	<tr style="display: none;" id="chkReturn2"><td></td><td  id="chkReturn"></td></tr>
-	<tr>
-	<td>그룹담당자아이디:</td>
-	<td><input type="text" name="mem_id" value="<%=mem_id%>" readonly="readonly"></td>
-	</tr>
-	<tr>
-	<td>그룹이미지</td>
-	<td><select id="imsg"></select>
-	<input type="hidden" id="imgname" value="" name="gr_img"></td>
-	<td><img id="imgbox" alt="" src="./grImgs/img002.png"></td>
-	</tr>
-	<tr>
-	<td>그룹검색거부</td>
-	<td>허용<input type="radio" name="gr_searchyn" checked="checked" value="Y"> 거부<input type="radio" name="gr_searchyn" value="N"></td>
-	</tr>
-	<tr>
-	<td>그룹가입신청거부</td>
-	<td>허용<input type="radio" name="gr_joinyn" checked="checked" value="Y"> 거부<input type="radio" name="gr_joinyn" value="N"></td>
-	</tr>
-	<tr>
-	<td>그룹목적</td>
-	<td><textarea rows="15" cols="27" name="gr_goal" id="grgoal"></textarea></td>
-	</tr>
-	<tr>
-	<td><input type="submit" value="그룹생성"></td>
-	<td><input type="button" onclick="closee()" value="취소"></td>
-	</tr>
-	</table>
-	</form>
+		<form class="createBox" action="./groupCreate.do" method="post">
+		<table>
+			<tr>
+				<td>그룹이름:</td>
+				<td><input type="text"  name="gr_name" id="grname"></td>
+				<td><input type="button" value="중복확인" onclick="grNameCheck()" id="chk" name="nochk"></td>
+			</tr>
+			<tr style="display: none;" id="chkReturn2"><td></td><td  id="chkReturn"></td></tr>
+			<tr>
+				<td>그룹담당자아이디:</td>
+				<td><input type="text" name="mem_id" value="<%=mem_id%>" readonly="readonly"></td>
+			</tr>
+			<tr>
+				<td>그룹이미지</td>
+				<td><select id="imsg"></select>
+				<input type="hidden" id="imgname" value="" name="gr_img"></td>
+				<td><img id="imgbox" alt="" src="./grImgs/img002.png" style = "height:130px; width:130px;"></td>
+			</tr>
+			<tr>
+				<td>그룹검색거부</td>
+				<td>허용<input type="radio" name="gr_searchyn" checked="checked" value="Y"> 거부<input type="radio" name="gr_searchyn" value="N"></td>
+			</tr>
+			<tr>
+				<td>그룹가입신청거부</td>
+				<td>허용<input type="radio" name="gr_joinyn" checked="checked" value="Y"> 거부<input type="radio" name="gr_joinyn" value="N"></td>
+			</tr>
+			<tr>
+				<td>그룹목적</td>
+				<td><textarea rows="15" cols="27" name="gr_goal" id="grgoal"></textarea></td>
+			</tr>
+			<tr>
+				<td><input type="submit" value="그룹생성"></td>
+				<td><input type="reset" id = "resetBtn" value="초기화"></td>
+			</tr>
+		</table>
+		</form>
 	</div>
 
 

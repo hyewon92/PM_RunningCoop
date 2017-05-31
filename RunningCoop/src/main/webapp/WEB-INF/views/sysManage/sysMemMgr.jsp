@@ -40,15 +40,19 @@
 				$("#upMem_email").val(mem_email);
 				$("#upMem_phone").val(mem_phone);
 			//	$("#insert_Container").css("display", "block");
-				$("#insert_Container").dialog({
-					title : "회원 정보 수정",
-					height : 400,
-					width : 500,
-					position : {my : "center", at : "center"},
-					resizable : false,
-					modal : true
-				});
+			viewModiForm();
 			}
+		});
+	}
+	
+	function viewModiForm(){
+		$("#insert_Container").dialog({
+			title : "회원 정보 수정",
+			height : 400,
+			width : 500,
+			position : {my : "center", at : "center"},
+			resizable : false,
+			modal : true
 		});
 	}
 	
