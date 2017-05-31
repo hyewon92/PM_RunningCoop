@@ -217,7 +217,7 @@ public class SysBoardController {
 	@RequestMapping(value="/writeForm.do", method = RequestMethod.GET)
 	public String boardWrite(){
 		logger.info("================== 게시글 작성 페이지 이동 ==================");
-		return "sysBoard/boardWrite";
+		return "sysBoard/qnaWrite";
 	}
 
 	// 게시글 작성 폼
@@ -301,7 +301,7 @@ public class SysBoardController {
 		return "redirect:/qnaList.do";
 	}
 
-	// 수정페이지 이동
+	// 문의 수정페이지 이동
 	@RequestMapping(value="/boardEditMove.do", method = RequestMethod.GET)
 	public String boardEditPageMove(HttpServletRequest request, Model model){
 		String sbr_uuid = request.getParameter("sbr_uuid");
@@ -322,7 +322,7 @@ public class SysBoardController {
 		model.addAttribute("view", view);
 		model.addAttribute("attach", attach);
 
-		return "sysBoard/boardEdit";
+		return "sysBoard/qnaEdit";
 	}
 
 	// 게시글 수정

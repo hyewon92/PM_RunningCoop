@@ -7,18 +7,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>문의게시판</title>
+<title>Running Co-op :: 그룹 게시판</title>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
-<style type="text/css">
-	table {
-		border-collapse: collapse;
-	}
-	tr, th, td {
-		border : 1px solid black;
-	}
-	.br_title{
-	cursor: pointer;}
-</style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 $(function(){

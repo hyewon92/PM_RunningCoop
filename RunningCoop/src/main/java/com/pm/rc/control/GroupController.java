@@ -134,27 +134,37 @@ public class GroupController implements ServletConfigAware {
 			session.setAttribute("gr_id", requestl.getParameter("gr_id"));
 		}
 		
-		return "Group/grInformationModify";
+		return "Group/groupInfoEdit";
 	}
+	
 	//그룹 정보 수정 하는 곳
-	@RequestMapping(value="/realGrmodify.do", method= RequestMethod.POST)
+	@RequestMapping(value="/grInfoEdit.do", method= RequestMethod.POST)
 	public String grmodify (Model model, HttpServletRequest request){
-		String retrGrid = request.getParameter("gr_id");
+		String gr_id = request.getParameter("gr_id");
 		
-		System.out.println("grrrrrrrrrrrrrrrrrrrrrrrrrrrridddddddddddddddddddddddddddddddddddddddddddddddd"+retrGrid);
+		logger.info("============== 그룹 수정 ===================");
+		logger.info("수정할 그룹 아이디 :"+gr_id);
+		logger.info("========================================");
+		
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("gr_id", request.getParameter("gr_id"));
+		
+		map.put("gr_id", gr_id);
 		map.put("gr_goal", request.getParameter("gr_goal"));
 		map.put("gr_searchyn", request.getParameter("gr_searchyn"));
 		map.put("gr_joinyn", request.getParameter("gr_joinyn"));
-		logger.info("그룹수정 수정입니다");
+		map.put("gr_img", request.getParameter("gr_img"));
+		
 		service.grModify(map);
-		return "redirect:/grmodify.do?gr_id="+retrGrid;
+		
+		return "redirect:/grmodify.do?gr_id="+gr_id;
 	}
 	
-	// 그룹으로 검색하여 페이징처리 그리고 그룹 검색하는 곳
+	// 전체 검색 창 : 그룹명으로 검색하기 + 페이징
 	@RequestMapping(value="/allGrSelect.do", method={RequestMethod.POST ,RequestMethod.GET})
 	public String allGrSelect (Model model , HttpServletRequest request,String gr_name) {
+		
+		logger.info("그룹검색하기 그룹이름이름으로");
+		
 		PagingDto paging = new PagingDto(request.getParameter("index"),
 									     request.getParameter("pageStartNum"),
 									     request.getParameter("listCnt"),
@@ -162,13 +172,14 @@ public class GroupController implements ServletConfigAware {
 		
 		List<GroupDto> lists = service.selectPaging(paging);
 		paging.setTotal(service.selectTotalPaging(request.getParameter("gr_name")));
-		logger.info("그룹검색하기 그룹이름이름으로");
 		String grid = request.getParameter("gr_name");
 		model.addAttribute("lists",lists);
 		model.addAttribute("paging",paging);
 		model.addAttribute("gr_name",grid);
+		
 		lists.forEach(System.err::println);
-		return "Group/grSeachList";
+		
+		return "Group/grSearchList";
 	}
 	// 멤버 관리 화면
 	@RequestMapping(value="/memModi.do" , method={RequestMethod.GET,RequestMethod.POST})
@@ -463,7 +474,7 @@ public class GroupController implements ServletConfigAware {
 		System.out.println("그룹아이디 받아옴 값="+gr);
 		List<Map<String, String>> lists = service.grBoradList(gr);
 		model.addAttribute("grlists", lists);		
-		return "Group/grBorad";
+		return "Group/groupBoard";
 	}
 	
 	@RequestMapping(value="groupImg.do", method=RequestMethod.POST)
@@ -480,7 +491,7 @@ public class GroupController implements ServletConfigAware {
 	@RequestMapping(value="/grBoradWriteForm.do" , method={RequestMethod.POST, RequestMethod.GET})
 	public String grBoradWriteForm(){
 		logger.info("================== 게시글 작성 페이지 이동 ==================");
-		return "Group/grBoradWrite";
+		return "Group/groupBoradWrite";
 	}
 	
 	// 게시글 작성 폼
@@ -582,7 +593,7 @@ public class GroupController implements ServletConfigAware {
 //				model.addAttribute("attach", list);
 //			}
 
-			return "Group/grBoardView";
+			return "Group/groupBoardView";
 		}
 		
 
@@ -607,7 +618,7 @@ public class GroupController implements ServletConfigAware {
 			model.addAttribute("view", view);
 //			model.addAttribute("attach", attach);
 
-			return "Group/grboardEdit";
+			return "Group/groupboardEdit";
 		}
 	
 		// 게시글 수정

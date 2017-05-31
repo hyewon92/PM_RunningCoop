@@ -50,7 +50,7 @@ public class sysManagerController {
 		logger.info("그룹생성신청리스트출력시작");
 		List<GroupDto> lists = service.grApplySelect(null);
 		model.addAttribute("Apply",lists);
-		return "sysManage/grApply";
+		return "sysManage/sysGrApplyMgr";
 	}
 	
 	//그룹승인 리스트 검색하여 출력
@@ -59,7 +59,7 @@ public class sysManagerController {
 			logger.info("그룹생성신청리스트출력시작");
 			List<GroupDto> lists = service.grApplySelect(gr_name);
 			model.addAttribute("Apply",lists);
-			return "Group/grApply";
+			return "Group/sysGrApplyMgr";
 		}
 
 		//그룹승인
@@ -318,7 +318,7 @@ public class sysManagerController {
 				model.addAttribute("attach", attach);
 			}
 
-			return "sysManage/sysBoardView";
+			return "sysManage/sysNoticeView";
 		}
 
 		// 게시글 삭제

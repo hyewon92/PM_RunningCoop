@@ -97,7 +97,6 @@ function doSearch(){
 	
 	<div id="div_select_area">
 		<select class='project_list_select' id='listCount' name='listCount' onchange='listCnt();'>
-			<option>선택</option>
 			<option value='15'>15</option>
 			<option value='30'>30</option>
 			<option value='45'>45</option>

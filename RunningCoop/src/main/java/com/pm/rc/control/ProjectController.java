@@ -29,7 +29,6 @@ import com.pm.rc.dto.GbAttachDto;
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.PagingProDto;
 import com.pm.rc.dto.ProjectDto;
-import com.pm.rc.dto.ProjectPagingDto;
 import com.pm.rc.dto.WorkCommentDto;
 import com.pm.rc.dto.WorkDetailDto;
 import com.pm.rc.dto.WorkListDto;

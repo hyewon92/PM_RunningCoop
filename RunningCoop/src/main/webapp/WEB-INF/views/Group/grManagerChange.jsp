@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Running Co-op :: 관리자 변경</title>
 
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 
@@ -15,8 +15,6 @@
 	String gr_id = (String)session.getAttribute("gr_id");
 	String mem_id2 = (String)session.getAttribute("mem_id");
 %>
-<script type="text/javascript">
-</script>
 
 </head>
 <body>

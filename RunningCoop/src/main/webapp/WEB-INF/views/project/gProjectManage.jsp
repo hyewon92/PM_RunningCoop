@@ -321,7 +321,7 @@
 						location.reload();
 					}
 				}
-			})
+			});
 		}
 	}
 	

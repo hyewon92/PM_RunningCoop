@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.ProjectDto;
-import com.pm.rc.dto.ProjectPagingDto;
 
 public interface ProjectService {
 

@@ -7,15 +7,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Running Co-op :: 그룹 선택</title>
 
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-<% 
-String mem_id = (String)session.getAttribute("mem_id"); 
-String Newgr_id = (String)session.getAttribute("gr_id");
-%>
-<!-- <script type="text/javascript" src="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.js"></script> -->
+
 <style type="text/css">
 #groupimg2{
 background-image: url("./grImgs/img01.png");
@@ -150,7 +146,9 @@ background-repeat: no-repeat;
 	box-shadow : 2px 2px 5px #C8C8C8;
 }
 </style>
-<%
+<% 
+	String mem_id = (String)session.getAttribute("mem_id"); 
+	String Newgr_id = (String)session.getAttribute("gr_id");
 	String userId = (String) session.getAttribute("mem_id");
 %>
 

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 // 1. PagingDto
 public class PagingProDto {
 	
-	Logger logger = LoggerFactory.getLogger(ProjectPagingDto.class);
+	Logger logger = LoggerFactory.getLogger(PagingProDto.class);
 
 	private int pageCnt;		// 출력할 페이지번호 갯수
 	private int index;			// 출력할 페이지번호

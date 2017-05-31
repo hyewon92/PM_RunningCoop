@@ -17,12 +17,10 @@
 		<typeAlias type="com.pm.rc.dto.WorkDetailDto" alias="WorkDetailDto"/>
 		<typeAlias type="com.pm.rc.dto.WorkListDto" alias="WorkListDto"/>
 		<typeAlias type="com.pm.rc.dto.PagingDto" alias="pagingDto"/>
-		<typeAlias type="com.pm.rc.dto.ProjectPagingDto" alias="ProjectPagingDto"/>
 		<typeAlias type="com.pm.rc.dto.PagingProDto" alias="PagingProDto"/>
 	</typeAliases>
 	
 	<mappers>
-		<mapper resource="/sqls/mapper01.xml"/>
 		<mapper resource="/sqls/accountMapper.xml"/>
 		<mapper resource="/sqls/sysBoardMapper.xml"/>
 		<mapper resource="/sqls/groupMapper.xml"/>

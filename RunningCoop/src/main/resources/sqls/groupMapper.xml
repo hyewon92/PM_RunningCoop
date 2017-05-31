@@ -44,9 +44,7 @@
 
 
 	<update id="grModify" parameterType="java.util.Map">
-		UPDATE RC_GROUP SET GR_GOAL
-		= #{gr_goal}, GR_SEARCHYN = #{gr_searchyn} ,
-		GR_JOINYN = #{gr_joinyn}
+		UPDATE RC_GROUP SET GR_GOAL = #{gr_goal}, GR_SEARCHYN = #{gr_searchyn}, GR_JOINYN = #{gr_joinyn}, GR_IMG = #{gr_img}
 		WHERE GR_ID = #{gr_id}
 	</update>
 

@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Running Co-op :: 전체 그룹 검색</title>
 
 <link rel="stylesheet" href="css/main.css" type="text/css" />
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -19,9 +19,9 @@ cursor: pointer;
 }
 </style>
 <%
-String mem_id = (String)session.getAttribute("mem_id"); 
-String gr_id = (String)session.getAttribute("gr_id");
-	%>
+	String mem_id = (String)session.getAttribute("mem_id"); 
+	String gr_id = (String)session.getAttribute("gr_id");
+%>
 <script type="text/javascript">
 var openwin;
 var serarchWord = "";
@@ -96,12 +96,12 @@ var serarchWord = "";
 	
 	<div id="div_select_area">
 		<select class='project_list_select' id='listCount' name='listCount' onchange='listCnt();'>
-			<option>선택</option>
-			<option value='5' >5</option>
-			<option value='10'>10</option>
-			<option value='15'>15</option>
-			<option value='20'>20</option>
+			<option value='15' >15</option>
+			<option value='30'>30</option>
+			<option value='45'>45</option>
+			<option value='60'>60</option>
 		</select>
+		
 		<form action="./allGrSelect.do" method="post" id='frmPaging'>
 			<input type='hidden' name='index' id='index' value='${paging.index}'>
 			<input type='hidden' name='pageStartNum' id='pageStartNum' value='${paging.pageStartNum}'>
@@ -119,13 +119,12 @@ var serarchWord = "";
 				<th>생성일</th>
 				<th>가입신청</th>
 			</tr>
-			<c:forEach var="dtos" items="${lists}" varStatus="vs">
+			<c:forEach var="dtos" items="${lists}">
 				<tr>
-					<td>${ vs.count}</td>
+					<td><%-- ${ lists.RNUM } --%></td>
 					<td id="gr_name">${dtos.gr_name}</td>
 					<td>${dtos.memberdto.mem_name}</td>
 					<td>${dtos.gr_regDate }</td>
-					<td>${dtos.gr_id }</td>
 					<c:if test="${ fn:contains(dtos.gr_joinYN, 'Y') == true }">
 						<td>
 						<input type="hidden" value="${dtos.gr_id }">
@@ -174,32 +173,27 @@ var serarchWord = "";
 	</div>	
 	
 	<div id="create_Form">
-	<form action="./grWaitInsert.do" method="post">
-	<table>
-		<tr>
-		<td>아이디 :
-		<input type="hidden" value="${gr_name}" name="gr_name">
-		</td>
-		<td id="mem_id">"<%=mem_id%>"</td>
-		<td><input type="hidden" value="<%=mem_id%>" name="memid">
-		</tr>
-		<tr>
-		<td>그룹이름 :</td>
-		<td id="grName"></td>
-		<td><input type="hidden" value="" name="grid">
-		</tr>
-		<tr>
-		<td colspan="2">자기소개 </td>
-		</tr>
-		<tr>
-		<td colspan="2">
-		<textarea rows="6" cols="0" name="wait_content">
-		</textarea>
-		</td>
-		</tr>
-	</table>
-	<input type="submit" value="가입신청">
-	</form>
+		<form action="./grWaitInsert.do" method="post">
+		<table>
+			<tr>
+				<td>아이디 : <input type="hidden" value="${gr_name}" name="gr_name"></td>
+				<td id="mem_id">"<%=mem_id%>"</td>
+				<td><input type="hidden" value="<%=mem_id%>" name="memid"></td>
+			</tr>
+			<tr>
+				<td>그룹이름 :</td>
+				<td id="grName"></td>
+				<td><input type="hidden" value="" name="grid"></td>
+			</tr>
+			<tr>
+				<td colspan="2">자기소개 </td>
+			</tr>
+			<tr>
+				<td colspan="2"><textarea rows="6" cols="0" name="wait_content"></textarea></td>
+			</tr>
+		</table>
+		<input type="submit" value="가입신청">
+		</form>
 	</div>
 </div>
 	

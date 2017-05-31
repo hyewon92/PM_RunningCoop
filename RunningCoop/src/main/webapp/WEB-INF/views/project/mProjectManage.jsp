@@ -59,23 +59,27 @@
 	
 	// 프로젝트 해체 기능
 	function project_delete(){
-		var pr_id = $("#pr_id").val();
+		var isc = confirm("프로젝트를 삭제하시겠습니까?");
 		
-		$.ajax({
-			type : "POST",
-			url : "./project_Delete.do",
-			data : "pr_id="+pr_id,
-			async : false,
-			success : function(msg){
-				if(msg == "success"){
-					alert("프로젝트 삭제 성공");
-					location.href= "./iProSelect.do";
-				} else {
-					alert("프로젝트 삭제 실패");
-					location.reload();
+		if(isc){
+			var pr_id = $("#pr_id").val();
+			
+			$.ajax({
+				type : "POST",
+				url : "./project_Delete.do",
+				data : "pr_id="+pr_id,
+				async : false,
+				success : function(msg){
+					if(msg == "success"){
+						alert("프로젝트 삭제 성공");
+						location.href= "./iProSelect.do";
+					} else {
+						alert("프로젝트 삭제 실패");
+						location.reload();
+					}
 				}
-			}
-		})
+			});
+		}
 	}
 	
 </script>
