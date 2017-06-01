@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Running Co-op :: 시스템 관리자 로그인</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-<script type="text/javascript" src="js/account/account.js"></script>
+<script type="text/javascript" src="js/account/main.js"></script>
 <link rel="stylesheet" href="css/main.css" type="text/css">
 <script type="text/javascript">
 </script>

@@ -455,7 +455,8 @@ public class GroupController implements ServletConfigAware {
 	
 	//그룹 관리자 위임
 	@RequestMapping(value="/grMgChange.do", method=RequestMethod.GET)
-	public String grMgChange(HttpServletRequest req, HttpSession session){
+	@ResponseBody
+	public Map<String, Boolean> grMgChange(HttpServletRequest req, HttpSession session){
 		Map<String, String> newmap = new HashMap<String, String>();
 		Map<String, String> oldmap = new HashMap<String, String>();
 		String gr_id = (String)session.getAttribute("gr_id");
@@ -467,15 +468,19 @@ public class GroupController implements ServletConfigAware {
 		oldmap.put("gr_id",gr_id);
 		oldmap.put("mem_id",mem_id2);
 		
-		boolean isc = false;
-		isc = service.grManagerChange(newmap);
-		isc = service.grManagerChange2(oldmap);
+		boolean isc1 = false;
+		boolean isc2 = false;
+		isc1 = service.grManagerChange(newmap);
+		isc2 = service.grManagerChange2(oldmap);
+
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
 		
-		if(isc==true){
-			return "redirect:/grmodify.do?gr_id="+gr_id;
+		if(isc1&&isc2){
+			map.put("result", true);
 		}else{
-			return "no";
+			map.put("result", false);
 		}
+		return map;
 	}
 	
 	// 그룹 중복가입 처리

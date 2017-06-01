@@ -21,8 +21,12 @@
 <div id="container">
 	<form action="./goGroupMail.do" method="post">
 	<table>
-		<tr>보낸이</tr>
-		<tr><td><input type="text" name="toSend"></td></tr>
+		<tr>
+			<td>수신자명: <input type = "text" name = "toName"></td>
+		</tr>
+		<tr>
+			<td>이메일: <input type="text" name="toSend"></td>
+		</tr>
 		<tr><td><input type="submit" value="메일보내기"></td></tr>
 	</table>
 	</form>
