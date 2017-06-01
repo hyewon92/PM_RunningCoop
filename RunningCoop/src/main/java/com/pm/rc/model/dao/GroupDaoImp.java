@@ -146,13 +146,13 @@ public class GroupDaoImp implements GroupDao{
 	}
 
 	@Override
-	public int selectTotalPaging(String gr_name) {
-		return sqlSession.selectOne(NAMESPACE+"countTotalpaging" , gr_name);
+	public int allGroupSearchSelectCount(GroupDto dto) {
+		return sqlSession.selectOne(NAMESPACE+"allGroupSearchSelectCount" , dto);
 	}
 
 	@Override
-	public List<GroupDto> selectPaging(PagingDto paging) {
-		return sqlSession.selectList(NAMESPACE+"createPaging" , paging);
+	public List<Map<String, String>> allGroupSearchSelect(GroupDto dto) {
+		return sqlSession.selectList(NAMESPACE+"allGroupSearchSelect" , dto);
 	}
 	
 	//그룹삭제 시작

@@ -20,8 +20,8 @@ public interface GroupDao {
 	 * 그룹 검색화면 페이징 처리
 	 * @author 라한솔
 	 */
-	public int selectTotalPaging(String gr_name);
-	public List<GroupDto> selectPaging(PagingDto paging);
+	public int allGroupSearchSelectCount(GroupDto dto);
+	public List<Map<String, String>> allGroupSearchSelect(GroupDto dto);
 
 	/**
 	 *내가 가입한 그룹 조회(접속할 그룹 선택)

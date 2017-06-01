@@ -3,6 +3,7 @@ package com.pm.rc.control;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +32,7 @@ import com.pm.rc.dto.GroupBoardDto;
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.PagingDto;
+import com.pm.rc.dto.PagingProDto;
 import com.pm.rc.model.service.AccountService;
 import com.pm.rc.model.service.GroupService;
 import com.pm.rc.model.service.ManagerService;
@@ -119,20 +121,24 @@ public class GroupController implements ServletConfigAware {
 	}
 	//그룹관리 화면
 	@RequestMapping(value="/grmodify.do" , method=RequestMethod.GET)
-	public String 	grmodifyMove(Model model, HttpServletRequest requestl, HttpSession session){
-		Map<String,String> map = new HashMap<String, String>();
-		map.put("gr_id", requestl.getParameter("gr_id"));
+	public String 	grmodifyMove(Model model, HttpServletRequest request, HttpSession session){
+		String gr_id = request.getParameter("gr_id");
+		
 		logger.info("그룹상세정보 띄우기");
-//		List<Map<String, String>> lists = service.grDetailSelect(map);
-		Map<String, String> lists = service.grDetailSelect(map);
-		System.out.println(lists.get("GR_ID")+"ffffffffffffffffffffffffffff");
-		model.addAttribute("grSelect" , lists);
+		
+		Map<String,String> map = new HashMap<String, String>();
+		map.put("gr_id", gr_id);
+		
+		Map<String, String> lists = new HashMap<String, String>();
+		lists = service.grDetailSelect(map);
 		
 		//회원탈퇴할때 바로 그룹삭제하기 위해 세션에 그룹아이디 넣기(세션값에 값이 없을 경우)
 		String ss_gr_id = (String)session.getAttribute("gr_id");
+		
 		if(ss_gr_id == null){
-			session.setAttribute("gr_id", requestl.getParameter("gr_id"));
+			session.setAttribute("gr_id", gr_id);
 		}
+		model.addAttribute("grSelect" , lists);
 		
 		return "Group/groupInfoEdit";
 	}
@@ -161,21 +167,28 @@ public class GroupController implements ServletConfigAware {
 	
 	// 전체 검색 창 : 그룹명으로 검색하기 + 페이징
 	@RequestMapping(value="/allGrSelect.do", method={RequestMethod.POST ,RequestMethod.GET})
-	public String allGrSelect (Model model , HttpServletRequest request,String gr_name) {
+	public String allGrSelect (Model model , HttpServletRequest request) {
+		
+		String gr_name = request.getParameter("gr_name");
 		
 		logger.info("그룹검색하기 그룹이름이름으로");
 		
-		PagingDto paging = new PagingDto(request.getParameter("index"),
+		PagingProDto paging = new PagingProDto(request.getParameter("index"),
 									     request.getParameter("pageStartNum"),
-									     request.getParameter("listCnt"),
-									     gr_name);
+									     request.getParameter("listCnt"));
 		
-		List<GroupDto> lists = service.selectPaging(paging);
-		paging.setTotal(service.selectTotalPaging(request.getParameter("gr_name")));
-		String grid = request.getParameter("gr_name");
+		GroupDto dto = new GroupDto();
+		dto.setPaging(paging);
+		dto.setGr_name(gr_name);
+		
+		List<Map<String, String>> lists = new ArrayList<Map<String, String>>();
+		lists = service.allGroupSearchSelect(dto);
+		
+		paging.setTotal(service.allGroupSearchSelectCount(dto));
+		
 		model.addAttribute("lists",lists);
 		model.addAttribute("paging",paging);
-		model.addAttribute("gr_name",grid);
+		model.addAttribute("gr_name",gr_name);
 		
 		lists.forEach(System.err::println);
 		
@@ -184,7 +197,6 @@ public class GroupController implements ServletConfigAware {
 	// 멤버 관리 화면
 	@RequestMapping(value="/memModi.do" , method={RequestMethod.GET,RequestMethod.POST})
 	public String grMemSelect(String gr_id,Model model) {
-		System.out.println("------------------"+gr_id);
 		logger.info("그룹멤버리스트 출력");
 		List<MemberDto> lists = service.grMemSelect(gr_id);
 		model.addAttribute("memList",lists);
@@ -192,7 +204,7 @@ public class GroupController implements ServletConfigAware {
 		List<MemberDto> lists2 = service.grWaitList(gr_id);
 		model.addAttribute("grWait" , lists2);
 		
-		return "Group/memModify";	
+		return "Group/group_MemEdit";	
 	}	
 
 	// 그룹 가입신청화면으로 연결
@@ -205,12 +217,12 @@ public class GroupController implements ServletConfigAware {
 	
 	// 그룹 가입신청 시작
 	@RequestMapping(value="/grWaitInsert.do" , method={RequestMethod.POST,RequestMethod.GET})
-	public String grWaitInsert(String memid , String grid , String wait_content, String gr_name, Model model){
-		logger.info("그룹가입신척 시작");
-		System.out.println(memid+"멤아디"+grid+"지알아디"+wait_content+"자기소개"+"gr_name"+gr_name);
+	public String grWaitInsert(String mem_id , String gr_id , String wait_content, String gr_name, Model model){
+		logger.info("그룹가입신청 시작");
+		
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("mem_id", memid);
-		map.put("gr_id", grid);
+		map.put("mem_id", mem_id);
+		map.put("gr_id", gr_id);
 		map.put("wait_content", wait_content);
 		boolean n = service.grWaitInsert(map);
 		model.addAttribute("result", n);
@@ -221,28 +233,49 @@ public class GroupController implements ServletConfigAware {
 		}
 		
 	}
-	// 그룹가입신척 수락하는곳
-	@RequestMapping(value="/groupAccept.do" )
+	// 그룹가입신청 수락하는곳
+	@RequestMapping(value="/groupAccept.do", method=RequestMethod.GET )
 	public String grWaitAccept (HttpServletRequest req){
-		String grid = req.getParameter("gr_id");
-		logger.info("그룹 가입신청 수락 시작");
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("mem_id", req.getParameter("mem_id"));
-		map.put("gr_id",req.getParameter("gr_id"));
-		boolean n = service.grMemInsert(map);
+		String gr_id = req.getParameter("gr_id");
+		String mem_id = req.getParameter("mem_id");
 		
-		return "redirect:/memModi.do?gr_id="+grid;
+		logger.info("그룹 가입신청 수락 시작");
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("gr_id", gr_id);
+		map.put("mem_id", mem_id);
+		
+		boolean isc = false;
+		isc = service.grMemInsert(map);
+		
+		if(isc){
+			System.out.println("그룹 가입신청 수락 성공");
+		} else {
+			System.out.println("그룹 가입신청 수락 실패");
+		}
+		
+		return "redirect:/memModi.do?gr_id="+gr_id;
 	}
 	
 	// 그룹가입신청 거절
-	@RequestMapping(value="/grouprefusal.do")
+	@RequestMapping(value="/grouprefusal.do", method=RequestMethod.GET)
 	public String groupAccept (HttpServletRequest req){
 		String gr_id = req.getParameter("gr_id");
+		String mem_id = req.getParameter("mem_id");
+		
 		logger.info("그룹거절 시작");
+		
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("mem_id", req.getParameter("mem_id"));
-		map.put("gr_id",req.getParameter("gr_id"));
+		map.put("mem_id", mem_id);
+		map.put("gr_id", gr_id);
+		
 		boolean n = service.grMemReject(map);
+		
+		if(n){
+			System.out.println("그룹 가입 거절 성공");
+		} else {
+			System.out.println("그룹 가입 거절 실패");
+		}
 		
 		return "redirect:/memModi.do?gr_id="+gr_id;
 	}
@@ -327,13 +360,15 @@ public class GroupController implements ServletConfigAware {
 	@RequestMapping(value="/groupDelete.do" , method=RequestMethod.GET)
 	public String groupDelete(String gr_id,HttpSession session){
 		logger.info("그룹삭제 시작합니다");
+		
 		boolean isc = false;
 		isc = service.groupDelete(gr_id);
-			if(isc=true){
-				return "redirect:/myGrSelect.do";
-			}else{
-				return "account/error/error";
-			}
+		
+		if(isc){
+			return "redirect:/myGrSelect.do";
+		}else{
+			return "account/error/error";
+		}
 	}
 	//그룹멤버 삭제
 	@RequestMapping(value="/groupMemDelete.do" , method=RequestMethod.GET)
@@ -348,10 +383,11 @@ public class GroupController implements ServletConfigAware {
 		isc = service.grMemDelete(map);
 		return "redirect:/memModi.do?gr_id="+gr_id;
 	}
+	
 	// 회원가입 후에 그룹가입신청 연결
 	@RequestMapping(value="/groupGoGo.do")
 	public String groupGoGo(){
-		return "account/grGogo";
+		return "account/groupJoinRequest";
 	}
 	
 	// WebSocket 채팅 접속했을 때
@@ -407,11 +443,6 @@ public class GroupController implements ServletConfigAware {
 		return map;
 	}
 	
-	@RequestMapping(value="/socketOpen2.do" , method=RequestMethod.GET)
-	public String socketOpen2(){
-		logger.info("socketOpen 소켓 화면 이동 2");
-		return "socket2";
-	}
 	@RequestMapping(value="/createGrManagerCh.do",method=RequestMethod.GET)
 	public String createGrManagerCh(String mem_id, Model model, HttpSession session){
 		model.addAttribute("mem_id",mem_id);
@@ -491,7 +522,7 @@ public class GroupController implements ServletConfigAware {
 	@RequestMapping(value="/grBoradWriteForm.do" , method={RequestMethod.POST, RequestMethod.GET})
 	public String grBoradWriteForm(){
 		logger.info("================== 게시글 작성 페이지 이동 ==================");
-		return "Group/groupBoradWrite";
+		return "Group/groupBoardWrite";
 	}
 	
 	// 게시글 작성 폼
@@ -583,7 +614,7 @@ public class GroupController implements ServletConfigAware {
 			logger.info("조회할 게시글 번호 : "+br_uuid);
 			logger.info("================================================");
 
-			Map<String, String> list = null;
+			Map<String, String> list = new HashMap<String, String>();
 //			list = service.sysAttachSelect(map);
 			
 			model.addAttribute("view", view);
@@ -618,7 +649,7 @@ public class GroupController implements ServletConfigAware {
 			model.addAttribute("view", view);
 //			model.addAttribute("attach", attach);
 
-			return "Group/groupboardEdit";
+			return "Group/groupBoardEdit";
 		}
 	
 		// 게시글 수정

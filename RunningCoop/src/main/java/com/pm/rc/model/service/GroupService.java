@@ -18,8 +18,8 @@ public interface GroupService {
 	 * 그룹 이름으로 검색 결과 페이징 처리부분
 	 * @author 라한솔
 	 */
-	public List<GroupDto> selectPaging(PagingDto paging);
-	public int selectTotalPaging(String gr_name);
+	public List<Map<String, String>> allGroupSearchSelect(GroupDto dto);
+	public int allGroupSearchSelectCount(GroupDto dto);
 	
 	/**
 	 * 내가 가입한 그룹 조회

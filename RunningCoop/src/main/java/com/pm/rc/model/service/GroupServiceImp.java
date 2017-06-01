@@ -172,14 +172,13 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public List<GroupDto> selectPaging(PagingDto paging) {
-		return groupdao.selectPaging(paging);
+	public List<Map<String, String>> allGroupSearchSelect(GroupDto dto) {
+		return groupdao.allGroupSearchSelect(dto);
 	}
 
 	@Override
-	public int selectTotalPaging(String gr_name) {
-		// TODO Auto-generated method stub
-		return groupdao.selectTotalPaging(gr_name);
+	public int allGroupSearchSelectCount(GroupDto dto) {
+		return groupdao.allGroupSearchSelectCount(dto);
 	}
 
 	@Override

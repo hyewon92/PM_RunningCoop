@@ -5,20 +5,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>사이드바메뉴</title>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<style>
-	.ui-autocomplete {
-		max-height: 100px;
-		overflow-y: auto;
-		overflow-x: hidden;
-	}
-	
-	* html .ui-autocomplete {
-		height: 100px;
-	}
-</style>
+
 <%
 	String userName = (String) session.getAttribute("mem_name");
 	String userId = (String) session.getAttribute("mem_id");
@@ -224,7 +214,7 @@
 		<li class="menu_logo"><span class="top_menu">그룹</span></li>
 		<li class="bottom-menu">
 			<ul class="groupMenu">
-				<li><a href="#" onclick="goGrBoard('<%=gr_id%>')">그룹 게시판</a></li>
+				<%-- <li><a href="#" onclick="goGrBoard('<%=gr_id%>')">그룹 게시판</a></li> --%>
 				<li><a href="#" onclick="goSocket('<%=gr_id%>')">그룹 채팅</a></li>
 				<li><a href="#" class="solo_Group" onclick="groupOut()">그룹 탈퇴</a></li>
 				<li><a href="#" class="manage_Group" onclick="location.href='./grmodify.do?gr_id=<%=gr_id%>'">그룹 관리</a></li>

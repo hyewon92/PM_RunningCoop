@@ -10,33 +10,33 @@
 <title>Running Co-op :: 전체 그룹 검색</title>
 
 <link rel="stylesheet" href="css/main.css" type="text/css" />
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="./js/paging.js"></script>
 
-<style type="text/css">
-#grname{
-cursor: pointer;
-}
-</style>
 <%
 	String mem_id = (String)session.getAttribute("mem_id"); 
 	String gr_id = (String)session.getAttribute("gr_id");
 %>
 <script type="text/javascript">
+$(function(){
+	var listCnt = $("#listCnt").val();
+	$("#listCount").val(listCnt).prop("selected", true);
+});
+
 var openwin;
 var serarchWord = "";
 	function openChild(val){
-		var grid = 	$(val).prev().val();
+		var gr_id = $(val).siblings("input[name=gr_id]").val();
 		var userid = "<%=mem_id%>";
 			$.ajax({
 			type : "POST",
 			url	 : "./grCheck.do",
-			data : "gr_id="+grid+"&mem_id="+userid,
+			data : "gr_id="+gr_id+"&mem_id="+userid,
 			async: false,
 			success : function(data){
 				if(data==1){
 					alert("이미 가입된 그룹 입니다.");
-				}else{
+				} else {
 					createPro(val);
 				}
 			}
@@ -57,18 +57,18 @@ var serarchWord = "";
 		}
 	}	
 	
-	function createPro(text){
-		var grid = $(text).prev().val();
-		var gr_name = $(text).next().val();
+	function createPro(val){
+		var gr_id = ""+$(val).siblings("input[name=gr_id]").val();
+		var gr_name = ""+$(val).siblings("input[name=gr_name]").val();
 		
-		$("#grName").text(gr_name);
-// 		$("#grid").val(grid);
-		$("input[name=grid]").val(grid);
+		$("#request_gr_id").val(gr_id);
+		$("#request_gr_name").val(gr_name);
+		$("#td_gr_name").text(gr_name);
 		
-		$("#create_Form").dialog({
-			title : "개인 프로젝트 생성",
-			height : 600,
-			width : 700,
+		$("#request_Form").dialog({
+			title : "그룹 가입 신청하기",
+			height : 400,
+			width : 400,
 			position : {my : "center", at : "center"},
 			resizable : false,
 			modal : true,
@@ -113,26 +113,26 @@ var serarchWord = "";
 	<div class="div_result_area">
 		<table class="projectTable">
 			<tr>
-				<th>번호</th>
-				<th>그룹명</th>
-				<th>그룹담당자</th>
-				<th>생성일</th>
-				<th>가입신청</th>
+				<th style="width: 15%;">번호</th>
+				<th style="width: 40%;">그룹명</th>
+				<th style="width: 20%;">그룹담당자</th>
+				<th style="width: 15%;">생성일</th>
+				<th style="width: 10%;">가입신청</th>
 			</tr>
 			<c:forEach var="dtos" items="${lists}">
 				<tr>
-					<td><%-- ${ lists.RNUM } --%></td>
-					<td id="gr_name">${dtos.gr_name}</td>
-					<td>${dtos.memberdto.mem_name}</td>
-					<td>${dtos.gr_regDate }</td>
-					<c:if test="${ fn:contains(dtos.gr_joinYN, 'Y') == true }">
-						<td>
-						<input type="hidden" value="${dtos.gr_id }">
+					<td>${ dtos.RNUM }</td>
+					<td id="gr_name">${dtos.GR_NAME}</td>
+					<td>${dtos.MEM_NAME}</td>
+					<td>${dtos.GR_REGDATE }</td>
+					<c:if test="${ fn:contains(dtos.GR_JOINYN, 'Y') == true }">
+					<td>
+						<input type="hidden" name="gr_id" value="${dtos.GR_ID }">
+						<input type="hidden" name="gr_name" value="${dtos.GR_NAME}">
 						<input type="button" value="가입신청" onclick="openChild(this)"/>
-						<input type="hidden" value="${dtos.gr_name}">
-						</td>
+					</td>
 					</c:if>
-					<c:if test="${ fn:contains(dtos.gr_joinYN, 'N') == true }">
+					<c:if test="${ fn:contains(dtos.GR_JOINYN, 'N') == true }">
 						<td>가입불가</td>
 					</c:if>
 				</tr>						
@@ -172,24 +172,27 @@ var serarchWord = "";
 		</form>
 	</div>	
 	
-	<div id="create_Form">
+	<div id="request_Form">
 		<form action="./grWaitInsert.do" method="post">
-		<table>
+		<table class="request_groupMem_table">
 			<tr>
-				<td>아이디 : <input type="hidden" value="${gr_name}" name="gr_name"></td>
-				<td id="mem_id">"<%=mem_id%>"</td>
-				<td><input type="hidden" value="<%=mem_id%>" name="memid"></td>
+				<th>아이디 </th>
+				<td id="request_mem_id"><%=mem_id%><input type="hidden" name="mem_id" value="<%=mem_id%>"/></td>
 			</tr>
 			<tr>
-				<td>그룹이름 :</td>
-				<td id="grName"></td>
-				<td><input type="hidden" value="" name="grid"></td>
+				<th>그룹명</th>
+				<td id="td_gr_name"></td>
+			</tr>
+			<tr style="display:none;">
+				<td colspan="2">
+					<input type="hidden" id="request_gr_id" name="gr_id"/>
+					<input type="hidden" id="request_gr_name" name="gr_name"/>
+				</td>
+			<tr>
+				<th colspan="2">자기소개 </th>
 			</tr>
 			<tr>
-				<td colspan="2">자기소개 </td>
-			</tr>
-			<tr>
-				<td colspan="2"><textarea rows="6" cols="0" name="wait_content"></textarea></td>
+				<td colspan="2"><textarea name="wait_content"></textarea></td>
 			</tr>
 		</table>
 		<input type="submit" value="가입신청">

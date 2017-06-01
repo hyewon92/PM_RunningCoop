@@ -40,7 +40,7 @@
 </div>
 
 <div id = "container">
-	<h3>문의 게시글 수정하기</h3>
+	<h3>그룹 게시글 수정하기</h3>
 	<div class="editor_div">
 		<c:set var="view" value="${ view }" />
 		<form id="boardEdit" action="./grBoardEdit.do" method="post" enctype="multipart/form-data">

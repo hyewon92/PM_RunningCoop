@@ -23,20 +23,20 @@
 function view_info_manage(){
 	$(".info_manage").css("display", "block");
 	$(".mem_manage").css("display", "none");
-	$(".calendar_manage").css("display", "none");
+	$(".grBoard_manage").css("display", "none");
 }
 
 // 그룹 멤버 관리
 function view_mem_manage(){
 	$(".info_manage").css("display", "none");
-	$(".calendar_manage").css("display", "none");
+	$(".grBoard_manage").css("display", "none");
 	$(".mem_manage").css("display", "block");
 }
 
-// 그룹관리 관련기능
-function view_calendar_manage(){
+// 그룹 게시판 관리
+function view_board_manage(){
 	$(".info_manage").css("display", "none");
-	$(".calendar_manage").css("display", "block");
+	$(".grBoard_manage").css("display", "block");
 	$(".mem_manage").css("display", "none");
 }
 
@@ -116,7 +116,7 @@ $(function(){
 	}else{
 		$("input:radio[id='grsearchy2']").attr("checked",true);
 	}
-	if(joinYN=="Y"){
+	if(joinyn=="Y"){
 		$("input:radio[id='grjoinyn']").attr("checked",true);
 	}else{
 		$("input:radio[id='grjoinyn2']").attr("checked",true);
@@ -144,10 +144,10 @@ $(function(){
 	var grimgnum = "이미지"+$("#grImgNum").val();
 	$("#selectGrImg").val(grimgnum).prop("selected", true);
 	
-	$('#selectGrImg').change(function(){
+	$('#selectGrImg').on('change', function(){
 		var imgln = $(this).val().length;
 		var GroupImgs = $(this).val().substring(3, imgln );
-		$("#imgname").val(GroupImgs);
+		$("#grImgNum").val(GroupImgs);
 		
 		$("#imgbox").attr("src","./grImgs/img"+GroupImgs+".png");
 	})	
@@ -171,7 +171,7 @@ function groupManagerCh(){
 	<div id = "con_side">
 		<input type="button" value="그룹정보 수정" class="group_manage_btn" onclick="view_info_manage()"/>
 		<input type="button" value="그룹 인원 관리" class="group_manage_btn" onclick="view_mem_manage()"/>
-		<input type="button" value="그룹 게시판 관리" class="group_manage_btn" onclick="view_calendar_manage()"/>
+		<!-- <input type="button" value="그룹 게시판 관리" class="group_manage_btn" onclick="view_board_manage()"/> -->
 		<input type="button" value="그룹 해체" class="group_manage_btn" onclick="group_delete()"/>
 	</div>
 	
@@ -211,7 +211,7 @@ function groupManagerCh(){
 					<tr>
 						<th>그룹가입신청여부</th>
 						<td>
-							<input type="hidden" id="joinYN" value="${grSelect.GR_JOINYN }"/>
+							<input type="hidden" id="joinYN" value="${ grSelect.GR_JOINYN }"/>
 							<input type="radio" name="gr_joinyn" id="grjoinyn" value="Y">예&nbsp;&nbsp;
 							<input type="radio" name="gr_joinyn" id="grjoinyn2" value="N">아니오
 						</td>
@@ -223,11 +223,11 @@ function groupManagerCh(){
 					<tr>
 						<th>그룹이미지</th>
 						<td>
-							<input type="hidden" id="grImgNum" value="${grSelect.GR_IMG}"/>
+							<input type="hidden" id="grImgNum" name="gr_img" value="${grSelect.GR_IMG}"/>
 							<img id="imgbox" alt="그룹이미지" src="./grImgs/img${grSelect.GR_IMG}.png">&nbsp;&nbsp;
 							<select id="selectGrImg"></select>
-							<input type="hidden" id="imgname" name="gr_img" value="" ></td>
-						</tr>
+						</td>
+					</tr>
 				</table>
 				<input type="submit" class="body_btn grInfo_Edit_btn" value="정보수정">
 			</form>
