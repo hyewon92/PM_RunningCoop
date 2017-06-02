@@ -234,7 +234,7 @@ function groupManagerCh(){
 		</div>
 			
 			<div class="mem_manage">
-				<iframe width = "100%" height = "595px"  src = "./memModi.do?gr_id=<%=Newgr_id%>" >여기
+				<iframe width = "100%" height = "595px"  frameborder = 0; src = "./memModi.do?gr_id=<%=Newgr_id%>" >여기
 				</iframe>
 			</div>
 			<div class = "grBoard_manage">

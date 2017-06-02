@@ -13,7 +13,6 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-<!-- <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script> -->
 
 <script type="text/javascript">
 	function accept1(memid){
@@ -45,11 +44,12 @@
 		$.ajax({
 			url: "./goGroupMail.do",
 			type: "GET",
-			data: "toSend="+$("#toSend")+"&toName="+$("#toName"),
+			data: "toSend="+$("#toSend").val()+"&toName="+$("#toName").val(),
 			async: false,
 			success: function(msg){
 				if(msg.result){
 					alert("메일이 성공적으로 발송됐습니다.");
+					close();
 				}else{
 					alert("메일 전송이 실패했습니다. 다시 확인해주세요.");
 				}
@@ -81,7 +81,7 @@
 				<tr>
 					<td>이메일: <input type="text" id = "toSend" name="toSend"></td>
 				</tr>
-				<tr><td><input type="button" value="메일보내기" onclick = "sendInvite()"></td></tr>
+				<tr><td><input type="button" style = "margin-top:10px;" value="메일보내기" onclick = "sendInvite()"></td></tr>
 			</table>
 		</form>
 	</div>

@@ -37,7 +37,7 @@ public class ScheduleController {
 		List<ScheduleDto> list = new ArrayList<ScheduleDto>();
 		list = scheduleService.mySchSelect(mem_id);
 		req.setAttribute("list", list);
-		return "schedule/calendar";
+		return "schedule/userSchedule";
 	}
 	
 	//지정일 일정목록 조회
@@ -62,26 +62,11 @@ public class ScheduleController {
 		String sch_seq = req.getParameter("sch_seq");
 		Map<String, ScheduleDto> map = new HashMap<String, ScheduleDto>();
 		ScheduleDto dto = new ScheduleDto();
-		System.out.println("dddd");
-//		if(dto.getProjectDto().getPr_name()==null){
-		
-//			dto.getProjectDto().setPr_name("aa");
-//		}else{
-			dto = scheduleService.mySchView(sch_seq);
-//		}
+		dto = scheduleService.mySchView(sch_seq);
 		map.put("dto", dto);
 		return map;
 	}
 	
-	//일정입력화면 이동
-/*	@RequestMapping(value = "/writeSchedule.do")
-	public String schWrite(Model model, int year, String month, String date){
-		logger.info("schWrite실행");
-		String day = year+"-"+month+"-"+date;
-		model.addAttribute("day", day);
-		return "schedule/schWrite";
-	}
-	*/
 	//일정등록
 	@RequestMapping(value = "/insertSchedule.do", method = RequestMethod.POST)
 	public String insertSchedule(ScheduleDto dto){
@@ -132,7 +117,7 @@ public class ScheduleController {
 		req.setAttribute("list", list);
 		req.setAttribute("pr_id", pr_id);
 		logger.info("viewSchedule실행");
-		return "schedule/teamCalendar";
+		return "schedule/teamSchedule";
 	}	
 	
 	//지정일 팀일정 목록 조회

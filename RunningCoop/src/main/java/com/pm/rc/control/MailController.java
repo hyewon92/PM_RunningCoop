@@ -91,25 +91,17 @@ public class MailController {
 		useMailSender(toMail, title, content);
 	}
 	
-	
-/*	//그룹초대
-	@RequestMapping(value="/groupSend.do")
-	public String groupSend (){
-		return "Group/groupMailSend";
-	}*/
-	
 	@RequestMapping(value="/goGroupMail.do" )
 	@ResponseBody
 	public Map<String, Boolean> goGroupMail(String toSend , String toName, HttpSession session){
 		//회원(수신자)정보
 			String gr_id = (String)session.getAttribute("gr_id");
+			logger.info("sessionGrSelect실행");
 			String gr_name = grService.sessionGrSelect(gr_id);
-			logger.info("====================gr_id:"+gr_id);
-			logger.info("====================gr_name:"+gr_name);
 			String toMail = toSend;
 			String mem_name = toName;
 			String title = "<RunningCoop>으로 초대합니다";
-			String content = gr_name+" (으)로 초대합니다";
+			String content ="그룹: "+gr_name+" (으)로 초대합니다!\n지금 바로 가입하세요.\n페이지 접속:http://localhost:8091/RunningCoop/main.do \n\n<RunningCoop개발팀 올림>";
 
 			Map<String, Boolean> map = new HashMap<String, Boolean>();
 			useMailSender(toMail, title, content);

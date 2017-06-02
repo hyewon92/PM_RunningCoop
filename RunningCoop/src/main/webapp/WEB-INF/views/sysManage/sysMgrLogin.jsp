@@ -26,7 +26,7 @@
 	<div class = "mainContain">
 		<div class = "accountBox">
 		<h3>관리자 로그인</h3>
-		<form class = "LoginBox">
+		<form class = "loginBox">
 			<div class = "login">
 				<div class = "idPart">
 					<input type = "text" class="id" id = "loginId" name = "mem_id" placeholder = "아이디">
@@ -34,6 +34,7 @@
 				<div class = "pwPart">
 					<input type = "password" class="pw" id = "loginPw" name = "mem_pw" placeholder = "비밀번호" onKeypress="if(event.keyCode==13) $('#loginBtn').click();">
 				</div>
+				<div class = "loginFail"></div>
 			</div>
 			<div class = "enter">
 				<input type = "button" class="accountBtn" id = "loginBtn" value="로그인" onclick="doMgrLogin()" style="width: 300px; height: 40px; font-size: 14pt; border-radius: 4px; background-color: #5cb85c; color: #fff;">

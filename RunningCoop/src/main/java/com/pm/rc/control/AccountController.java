@@ -50,6 +50,7 @@ public class AccountController {
 		MemberDto dto = new MemberDto();
 		dto = accountService.loginPro(map);
 		
+		Map<String, String> resultMap = new HashMap<String, String>();
 		String result = null;
 		if(dto != null){
 			if(dto.getMem_level().equals("Y")){
@@ -63,7 +64,6 @@ public class AccountController {
 				result = "user";
 			}
 		}
-		Map<String, String> resultMap = new HashMap<String, String>();
 		resultMap.put("login", result);
 		return resultMap;
 	}

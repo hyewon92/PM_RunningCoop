@@ -293,7 +293,7 @@ public class GroupDaoImp implements GroupDao{
 	@Override
 	public String sessionGrSelect(String gr_id) {
 		String gr_name = sqlSession.selectOne(NAMESPACE+"sessionGrSelect", gr_id);
-		return null;
+		return gr_name;
 	};
 
 }

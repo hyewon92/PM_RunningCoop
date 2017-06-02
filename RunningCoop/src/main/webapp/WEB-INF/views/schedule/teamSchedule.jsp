@@ -11,116 +11,9 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <link rel="stylesheet" href="css/body/user_account.css" type="text/css"/>
-<style type="text/css">
-
-	#calendar{
-	  	margin: auto;
-	    display:block;
-	    .border-box;
-	    background:white;
-	    width:650px; 
-	    border:solid 1px #CCC;
-	    margin-bottom:10px;
-	    
-	}
-	
-	.calendar_header{
-		float:left;
-	    width:100%;
-	    height:60px;
-	    background-color: #5cb85c;
-	    color:white;
-	}
-	
-	.calendar_header *{
-	    height: 50px;
-	    line-height:50px !important;
-	    display:inline-block;
-    	vertical-align:middle;
-	} 
-	
-	#calendar th {
-		color: #5cb85c;
-		border-bottom: 1px solid #ccc;
-	}
-	
-	#calendar td {
-		background:white;
-		width: 92px;
-		height: 80px;
-		padding: 0px;
-		vertical-align: top;
-		text-align: left;
-		font-size: 10pt;
-		border: 1px solid transparent;
-	}
-	
-	.calendar_list{
-		font-size: 8pt;
-		width: 88px;
-		height: 50px;
-		overflow: hidden;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-	}
-	
-	a {
-		text-decoration: none;
-	}
-	
-	.plus {
-		width: 15px;
-		height: 15px;
-		float: right;
-	}
-	
-	.arrow {
-		padding-top: 17px;
-		width: 15px;
-		height: 15px;
-	}
-	
-	b {
-		font-size: 14pt;
-	}
-	
-	input[type=text]{
-		background: white;
-	}
-	
-	.scheduleBox, .scheduleModiBox {
-		border: 1px solid gray;
-		border-collapse: collapse;
-		display: none;
-	}
-
-	
-	#dayList{
-		width: 300px;
-		display: inline-block;
-		float: left;
-		display: none;
-	}
-	
-	#dayDetail{
-		display : none;
-		width: 300px;
-		float: right;
-	}
-	
-	.scheduleBtn{
-		border-radius: 4px; 
-		border: 1px solid transparent; 
-		background-color: #5cb85c; 
-		color: #fff;
-		margin-top: 5px;
-		margin-bottom: 3px;
-	}
-</style>
-
+<link rel="stylesheet" href="css/body/user_schedule.css" type="text/css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript" src="js/schedule/teamSchedule.js"></script>
-
 </head>
 
 <%!
@@ -253,9 +146,12 @@
 				for(int i = 1; i <= lastDay; i++){
 			%>
 			<td style="color:<%=weekColor(i, dayOfWeek)%>;"><% String s_month = dateForm(String.valueOf(month)); %>
-				<% String s_i = dateForm(String.valueOf(i)); %> <%=schWrite(year, s_month, s_i)%></a>
-				<span class = "dailyList" onclick = "dailyList('<%=year%>', '<%=s_month%>', '<%=s_i%>', '<%=pr_id%>')"><%=i %></span>
-				<div id="list"><%=schListView(year, month, i, lists, pr_id) %></div></td>
+				<% String s_i = dateForm(String.valueOf(i)); %> 
+				<div class = "dailyTitle">
+					<span class = "dailyList" onclick = "dailyList('<%=year%>', '<%=s_month%>', '<%=s_i%>', '<%=pr_id%>')"><%=i %></span>
+					<%=schWrite(year, s_month, s_i)%></a>
+				</div>
+				<div class="calendar_list"><%=schListView(year, month, i, lists, pr_id) %></div></td>
 			<%
 					//토요일이 되면 줄바꿈
 					if((i+dayOfWeek-1)%7==0){
