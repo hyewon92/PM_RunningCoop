@@ -50,7 +50,7 @@
             	      }
                });
             },
-            minLength : 2,
+            minLength : 1,
             select : function ( event , ui){
             $("#gr_name").val(ui.item.label);
             }
@@ -76,7 +76,7 @@
              	      }
                 });
              },
-             minLength : 2,
+             minLength : 1,
              select : function ( event , ui){
              $("#pr_name").val(ui.item.label);
              }
