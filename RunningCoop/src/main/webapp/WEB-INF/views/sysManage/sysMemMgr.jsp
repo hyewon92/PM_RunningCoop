@@ -8,14 +8,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Running Co-op :: 시스템 관리자 - 회원 관리</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
-<!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
- <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script> -->
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="./js/paging.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 	$(function(){
 		var listCnt = $("#listCnt").val();
@@ -107,23 +105,23 @@
 				<table class = "adm_memEdit_table">
 					<tr>
 						<th>아이디</th>
-						<td><input type = "text" id = "upMem_id"></td>
+						<td><input type = "text" id = "upMem_id" name = "mem_id"></td>
 					</tr>
 					<tr>
 						<th>비밀번호</th>
-						<td><input type = "text" id = "upMem_pw"></td>
+						<td><input type = "text" id = "upMem_pw" name = "mem_pw"></td>
 					</tr>
 					<tr>
 						<th>이름</th>
-						<td><input type = "text" id = "upMem_name"></td>
+						<td><input type = "text" id = "upMem_name" name = "mem_name"></td>
 					</tr>
 					<tr>
 						<th>이메일</th>
-						<td><input type = "text" id = "upMem_email"></td>
+						<td><input type = "text" id = "upMem_email" name = "mem_email"></td>
 					</tr>
 					<tr>
 						<th>전화번호</th>
-						<td><input type = "text" id = "upMem_phone"></td>
+						<td><input type = "text" id = "upMem_phone" name = "mem_phone"></td>
 					</tr>
 				</table>
 					<input type="submit" value="수정"/> 

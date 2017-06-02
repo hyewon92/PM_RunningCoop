@@ -155,7 +155,7 @@ $(function(){
 })
 function groupManagerCh(){
 	var mem = "<%=mem_id%>";
-	window.open("./createGrManagerCh.do?mem_id=<%=mem_id%>", "GroupManagerCh", "width=570, height=350, resizable = no, scrollbars = no");
+	window.open("./createGrManagerCh.do?mem_id=<%=mem_id%>", "GroupManagerCh", "width=338, height=552, resizable = no, scrollbars = no");
 }
 //여기 까지 기존스크립트
 

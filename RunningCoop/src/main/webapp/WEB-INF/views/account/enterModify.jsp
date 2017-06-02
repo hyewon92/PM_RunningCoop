@@ -7,7 +7,7 @@
 <title>개인정보수정</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript" src="js/account/account.js"></script>
+<script type="text/javascript" src="js/account/modify.js"></script>
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/body/user_account.css">
 <style type="text/css">
@@ -29,31 +29,6 @@
 		display: none;
 	}
 </style>
-<script type="text/javascript">
-	$(function(){
-		$(".pwChkForm").submit(function(){
-			if($("#ckPw").val()==""){
-				alert("비밀번호를 입력해주세요.");
-				return false;
-			}
-			$.ajax({
-				type: "POST",
-				url: "./ckPwInfo.do",
-				data: "mem_pw="+$("#ckPw").val(),
-				async:false,
-				success: function(msg){
-					if(!msg.result){
-						alert("비밀번호가 일치하지 않습니다. 다시 입력해주세요"); 
-						return false;
-					}else{
-						$(".pwChkForm").prop("action", "./writeModifyForm.do");
-					}
-				}
-			});
-		});
-	});
-	
-</script>
 </head>
 <body>
 
