@@ -111,6 +111,8 @@
 				async : false,
 				success : function(msg){
 					$("#wd_Field").children("p").remove().children("div").remove();
+					$("#insert_wd_title").val("");
+					$("#insert_wd_endDate").val("");
 					showWorkDetail(msg)
 				}
 				

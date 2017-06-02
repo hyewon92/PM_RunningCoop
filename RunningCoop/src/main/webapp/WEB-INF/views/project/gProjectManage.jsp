@@ -10,8 +10,9 @@
 <title>Running Co-op :: 그룹 프로젝트 관리</title>
 
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript">
 <%
 	String mem_id = (String)session.getAttribute("mem_id");
@@ -34,6 +35,7 @@
 		$(".calendar_manage").css("display", "none");
 		$(".mem_manage").css("display", "block");
 		loadMember();
+		invite_memList();
 	}
 	
 	// 프로젝트 팀 일정 관리(컨트롤러 실행)
@@ -124,6 +126,8 @@
 	function invite_memList(){
 		var pr_id = $("#pr_id").val();
 		
+		$("#invitable_Memlist").children("p").remove();
+		
 		$.ajax({
 			type : "POST",
 			url : "./invite_memList.do",
@@ -136,8 +140,6 @@
 					for(var i = 0; i < msg.length; i++){
 						$("#invitable_Memlist").append("<p><input type='checkbox' name='mem_id' value='"+msg[i].mem_id+"'/>"+msg[i].mem_name+"</p>");
 					}
-					$("#invitable_Memlist").append("<input type='button' value='초대' onclick='inviteMem()'/>");
-					$("#invitable_Memlist").append("<input type='button' value='정보보기' onclick='view_meminfo()'/>");
 				}
 			}
 		})
@@ -163,9 +165,11 @@
 				if(msg == "success"){
 					alert("멤버초대성공!");
 					loadMember();
+					invite_memList()
 				} else {
 					alert("멤버초대실패!");
 					loadMember();
+					invite_memList()
 				}
 			}
 		})
@@ -192,9 +196,11 @@
 				if(msg == "success"){
 					alert("멤버탈퇴성공!");
 					loadMember();
+					invite_memList()
 				} else {
 					alert("멤버탈퇴실패!");
 					loadMember();
+					invite_memList()
 				}
 			}
 		})
@@ -251,7 +257,7 @@
 					$("#memInfo_mem_phone").text(msg.MEM_PHONE);
 					inputbox.attr("checked", false);
 				}
-			})
+			});
 			
 			/* 회원의 참여 프로젝트리스트 불러오기 */
 			$.ajax({
@@ -282,18 +288,17 @@
 						}
 							$("#memInfo_mem_project").html(text);
 							
-							$("#member_Information").css("display","block");
-							$("#member_Information").dialog({
-								title : "회원 정보 보기",
-								height : 400,
-								width : 500,
-								position : {my : "center", at : "center"},
-								resizable : false,
-								modal : true
-							});
 					}
 				}
-			})
+			});
+			$("#member_Information").dialog({
+				title : "회원 정보 보기",
+				height : 400,
+				width : 500,
+				position : {my : "center", at : "center"},
+				resizable : false,
+				modal : true
+			});
 			
 		}
 	}
@@ -402,7 +407,7 @@
 					</div>
 				</div>
 				<div class="invite_mem_con">
-					<input type="button" value="멤버 초대" onclick="invite_memList()"/><br/>
+					<input type="button" value="멤버 초대" onclick="inviteMem()"/><br/>
 					<input type="button" value="멤버 정보 보기" onclick="view_meminfo()"/>
 				</div>
 				<div id = "member_Information" style="display: none;">
