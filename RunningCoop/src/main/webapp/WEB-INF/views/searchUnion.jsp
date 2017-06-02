@@ -9,6 +9,39 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 
 <script type="text/javascript">
+	$(function(){
+		$("#select_type").change(function(){
+			var selectVal = $("#select_type option:selected").text();
+			if(selectVal == "그룹"){
+				$("#search_word").autocomplete({
+		            source: function(request , response){
+		               $.ajax({
+		                  type:"POST",
+		                  url: "./autoauto.do",
+		                  dataType : "json",
+		                  async : false,
+		                  data:{ value : request.term},
+		                  success: function(data) {
+		                      response(
+		                                     $.map(data, function(item) {
+		                                         return {
+		                                             label: item.gr_name,
+		                                             value: item.gr_name
+		                                         }
+		                                     })
+		                                 );
+		                  }
+		               });
+		            },
+		            minLength : 1,
+		            select : function ( event , ui){
+		            $("#gr_name").val(ui.item.label);
+		            }
+		         });
+			}
+		});
+	});
+
 	function doSearch(){
 		var type = $("#select_type option:selected").val();
 		var work = $("#search_word").val();

@@ -11,7 +11,6 @@
 		<result property="gr_id" column="GR_ID"/>
 		<result property="gr_name" column="GR_NAME"/>
 		<result property="gr_regDate" column="GR_REGDATE"/>
-		<result property="memberdto.mem_name" column="mem_name"/>
 		<result property="gr_joinYN" column="GR_JOINYN"/>
 	</resultMap>
 

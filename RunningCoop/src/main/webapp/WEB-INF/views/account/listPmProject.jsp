@@ -34,11 +34,7 @@
 		border-bottom: 0.5px solid #D8D8D8; 	
 	}
 </style>
-<script type="text/javascript">
-	function closeWindow(){
-		window.close();		
-	}
-</script>
+<script type="text/javascript" src="js/account/modify.js"></script>
 </head>
 <body>
 
