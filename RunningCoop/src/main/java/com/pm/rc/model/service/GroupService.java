@@ -287,4 +287,13 @@ public interface GroupService {
 	 * @author 라한솔
 	 */
 	public boolean grBoardDelete2(String br_uuid);
+	
+	/**
+	 * 접속 중인 그룹명 조회
+	 * @param gr_id
+	 * @result gr_name
+	 * @author 김혜원
+	 * */
+	public String sessionGrSelect(String gr_id);
+	
 }

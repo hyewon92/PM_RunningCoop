@@ -288,6 +288,12 @@ public class GroupDaoImp implements GroupDao{
 		Map<String, String> view = new HashMap<String, String>();
 		view = sqlSession.selectOne(NAMESPACE+"grBoardViewSelect",map);
 		return view;
+	}
+
+	@Override
+	public String sessionGrSelect(String gr_id) {
+		String gr_name = sqlSession.selectOne(NAMESPACE+"sessionGrSelect", gr_id);
+		return null;
 	};
 
 }

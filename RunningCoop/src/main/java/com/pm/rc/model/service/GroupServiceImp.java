@@ -282,6 +282,12 @@ public class GroupServiceImp implements GroupService{
 	public boolean grBoardDelete2(String br_uuid) {
 		boolean isc = groupboarddao.gboardDelete(br_uuid);
 		return isc;
+	}
+
+	@Override
+	public String sessionGrSelect(String gr_id) {
+		String gr_name = groupdao.sessionGrSelect(gr_id);
+		return gr_name;
 	};
 
 

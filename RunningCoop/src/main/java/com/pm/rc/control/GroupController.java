@@ -18,7 +18,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,8 +63,8 @@ public class GroupController implements ServletConfigAware {
 	private ManagerService managserService;
 	
 	// Mail 서비스
-	@Autowired
-	private JavaMailSender mailSend;
+/*	@Autowired
+	private JavaMailSender mailSend;*/
 	
 	@Autowired
 	private AccountService accountService;
