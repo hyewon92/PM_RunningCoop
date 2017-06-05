@@ -86,7 +86,7 @@ public class ProjectController {
 		session.removeAttribute("pr_level");
 		session.removeAttribute("gr_id");
 
-		List<ProjectDto> list = null;
+		List<ProjectDto> list = new ArrayList<ProjectDto>();
 		String mem_id = (String) session.getAttribute("mem_id");
 
 		list = service.myProSelect(mem_id);
@@ -191,26 +191,22 @@ public class ProjectController {
 		logger.info("업무리스트를 볼 프로젝트 id :"+pr_id);
 		logger.info("===========================================================");
 
-		List<Map<String, String>> todo = null;
-		List<Map<String, String>> doing = null;
-		List<Map<String, String>> done = null;
+		List<Map<String, String>> todo = new ArrayList<Map<String, String>>();
+		List<Map<String, String>> doing = new ArrayList<Map<String, String>>();
+		List<Map<String, String>> done = new ArrayList<Map<String, String>>();
 
 		Map<String, String> map = new HashMap<String, String>();
-
+		
 		map.put("pr_id", pr_id);
 		map.put("wk_condition", "todo");
 		todo = wService.wkListSelect(map);
-
-		model.addAttribute("todo", todo);
-
 		map.replace("wk_condition", "doing");
 		doing = wService.wkListSelect(map);
-
-		model.addAttribute("doing", doing);
-
 		map.replace("wk_condition", "done");
 		done = wService.wkListSelect(map);
-
+		
+		model.addAttribute("todo", todo);
+		model.addAttribute("doing", doing);
 		model.addAttribute("done", done);
 
 		model.addAttribute("pr_id", pr_id);
@@ -218,16 +214,16 @@ public class ProjectController {
 		String mem_id = (String)session.getAttribute("mem_id");
 
 		Map<String, String> value = new HashMap<String, String>();
+		
 		value.put("pr_id", pr_id);
 		value.put("mem_id", mem_id);
 
 		String pr_level = service.myLevelSelect(value);
-
+		
 		session.setAttribute("pr_level", pr_level);
 		
 		Map<String, String> pr_detail = new HashMap<String, String>();
 		pr_detail = service.prDetailSelect(pr_id);
-		
 		model.addAttribute("pr_detail", pr_detail);
 
 		return "project/workList";
@@ -243,7 +239,7 @@ public class ProjectController {
 		logger.info("조회할 업무 아이디 : "+wk_id);
 		logger.info("=========================================");
 
-		List<WorkDetailDto> dto = null;
+		List<WorkDetailDto> dto = new ArrayList<WorkDetailDto>();
 		dto = wService.wdSelect(wk_id);
 
 		return dto;
@@ -280,7 +276,7 @@ public class ProjectController {
 			System.out.println("하위 업무 추가 실패");
 		}
 
-		List<WorkDetailDto> list = null;
+		List<WorkDetailDto> list = new ArrayList<WorkDetailDto>();
 		list = wService.wdSelect(wk_id);
 
 		return list;
@@ -315,7 +311,7 @@ public class ProjectController {
 			System.out.println("하위 업무 수정 실패");
 		}
 
-		List<WorkDetailDto> list = null;
+		List<WorkDetailDto> list = new ArrayList<WorkDetailDto>();
 		list = wService.wdSelect(wk_id);
 
 		return list;
@@ -344,7 +340,7 @@ public class ProjectController {
 			System.out.println("하위 업무 완료 수정 실패");
 		}
 
-		List<WorkDetailDto> list = null;
+		List<WorkDetailDto> list = new ArrayList<WorkDetailDto>();
 		list = wService.wdSelect(wk_id);
 
 		return list;
@@ -381,7 +377,7 @@ public class ProjectController {
 			System.out.println("하위 업무 애로사항 표시 실패");
 		}
 
-		List<WorkDetailDto> list = null;
+		List<WorkDetailDto> list = new ArrayList<WorkDetailDto>();
 		list = wService.wdSelect(wk_id);
 
 		return list;
@@ -410,7 +406,7 @@ public class ProjectController {
 			System.out.println("하위 업무 삭제 실패");
 		}
 
-		List<WorkDetailDto> list = null;
+		List<WorkDetailDto> list = new ArrayList<WorkDetailDto>();
 		list = wService.wdSelect(wk_id);
 
 		return list;
@@ -426,7 +422,7 @@ public class ProjectController {
 		logger.info("멤버 조회할 프로젝트 아이디 : "+pr_id);
 		logger.info("==================================================");
 
-		List<Map<String, String>> list = null;
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		list = service.prMemListSelect(pr_id);
 
 		return list;
@@ -535,7 +531,7 @@ public class ProjectController {
 		logger.info("코멘트 출력할 업무 아이디 : "+wk_id);
 		logger.info("=============================================");
 
-		List<Map<String, String>> list = null;
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 
 		list = wService.wCommListSelect(wk_id);
 
@@ -570,7 +566,7 @@ public class ProjectController {
 			System.out.println("업무 코멘트 추가 실패");
 		}
 
-		List<Map<String, String>> list = null;
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 
 		list = wService.wCommListSelect(wk_id);
 
@@ -604,7 +600,7 @@ public class ProjectController {
 			System.out.println("업무 코멘트 수정 실패");
 		}
 
-		List<Map<String, String>> list = null;
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		list = wService.wCommListSelect(wk_id);
 
 		return list;
@@ -631,7 +627,7 @@ public class ProjectController {
 			System.out.println("업무 코멘트 삭제 실패");
 		}
 
-		List<Map<String, String>> list = null;
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		list = wService.wCommListSelect(wk_id);
 
 		return list;
@@ -647,7 +643,7 @@ public class ProjectController {
 		logger.info("첨부파일 조회할 업무 아이디 : "+wk_id);
 		logger.info("===============================================");
 
-		List<GbAttachDto> list = null;
+		List<GbAttachDto> list = new ArrayList<GbAttachDto>();
 		list = wService.gbAttachSelect(wk_id);
 
 
@@ -704,7 +700,7 @@ public class ProjectController {
 			System.out.println("파일 추가 실패");
 		}
 
-		List<GbAttachDto> list = null;
+		List<GbAttachDto> list = new ArrayList<GbAttachDto>();
 
 		list = wService.gbAttachSelect(wk_id);
 
@@ -773,7 +769,7 @@ public class ProjectController {
 			System.out.println("파일 삭제 실패");
 		}
 
-		List<GbAttachDto> list = null;
+		List<GbAttachDto> list = new ArrayList<GbAttachDto>();
 		list = wService.gbAttachSelect(wk_id);
 
 		return list;
@@ -858,7 +854,7 @@ public class ProjectController {
 		logger.info("멤버 조회할 프로젝트 id :"+pr_id);
 		logger.info("========================================================");
 
-		List<Map<String, String>> list = null;
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		list = service.prMemListSelect(pr_id);
 
 		return list;
@@ -879,7 +875,7 @@ public class ProjectController {
 		map.put("pr_id", pr_id);
 		map.put("gr_id", gr_id);
 
-		List<MemberDto> list = null;
+		List<MemberDto> list = new ArrayList<MemberDto>();
 		list = service.prMemInsertSearch(map);
 
 		return list;
@@ -1009,7 +1005,7 @@ public class ProjectController {
 		map.put("mem_id", mem_id);
 		map.put("gr_id", gr_id);
 
-		List<Map<String, String>> prolist = null;
+		List<Map<String, String>> prolist = new ArrayList<Map<String, String>>();
 		prolist = service.memInfoSelect_2(map);
 
 		return prolist;

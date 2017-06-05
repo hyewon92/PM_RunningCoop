@@ -1,5 +1,4 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -284,7 +283,7 @@
 								pr_condition = '진행완료';
 							}
 							
-							text += "<span><a href='#' onclick='projectDetail('"+pr_id+"')'>"+pr_name+"</a>("+pr_condition+")</span></br>";
+							text += "<span><a href='#'>"+pr_name+"</a>("+pr_condition+")</span></br>";
 						}
 							$("#memInfo_mem_project").html(text);
 							
@@ -330,6 +329,13 @@
 		}
 	}
 	
+	function backToproject(){
+		var pr_id = $("#pr_id").val();
+		location.href="./goProject.do?pr_id="+pr_id;
+	}
+	
+	
+	
 </script>
 </head>
 <body>
@@ -339,6 +345,9 @@
 <div id = "container">
 	<input type="hidden" id = "pr_id" value="${ pr_id }"/>
 	<h3>그룹 프로젝트 관리 페이지</h3>
+	<div id = "backProject">
+		<input type="button" class="body_btn backToProject_btn" value="프로젝트로 돌아가기" onclick="backToproject()"/>
+	</div>
 	<div id = "con_side">
 		<input type="button" value="프로젝트 정보관리" class="gPr_manage_btn" onclick="view_info_manage()"/>
 		<input type="button" value="멤버 관리" class="gPr_manage_btn" onclick="view_mem_manage()"/>
@@ -441,6 +450,35 @@
 				</iframe>
 			</div>
 		</div>
+		
+		<div class="pr_detail_view">
+		<table class="pr_detail_table">
+			<tr>
+				<th>프로젝트명</th>
+				<td><span id="pr_name"></span></td>
+			</tr>
+			<tr>
+				<th>프로젝트관리자</th>
+				<td><span id="mem_name"></span></td>
+			</tr>
+			<tr>
+				<th>프로젝트 인원</th>
+				<td><span id="pr_memcnt"></span></td>
+			</tr>
+			<tr>
+				<th>프로젝트목적</th>
+				<td><span id="pr_goal"></span></td>
+			</tr>
+			<tr>
+				<th>프로젝트마감기한</th>
+				<td><span id="pr_enddate"></span></td>
+			</tr>
+			<tr>
+				<th style="height : 80px;">비고</th>
+				<td style="height : 80px;"><span id="pr_etc"></span></td>
+			</tr>
+		</table>
+	</div>
 	</div>
 </div>
 <div id = "footer">

@@ -12,15 +12,16 @@
 	})
 	
 	/* 업무 상세 페이지 조회 메소드 */
-	function viewWork(val, val2){
+	function viewWork(val, val2, val3){
 		$("#wk_id").val(val);
+		var wd_title = "업무 상세 화면 : : "+ val3;
+		$("#header_title").html("업무 상세 화면 - "+val3);
 		$.ajax({
 			type : "POST",
 			url : "./detailWork.do",
 			data : "wk_id="+val,
 			async : false,
 			success : function(msg){
-				/*$("#wd_Field").children("p").remove().children("div").remove();*/
 				$(".wd_modal").css("display", "block");
 				showWorkDetail(msg)
 				changeProgress(val2);

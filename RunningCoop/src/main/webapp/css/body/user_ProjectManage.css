@@ -1,3 +1,19 @@
+#backProject {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+}
+
+.backToProject_btn {
+    background: darkgreen;
+    color: white;
+    font-size: 12pt;
+    font-weight: bold;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 3px 5px;
+}
+
 #con_body{
     margin-bottom: 10px;
 }
