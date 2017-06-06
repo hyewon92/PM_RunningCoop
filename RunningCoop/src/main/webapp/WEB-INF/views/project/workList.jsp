@@ -20,11 +20,17 @@
 		String mem_id = (String)session.getAttribute("mem_id");
 	%>
 	/* 관리자 여부에 따라 프로젝트 관리 버튼 출력 */
-	$(document).ready(function(){
+	$(function(){
+		var pr_level = "<%=pr_level%>";
+		if( pr_level === 'PM'){
+			$(".pr_settings").css("display", "block");
+		}
+	})
+	<%-- $(document).ready(function(){
 		if( '<%=pr_level%>' == 'PM'){
 			$(".project_manage").css("display", "block");
 		}
-	})
+	}) --%>
 	
 	/* 업무 상세 페이지 - 업무 코멘트 목록 출력 기능 */
 	function showcommentList(nodes){
@@ -65,7 +71,7 @@
 				<input type="hidden" id="pr_id" value="${ pr_id }" /> 
 				<c:set var="pr_name" value="${ pr_detail }"></c:set>
 				<p>${ pr_name.get('PR_NAME') }</p>
-				<img alt="프로젝트 관리" class="pr_settings" src="images/project/pr_settings.png" onclick="location.href='./goProManage.do?pr_id=${ pr_id }'"/>
+				<img alt="프로젝트 관리" class="pr_settings" src="images/project/pr_settings.png" style="display:none;" onclick="location.href='./goProManage.do?pr_id=${ pr_id }'"/>
 			</div>
 			<div class="work_list">
 				<div id="todoList" class="list_field">
@@ -87,7 +93,7 @@
 							</c:when>
 							<c:otherwise>
 								<c:forEach var="todo" items="${ todo }">
-									<tr class="work" onclick="viewWork('${ todo.get('WK_ID') }', 0)">
+									<tr class="work" onclick="viewWork('${ todo.get('WK_ID') }', 0, '${ todo.get('WK_TITLE') }')">
 										<td>${ todo.get('WK_TITLE') }</td>
 										<td>${ todo.get('MEM_NAME') }</td>
 										<td>${ todo.get('WK_PRORATE') }%</td>
@@ -116,7 +122,7 @@
 							</c:when>
 							<c:otherwise>
 								<c:forEach var="doing" items="${ doing }">
-									<tr class="work" onclick = "viewWork('${ doing.get('WK_ID')}', '${ doing.get('WK_PRORATE') }')">
+									<tr class="work" onclick = "viewWork('${ doing.get('WK_ID')}', '${ doing.get('WK_PRORATE') }', '${ doing.get('WK_TITLE') }')">
 										<td>${ doing.get("WK_TITLE") }</td>
 										<td>${ doing.get("MEM_NAME") }</td>
 										<td>${ doing.get("WK_PRORATE") }%</td>
@@ -147,7 +153,7 @@
 							<c:otherwise>
 								<c:forEach var="done" items="${ done }">
 									<tr class="work">
-										<td onclick="viewWork('${ done.get('WK_ID') }', '${ done.get('WK_PRORATE') }')">${ done.get("WK_TITLE") }</td>
+										<td onclick="viewWork('${ done.get('WK_ID') }', '${ done.get('WK_PRORATE') }', '${ done.get('WK_TITLE') }')">${ done.get("WK_TITLE") }</td>
 										<td>${ done.get("MEM_NAME") }</td>
 										<td>${ done.get("WK_PRORATE") }%</td>
 									</tr>
@@ -230,7 +236,7 @@
 		<div class="wd_modal">
 			<div class="modal_content">
 				<div class="modal_header">
-					<h2 style="display:inline;">업무 상세 화면</h2>
+					<h2 id="header_title" style="display:inline;"></h2>
 					<img alt="닫기" src="images/project/wd_close_btn.png" onclick="backToProject()"/>
 				</div>
 				<div class="modal_body">

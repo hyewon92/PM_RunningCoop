@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>개인 프로젝트 관리 페이지</title>
+<title>Running Co-op :: 개인 프로젝트 관리</title>
 
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
@@ -82,6 +82,11 @@
 		}
 	}
 	
+	function backToproject(){
+		var pr_id = $("#pr_id").val();
+		location.href="./goProject.do?pr_id="+pr_id;
+	}
+	
 </script>
 </head>
 <body>
@@ -91,6 +96,9 @@
 <div id = "container">
 	<input type="hidden" id = "pr_id" value="${ pr_id }"/>
 	<h3>개인 프로젝트 관리 페이지</h3>
+	<div id = "backProject">
+		<input type="button" class="body_btn backToProject_btn" value="프로젝트로 돌아가기" onclick="backToproject()"/>
+	</div>
 	<div id = "con_body">
 		<div class = "info_manage">
 			<h4>프로젝트 정보 수정</h4>
