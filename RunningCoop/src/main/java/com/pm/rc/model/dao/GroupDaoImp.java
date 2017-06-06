@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.pm.rc.dto.GroupBoardDto;
 import com.pm.rc.dto.GroupDto;
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.PagingDto;
@@ -259,8 +260,8 @@ public class GroupDaoImp implements GroupDao{
 	}
 
 	@Override
-	public List<Map<String, String>> grBoradList(String gr_id) {
-		List<Map<String, String>> lists = sqlSession.selectList(NAMESPACE+"grBoradList",gr_id);
+	public List<Map<String, String>> grBoradList(GroupBoardDto gDto) {
+		List<Map<String, String>> lists = sqlSession.selectList(NAMESPACE+"grBoradList",gDto);
 		return lists;
 	}
 
@@ -294,6 +295,12 @@ public class GroupDaoImp implements GroupDao{
 	public String sessionGrSelect(String gr_id) {
 		String gr_name = sqlSession.selectOne(NAMESPACE+"sessionGrSelect", gr_id);
 		return gr_name;
+	}
+
+	@Override
+	public int grBoradListCnt(GroupBoardDto gDto) {
+			int n = sqlSession.selectOne(NAMESPACE+"grBoradListCnt", gDto);
+		return n;
 	};
 
 }

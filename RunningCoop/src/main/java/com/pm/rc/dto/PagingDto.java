@@ -112,9 +112,11 @@ public class PagingDto {
 	}
 	@Override
 	public String toString() {
-		return "PagingDto [pageCnt=" + pageCnt + ", index=" + index
-				+ ", pageStartNum=" + pageStartNum + ", listCnt=" + listCnt
-				+ ", total=" + total + ", gr_name=" + gr_name + "]";
+		return "PagingDto [logger=" + logger + ", pageCnt=" + pageCnt
+				+ ", index=" + index + ", pageStartNum=" + pageStartNum
+				+ ", listCnt=" + listCnt + ", total=" + total + ", gr_name="
+				+ gr_name + "]";
 	}
+
 	
 }
