@@ -10,7 +10,9 @@
 <title>Running Co-op :: 그룹관리 - 멤버 관리</title>
 
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 
 <script type="text/javascript">
 	function accept1(memid){
@@ -27,7 +29,32 @@
 	}
 	
 	function groupMemAdd(){
-		window.open("./groupSend.do", "sendForm", "width=570, height=350, resizable = no, scrollbars = no");
+		//window.open("./groupSend.do", "sendForm", "width=570, height=350, resizable = no, scrollbars = no");
+		$("#memAdd_box").dialog({
+			title : "그룹 초대",
+			height : 250,
+			width : 300,
+			position : {my : "center", at : "center"},
+			resizable : false,
+			modal : true
+		});
+	}
+	
+	function sendInvite(){
+		$.ajax({
+			url: "./goGroupMail.do",
+			type: "GET",
+			data: "toSend="+$("#toSend").val()+"&toName="+$("#toName").val(),
+			async: false,
+			success: function(msg){
+				if(msg.result){
+					alert("메일이 성공적으로 발송됐습니다.");
+					close();
+				}else{
+					alert("메일 전송이 실패했습니다. 다시 확인해주세요.");
+				}
+			}
+		});
 	}
 	
 	function memDelete(grmemid){
@@ -44,6 +71,20 @@
 </head>
 <body>
 <div class="member_manage_area">
+	
+	<div id = "memAdd_box" style = "display: none;">
+		<form action="./goGroupMail.do" method="post">
+			<table style = "border-collapse: collapse;">
+				<tr>
+					<td>수신자명: <input type = "text" id = "toName" name = "toName"></td>
+				</tr>
+				<tr>
+					<td>이메일: <input type="text" id = "toSend" name="toSend"></td>
+				</tr>
+				<tr><td><input type="button" style = "margin-top:10px;" value="메일보내기" onclick = "sendInvite()"></td></tr>
+			</table>
+		</form>
+	</div>
 	
 	<div class="div_member_area">
 		<h3>그룹 멤버 목록</h3>

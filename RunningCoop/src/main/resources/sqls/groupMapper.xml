@@ -20,6 +20,7 @@
 		(SELECT GR_ID FROM RC_GROUPMEM WHERE MEM_ID IN #{mem_id})
 		AND G.GR_DELYN = 'N' AND G.GR_APPYN = 'Y'
 	</select>
+	
 	<select id="waitGrSelect" parameterType="java.util.Map" resultType="GroupDto">
 		SELECT G.GR_ID , G.GR_NAME,G.GR_GOAL,TO_CHAR(G.GR_REGDATE, 'YYYY/MM/DD'),G.GR_IMG,G.GR_REGDATE FROM RC_GROUP G
 		WHERE G.GR_ID IN
@@ -230,10 +231,30 @@
 	</select>
 	
 <!-- 	그룹게시판 목록 출력 -->
-	<select id="grBoradList" parameterType="java.lang.String" resultType="java.util.Map">
-		SELECT BR.BR_UUID, BR.BR_TITLE, M.MEM_NAME, TO_CHAR(BR.BR_REGDATE, 'YYYY/MM/DD') BR_REGDATE, BR.BR_NOTICEYN
+	<select id="grBoradList" parameterType="GroupBoardDto" resultType="java.util.Map">
+		SELECT * FROM 
+			(SELECT ROWNUM RNUMBER, R.* FROM (
+				(SELECT ROWNUM RNUM, P.* FROM
+					(SELECT BR.BR_UUID, BR.BR_TITLE, M.MEM_NAME, TO_CHAR(BR.BR_REGDATE, 'YYYY/MM/DD') BR_REGDATE, BR.BR_NOTICEYN
+						FROM RC_GRBOARD BR, RC_MEMBER M
+						WHERE GR_ID = #{gr_id} AND BR.MEM_ID = M.MEM_ID AND BR.BR_DELYN = 'N'	
+						<if test="br_title != null">
+							AND BR.BR_TITLE LIKE '%${br_title}%'
+						</if>
+						ORDER BY BR_REFER, BR_REGDATE DESC
+				  	) P
+				ORDER BY RNUM DESC) R)
+			)
+		WHERE RNUMBER BETWEEN #{paging.start} AND #{paging.last}
+	</select>
+	
+	<select id="grBoradListCnt" resultType="java.lang.Integer" parameterType="GroupBoardDto">
+		SELECT NVL(COUNT(*),0)
 		FROM RC_GRBOARD BR, RC_MEMBER M
-  		WHERE GR_ID = #{gr_id} AND BR.MEM_ID = M.MEM_ID AND BR.BR_DELYN = 'N'	
+		WHERE GR_ID = #{gr_id} AND BR.MEM_ID = M.MEM_ID AND BR.BR_DELYN = 'N'
+		<if test="br_title != null">
+			AND BR.BR_TITLE LIKE '%${br_title}%'
+		</if>	
 	</select>
 	
 <!-- 	그룹선택시 이미지 값 출력 -->
@@ -272,5 +293,8 @@
 	UPDATE RC_GROUP SET GR_MEMCNT =  GR_MEMCNT-1 WHERE GR_ID = #{gr_id}
 	</update>
 	
-	
+<!-- 접속중인 그룹명 출력 -->
+	<select id="sessionGrSelect" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT GR_NAME FROM RC_GROUP WHERE GR_ID = #{gr_id}
+	</select>	
 </mapper>

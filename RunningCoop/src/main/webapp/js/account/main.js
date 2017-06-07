@@ -47,6 +47,7 @@
 				async: false,
 				success:function(result){
 					if(!result.login){
+						$(".loginFail").children().remove();
 						$(".loginFail").append("<p style = 'font-size:8pt; color:red;'>로그인에 실패했습니다. 아이디 또는 비밀번호를 확인해주세요</p>");
 					}else if(result.login=="user"){
 						alert("일반 회원 계정은 서비스 메인 페이지에서 로그인 해주세요.");

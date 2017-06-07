@@ -248,7 +248,8 @@ public interface GroupService {
 	 * @return list
 	 * @author 라한솔
 	 */
-	public List<Map<String, String>> grBoradList(String gr_id);
+	public List<Map<String, String>> grBoradList(GroupBoardDto gDto);
+	public int grBoradListCnt (GroupBoardDto gDto);
 	
 	/**
 	 *그룹선택시 이미지 출력
@@ -287,4 +288,13 @@ public interface GroupService {
 	 * @author 라한솔
 	 */
 	public boolean grBoardDelete2(String br_uuid);
+	
+	/**
+	 * 접속 중인 그룹명 조회
+	 * @param gr_id
+	 * @result gr_name
+	 * @author 김혜원
+	 * */
+	public String sessionGrSelect(String gr_id);
+	
 }

@@ -286,7 +286,7 @@ function createGr(){
 	$("#resetBtn").click();
 	$("#create_Form").dialog({
 		title : "그룹 생성",
-		height : 600,
+		height : 900,
 		width : 700,
 		position : {my : "center", at : "center"},
 		resizable : false,
