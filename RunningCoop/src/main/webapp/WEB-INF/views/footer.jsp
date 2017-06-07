@@ -187,7 +187,7 @@
 			url: "./deleteMem.do",
 			async: false,
 			success: function(msg){
-				if(!msg.result){
+				if(msg.result==false){
 					alert("탈퇴가 정상적으로 종료되지 못했습니다. 다시 시도해주세요.");
 				}else{
 					alert("탈퇴가 성공적으로 이뤄졌습니다. 감사합니다.");
@@ -214,7 +214,7 @@
 		<li class="menu_logo"><span class="top_menu">그룹</span></li>
 		<li class="bottom-menu">
 			<ul class="groupMenu">
-				<%-- <li><a href="#" onclick="goGrBoard('<%=gr_id%>')">그룹 게시판</a></li> --%>
+<%-- 				<li><a href="#" onclick="goGrBoard('<%=gr_id%>')">그룹 게시판</a></li> --%>
 				<li><a href="#" onclick="goSocket('<%=gr_id%>')">그룹 채팅</a></li>
 				<li><a href="#" class="solo_Group" onclick="groupOut()">그룹 탈퇴</a></li>
 				<li><a href="#" class="manage_Group" onclick="location.href='./grmodify.do?gr_id=<%=gr_id%>'">그룹 관리</a></li>

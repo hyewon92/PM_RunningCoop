@@ -239,8 +239,8 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public List<Map<String, String>> grBoradList(String gr_id) {
-		List<Map<String, String>> lists = groupdao.grBoradList(gr_id);
+	public List<Map<String, String>> grBoradList(GroupBoardDto gDto) {
+		List<Map<String, String>> lists = groupdao.grBoradList(gDto);
 		return lists;
 	}
 
@@ -288,6 +288,12 @@ public class GroupServiceImp implements GroupService{
 	public String sessionGrSelect(String gr_id) {
 		String gr_name = groupdao.sessionGrSelect(gr_id);
 		return gr_name;
+	}
+
+	@Override
+	public int grBoradListCnt(GroupBoardDto gDto) {
+		int n = groupdao.grBoradListCnt(gDto);
+		return n;
 	};
 
 

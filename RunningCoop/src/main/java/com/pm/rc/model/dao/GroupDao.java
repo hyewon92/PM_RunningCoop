@@ -290,7 +290,8 @@ public interface GroupDao {
 	 */
 	public int grNameCheck(String gr_name);
 	
-	public List<Map<String, String>> grBoradList (String gr_id);
+	public List<Map<String, String>> grBoradList (GroupBoardDto gDto);
+	public int grBoradListCnt (GroupBoardDto gDto);
 	
 	/**
 	 *그룹선택시 이미지 출력

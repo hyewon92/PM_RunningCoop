@@ -7,7 +7,16 @@
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
+<!-- 	에러페이지 설정 -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/views/errors/404.jsp</location>
+	</error-page>
 	
+	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/views/errors/404.jsp</location>
+	</error-page>
 	
 	<!-- 11. model(Mybatis) 설정 -->
 	<context-param>

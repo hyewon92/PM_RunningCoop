@@ -15,6 +15,8 @@ public class GroupBoardDto {
 	private MemberDto memberdto;
 	private GbAttachDto gbAttach;
 	
+	private PagingProDto paging;
+	
 	public MemberDto getMemberdto() {
 		return memberdto;
 	}
@@ -112,6 +114,14 @@ public class GroupBoardDto {
 	public void setBr_refer(String br_refer) {
 		this.br_refer = br_refer;
 	}
+	
+	public PagingProDto getPaging() {
+		return paging;
+	}
+
+	public void setPaging(PagingProDto paging) {
+		this.paging = paging;
+	}
 
 	@Override
 	public String toString() {
@@ -120,8 +130,8 @@ public class GroupBoardDto {
 				+ ", br_content=" + br_content + ", br_regDate=" + br_regDate
 				+ ", br_delYN=" + br_delYN + ", br_noticeYN=" + br_noticeYN
 				+ ", br_comYN=" + br_comYN + ", br_refer=" + br_refer
-				+ ", gbAttach=" + gbAttach + "]";
+				+ ", memberdto=" + memberdto + ", gbAttach=" + gbAttach
+				+ ", paging=" + paging + "]";
 	}
-
 
 }

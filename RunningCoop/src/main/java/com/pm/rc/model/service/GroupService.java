@@ -248,7 +248,8 @@ public interface GroupService {
 	 * @return list
 	 * @author 라한솔
 	 */
-	public List<Map<String, String>> grBoradList(String gr_id);
+	public List<Map<String, String>> grBoradList(GroupBoardDto gDto);
+	public int grBoradListCnt (GroupBoardDto gDto);
 	
 	/**
 	 *그룹선택시 이미지 출력
