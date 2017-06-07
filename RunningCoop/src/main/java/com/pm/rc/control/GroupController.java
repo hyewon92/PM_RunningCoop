@@ -18,7 +18,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,8 +63,8 @@ public class GroupController implements ServletConfigAware {
 	private ManagerService managserService;
 	
 	// Mail 서비스
-	@Autowired
-	private JavaMailSender mailSend;
+/*	@Autowired
+	private JavaMailSender mailSend;*/
 	
 	@Autowired
 	private AccountService accountService;
@@ -81,7 +80,7 @@ public class GroupController implements ServletConfigAware {
 	@RequestMapping(value= "/myGrSelect.do" , method=RequestMethod.GET)
 	public String myGrSelect(Model model, HttpSession session){
 		
-		session.removeAttribute("gr_level");
+		session.removeAttribute("gr_level"); 
 		session.removeAttribute("gr_id");
 		
 		Map<String, String> map = new HashMap<String, String>();
@@ -233,7 +232,7 @@ public class GroupController implements ServletConfigAware {
 		}
 		
 	}
-	// 그룹가입신청 수락하는곳
+	// 그룹가입신청 수락
 	@RequestMapping(value="/groupAccept.do", method=RequestMethod.GET )
 	public String grWaitAccept (HttpServletRequest req){
 		String gr_id = req.getParameter("gr_id");
@@ -503,13 +502,30 @@ public class GroupController implements ServletConfigAware {
 		return n;
 	}
 	
-	@RequestMapping(value="/grBoradList.do" , method=RequestMethod.GET)
-	public String grBoradList(Model model,HttpSession session){
-		logger.info("=========그룹게시판 목록 시작 ========");
+	// 그룹 게시판 목록 출력 시작
+	@RequestMapping(value="/grBoradList.do" , method={RequestMethod.GET, RequestMethod.POST})
+	public String grBoradList(Model model,HttpSession session, HttpServletRequest req){
+		
+		PagingProDto paging = new PagingProDto(req.getParameter("index"), req.getParameter("pageStartNum"), req.getParameter("listCnt"));
 		String gr = (String)session.getAttribute("gr_id");
+		
+		String br_title = req.getParameter("br_title");
+		
+		GroupBoardDto gDto = new GroupBoardDto();
+		gDto.setBr_title(br_title);
+		gDto.setPaging(paging);
+		gDto.setGr_id(gr);
+		
+		logger.info("=========그룹게시판 목록 시작 ========");
 		System.out.println("그룹아이디 받아옴 값="+gr);
-		List<Map<String, String>> lists = service.grBoradList(gr);
+		
+		List<Map<String, String>> lists = service.grBoradList(gDto);
+		paging.setTotal(service.grBoradListCnt(gDto));
+		
 		model.addAttribute("grlists", lists);		
+		model.addAttribute("paging" , paging);
+		model.addAttribute("br_title", br_title);
+		
 		return "Group/groupBoard";
 	}
 	
@@ -599,7 +615,7 @@ public class GroupController implements ServletConfigAware {
 			return "redirect:/grBoradList.do";
 		}
 		
-		// 공개 게시글 보기 페이지
+		// 문의 게시판 상세보기 
 		@RequestMapping(value="/grBoardView.do", method = RequestMethod.GET)
 		public String boardView(Model model, HttpServletRequest request, HttpSession session){
 
