@@ -72,15 +72,9 @@ public class SysBoardDaoImpl implements SysBoardDao {
 		attach = sqlSession.selectOne(NAMESPACE+"sysAttachSelect", map);
 		return attach;
 	}
-	
-	@Override
-	public boolean noticeBoardInsert(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
-	public boolean qnaBoardInsert(Map<String, Object> map) {
+	public boolean qnaBoardInsert(Map<String, String> map) {
 		boolean isc = false;
 		int num = sqlSession.insert(NAMESPACE+"qnaBoardInsert", map);
 		if(num > 0){
@@ -92,13 +86,7 @@ public class SysBoardDaoImpl implements SysBoardDao {
 	}
 
 	@Override
-	public boolean qnaReplyInsert(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean FileInsert(Map<String, Object> map) {
+	public boolean FileInsert(Map<String, String> map) {
 		boolean isc = false;
 		int num = sqlSession.insert(NAMESPACE+"FileInsert", map);
 		if(num > 0){

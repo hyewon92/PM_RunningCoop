@@ -247,9 +247,13 @@ public class sysManagerController {
 				// 기존 파일 삭제
 				Map<String, String> originFile = new HashMap<String, String>();
 				originFile = service.sysAttachSelect(map);
-
-				File delFile = new File(originFile.get("SATT_PATH")+originFile.get("SATT_RNAME"));
-				delFile.delete();
+				
+				if(originFile != null){
+					File delFile = new File(originFile.get("SATT_PATH")+originFile.get("SATT_RNAME"));
+					delFile.delete();
+				} else {
+					map.put("attachYN", "N");
+				}
 
 				// 새 파일 등록
 				String fuuid = createUUID();
@@ -277,7 +281,7 @@ public class sysManagerController {
 				map.put("satt_rname", newFileName);
 				map.put("satt_size", satt_size);
 				map.put("satt_path", savePath);
-
+				
 			}
 
 			map.put("sbr_title", sbr_title);

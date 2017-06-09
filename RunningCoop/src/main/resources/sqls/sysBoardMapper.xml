@@ -110,10 +110,7 @@
 	<!-- 공지/문의 게시판 수정 -->
 	<update id="sysBoardUpdate" parameterType="java.util.Map">
 		UPDATE RC_SYSBOARD 
-		SET SBR_TITLE = #{sbr_title}, SBR_CONTENT = #{sbr_content}
-		<if test="sbr_scryn.equals('Y')">
-			,SBR_SCRYN = #{sbr_scryn}, SBR_PW = #{sbr_pw}
-		</if>
+		SET SBR_TITLE = #{sbr_title}, SBR_CONTENT = #{sbr_content}, SBR_SCRYN = #{sbr_scryn}, SBR_PW = #{sbr_pw}
 		WHERE SBR_UUID = #{sbr_uuid}
 	</update>
 	

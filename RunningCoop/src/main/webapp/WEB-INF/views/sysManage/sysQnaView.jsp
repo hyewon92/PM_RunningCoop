@@ -22,7 +22,7 @@
 
 	function Delete() {
 		var sbr_uuid = $("#sbr_uuid").val();
-		location.href = "./sysboardDelete.do?sbr_uuid=" + sbr_uuid;
+		location.href = "./sysboardDelete.do?sbr_uuid=" + sbr_uuid +"&noticeyn=N";
 	}
 
 	$(function() {

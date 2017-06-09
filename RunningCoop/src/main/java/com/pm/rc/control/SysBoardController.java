@@ -109,7 +109,7 @@ public class SysBoardController {
 		logger.info("조회할 게시글 번호 : "+sbr_uuid);
 		logger.info("================================================");
 
-		Map<String, String> list = null;
+		Map<String, String> list = new HashMap<String, String>();
 		list = service.sysAttachSelect(map);
 
 		model.addAttribute("view", view);
@@ -143,7 +143,7 @@ public class SysBoardController {
 		Map<String, String> view = new HashMap<String, String>();
 		view = service.sysBoardViewSelect(map);
 
-		Map<String, String> list = null;
+		Map<String, String> list = new HashMap<String, String>();
 		list = service.sysAttachSelect(map);
 
 		String page = "";
@@ -232,7 +232,7 @@ public class SysBoardController {
 		int indexnum = uuid.lastIndexOf("-");
 		String sbr_uuid = uuid.substring(indexnum+1);
 
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, String> map = new HashMap<String, String>();
 		map.put("sbr_uuid", sbr_uuid);
 
 		MultipartFile file = multipartRequest.getFile("satt_name");
@@ -316,7 +316,7 @@ public class SysBoardController {
 		Map<String, String> view = new HashMap<String, String>();
 		view = service.editBoardViewSelect(map);
 
-		Map<String, String> attach = null;
+		Map<String, String> attach = new HashMap<String, String>();
 		attach = service.sysAttachSelect(map);
 
 		model.addAttribute("view", view);
@@ -349,9 +349,13 @@ public class SysBoardController {
 			// 기존 파일 삭제
 			Map<String, String> originFile = new HashMap<String, String>();
 			originFile = service.sysAttachSelect(map);
-
-			File delFile = new File(originFile.get("SATT_PATH")+originFile.get("SATT_RNAME"));
-			delFile.delete();
+			
+			if(originFile != null){
+				File delFile = new File(originFile.get("SATT_PATH")+originFile.get("SATT_RNAME"));
+				delFile.delete();
+			} else {
+				map.put("attachYN", "N");
+			}
 
 			// 새 파일 등록
 			String fuuid = createUUID();
@@ -386,14 +390,16 @@ public class SysBoardController {
 		map.put("sbr_title", sbr_title);
 		map.put("sbr_content", sbr_content);
 		
-		// 비밀글 여부
-		String scrpw = multipartRequest.getParameter("sbr_pw");
-		String scryn = multipartRequest.getParameter("scryn");
-		if(scryn.equals("Y")){
-			map.put("sbr_scryn", scryn);
-			map.put("sbr_pw", scrpw);
+		String sbr_scrYN = multipartRequest.getParameter("scryn");
+		String sbr_scrPW = multipartRequest.getParameter("sbr_pw");
+		
+		/* 비밀글 여부 */
+		if(sbr_scrYN.equals("Y")){
+			map.put("sbr_scryn", sbr_scrYN);
+			map.put("sbr_pw", sbr_scrPW);
 		} else {
-			map.put("sbr_scryn", scryn);
+			map.put("sbr_scryn", "N");
+			map.put("sbr_pw", "");
 		}
 		
 		// 서비스 실행
@@ -418,7 +424,7 @@ public class SysBoardController {
 		Map<String, String> uuid = new HashMap<String, String>();
 		uuid.put("sbr_uuid", sbr_uuid);
 
-		Map<String, String> attach = null;
+		Map<String, String> attach = new HashMap<String, String>();
 		attach = service.sysAttachSelect(uuid);
 		
 		if(attach != null){

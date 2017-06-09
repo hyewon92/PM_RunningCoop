@@ -95,7 +95,11 @@ public class ManagerServiceimpl implements ManagerService {
 	public boolean noticeModify(Map<String, String> map) {
 		boolean isc = false;
 		String satt_name = map.get("satt_name");
-		if(satt_name != null){
+		String attachYN = map.get("attachYN");
+		if(attachYN.equals("N")){
+			/* 기존에 첨부파일이 없을 경우 새롭게 insert해야함.*/
+			isc = managerdao.noticeInsert_1(map); 
+		} else if (satt_name != null){
 			isc = managerdao.noticeModify_1(map);
 		}
 		isc = managerdao.noticeModify_2(map);
