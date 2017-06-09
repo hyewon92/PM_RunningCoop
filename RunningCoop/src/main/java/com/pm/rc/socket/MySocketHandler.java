@@ -27,14 +27,9 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 @Component(value="wsChat.do")
-public class MySocketHandler extends TextWebSocketHandler implements ServletConfigAware{
+public class MySocketHandler extends TextWebSocketHandler{
 
 	Logger logger = LoggerFactory.getLogger(MySocketHandler.class);
-
-	/**
-	 * 채팅에 대한 정보를 Applicaton 에 담기 위한 변수
-	 */
-	private ServletContext servletContext;	//접속자 session 저장
 
 	private ArrayList<WebSocketSession> list ; //webSocket session값을 담은 리스트
 
@@ -50,12 +45,6 @@ public class MySocketHandler extends TextWebSocketHandler implements ServletConf
 		list.add(session);	//전체 접속자 리스트에 새로운 접속자 추가
 		System.out.println("client session cnt : "+list.size()); 
 		System.out.println("session connected : "+session.getId());
-
-		/*     //그룹리스트에 담기
-      Map<String, Object> mySession = session.getHandshakeAttributes();	//WebsocketSession의 session값을 httpSesssion값으로 변경
-      String myGrSession = (String)mySession.get("gr_id");	//접속자의 그룹 아이디
-      //String myMemSession = (String)mySession.get("mem_id");	//접속자 아이디
-      grList.put(myMemSession, myGrSession);*/
 	}
 
 	@Override
@@ -75,27 +64,17 @@ public class MySocketHandler extends TextWebSocketHandler implements ServletConf
 					Map<String, Object> sessionMap = s.getHandshakeAttributes();
 					String otherGrSession = (String)sessionMap.get("gr_id");
 					String otherMemSession = (String)sessionMap.get("mem_id");
-					//logger.info("myGrSession="+myGrSession);
-					//logger.info("otherGrSession="+otherGrSession);
 
 					ArrayList<String> grMemList = new ArrayList<String>();
 					System.out.println("그룹아이디: "+myGrSession);
-					//	System.out.println("멤버아이디: "+myMemSession);
 					System.out.println("멤버아이디2: "+otherMemSession);
 
 					if(myGrSession.equals(otherGrSession)) {	//같은 그룹 소속일 때
 						s.sendMessage(
 								new TextMessage("<font color='red' size='1px'>"+myMemSession+" 님이 입장했습니다.</font>")
 								);
-						//s.sendMessage(new TextMessage(myGrSession));
-						// memList.add(otherMemSession);	
 					}
 				}
-				/*            for(WebSocketSession s2 : list){	//그룹 접속자 리스트 보내기
-            	JSONObject obj = new JSONObject();
-            	obj.put("memList", memList);
-            	s2.sendMessage(new TextMessage(obj.toString()));
-            }*/
 			}else {
 				String msg2 = msg.substring(0, msg.indexOf(":")).trim();
 				for(WebSocketSession s : list) {
@@ -106,10 +85,8 @@ public class MySocketHandler extends TextWebSocketHandler implements ServletConf
 						if(msg2.equals(otherMemSession)){
 							String newMsg = "[나]"+msg.replace(msg.substring(0, msg.trim().indexOf(":")+1),"");
 							System.out.println("newMsg:"+newMsg);
-							//txt = "<font color='pink' size='2px' style = 'float : right;'>"+newMsg+"</font>" ;
 							txt = newMsg;
 						}else{
-							//txt = "<font color='black' size='2px' style = 'float : left;'>"+msg+"</font>" ;
 							String part1 = msg.substring(0, msg.trim().indexOf(":")).trim();
 							String part2 = "["+part1+"] \n"+msg.substring(msg.trim().indexOf(":")+1);
 							txt = part2;
@@ -130,15 +107,6 @@ public class MySocketHandler extends TextWebSocketHandler implements ServletConf
 		String myGrSession = (String)mySession.get("gr_id");
 		String myMemSession = (String)mySession.get("mem_id");
 		list.remove(session);
-
-		HashMap<String, String> chatList = (HashMap<String, String>)servletContext.getAttribute("chatList");
-		System.out.println("기존 접속 회원 리스트:"+chatList);
-		if(chatList != null){
-			chatList.remove(myMemSession);
-		}
-		System.out.println("갱신 후 접속 회원 리스트:"+chatList);
-		servletContext.setAttribute("chatList", chatList); 
-
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분");
 		String now = sdf.format(new Date());
 		for(WebSocketSession a : list) {
@@ -149,10 +117,4 @@ public class MySocketHandler extends TextWebSocketHandler implements ServletConf
 			}
 		}
 	}
-
-	@Override
-	public void setServletConfig(ServletConfig servletConfig) {
-		servletContext = servletConfig.getServletContext();
-	}
-
 }

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>아이디찾기</title>
+<title>Running Co-op :: 아이디찾기</title>
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/body/user_account.css">
 <style type="text/css">

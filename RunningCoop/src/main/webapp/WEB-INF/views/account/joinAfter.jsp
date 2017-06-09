@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Running Co-op :: welcome!</title>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 
 <style type="text/css">

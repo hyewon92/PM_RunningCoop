@@ -411,7 +411,7 @@ public class GroupController implements ServletConfigAware {
 		logger.info("socketOpen 소켓 화면 이동 2)리스트 값 전달");
 		//model.addAttribute("chatList", chatList);
 		
-		return "socket";
+		return "groupChat";
 	}
 	
 	//WebSocket 채팅 종료했을 때

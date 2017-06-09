@@ -141,14 +141,12 @@ public class AccountController {
 		return map;
 	}
 	
-	//본인인증 번호(세션) 삭제
+	//본인인증 번호(세션) 삭제 : 시간 종료 or 사용자가 번호 입력할 때
 	@RequestMapping(value = "/removeIdentify.do")
 	@ResponseBody
 	public void removeIdentify(HttpSession session){
 		logger.info("removeIdentify실행");
-		System.out.println("삭제 전 인증번호:"+session.getAttribute("identifyNum"));
 		session.removeAttribute("identifyNum");
-		System.out.println("삭제 후 인증번호:"+session.getAttribute("identifyNum"));
 	}
 
 	//본인인증 번호 확인
@@ -171,36 +169,36 @@ public class AccountController {
 	}
 
 	//회원가입처리
-	   @RequestMapping(value = "/chkJoin.do", method = RequestMethod.POST)
-	   public String ckJoin(HttpSession session, MemberDto dto){
-	      logger.info("ckJoin실행");
-	      boolean isc = accountService.memInsert(dto);
-	      if(isc == false){
-	         return "account/error/error";
-	      }else{
-	         session.setAttribute("mem_id", dto.getMem_id());
-	         session.setAttribute("mem_pw", dto.getMem_pw());
-	         session.setAttribute("mem_name", dto.getMem_name());
-	         return "redirect:/afterJoin.do";
-	      }
-	   }
+   @RequestMapping(value = "/chkJoin.do", method = RequestMethod.POST)
+   public String ckJoin(HttpSession session, MemberDto dto){
+      logger.info("ckJoin실행");
+      boolean isc = accountService.memInsert(dto);
+      if(isc == false){
+         return "account/error/error";
+      }else{
+         session.setAttribute("mem_id", dto.getMem_id());
+         session.setAttribute("mem_pw", dto.getMem_pw());
+         session.setAttribute("mem_name", dto.getMem_name());
+         return "redirect:/afterJoin.do";
+      }
+   }
 	   
-	   //회원가입 완료 후 그룹가입신청/메인페이지 선택
-	   @RequestMapping(value = "/afterJoin.do")
-	   public String afterJoin(){
-		   return "account/joinAfter";
-	   }
+   //회원가입 완료 후 그룹가입신청/메인페이지 선택
+   @RequestMapping(value = "/afterJoin.do")
+   public String afterJoin(){
+	   return "account/joinAfter";
+   }
 
-	//탈퇴 전 pm리스트 출력
-	@RequestMapping(value = "/viewListPm.do")
-	public String viewListPm(HttpSession session, Model model){
-		logger.info("viewListPm실행");
-		String mem_id = (String)session.getAttribute("mem_id");
-		//pm목록 보는 서비스(PM권한 위임)
-		List<Map<String, String>> pmSearchList = accountService.levelPmSelect(mem_id);
-		model.addAttribute("pmSearchList", pmSearchList);
-		return "account/listPmProject";
-	}
+   //탈퇴 전 pm리스트 출력
+   @RequestMapping(value = "/viewListPm.do")
+   public String viewListPm(HttpSession session, Model model){
+	   logger.info("viewListPm실행");
+	   String mem_id = (String)session.getAttribute("mem_id");
+	   //pm목록 보는 서비스(PM권한 위임)
+	   List<Map<String, String>> pmSearchList = accountService.levelPmSelect(mem_id);
+	   model.addAttribute("pmSearchList", pmSearchList);
+	   return "account/listPmProject";
+   }
 
 	//탈퇴 전 gm리스트 출력
 	@RequestMapping(value = "/viewListGm.do")

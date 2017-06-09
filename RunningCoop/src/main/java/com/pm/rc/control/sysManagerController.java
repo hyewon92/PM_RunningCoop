@@ -148,38 +148,40 @@ public class sysManagerController {
 			map.put("sbr_uuid", sbr_uuid);
 
 			MultipartFile file = multipartRequest.getFile("satt_name");
-
-			String oldFileName = file.getOriginalFilename();
 			
-			if (oldFileName.length() > 0){
-				String savePath = "C:\\RC_fileSave\\";
+			if (file != null){
+				String oldFileName = file.getOriginalFilename();
+				
+				if (oldFileName.length() > 0){
+					String savePath = "C:\\RC_fileSave\\";
 
-				String fuuid = createUUID();
-				int indexNum = fuuid.lastIndexOf("-");
+					String fuuid = createUUID();
+					int indexNum = fuuid.lastIndexOf("-");
 
-				String satt_size = ""+file.getSize();
+					String satt_size = ""+file.getSize();
 
-				String newFileName = fuuid.substring(indexNum+1) + oldFileName;
+					String newFileName = fuuid.substring(indexNum+1) + oldFileName;
 
-				// 첨부파일 실제경로 저장
-				try {
-					file.transferTo(new File(savePath + newFileName));
-				} catch (IllegalStateException | IOException e) {
-					e.printStackTrace();
+					// 첨부파일 실제경로 저장
+					try {
+						file.transferTo(new File(savePath + newFileName));
+					} catch (IllegalStateException | IOException e) {
+						e.printStackTrace();
+					}
+
+					logger.info("=============== 공지게시판 첨부파일 추가 ===================");
+					logger.info("첨부파일 명 : "+oldFileName);
+					logger.info("첨부파일 크기 : "+satt_size);
+					logger.info("첨부파일 경로 : "+savePath);
+					logger.info("첨부파일 실제이름 : "+newFileName);
+					logger.info("====================================================");
+
+					map.put("satt_name", oldFileName);
+					map.put("satt_rname", newFileName);
+					map.put("satt_size", satt_size);
+					map.put("satt_path", savePath);
+
 				}
-
-				logger.info("=============== 공지게시판 첨부파일 추가 ===================");
-				logger.info("첨부파일 명 : "+oldFileName);
-				logger.info("첨부파일 크기 : "+satt_size);
-				logger.info("첨부파일 경로 : "+savePath);
-				logger.info("첨부파일 실제이름 : "+newFileName);
-				logger.info("====================================================");
-
-				map.put("satt_name", oldFileName);
-				map.put("satt_rname", newFileName);
-				map.put("satt_size", satt_size);
-				map.put("satt_path", savePath);
-
 			}
 
 			map.put("sbr_title", sbr_title);

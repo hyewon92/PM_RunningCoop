@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>프로젝트관리툴:Running Coop!</title>
+<title>프로젝트관리툴 :: Running Coop!</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="js/account/main.js"></script>
@@ -75,7 +75,7 @@
 					 				</div>
 					 				<div class = "join_row">
 					 					<span class = "ps_box int_id">
-					 						<input type = "password" class = "int" id = "pw" name = "mem_pw" placeholder = "비밀번호">
+					 						<input type = "password" class = "int" id = "pw" name = "mem_pw" placeholder = "비밀번호(영소문자, 숫자 포함 8~16자)">
 					 					</span>
 					 				</div>
 					 				<div class = "join_row">
