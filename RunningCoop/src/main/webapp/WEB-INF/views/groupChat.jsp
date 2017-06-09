@@ -156,39 +156,37 @@
       var nick = null ; 
       
       $(document).ready(function() {
-    	  
-            nick = $("#nickName").val();
-            $(".receive_msg").html('');
-            $(".chat_div").show();
-            $(".chat").focus();
-            
-            ws = new WebSocket("ws://192.168.1.14:8091/RunningCoop/wsChat.do");
-            
-            ws.onopen = function() {
-               ws.send("#$nick_"+nick);
-               
-            };
-            ws.onmessage = function(event) {
-            	var msg = event.data;
-            	var id = "<%=grId%>";
-            	if(msg.startsWith("<font color=")){	//입장,퇴장
-	               $(".receive_msg").append($("<div class = 'noticeTxt'>").append(msg+"<br/>"));
-					viewList(id);
-            	}else if(msg.startsWith("[나]")){	//대화내용
-/*             		for(var i = 1; i*10 < msg.length; i++){
-            			msg.replace(msg.charAt(i*10),msg.charAt(i*10)+"\n");
-            		} */
-            		msg = msg.substring(3);
-            		$(".receive_msg").append($("<div class = 'sendTxt'>").append($("<span class ='sender_img'>").text(msg))).append("<br><br>");
-            	}else{
-            		$(".receive_msg").append($("<div class = 'receiveTxt'>").append($("<span class = 'receiver_img'>").text(msg))).append("<br><br>");
-            	}
-            	
-            	$(".receive_msg").scrollTop($(".receive_msg")[0].scrollHeight);
-            }
-            ws.onclose = function(event) {
-               alert("채팅방이 삭제됩니다."); 
-            }
+          nick = $("#nickName").val();
+          $(".receive_msg").html('');
+          $(".chat_div").show();
+          $(".chat").focus();
+          
+          ws = new WebSocket("ws://192.168.0.14:8091/RunningCoop/wsChat.do");
+          
+          ws.onopen = function() {
+             ws.send("#$nick_"+nick);
+             
+          };
+          
+          ws.onmessage = function(event) {
+          	var msg = event.data;
+          	var id = "<%=grId%>";
+          	if(msg.startsWith("<font color=")){	//입장,퇴장
+              $(".receive_msg").append($("<div class = 'noticeTxt'>").append(msg+"<br/>"));
+			viewList(id);
+          	}else if(msg.startsWith("[나]")){	//대화내용
+          		msg = msg.substring(3);
+          		$(".receive_msg").append($("<div class = 'sendTxt'>").append($("<span class ='sender_img'>").text(msg))).append("<br><br>");
+          	}else{
+          		$(".receive_msg").append($("<div class = 'receiveTxt'>").append($("<span class = 'receiver_img'>").text(msg))).append("<br><br>");
+          	}
+          	
+          	$(".receive_msg").scrollTop($(".receive_msg")[0].scrollHeight);
+          }
+          
+          ws.onclose = function(event) {
+             alert("채팅방이 삭제됩니다."); 
+          }
       
          $(".chat_btn").bind("click",function() {
             if($(".chat").val() == '' ) {
@@ -208,6 +206,7 @@
          ws.close();
          ws = null ;
       }
+      
       function disconnect() {
          ws.close();
          ws = null ;
@@ -230,14 +229,6 @@
     		 }
     	  });
       }      
-/*       function printMemList(memList){
-    	  $("#memBox").children("p").remove();
-    	  var list = JSON.parse(memList);
-    	  for(var i = 0; i < list.memList.length; i++){
-    		  $("#memBox").append("<p>"+list.memList[i]+"</p>");
-    	  }
-      }
-       */
 </script>
 </head>
 <body>

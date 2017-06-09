@@ -19,8 +19,10 @@
 				async: false,
 				success:function(result){
 					if(!result.login){
+						var failNotice = 
+							"<p style = 'font-size:8pt; color:red;'>로그인에 실패했습니다. 아이디 또는 비밀번호를 확인해주세요</p>";
 						$(".loginFail").children().remove();
-						$(".loginFail").append("<p style = 'font-size:8pt; color:red;'>로그인에 실패했습니다. 아이디 또는 비밀번호를 확인해주세요</p>");
+						$(".loginFail").append(failNotice);
 					}else if(result.login=="mgr"){
 						alert("관리자 계정은 관리자 페이지에서 로그인 해주세요.");
 					}else{
@@ -69,6 +71,10 @@
 	/**
 	회원가입
 	*/
+	
+	var interval;	//인증번호 등록 제한 시간 설정을 위해 설정
+	var checked = [false, false, false, false, false, false];	//각 확인 버튼 성공 여부(모두 true여야 회원가입 가능)
+	
 	//회원가입 팝업 띄우기	
 	function joinAccount(){
 		$(".join_modal").css("display", "block");
@@ -78,6 +84,7 @@
 	function closeJoin(){
 		$(".join_modal").css("display", "none");
 		$("#id").val("");
+		$("#resultIdChk").html("");
 		$("#pw").val("");
 		$("#pw2").val("");
 		$("#name").val("");
@@ -87,11 +94,12 @@
 		$("#phone2").val("");
 		$("#phone3").val("");
 		joinStatus = 0;
+		
+		for(var i = 0; i< checked.length; i++){
+			checked[i] = false;
+		}
 	}
 
-	var interval;
-	var checked = [false, false, false, false, false, false];
-	
 	//아이디 제약조건, 중복 확인
 	function id_chk(){
 		if(joinStatus == 1){
@@ -311,10 +319,6 @@
 			}
 		}
 	}
-/*	
-	function goJoin(){
-		location.href = "./goJoin.do";
-	}*/
 	
 	//최종입력 제약조건
 	$(function(){

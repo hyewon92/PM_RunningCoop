@@ -45,18 +45,22 @@
 		String s_year = dateForm(String.valueOf(year));
 		String s_month = dateForm(String.valueOf(month));
 		String s_day = dateForm(String.valueOf(day));
-		String date = s_year+s_month;
+		String date = s_year+s_month;	//출력되는 날짜(년/월 부분)
 		for(ScheduleDto dto:lists){
 			System.out.println(dto);
 			String title = dto.getSch_title();
 			
-			int startDate = Integer.parseInt(dto.getSch_startDate().substring(6, 8));
-			int endDate = Integer.parseInt(dto.getSch_endDate().substring(6, 8));
+			int startDate = Integer.parseInt(dto.getSch_startDate().substring(6, 8));	//일정 시작 날짜(일) 부분
+			int endDate = Integer.parseInt(dto.getSch_endDate().substring(6, 8));	//일정 종료 날짜(일) 부분
 			if(dto.getSch_startDate().substring(0, 6).equals(date)&&dto.getSch_endDate().substring(0, 6).equals(date)&&startDate<=day&&day<=endDate){
-				if(dto.getSch_prosYN().equals("Y")){
-					title = "<img src = 'images/pIcon.png' alt = '프로젝트일정' style = 'width: 15px; height: 15px;'>"+ dto.getProjectDto().getPr_name()+":"+title;
+				//일정 시작&종료날짜(년/월) == 출력되는 날짜(년/월), 시작 날짜(일)<=출력되는 일<=종료 날짜(일)
+				if(dto.getSch_prosYN().equals("Y")){	//팀 일정 여부
+					title = "<img src = 'images/pIcon.png' alt = '프로젝트일정' style = 'width: 15px; height: 15px;'>"
+							+ dto.getProjectDto().getPr_name()+":"+title;
 				}
-				String event = "<span class = 'listChk' onclick = 'showDetail("+dto.getSch_seq()+",\""+s_year+"\",\""+s_month+"\",\""+s_day+"\")'>"+title+"</span><br>";
+				String event = "<span class = 'listChk' onclick = 'showDetail("
+								+dto.getSch_seq()+",\""+s_year+"\",\""+s_month+"\",\""+s_day+"\")'>"
+								+title+"</span><br>";
 				result += event+"\n";
 			}
 		}

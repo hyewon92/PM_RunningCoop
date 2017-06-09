@@ -172,7 +172,7 @@ var serarchWord = "";
 		</form>
 	</div>	
 	
-	<div id="request_Form">
+	<div id="request_Form" style = "display:none;">
 		<form action="./grWaitInsert.do" method="post">
 		<table class="request_groupMem_table">
 			<tr>

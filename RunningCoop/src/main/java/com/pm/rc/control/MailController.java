@@ -1,8 +1,6 @@
 package com.pm.rc.control;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -18,7 +16,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pm.rc.model.service.AccountService;
@@ -56,8 +53,9 @@ public class MailController {
 		//회원(수신자)정보
 		String toMail = req.getParameter("toMail");
 		String title = "<RunningCoop> "+req.getParameter("title")+"님 비밀번호 변경 메일입니다";
-		String content = "임시 비밀번호: "+mem_pw+"\n페이지 접속:http://localhost:8088/RunningCoop/main.do \n\n<RunningCoop개발팀 올림>";
+		String content = "임시 비밀번호: "+mem_pw+"\n페이지 접속:http://localhost:8091/RunningCoop/main.do \n\n<RunningCoop개발팀 올림>";
 		
+		//비밀번호 변경
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("mem_id", mem_id);
 		map.put("mem_pw", mem_pw);

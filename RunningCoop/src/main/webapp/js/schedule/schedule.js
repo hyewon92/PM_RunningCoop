@@ -17,7 +17,7 @@
 		});
 	}
 	
-	//지정일 일정 출력
+	//지정일 일정 목록 출력
 	function showDailyList(schedule, val1, val2, val3){
 		if(schedule.length == 0){
 			$(".listBox").append("<p>해당 일에 등록된 일정이 없습니다.</p>");
@@ -38,7 +38,8 @@
 				$(".scheduleBox").css("display", "none");
 				$(".scheduleModiBox").css("display", "none");
 				$("#dayList").css("display", "block");
-				$(".listBox").append("<span class = 'listChk' onclick = 'showDetail("+sch_seq+",\""+val1+"\",\""+val2+"\",\""+val3+"\")'>"+title+"</span><br>");
+				$(".listBox").append("<span class = 'listChk' onclick = 'showDetail("
+									+sch_seq+",\""+val1+"\",\""+val2+"\",\""+val3+"\")'>"+title+"</span><br>");
 			}
 		}
 	}
