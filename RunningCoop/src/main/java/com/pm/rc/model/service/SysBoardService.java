@@ -46,7 +46,7 @@ public interface SysBoardService {
 	 * @return boolean
 	 * @author 김혜원
 	 * */
-	public boolean qnaBoardInsert(Map<String, Object> map);
+	public boolean qnaBoardInsert(Map<String, String> map);
 	
 	/**
 	 * 문의 게시글 수정

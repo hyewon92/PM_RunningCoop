@@ -62,32 +62,18 @@ public interface SysBoardDao {
 	public Map<String, String> sysAttachSelect(Map<String, String> map);
 	
 	/**
-	 * 공지게시판 게시글 작성
-	 * @param dto 입력받은  정보를 dto형태로 전송
-	 * @return 작성 성공하면 true, 실패하면 false
-	 */
-	public boolean noticeBoardInsert(Map<String, Object> map);
-	
-	/**
 	 * 문의게시판 게시글 작성
 	 * @param dto 입력받은 정보를 dto형태로 전송
 	 * @return 작성 성공하면 true, 실패하면 false
 	 */
-	public boolean qnaBoardInsert (Map<String, Object> map);
-	
-	/**
-	 * 관리자가 문의글에 답글을 작성
-	 * @param dto : 입력한 정보를 dto형태로 전송
-	 * @return 등록 성공하면 true, 실패하면 false
-	 */
-	public boolean qnaReplyInsert (Map<String, Object> map);
+	public boolean qnaBoardInsert (Map<String, String> map);
 	
 	/**
 	 * 게시글 작성 시 파일 업로드
 	 * @param dto 입력받은 정보를 dto형태로 전송
 	 * @return 작성 성공하면 true, 실패하면 false
 	 */
-	public boolean FileInsert (Map<String, Object> map);
+	public boolean FileInsert (Map<String, String> map);
 	
 	/**
 	 * 게시글 수정 (공지/문의 통합)

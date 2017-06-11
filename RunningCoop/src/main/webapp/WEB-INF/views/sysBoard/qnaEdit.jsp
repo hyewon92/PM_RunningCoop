@@ -24,10 +24,6 @@
 		var scryn = $("#scryn").val();
 		if(scryn == 'Y'){
 			$("#sbr_scryn").attr("checked", true);
-		}
-		
-		var chkyn = $("#sbr_scryn").is(":checked");
-		if(chkyn == true){
 			$("#sbr_pw").css("display", "inline");
 		}
 		
@@ -38,6 +34,7 @@
 				$("#sbr_pw").css("display", "inline");
 			} else if (chkyn == false) {
 				$("#scryn").val("N");
+				$("#sbr_pw").val("");
 				$("#sbr_pw").css("display", "none");
 			}
 		});
@@ -59,6 +56,17 @@
 		if(value.length > 50){
 			alert("게시글 제목은 50자를 넘을 수 없습니다.");
 			$(val).val(value.substring(0, 49));
+		}
+	}
+	
+	function submitContent(){
+		var scryn = $("#scryn").val();
+		var sbr_pw = $("#sbr_pw").val();
+		
+		if(scryn == "Y" && sbr_pw.length == 0){
+			alert("비밀번호를 입력해주세요!");
+		} else {
+			saveContent();
 		}
 	}
 </script>
@@ -160,7 +168,7 @@
 </script>
 
 	<div class="btn_area">
-		<button class="body_btn edit_submit_btn" onclick='saveContent()'>등록</button>
+		<button class="body_btn edit_submit_btn" onclick='submitContent()'>등록</button>
 		<input type="button" class="body_btn edit_collback_btn" value="이전으로" onclick="back()" />
 	</div>
 </div>

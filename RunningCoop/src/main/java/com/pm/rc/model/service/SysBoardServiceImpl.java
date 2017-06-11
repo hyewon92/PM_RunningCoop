@@ -56,7 +56,7 @@ public class SysBoardServiceImpl implements SysBoardService {
 	};
 
 	@Override
-	public boolean qnaBoardInsert(Map<String, Object> map) {
+	public boolean qnaBoardInsert(Map<String, String> map) {
 
 		boolean board = sysBoardDao.qnaBoardInsert(map);
 		boolean attach = false;
@@ -81,8 +81,10 @@ public class SysBoardServiceImpl implements SysBoardService {
 		boolean updateFile = false;
 		
 		String satt_name = map.get("satt_name");
-		
-		if(satt_name!=null){
+		String attachYN = map.get("attachYN");
+		if(attachYN != null && attachYN.equals("N")){
+			updateFile = sysBoardDao.FileInsert(map);
+		} else if(satt_name!=null){
 			updateFile = sysBoardDao.FileUpdate(map);
 		} else {
 			updateFile = true;
