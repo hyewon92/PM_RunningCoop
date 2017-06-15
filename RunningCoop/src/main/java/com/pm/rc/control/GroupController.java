@@ -248,9 +248,9 @@ public class GroupController implements ServletConfigAware {
 		isc = service.grMemInsert(map);
 		
 		if(isc){
-			System.out.println("그룹 가입신청 수락 성공");
+			logger.info("그룹 가입신청 수락 성공");
 		} else {
-			System.out.println("그룹 가입신청 수락 실패");
+			logger.info("그룹 가입신청 수락 실패");
 		}
 		
 		return "redirect:/memModi.do?gr_id="+gr_id;
@@ -271,9 +271,9 @@ public class GroupController implements ServletConfigAware {
 		boolean n = service.grMemReject(map);
 		
 		if(n){
-			System.out.println("그룹 가입 거절 성공");
+			logger.info("그룹 가입 거절 성공");
 		} else {
-			System.out.println("그룹 가입 거절 실패");
+			logger.info("그룹 가입 거절 실패");
 		}
 		
 		return "redirect:/memModi.do?gr_id="+gr_id;
@@ -313,15 +313,11 @@ public class GroupController implements ServletConfigAware {
 	      String id_1 = "GR";
 	      String id_2 = dateForm.format(date).toString();
 	      String uuid = createUUID();
-	      System.out.println(uuid);
 	      String id_3 = uuid.substring(uuid.lastIndexOf("-")+9);
-	      System.out.println(id_3);
 	      String gr_id = id_1+id_2+id_3;
 	      
-	      System.out.println("================================");
-	      System.out.println(req.getParameter("gr_joinyn")+"|||||"+req.getParameter("gr_searchyn")+"||"+req.getParameter("gr_img"));
-	      System.out.println(gr_id);
-	      System.out.println("================================");
+	      logger.info("================================"+req.getParameter("gr_joinyn")+"|||||"+req.getParameter("gr_searchyn")+"||"+req.getParameter("gr_img")+"================================");
+	      logger.info("================================"+gr_id+"================================");
 	      
 	      map.put("gr_id", gr_id);
 	      map.put("gr_name", req.getParameter("gr_name"));
@@ -350,7 +346,6 @@ public class GroupController implements ServletConfigAware {
 		Map<String, String> map = new HashMap<String, String>();
 		System.err.println("ㅎㅎ2");
 		map.put("gr_name", value);
-		System.out.println(map.get("gr_name"));
 		List<GroupDto> lists = service.allGrSelect(map);
 		return lists;
 	}
@@ -373,8 +368,6 @@ public class GroupController implements ServletConfigAware {
 	@RequestMapping(value="/groupMemDelete.do" , method=RequestMethod.GET)
 	public String groupMemDelete(String gr_id , String memID){
 		logger.info("그룹멤버 삭제하기 시작합니다 ");
-		System.out.println("memID " + memID);
-		System.out.println("grID " + gr_id);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("gr_id", gr_id);
 		map.put("mem_id", memID);
@@ -395,10 +388,6 @@ public class GroupController implements ServletConfigAware {
 		logger.info("socketOpen 소켓 화면 이동 1)리스트에 접속자 값 넣기");
 		String mem_id = (String)session.getAttribute("mem_id");
 		String gr_id = (String)session.getAttribute("gr_id");
-		//GrChatMemberDto chatDto = new GrChatMemberDto();
-		//servletContext.setAttribute(mem_id, chatDto);
-		//ArrayList<String> chatList = (ArrayList<String>)servletContext.getAttribute("chatList");
-		System.out.println("servletContext.getAttribute()::::::::::::::"+servletContext.getAttribute("chatList"));
 		HashMap<String, String> chatList = (HashMap<String, String>)servletContext.getAttribute("chatList");
 		if(chatList == null){
 			chatList = new HashMap<String, String>();
@@ -409,14 +398,13 @@ public class GroupController implements ServletConfigAware {
 			servletContext.setAttribute("chatList", chatList);
 		}
 		logger.info("socketOpen 소켓 화면 이동 2)리스트 값 전달");
-		//model.addAttribute("chatList", chatList);
 		
 		return "groupChat";
 	}
 	
 	//WebSocket 채팅 종료했을 때
 	@RequestMapping(value = "/socketOut.do", method={RequestMethod.GET, RequestMethod.POST})
-	public void socketOut(HttpSession session, Model model){
+	public void socketOut(HttpSession session){
 		logger.info("socketOut 소켓에서 나오기");
 		String mem_id = (String)session.getAttribute("mem_id");
 		HashMap<String, String> chatList = (HashMap<String, String>)servletContext.getAttribute("chatList");
@@ -435,9 +423,6 @@ public class GroupController implements ServletConfigAware {
 	public Map<String, Map<String, String>> viewChatList(){
 		Map<String, Map<String, String>> map = new HashMap<String, Map<String, String>>();
 		Map<String, String> chatList = (HashMap<String, String>)servletContext.getAttribute("chatList");
-		System.out.println("ajax확인::::::::::::::::::::::::::"+chatList);
-		String msg = chatList.get("user12");
-		System.out.println(msg);
 		map.put("list", chatList);
 		return map;
 	}
@@ -517,7 +502,7 @@ public class GroupController implements ServletConfigAware {
 		gDto.setGr_id(gr);
 		
 		logger.info("=========그룹게시판 목록 시작 ========");
-		System.out.println("그룹아이디 받아옴 값="+gr);
+		logger.info("그룹아이디 받아옴 값="+gr);
 		
 		List<Map<String, String>> lists = service.grBoradList(gDto);
 		paging.setTotal(service.grBoradListCnt(gDto));
@@ -534,8 +519,6 @@ public class GroupController implements ServletConfigAware {
 	public int groupImgCk (String gr_id){
 		logger.info("=========그룹선택시 이미지 출력 시작 ========");
 		int n = service.groupImg(gr_id);
-//		List<GroupDto> lists = service.groupImg(gr_id);
-//		System.out.println("asdfasdfasdf"+lists.get(0).getGr_img());
 	return n;	
 	}
 	
@@ -563,7 +546,7 @@ public class GroupController implements ServletConfigAware {
 
 			MultipartFile file = multipartRequest.getFile("gatt_name");
 			
-			System.out.println(file);
+			logger.info("file: "+file);
 
 			String oldFileName = file.getOriginalFilename();
 			if (oldFileName.length()>0){
@@ -607,9 +590,9 @@ public class GroupController implements ServletConfigAware {
 			isc = service.grBoardInsert(map);
 
 			if(isc == true){
-				System.out.println("문의게시판 게시글 등록 성공");
+				logger.info("문의게시판 게시글 등록 성공");
 			} else {
-				System.out.println("문의게시판 게시글 등록 실패");
+				logger.info("문의게시판 게시글 등록 실패");
 			}
 
 			return "redirect:/grBoradList.do";
@@ -750,9 +733,9 @@ public class GroupController implements ServletConfigAware {
 			isc = service.grBoardEdit(map);
 			
 			if(isc == true){
-				System.out.println("문의게시판 게시글 수정 성공");
+				logger.info("문의게시판 게시글 수정 성공");
 			} else {
-				System.out.println("문의게시판 게시글 수정 실패");
+				logger.info("문의게시판 게시글 수정 실패");
 			}
 
 			return "redirect:/grBoardView.do?br_uuid="+br_uuid;
@@ -782,9 +765,9 @@ public class GroupController implements ServletConfigAware {
 			isc = service.grBoardDelete2(br_uuid);
 			
 			if(isc == true){
-				System.out.println("문의 게시글 삭제 성공");
+				logger.info("문의 게시글 삭제 성공");
 			} else {
-				System.out.println("문의 게시글 삭제 실패");
+				logger.info("문의 게시글 삭제 실패");
 			}
 
 			return "redirect:/grBoradList.do";
@@ -800,20 +783,11 @@ public class GroupController implements ServletConfigAware {
 
 			//탈퇴전 gm,pm 재확인
 			String mem_id = (String)session.getAttribute("mem_id");
-			System.out.println("-------------"+mem_id);
 			List<Map<String, String>> pmSearchList = accountService.levelPmSelect(mem_id);
 			if(pmSearchList.size()!=0){
 				map.put("result", false);
 			}else{
 				map.put("result", true);
-				/*//탈퇴처리
-				boolean isc = accountService.memDelete(mem_id);
-				if(isc == true){
-					session.invalidate();
-					return "account/bye";
-				}else{
-					return "account/error/error";
-				}*/
 			}
 			return map;
 		}

@@ -172,8 +172,8 @@
           	var msg = event.data;
           	var id = "<%=grId%>";
           	if(msg.startsWith("<font color=")){	//입장,퇴장
-              $(".receive_msg").append($("<div class = 'noticeTxt'>").append(msg+"<br/>"));
-			viewList(id);
+            	$(".receive_msg").append($("<div class = 'noticeTxt'>").append(msg+"<br/>"));
+				viewList(id);
           	}else if(msg.startsWith("[나]")){	//대화내용
           		msg = msg.substring(3);
           		$(".receive_msg").append($("<div class = 'sendTxt'>").append($("<span class ='sender_img'>").text(msg))).append("<br><br>");
@@ -200,11 +200,17 @@
          });
       });
       
-      window.onbeforeunload = function() {
-    	 alert("채팅종료");
-	     location.href = "./socketOut.do";
-         ws.close();
-         ws = null ;
+/*       window.onbeforeunload = function(e) {
+      } */
+      
+      function roomClose(){
+    	  alert("채팅종료");
+/*     	  location.href = "./socketOut.do"; */
+      	  $.ajax({
+      		  type: "GET",
+      		  url: "./socketOut.do",
+      		  async: false
+      	  });	
       }
       
       function disconnect() {
@@ -231,26 +237,26 @@
       }      
 </script>
 </head>
-<body>
+<body onbeforeunload="roomClose()">
    <table>
-   <tr>
-      <td width="360x" height="390px" align="center">
-      <div class ="receive_msg" style="border:1px">
-      <div class = "last"></div> 
-      <input type="hidden" id="nickName" value = <%=mem_id%> />
-      </div>
-      </td>
-      <td width="130px" class = "memListBox">
-      	<div class = "listTitle">접속자 목록</div>
-      	<div class = "memList"></div> 
-      </td>
-   </tr>   
+	   <tr>
+	      <td width="360x" height="390px" align="center">
+	      <div class ="receive_msg" style="border:1px">
+	      <div class = "last"></div> 
+	      <input type="hidden" id="nickName" value = <%=mem_id%> />
+	      </div>
+	      </td>
+	      <td width="130px" class = "memListBox">
+	      	<div class = "listTitle">접속자 목록</div>
+	      	<div class = "memList"></div> 
+	      </td>
+	   </tr>   
    </table>
    
    <div class="chat_div" style="display:none; margin-top: 10px;">
-   <textarea class="chat"
-          onKeypress="if(event.keyCode==13) $('.chat_btn').click();" ></textarea>
-   <div class="chat_btn"></div>          
+	   <textarea class="chat"
+	          onKeypress="if(event.keyCode==13) $('.chat_btn').click();" ></textarea>
+	   <div class="chat_btn"></div>          
    </div>
       
 </body>

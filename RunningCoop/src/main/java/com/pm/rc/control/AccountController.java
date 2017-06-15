@@ -119,7 +119,6 @@ public class AccountController {
 	public Map<String, Boolean> memIdSelect(String mem_id){
 		logger.info("memIdSelect실행");
 		Map<String, Boolean> map = new HashMap<String, Boolean>();
-		System.out.println("mem_id="+mem_id);
 		String isc = accountService.memIdSelect(mem_id);
 		if(isc!=null){
 			map.put("result", false);
@@ -135,7 +134,6 @@ public class AccountController {
 	public Map<String, Boolean> memEmailSelect(String mem_email){
 		logger.info("memEmailSelect실행");
 		Map<String, Boolean> map = new HashMap<String, Boolean>();
-		System.out.println("mem_id="+mem_email);
 		boolean isc = accountService.memEmailSelect(mem_email);
 		map.put("result", isc);
 		return map;
@@ -155,14 +153,12 @@ public class AccountController {
 	public Map<String, Boolean> ckIdentifyNum(HttpSession session,String input){
 		logger.info("ckIdentifyNum실행");
 		Map<String, Boolean> map = new HashMap<String, Boolean>();
-		System.out.println("인증번호:"+session.getAttribute("identifyNum"));
-		System.out.println("입력값:"+input);
 		String identifyNum = (String)session.getAttribute("identifyNum");
 		if(input.equals(identifyNum)){
-			System.out.println("번호 일치, 성공");
+			logger.info("번호 일치, 성공");
 			map.put("result",true);
 		}else{
-			System.out.println("번호 불일치, 실패");
+			logger.info("번호 불일치, 실패");
 			map.put("result",false);
 		}
 		return map;
@@ -227,14 +223,6 @@ public class AccountController {
 			map.put("result", false);
 		}else{
 			map.put("result", true);
-/*			//탈퇴처리
-			boolean isc = accountService.memDelete(mem_id);
-			if(isc == true){
-				session.invalidate();
-				return "account/bye";
-			}else{
-				return "account/error/error";
-			}*/
 		}
 		return map;
 	}
@@ -280,7 +268,6 @@ public class AccountController {
 	public String writeModify(Model model, HttpSession session){
 		logger.info("writeModifyForm실행");
 		String mem_id = (String)session.getAttribute("mem_id");
-		System.out.println(mem_id);
 		MemberDto dto = accountService.memSelect(mem_id);
 		model.addAttribute("dto", dto);
 		return "account/writeModifyForm";

@@ -3,15 +3,7 @@ package com.pm.rc.socket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
-import javax.websocket.server.HandshakeRequest;
 
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -26,11 +18,12 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+
 @Component(value="wsChat.do")
 public class MySocketHandler extends TextWebSocketHandler{
 
 	Logger logger = LoggerFactory.getLogger(MySocketHandler.class);
-
+	
 	private ArrayList<WebSocketSession> list ; //webSocket session값을 담은 리스트
 
 	public MySocketHandler() {
@@ -101,12 +94,13 @@ public class MySocketHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionClosed(WebSocketSession session,CloseStatus status) throws Exception {
 		logger.info("afterConnectionClosed()실행");
-
+		
 		super.afterConnectionClosed(session, status);
 		Map<String, Object> mySession = session.getHandshakeAttributes();
 		String myGrSession = (String)mySession.get("gr_id");
 		String myMemSession = (String)mySession.get("mem_id");
 		list.remove(session);
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분");
 		String now = sdf.format(new Date());
 		for(WebSocketSession a : list) {

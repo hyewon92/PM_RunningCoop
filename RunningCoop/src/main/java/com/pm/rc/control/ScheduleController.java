@@ -140,11 +140,9 @@ public class ScheduleController {
 	public Map<String, ScheduleDto> detailTeamSchedule(HttpServletRequest req){
 		logger.info("detailTeamSchedule실행");
 		String sch_seq = req.getParameter("sch_seq");
-		System.out.println("seq="+sch_seq);
 		Map<String, ScheduleDto> map = new HashMap<String, ScheduleDto>();
 		ScheduleDto dto = new ScheduleDto();
 		dto = scheduleService.teamSchView(sch_seq);
-		System.out.println("pr_name="+dto.getProjectDto().getPr_name());
 		map.put("dto", dto);
 		return map;
 	}
@@ -183,8 +181,6 @@ public class ScheduleController {
 	@RequestMapping(value = "/deleteTeamSchedule.do", method = RequestMethod.GET)
 	public String deleteTeamSchedule(String pr_id, String sch_seq){
 		logger.info("deleteTeamSchedule실행");
-		System.out.println("pr_id="+pr_id);
-		System.out.println("sch_seq="+sch_seq);
 		boolean isc = scheduleService.schDelete(sch_seq);
 		if(isc == false){
 			return "schedule/error";

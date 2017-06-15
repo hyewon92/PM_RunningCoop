@@ -75,7 +75,7 @@
 	<!-- 그룹 프로젝트 탈퇴 처리 -->
 	<delete id="memDelete_1" parameterType="java.lang.String">
 		DELETE FROM RC_PROMEM
-		WHERE PR_ID = #{pr_id} AND MEM_ID = #{mem_id}
+		WHERE MEM_ID = #{mem_id}
 	</delete>
 	
 	<!-- 프로젝트 멤버 수 조정 -->

@@ -51,7 +51,8 @@
 							WHERE 	GM.GR_ID = G.GR_ID 
 									AND GM.GR_LEVEL = 'GM'
 						   )
-		AND G.GR_NAME LIKE '%'|| #{gr_name} ||'%'
+		AND G.GR_DELYN = 'N'
+		AND G.GR_NAME LIKE #{gr_name} ||'%'
 	</select>
 
 	<select id="grMemSelect" parameterType="java.lang.String" resultType="MemberDto">
@@ -131,6 +132,7 @@
 					WHERE M.MEM_ID IN (SELECT GM.MEM_ID FROM RC_GROUPMEM GM WHERE GM.GR_ID = G.GR_ID AND GM.GR_LEVEL = 'GM')
 					AND G.GR_NAME LIKE '%${gr_name}%'
 					AND G.GR_SEARCHYN = 'Y'
+					AND G.GR_DELYN = 'N'
 					ORDER BY G.GR_REGDATE DESC
 		      ) P
 		    )	

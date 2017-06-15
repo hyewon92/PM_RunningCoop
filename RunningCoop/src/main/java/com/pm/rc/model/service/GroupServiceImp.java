@@ -186,31 +186,18 @@ public class GroupServiceImp implements GroupService{
 	public boolean groupDelete(String gr_id) {
 		boolean isc = false;
 		isc = groupdao.groupDelete1(gr_id);
-		System.out.println(isc+"1번쨍ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
 		isc = groupdao.groupDelete2(gr_id);
-		System.out.println(isc+"2번쨍ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
 		isc = groupdao.groupDelete3(gr_id);
-		System.out.println(isc+"3번쨍ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
 		isc = groupdao.groupDelete4(gr_id);
-		System.out.println(isc+"4번쨍ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
 		isc = groupdao.groupDelete5(gr_id);
-		System.out.println(isc+"5번쨍ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
 		isc = groupdao.groupDelete6(gr_id);
-		System.out.println(isc+"6번쨍ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
 		isc = groupdao.groupDelete7(gr_id);
-		System.out.println(isc+"7번쨍ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
 		isc = groupdao.groupDelete8(gr_id);
-		System.out.println(isc+"8번쨍ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
 		isc = groupdao.groupDelete9(gr_id);
-		System.out.println(isc+"9번쨍ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
 		isc = groupdao.groupDelete10(gr_id);
-		System.out.println(isc+"10번쨍ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
 		isc = groupdao.groupDelete11(gr_id);
-		System.out.println(isc+"11번쨍ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
 		isc = groupdao.groupDelete12(gr_id);
-		System.out.println(isc+"12번쨍ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
 		isc = groupdao.groupDelete13(gr_id);
-		System.out.println(isc+"13번쨍ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
 		return isc;
 	}
 

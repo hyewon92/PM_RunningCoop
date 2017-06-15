@@ -96,7 +96,7 @@
       <jsp:include page="../sysHeader.jsp" flush="false" />
    </div>
    <div id="sys_container">
-      <h3>회원 관리</h3>
+      <h3>그룹생성 관리</h3>
       <div class="adm_search_area">
          <form action="./grApplySch.do" method="post">
                <input type="text"  name="gr_name" />
