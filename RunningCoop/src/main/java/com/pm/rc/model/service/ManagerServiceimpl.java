@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pm.rc.dto.GroupDto;
-import com.pm.rc.dto.PagingProDto;
 import com.pm.rc.dto.MemberDto;
 import com.pm.rc.dto.SystemBoardDto;
 import com.pm.rc.model.dao.ManagerDao;
@@ -84,10 +83,10 @@ public class ManagerServiceimpl implements ManagerService {
 	@Transactional
 	public boolean noticeInsert(Map<String, String> map) {
 		boolean isc = false;
+		isc = managerdao.noticeInsert_2(map);
 		if(map.get("satt_name")!=null){
 			isc = managerdao.noticeInsert_1(map);
 		}
-		isc = managerdao.noticeInsert_2(map);
 		return isc;
 	}
 
@@ -110,10 +109,10 @@ public class ManagerServiceimpl implements ManagerService {
 	public boolean qnaReplyInsert(Map<String, String> map) {
 		boolean isc = false;
 		String satt_name = (String)map.get("satt_name");
+		isc = managerdao.qnaReplyInsert_2(map);
 		if(satt_name != null){
 			isc = managerdao.qnaReplyInsert_1(map);
 		}
-		isc = managerdao.qnaReplyInsert_2(map);
 		return isc;
 	}
 
